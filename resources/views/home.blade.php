@@ -7,16 +7,16 @@
 <!-- ============================================ -->
 <!-- GIS MAP SECTION (Full-Width, Top of Landing) -->
 <!-- ============================================ -->
-<section id="gis-section" class="relative w-full bg-black">
+<section id="gis-section" class="relative w-full bg-[#0e4f81]">
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
 <!-- Map Header Bar -->
-    <div class="absolute top-0 left-0 right-0 z-[1000] bg-gradient-to-r from-teal-700 via-teal-600 to-teal-500 text-white px-6 py-4 shadow-lg">
+    <div class="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-sky-200 via-cyan-200 to-slate-100 text-slate-900 px-6 py-4 shadow-lg">
         <div class="flex items-center justify-between">
             <div>
                 <h1 class="text-xl lg:text-2xl font-bold">Peta Wilayah Bakorwil</h1>
-                <p class="text-sm text-teal-100">Sistem Informasi Geografis 7 Daerah Tapal Kuda - Jawa Timur</p>
+                <p class="text-sm text-slate-700">Sistem Informasi Geografis 7 Daerah Tapal Kuda - Jawa Timur</p>
             </div>
             <span class="hidden sm:inline-flex items-center px-3 py-1 bg-yellow-400 text-teal-900 text-xs font-bold rounded-full">
                 <span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>
@@ -26,17 +26,17 @@
     </div>
 
     <!-- Leaflet Map Container (full width, large height) -->
-    <div id="qgis-map" class="w-full" style="height: 80vh;"></div>
+    <div id="qgis-map" class="w-full relative z-0" style="height: 80vh; background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);"></div>
 
 <!-- Placeholder Overlay (shown until GeoJSON data is loaded) -->
-    <div id="gis-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-center px-6" style="background: linear-gradient(135deg, rgba(15,81,70,0.92), rgba(13,148,136,0.92)); z-index: 500;">
+    <div id="gis-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-slate-900" style="background: linear-gradient(135deg, rgba(173,216,230,0.96), rgba(199,229,255,0.96)); z-index: 10;">
         <div class="w-20 h-20 bg-white/15 border border-yellow-400/50 rounded-2xl flex items-center justify-center mb-6">
             <svg class="w-10 h-10 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
             </svg>
         </div>
-        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-3">Tempat Peta QGIS</h2>
-        <p class="text-teal-50 max-w-xl mb-6 leading-relaxed">
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-900 mb-3">Tempat Peta QGIS</h2>
+        <p class="text-slate-700 max-w-xl mb-6 leading-relaxed">
             Area ini disiapkan untuk menampilkan peta interaktif hasil QGIS.
             Unggah file <span class="font-mono text-yellow-300">GeoJSON</span> hasil ekspor QGIS ke
             <span class="font-mono text-yellow-300">public/maps/bakorwil.geojson</span>
@@ -46,14 +46,14 @@
             <button onclick="loadQGISData()" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-teal-900 font-bold rounded-lg transition shadow-lg">
                 Muat Data Peta
             </button>
-            <a href="#after-gis" class="px-6 py-3 bg-white/10 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/20 transition">
+            <a href="#after-gis" class="px-6 py-3 bg-white border border-slate-300 text-slate-900 font-semibold rounded-lg hover:bg-slate-100 transition">
                 Lihat Layanan
             </a>
         </div>
     </div>
 
     <!-- Map Info Panel (populated on region click) -->
-    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index: 1000;">
+    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index: 20;">
         <div class="flex items-start justify-between">
             <div>
                 <h3 id="qgis-info-name" class="text-lg font-bold text-teal-900"></h3>
@@ -73,7 +73,7 @@
 <a id="after-gis" class="block"></a>
 
 <!-- Hero Section -->
-<section class="relative bg-gradient-to-br from-teal-700 via-teal-600 to-teal-500 text-white overflow-hidden">
+<section class="relative bg-gradient-to-br from-sky-200 via-cyan-100 to-slate-100 text-slate-900 overflow-hidden">
     <div class="absolute inset-0 opacity-10">
         <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
             <defs>
@@ -84,20 +84,20 @@
             <rect width="100" height="100" fill="url(#grid)"/>
         </svg>
     </div>
-    <div class="absolute -top-24 -right-24 w-96 h-96 bg-yellow-400 rounded-full blur-3xl opacity-20"></div>
-    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-teal-400 rounded-full blur-3xl opacity-30"></div>
+    <div class="absolute -top-24 -right-24 w-96 h-96 bg-sky-300 rounded-full blur-3xl opacity-20"></div>
+    <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-200 rounded-full blur-3xl opacity-30"></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
         <div class="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-                <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/10 border border-yellow-400/40 text-sm font-medium mb-6">
-                    <span class="w-2 h-2 bg-yellow-400 rounded-full mr-2 animate-pulse"></span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-white/90 border border-sky-300/40 text-sm font-medium mb-6">
+                    <span class="w-2 h-2 bg-sky-600 rounded-full mr-2 animate-pulse"></span>
                     Platform Resmi EJSC Bakorwil
                 </span>
                 <h1 class="text-4xl lg:text-6xl font-bold leading-tight mb-6">
-                    Menghubungkan <span class="text-yellow-400">Mentor</span>, <span class="text-yellow-400">Talenta</span> & <span class="text-yellow-400">Client</span>
+                    Menghubungkan <span class="text-sky-700">Mentor</span>, <span class="text-sky-700">Talenta</span> & <span class="text-sky-700">Client</span>
                 </h1>
-                <p class="text-lg lg:text-xl text-teal-50 mb-8 leading-relaxed">
+                <p class="text-lg lg:text-xl text-slate-700 mb-8 leading-relaxed">
                     Platform terpercaya untuk menemukan mentor berpengalaman, mengembangkan talenta terbaik, dan menghubungkan dengan client yang tepat.
                 </p>
                 <div class="flex flex-wrap gap-4">
@@ -107,33 +107,33 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12"/>
                         </svg>
                     </a>
-                    <a href="{{ route('talenta') }}" class="inline-flex items-center px-6 py-3 bg-white/10 border border-white/30 text-white font-semibold rounded-lg hover:bg-white/20 transition">
+                    <a href="{{ route('talenta') }}" class="inline-flex items-center px-6 py-3 bg-white border border-slate-300 text-slate-900 font-semibold rounded-lg hover:bg-slate-100 transition">
                         Lihat Talenta
                     </a>
                 </div>
             </div>
             <div class="hidden lg:block">
-                <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-yellow-400/30 shadow-2xl">
+                <div class="bg-white/70 backdrop-blur-lg rounded-2xl p-8 border border-sky-200/60 shadow-2xl">
                     <div class="flex items-center justify-between mb-6">
                         <h3 class="text-lg font-semibold">Statistik Platform</h3>
-                        <span class="px-3 py-1 bg-yellow-400/20 text-yellow-300 text-xs font-medium rounded-full">Live</span>
+                        <span class="px-3 py-1 bg-sky-200/50 text-sky-700 text-xs font-medium rounded-full">Live</span>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white/10 rounded-xl p-4">
-                            <p class="text-3xl font-bold text-yellow-400">150+</p>
-                            <p class="text-sm text-teal-50 mt-1">Mentor</p>
+                        <div class="bg-white/80 rounded-xl p-4">
+                            <p class="text-3xl font-bold text-sky-700">150+</p>
+                            <p class="text-sm text-slate-700 mt-1">Mentor</p>
                         </div>
-                        <div class="bg-white/10 rounded-xl p-4">
-                            <p class="text-3xl font-bold text-yellow-400">500+</p>
-                            <p class="text-sm text-teal-50 mt-1">Talenta</p>
+                        <div class="bg-white/80 rounded-xl p-4">
+                            <p class="text-3xl font-bold text-sky-700">500+</p>
+                            <p class="text-sm text-slate-700 mt-1">Talenta</p>
                         </div>
-                        <div class="bg-white/10 rounded-xl p-4">
-                            <p class="text-3xl font-bold text-yellow-400">80+</p>
-                            <p class="text-sm text-teal-50 mt-1">Client</p>
+                        <div class="bg-white/80 rounded-xl p-4">
+                            <p class="text-3xl font-bold text-sky-700">80+</p>
+                            <p class="text-sm text-slate-700 mt-1">Client</p>
                         </div>
-                        <div class="bg-white/10 rounded-xl p-4">
-                            <p class="text-3xl font-bold text-yellow-400">98%</p>
-                            <p class="text-sm text-teal-50 mt-1">Kepuasan</p>
+                        <div class="bg-white/80 rounded-xl p-4">
+                            <p class="text-3xl font-bold text-sky-700">98%</p>
+                            <p class="text-sm text-slate-700 mt-1">Kepuasan</p>
                         </div>
                     </div>
                 </div>
@@ -205,45 +205,45 @@
 </section>
 
 <!-- How It Works -->
-<section class="py-20 bg-gray-50">
+<section class="py-20 bg-sky-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-            <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Cara Kerja</h2>
-            <p class="text-lg text-gray-600">Langkah mudah untuk memulai bersama kami</p>
+            <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Cara Kerja</h2>
+            <p class="text-lg text-slate-700">Langkah mudah untuk memulai bersama kami</p>
         </div>
-<div class="grid md:grid-cols-4 gap-8">
+        <div class="grid md:grid-cols-4 gap-8">
             <div class="text-center">
-                <div class="w-16 h-16 mx-auto bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
-                <h3 class="font-semibold text-gray-900 mb-2">Daftar</h3>
-                <p class="text-gray-600 text-sm">Buat akun dan lengkapi profil Anda</p>
+                <div class="w-16 h-16 mx-auto bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">1</div>
+                <h3 class="font-semibold text-slate-900 mb-2">Daftar</h3>
+                <p class="text-slate-700 text-sm">Buat akun dan lengkapi profil Anda</p>
             </div>
             <div class="text-center">
-                <div class="w-16 h-16 mx-auto bg-yellow-400 text-teal-900 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
-                <h3 class="font-semibold text-gray-900 mb-2">Pilih</h3>
-                <p class="text-gray-600 text-sm">Pilih mentor, talenta, atau client sesuai kebutuhan</p>
+                <div class="w-16 h-16 mx-auto bg-sky-200 text-slate-900 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">2</div>
+                <h3 class="font-semibold text-slate-900 mb-2">Pilih</h3>
+                <p class="text-slate-700 text-sm">Pilih mentor, talenta, atau client sesuai kebutuhan</p>
             </div>
             <div class="text-center">
-                <div class="w-16 h-16 mx-auto bg-teal-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
-                <h3 class="font-semibold text-gray-900 mb-2">Terhubung</h3>
-                <p class="text-gray-600 text-sm">Mulai kolaborasi dan komunikasi langsung</p>
+                <div class="w-16 h-16 mx-auto bg-sky-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">3</div>
+                <h3 class="font-semibold text-slate-900 mb-2">Terhubung</h3>
+                <p class="text-slate-700 text-sm">Mulai kolaborasi dan komunikasi langsung</p>
             </div>
             <div class="text-center">
-                <div class="w-16 h-16 mx-auto bg-yellow-400 text-teal-900 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">4</div>
-                <h3 class="font-semibold text-gray-900 mb-2">Berkembang</h3>
-                <p class="text-gray-600 text-sm">Kembangkan karier dan bisnis bersama kami</p>
+                <div class="w-16 h-16 mx-auto bg-sky-200 text-slate-900 rounded-2xl flex items-center justify-center text-2xl font-bold mb-4 shadow-lg">4</div>
+                <h3 class="font-semibold text-slate-900 mb-2">Berkembang</h3>
+                <p class="text-slate-700 text-sm">Kembangkan karier dan bisnis bersama kami</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- CTA Section -->
-<section class="py-20 bg-gradient-to-r from-teal-700 to-teal-500">
+<section class="py-20 bg-gradient-to-r from-sky-200 via-cyan-100 to-slate-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 class="text-3xl lg:text-4xl font-bold text-white mb-4">Siap Memulai?</h2>
-        <p class="text-lg text-teal-50 mb-8 max-w-2xl mx-auto">Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat platform kami</p>
+        <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Siap Memulai?</h2>
+        <p class="text-lg text-slate-700 mb-8 max-w-2xl mx-auto">Bergabunglah dengan ribuan pengguna yang telah merasakan manfaat platform kami</p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="{{ route('kelola.mentor') }}" class="px-8 py-3 bg-yellow-400 text-teal-900 font-bold rounded-lg hover:bg-yellow-300 transition shadow-lg">Kelola Data</a>
-            <a href="{{ route('client') }}" class="px-8 py-3 bg-transparent border-2 border-white text-white font-semibold rounded-lg hover:bg-white/10 transition">Hubungi Kami</a>
+            <a href="{{ route('kelola.mentor') }}" class="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 transition shadow-lg">Kelola Data</a>
+            <a href="{{ route('client') }}" class="px-8 py-3 bg-white border-2 border-slate-300 text-slate-900 font-semibold rounded-lg hover:bg-slate-100 transition">Hubungi Kami</a>
         </div>
     </div>
 </section>
@@ -340,6 +340,7 @@
     }
 
     // Auto-initialize map when the page loads (shows base map behind placeholder)
-    window.addEventListener('DOMContentLoaded', initQGISMap);
+    // Do not initialize the Leaflet map until the user loads QGIS data.
+    // This keeps the landing page in its original QGIS placeholder state.
 </script>
 @endsection
