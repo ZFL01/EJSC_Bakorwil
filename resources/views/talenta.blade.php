@@ -3,114 +3,1201 @@
 @section('title', 'Daftar Talenta - EJSC Bakorwil')
 
 @section('content')
-<section class="bg-gradient-to-r from-purple-600 to-pink-600 text-white py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 class="text-4xl font-bold mb-4">Daftar Talenta</h1>
-        <p class="text-lg text-purple-100">Jelajahi talenta terbaik dengan keahlian dan potensi luar biasa</p>
-    </div>
-</section>
 
-<section class="py-12 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="mb-8">
-            <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
-                <div class="relative md:w-80">
-                    <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
-                    <input id="search-input" type="text" placeholder="Cari talenta..."
-                        class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 bg-white">
-                </div>
-                <div class="flex items-center gap-3">
-                    <select id="filter-select" class="px-4 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-purple-500">
-                        <option value="semua">Semua Keahlian</option>
-                        <option value="programming">Programming</option>
-                        <option value="design">Design</option>
-                        <option value="marketing">Marketing</option>
-                        <option value="data">Data Analysis</option>
-                    </select>
-                </div>
-            </div>
-        </div>
+<style>
+    /* =========================================================
+       DAFTAR TALENTA - AQUA / TEAL THEME
+    ========================================================= */
 
-        <div id="talenta-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Talenta cards rendered by JS -->
-        </div>
-
-        <div id="empty-state" class="hidden text-center py-16">
-            <svg class="w-16 h-16 mx-auto text-gray-300 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-            <h3 class="text-xl font-semibold text-gray-700 mb-2">Talenta tidak ditemukan</h3>
-            <p class="text-gray-500">Coba ubah kata kunci pencarian atau filter keahlian</p>
-        </div>
-    </div>
-</section>
-
-@section('scripts')
-<script>
-    const talentas = [
-        { nama: 'Ahmad Fauzi', keahlian: 'programming', skill: 'Full Stack Developer', level: 'Senior', avatar: 'AF' },
-        { nama: 'Putri Maharani', keahlian: 'design', skill: 'UI Designer', level: 'Senior', avatar: 'PM' },
-        { nama: 'Rizky Ramadhan', keahlian: 'programming', skill: 'Backend Engineer', level: 'Mid', avatar: 'RR' },
-        { nama: 'Dewi Lestari', keahlian: 'marketing', skill: 'Digital Marketing', level: 'Senior', avatar: 'DL' },
-        { nama: 'Fajar Nugroho', keahlian: 'data', skill: 'Data Scientist', level: 'Senior', avatar: 'FN' },
-        { nama: 'Intan Permata', keahlian: 'design', skill: 'UX Researcher', level: 'Mid', avatar: 'IP' },
-        { nama: 'Bagas Prakoso', keahlian: 'programming', skill: 'Mobile Developer', level: 'Mid', avatar: 'BP' },
-        { nama: 'Salsa Rahmadani', keahlian: 'marketing', skill: 'Content Creator', level: 'Junior', avatar: 'SR' },
-        { nama: 'Yoga Saputra', keahlian: 'data', skill: 'Data Analyst', level: 'Mid', avatar: 'YS' },
-    ];
-
-    const keahlianLabel = {
-        programming: { label: 'Programming', color: 'bg-blue-100 text-blue-700' },
-        design: { label: 'Design', color: 'bg-purple-100 text-purple-700' },
-        marketing: { label: 'Marketing', color: 'bg-green-100 text-green-700' },
-        data: { label: 'Data Analysis', color: 'bg-yellow-100 text-yellow-700' },
-    };
-
-    const levelColor = {
-        Senior: 'bg-red-100 text-red-700',
-        Mid: 'bg-orange-100 text-orange-700',
-        Junior: 'bg-green-100 text-green-700',
-    };
-
-    const searchInput = document.getElementById('search-input');
-    const filterSelect = document.getElementById('filter-select');
-    const talentaList = document.getElementById('talenta-list');
-    const emptyState = document.getElementById('empty-state');
-
-    function renderTalentas() {
-        const keyword = searchInput.value.toLowerCase();
-        const keahlian = filterSelect.value;
-
-        const filtered = talentas.filter(t => {
-            const matchKeyword = t.nama.toLowerCase().includes(keyword) || t.skill.toLowerCase().includes(keyword);
-            const matchKeahlian = keahlian === 'semua' || t.keahlian === keahlian;
-            return matchKeyword && matchKeahlian;
-        });
-
-        emptyState.classList.toggle('hidden', filtered.length > 0);
-
-        talentaList.innerHTML = filtered.map(t => {
-            const k = keahlianLabel[t.keahlian];
-            return `
-                <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition border border-gray-100">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center text-white text-xl font-bold">${t.avatar}</div>
-                        <span class="px-3 py-1 rounded-full text-xs font-medium ${levelColor[t.level]}">${t.level}</span>
-                    </div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-1">${t.nama}</h3>
-                    <p class="text-purple-600 text-sm font-medium mb-3">${t.skill}</p>
-                    <span class="inline-block px-3 py-1 rounded-full text-xs font-medium ${k.color} mb-4">${k.label}</span>
-                    <button class="w-full mt-2 py-2.5 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition">Lihat Profil</button>
-                </div>
-            `;
-        }).join('');
+    .talenta-page {
+        position: relative;
+        overflow: hidden;
+        background: #f8feff;
+        min-height: 100vh;
     }
 
-    searchInput.addEventListener('input', renderTalentas);
-    filterSelect.addEventListener('change', renderTalentas);
-    renderTalentas();
-</script>
+    /* =========================================================
+       BACKGROUND BUBBLES
+    ========================================================= */
+
+    .talenta-page::before,
+    .talenta-page::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    .talenta-page::before {
+        width: 320px;
+        height: 320px;
+        left: -160px;
+        top: 300px;
+        background: rgba(103, 232, 249, 0.10);
+        animation: talentBubble 8s ease-in-out infinite;
+    }
+
+    .talenta-page::after {
+        width: 380px;
+        height: 380px;
+        right: -200px;
+        bottom: 100px;
+        background: rgba(20, 184, 196, 0.07);
+        animation: talentBubble2 10s ease-in-out infinite;
+    }
+
+    @keyframes talentBubble {
+        0%, 100% {
+            transform: translate(0, 0) scale(1);
+        }
+
+        50% {
+            transform: translate(35px, -25px) scale(1.08);
+        }
+    }
+
+    @keyframes talentBubble2 {
+        0%, 100% {
+            transform: translate(0, 0);
+        }
+
+        50% {
+            transform: translate(-30px, 25px);
+        }
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .talenta-hero {
+        position: relative;
+        overflow: hidden;
+
+        background:
+            radial-gradient(
+                circle at 10% 20%,
+                rgba(103, 232, 249, 0.28),
+                transparent 30%
+            ),
+            radial-gradient(
+                circle at 90% 80%,
+                rgba(20, 184, 196, 0.12),
+                transparent 35%
+            ),
+            linear-gradient(
+                135deg,
+                #dffbfc,
+                #c9f5f7,
+                #effdfe
+            );
+
+        background-size: 180% 180%;
+        animation: talentHeroGradient 10s ease-in-out infinite;
+    }
+
+    @keyframes talentHeroGradient {
+        0% {
+            background-position: 0% 50%;
+        }
+
+        50% {
+            background-position: 100% 50%;
+        }
+
+        100% {
+            background-position: 0% 50%;
+        }
+    }
+
+
+    /* =========================================================
+       HERO BUBBLES
+    ========================================================= */
+
+    .talenta-hero::before {
+        content: "";
+        position: absolute;
+
+        width: 360px;
+        height: 360px;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.28);
+
+        right: -120px;
+        top: -220px;
+
+        animation: talentHeroBubble 7s ease-in-out infinite;
+    }
+
+    .talenta-hero::after {
+        content: "";
+        position: absolute;
+
+        width: 170px;
+        height: 170px;
+
+        border-radius: 50%;
+
+        background: rgba(103, 232, 249, 0.16);
+
+        left: 4%;
+        bottom: -110px;
+
+        animation: talentHeroBubble2 6s ease-in-out infinite;
+    }
+
+    @keyframes talentHeroBubble {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(20px);
+        }
+    }
+
+    @keyframes talentHeroBubble2 {
+        0%, 100% {
+            transform: translate(0, 0);
+        }
+
+        50% {
+            transform: translate(20px, -15px);
+        }
+    }
+
+
+    /* =========================================================
+       HERO CONTENT
+    ========================================================= */
+
+    .talenta-hero-content {
+        position: relative;
+        z-index: 3;
+        animation: talentHeroEnter 0.9s ease-out;
+    }
+
+    @keyframes talentHeroEnter {
+        from {
+            opacity: 0;
+            transform: translateY(25px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .talenta-title {
+        color: #12344d;
+    }
+
+    .talenta-title span {
+        color: #18aeb8;
+    }
+
+    .talenta-description {
+        color: #52758b;
+    }
+
+
+    /* =========================================================
+       DECORATIVE DOTS
+    ========================================================= */
+
+    .talenta-dots {
+        position: absolute;
+
+        width: 110px;
+        height: 110px;
+
+        right: 6%;
+        bottom: 20px;
+
+        background-image:
+            radial-gradient(
+                #45cbd3 1.7px,
+                transparent 1.7px
+            );
+
+        background-size: 14px 14px;
+
+        opacity: 0.35;
+
+        animation:
+            talentDotsFloat 5s ease-in-out infinite,
+            talentDotsPulse 3s ease-in-out infinite;
+
+        z-index: 2;
+    }
+
+    @keyframes talentDotsFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-12px);
+        }
+    }
+
+    @keyframes talentDotsPulse {
+        0%, 100% {
+            opacity: 0.25;
+        }
+
+        50% {
+            opacity: 0.55;
+        }
+    }
+
+
+    /* =========================================================
+       SEARCH & FILTER
+    ========================================================= */
+
+    .talenta-search,
+    .talenta-filter {
+        transition:
+            border-color 0.3s ease,
+            box-shadow 0.3s ease,
+            transform 0.25s ease;
+    }
+
+    .talenta-search:focus,
+    .talenta-filter:focus {
+        border-color: #25b9c3 !important;
+
+        box-shadow:
+            0 0 0 4px rgba(20, 184, 196, 0.10),
+            0 6px 18px rgba(20, 184, 196, 0.08);
+
+        transform: translateY(-1px);
+
+        outline: none;
+    }
+
+
+    /* =========================================================
+       TALENTA CARD
+    ========================================================= */
+
+    .talenta-card {
+        position: relative;
+        overflow: hidden;
+
+        background: rgba(255, 255, 255, 0.96);
+
+        border: 1px solid #dff1f3;
+
+        border-radius: 18px;
+
+        padding: 24px;
+
+        box-shadow:
+            0 5px 20px rgba(20, 120, 130, 0.06);
+
+        opacity: 0;
+
+        animation:
+            talentCardEnter
+            0.65s
+            cubic-bezier(0.22, 0.61, 0.36, 1)
+            forwards;
+
+        transition:
+            transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+            box-shadow 0.4s ease,
+            border-color 0.4s ease;
+    }
+
+
+    /* Lingkaran cahaya */
+
+    .talenta-card::before {
+        content: "";
+
+        position: absolute;
+
+        width: 150px;
+        height: 150px;
+
+        border-radius: 50%;
+
+        right: -80px;
+        top: -80px;
+
+        background: rgba(103, 232, 249, 0.10);
+
+        transition:
+            transform 0.5s ease,
+            opacity 0.5s ease;
+    }
+
+
+    /* Garis cahaya */
+
+    .talenta-card::after {
+        content: "";
+
+        position: absolute;
+
+        width: 0;
+        height: 2px;
+
+        left: 50%;
+        bottom: 0;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                #25c0c8,
+                transparent
+            );
+
+        transform: translateX(-50%);
+
+        transition: width 0.5s ease;
+    }
+
+
+    /* =========================================================
+       CARD ENTER
+    ========================================================= */
+
+    @keyframes talentCardEnter {
+        from {
+            opacity: 0;
+            transform:
+                translateY(35px)
+                scale(0.97);
+        }
+
+        to {
+            opacity: 1;
+            transform:
+                translateY(0)
+                scale(1);
+        }
+    }
+
+
+    /* =========================================================
+       CARD HOVER
+    ========================================================= */
+
+    .talenta-card:hover {
+        transform:
+            translateY(-9px)
+            scale(1.015);
+
+        border-color: #b8e9ed;
+
+        box-shadow:
+            0 20px 40px rgba(20, 150, 160, 0.13),
+            0 5px 15px rgba(20, 150, 160, 0.06);
+    }
+
+    .talenta-card:hover::before {
+        transform: scale(1.7);
+        opacity: 0.7;
+    }
+
+    .talenta-card:hover::after {
+        width: 70%;
+    }
+
+
+    /* =========================================================
+       AVATAR
+    ========================================================= */
+
+    .talenta-avatar {
+        background:
+            linear-gradient(
+                135deg,
+                #28c4ce,
+                #159da8
+            );
+
+        box-shadow:
+            0 8px 18px rgba(20, 184, 196, 0.20);
+
+        animation:
+            talentAvatarFloat 4s ease-in-out infinite;
+
+        transition:
+            transform 0.35s ease,
+            box-shadow 0.35s ease;
+    }
+
+    @keyframes talentAvatarFloat {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-4px);
+        }
+    }
+
+    .talenta-card:hover .talenta-avatar {
+        transform:
+            translateY(-5px)
+            rotate(3deg)
+            scale(1.04);
+
+        box-shadow:
+            0 13px 25px rgba(20, 184, 196, 0.28);
+    }
+
+
+    /* =========================================================
+       TEXT
+    ========================================================= */
+
+    .talenta-name {
+        color: #17384d;
+    }
+
+    .talenta-skill {
+        color: #119da8;
+    }
+
+
+    /* =========================================================
+       KEAHLIAN BADGE
+    ========================================================= */
+
+    .badge-programming {
+        background: #e0f8fa;
+        color: #168d98;
+    }
+
+    .badge-design {
+        background: #e7f6f8;
+        color: #278c98;
+    }
+
+    .badge-marketing {
+        background: #e3f8f1;
+        color: #168a72;
+    }
+
+    .badge-data {
+        background: #eef8f6;
+        color: #43877c;
+    }
+
+
+    /* =========================================================
+       LEVEL BADGE
+    ========================================================= */
+
+    .level-senior {
+        background: #e0f8fa;
+        color: #168d98;
+    }
+
+    .level-mid {
+        background: #e8f7f5;
+        color: #278b82;
+    }
+
+    .level-junior {
+        background: #e3f8f1;
+        color: #168a72;
+    }
+
+
+    /* =========================================================
+       BUTTON
+    ========================================================= */
+
+    .talenta-button {
+        position: relative;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                135deg,
+                #20b6c0,
+                #159da8
+            );
+
+        box-shadow:
+            0 5px 12px rgba(20, 184, 196, 0.16);
+
+        transition:
+            transform 0.3s ease,
+            box-shadow 0.3s ease;
+    }
+
+
+    /* Shine */
+
+    .talenta-button::before {
+        content: "";
+
+        position: absolute;
+
+        top: 0;
+        left: -100%;
+
+        width: 60%;
+        height: 100%;
+
+        background:
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.35),
+                transparent
+            );
+
+        transform: skewX(-20deg);
+
+        transition: left 0.6s ease;
+    }
+
+    .talenta-button:hover::before {
+        left: 130%;
+    }
+
+    .talenta-button:hover {
+        transform: translateY(-3px);
+
+        box-shadow:
+            0 10px 22px rgba(20, 184, 196, 0.27);
+    }
+
+
+    /* =========================================================
+       CARD DELAY
+    ========================================================= */
+
+    .talenta-card:nth-child(1) {
+        animation-delay: 0.05s;
+    }
+
+    .talenta-card:nth-child(2) {
+        animation-delay: 0.12s;
+    }
+
+    .talenta-card:nth-child(3) {
+        animation-delay: 0.19s;
+    }
+
+    .talenta-card:nth-child(4) {
+        animation-delay: 0.26s;
+    }
+
+    .talenta-card:nth-child(5) {
+        animation-delay: 0.33s;
+    }
+
+    .talenta-card:nth-child(6) {
+        animation-delay: 0.40s;
+    }
+
+    .talenta-card:nth-child(7) {
+        animation-delay: 0.47s;
+    }
+
+    .talenta-card:nth-child(8) {
+        animation-delay: 0.54s;
+    }
+
+    .talenta-card:nth-child(9) {
+        animation-delay: 0.61s;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 768px) {
+
+        .talenta-hero::before {
+            right: -160px;
+        }
+
+        .talenta-card {
+            padding: 20px;
+        }
+
+        .talenta-dots {
+            right: -20px;
+        }
+
+    }
+</style>
+
+
+<!-- =========================================================
+     MAIN PAGE
+========================================================= -->
+
+<div class="talenta-page">
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <section class="talenta-hero py-16">
+
+        <div class="talenta-dots"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <div class="talenta-hero-content">
+
+                <h1 class="talenta-title text-4xl font-bold mb-4">
+                    Daftar <span>Talenta</span>
+                </h1>
+
+                <p class="talenta-description text-lg">
+                    Jelajahi talenta terbaik dengan keahlian dan potensi luar biasa
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         TALENTA SECTION
+    ====================================================== -->
+
+    <section class="py-12">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+
+            <!-- =================================================
+                 SEARCH & FILTER
+            ================================================== -->
+
+            <div class="mb-8">
+
+                <div
+                    class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between"
+                >
+
+
+                    <!-- SEARCH -->
+
+                    <div class="relative md:w-80">
+
+                        <svg
+                            class="w-5 h-5 text-[#7da0ad] absolute left-3 top-1/2 -translate-y-1/2"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                            />
+
+                        </svg>
+
+                        <input
+                            id="search-input"
+                            type="text"
+                            placeholder="Cari talenta..."
+                            class="talenta-search w-full pl-10 pr-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#17384d] placeholder-[#8ba4af] focus:outline-none"
+                        >
+
+                    </div>
+
+
+                    <!-- FILTER -->
+
+                    <div>
+
+                        <select
+                            id="filter-select"
+                            class="talenta-filter px-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#36566a] focus:outline-none"
+                        >
+
+                            <option value="semua">
+                                Semua Keahlian
+                            </option>
+
+                            <option value="programming">
+                                Programming
+                            </option>
+
+                            <option value="design">
+                                Design
+                            </option>
+
+                            <option value="marketing">
+                                Marketing
+                            </option>
+
+                            <option value="data">
+                                Data Analysis
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TALENTA LIST
+            ================================================== -->
+
+            <div
+                id="talenta-list"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+                <!-- Talenta cards dirender oleh JavaScript -->
+            </div>
+
+
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
+
+            <div
+                id="empty-state"
+                class="hidden text-center py-16"
+            >
+
+                <svg
+                    class="w-16 h-16 mx-auto text-[#9edce1] mb-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+
+                </svg>
+
+                <h3
+                    class="text-xl font-semibold text-[#31566a] mb-2"
+                >
+                    Talenta tidak ditemukan
+                </h3>
+
+                <p class="text-[#78909c]">
+                    Coba ubah kata kunci pencarian atau filter keahlian
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
 @endsection
+
+
+@section('scripts')
+
+<script>
+
+    /* =========================================================
+       DATA TALENTA
+    ========================================================= */
+
+    const talentas = [
+
+        {
+            nama: 'Ahmad Fauzi',
+            keahlian: 'programming',
+            skill: 'Full Stack Developer',
+            level: 'Senior',
+            avatar: 'AF'
+        },
+
+        {
+            nama: 'Putri Maharani',
+            keahlian: 'design',
+            skill: 'UI Designer',
+            level: 'Senior',
+            avatar: 'PM'
+        },
+
+        {
+            nama: 'Rizky Ramadhan',
+            keahlian: 'programming',
+            skill: 'Backend Engineer',
+            level: 'Mid',
+            avatar: 'RR'
+        },
+
+        {
+            nama: 'Dewi Lestari',
+            keahlian: 'marketing',
+            skill: 'Digital Marketing',
+            level: 'Senior',
+            avatar: 'DL'
+        },
+
+        {
+            nama: 'Fajar Nugroho',
+            keahlian: 'data',
+            skill: 'Data Scientist',
+            level: 'Senior',
+            avatar: 'FN'
+        },
+
+        {
+            nama: 'Intan Permata',
+            keahlian: 'design',
+            skill: 'UX Researcher',
+            level: 'Mid',
+            avatar: 'IP'
+        },
+
+        {
+            nama: 'Bagas Prakoso',
+            keahlian: 'programming',
+            skill: 'Mobile Developer',
+            level: 'Mid',
+            avatar: 'BP'
+        },
+
+        {
+            nama: 'Salsa Rahmadani',
+            keahlian: 'marketing',
+            skill: 'Content Creator',
+            level: 'Junior',
+            avatar: 'SR'
+        },
+
+        {
+            nama: 'Yoga Saputra',
+            keahlian: 'data',
+            skill: 'Data Analyst',
+            level: 'Mid',
+            avatar: 'YS'
+        }
+
+    ];
+
+
+    /* =========================================================
+       KEAHLIAN LABEL
+    ========================================================= */
+
+    const keahlianLabel = {
+
+        programming: {
+            label: 'Programming',
+            color: 'badge-programming'
+        },
+
+        design: {
+            label: 'Design',
+            color: 'badge-design'
+        },
+
+        marketing: {
+            label: 'Marketing',
+            color: 'badge-marketing'
+        },
+
+        data: {
+            label: 'Data Analysis',
+            color: 'badge-data'
+        }
+
+    };
+
+
+    /* =========================================================
+       LEVEL COLOR
+    ========================================================= */
+
+    const levelColor = {
+
+        Senior: 'level-senior',
+
+        Mid: 'level-mid',
+
+        Junior: 'level-junior'
+
+    };
+
+
+    /* =========================================================
+       ELEMENT
+    ========================================================= */
+
+    const searchInput =
+        document.getElementById('search-input');
+
+    const filterSelect =
+        document.getElementById('filter-select');
+
+    const talentaList =
+        document.getElementById('talenta-list');
+
+    const emptyState =
+        document.getElementById('empty-state');
+
+
+    /* =========================================================
+       RENDER TALENTA
+    ========================================================= */
+
+    function renderTalentas() {
+
+        const keyword =
+            searchInput.value.toLowerCase();
+
+        const keahlian =
+            filterSelect.value;
+
+
+        const filtered =
+            talentas.filter(t => {
+
+                const matchKeyword =
+                    t.nama
+                        .toLowerCase()
+                        .includes(keyword)
+
+                    ||
+
+                    t.skill
+                        .toLowerCase()
+                        .includes(keyword);
+
+
+                const matchKeahlian =
+                    keahlian === 'semua' ||
+                    t.keahlian === keahlian;
+
+
+                return matchKeyword &&
+                       matchKeahlian;
+
+            });
+
+
+        /* EMPTY STATE */
+
+        emptyState.classList.toggle(
+            'hidden',
+            filtered.length > 0
+        );
+
+
+        /* =====================================================
+           RENDER CARD
+        ====================================================== */
+
+        talentaList.innerHTML =
+            filtered
+                .map((t, index) => {
+
+                    const k =
+                        keahlianLabel[t.keahlian];
+
+
+                    return `
+
+                        <div
+                            class="talenta-card"
+                            style="animation-delay: ${index * 0.07}s"
+                        >
+
+
+                            <!-- TOP -->
+
+                            <div
+                                class="
+                                    flex
+                                    items-start
+                                    justify-between
+                                    mb-4
+                                "
+                            >
+
+
+                                <!-- AVATAR -->
+
+                                <div
+                                    class="
+                                        talenta-avatar
+                                        w-16
+                                        h-16
+                                        rounded-2xl
+                                        flex
+                                        items-center
+                                        justify-center
+                                        text-white
+                                        text-xl
+                                        font-bold
+                                    "
+                                >
+
+                                    ${t.avatar}
+
+                                </div>
+
+
+                                <!-- LEVEL -->
+
+                                <span
+                                    class="
+                                        px-3
+                                        py-1
+                                        rounded-full
+                                        text-xs
+                                        font-medium
+                                        ${levelColor[t.level]}
+                                    "
+                                >
+
+                                    ${t.level}
+
+                                </span>
+
+                            </div>
+
+
+                            <!-- NAME -->
+
+                            <h3
+                                class="
+                                    talenta-name
+                                    text-lg
+                                    font-semibold
+                                    mb-1
+                                "
+                            >
+
+                                ${t.nama}
+
+                            </h3>
+
+
+                            <!-- SKILL -->
+
+                            <p
+                                class="
+                                    talenta-skill
+                                    text-sm
+                                    font-medium
+                                    mb-3
+                                "
+                            >
+
+                                ${t.skill}
+
+                            </p>
+
+
+                            <!-- KEAHLIAN -->
+
+                            <span
+                                class="
+                                    inline-block
+                                    px-3
+                                    py-1
+                                    rounded-full
+                                    text-xs
+                                    font-medium
+                                    ${k.color}
+                                    mb-4
+                                "
+                            >
+
+                                ${k.label}
+
+                            </span>
+
+
+                            <!-- BUTTON -->
+
+                            <button
+                                class="
+                                    talenta-button
+                                    w-full
+                                    mt-2
+                                    py-2.5
+                                    text-white
+                                    rounded-xl
+                                    font-medium
+                                "
+                            >
+
+                                <span class="relative z-10">
+                                    Lihat Profil
+                                </span>
+
+                            </button>
+
+                        </div>
+
+                    `;
+
+                })
+                .join('');
+
+    }
+
+
+    /* =========================================================
+       SEARCH EVENT
+    ========================================================= */
+
+    searchInput.addEventListener(
+        'input',
+        renderTalentas
+    );
+
+
+    /* =========================================================
+       FILTER EVENT
+    ========================================================= */
+
+    filterSelect.addEventListener(
+        'change',
+        renderTalentas
+    );
+
+
+    /* =========================================================
+       INITIAL RENDER
+    ========================================================= */
+
+    renderTalentas();
+
+</script>
+
 @endsection
