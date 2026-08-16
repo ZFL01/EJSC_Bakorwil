@@ -6,7 +6,8 @@
 
 <style>
     /* =========================================================
-       DAFTAR MENTOR - AQUA / TEAL THEME
+       DAFTAR MENTOR - EJSC BAKORWIL
+       COLOR STYLE MENGIKUTI REFERENCE IMAGE
     ========================================================= */
 
     .mentor-page {
@@ -15,6 +16,7 @@
         background: #f8feff;
         min-height: 100vh;
     }
+
 
     /* =========================================================
        BACKGROUND BUBBLES
@@ -34,7 +36,9 @@
         height: 320px;
         left: -160px;
         top: 300px;
-        background: rgba(103, 232, 249, 0.10);
+
+        background: rgba(22, 184, 196, 0.10);
+
         animation: floatingBubble 8s ease-in-out infinite;
     }
 
@@ -43,9 +47,12 @@
         height: 380px;
         right: -200px;
         bottom: 100px;
-        background: rgba(20, 184, 196, 0.07);
+
+        background: rgba(22, 184, 196, 0.07);
+
         animation: floatingBubble2 10s ease-in-out infinite;
     }
+
 
     @keyframes floatingBubble {
         0%, 100% {
@@ -56,6 +63,7 @@
             transform: translate(35px, -25px) scale(1.08);
         }
     }
+
 
     @keyframes floatingBubble2 {
         0%, 100% {
@@ -79,24 +87,28 @@
         background:
             radial-gradient(
                 circle at 10% 20%,
-                rgba(103, 232, 249, 0.28),
+                rgba(72, 221, 228, 0.28),
                 transparent 30%
             ),
+
             radial-gradient(
                 circle at 90% 80%,
-                rgba(20, 184, 196, 0.12),
+                rgba(22, 184, 196, 0.12),
                 transparent 35%
             ),
+
             linear-gradient(
                 135deg,
                 #dffbfc,
                 #c9f5f7,
-                #effdfe
+                #f4feff
             );
 
         background-size: 180% 180%;
+
         animation: heroGradient 10s ease-in-out infinite;
     }
+
 
     @keyframes heroGradient {
         0% {
@@ -119,6 +131,7 @@
 
     .mentor-hero::before {
         content: "";
+
         position: absolute;
 
         width: 360px;
@@ -126,7 +139,7 @@
 
         border-radius: 50%;
 
-        background: rgba(255, 255, 255, 0.28);
+        background: rgba(255, 255, 255, 0.30);
 
         right: -120px;
         top: -220px;
@@ -134,8 +147,10 @@
         animation: heroBubble 7s ease-in-out infinite;
     }
 
+
     .mentor-hero::after {
         content: "";
+
         position: absolute;
 
         width: 170px;
@@ -143,13 +158,14 @@
 
         border-radius: 50%;
 
-        background: rgba(103, 232, 249, 0.16);
+        background: rgba(72, 221, 228, 0.16);
 
         left: 4%;
         bottom: -110px;
 
         animation: heroBubble2 6s ease-in-out infinite;
     }
+
 
     @keyframes heroBubble {
         0%, 100% {
@@ -160,6 +176,7 @@
             transform: translateY(20px);
         }
     }
+
 
     @keyframes heroBubble2 {
         0%, 100% {
@@ -179,8 +196,10 @@
     .hero-content {
         position: relative;
         z-index: 3;
+
         animation: heroEnter 0.9s ease-out;
     }
+
 
     @keyframes heroEnter {
         from {
@@ -194,13 +213,23 @@
         }
     }
 
+
+    /* =========================================================
+       JUDUL
+       Mengikuti warna tulisan pada gambar referensi
+    ========================================================= */
+
     .hero-title {
         color: #12344d;
     }
 
+
+    /* "Mentor" dibuat cyan seperti "Mentor," pada gambar */
+
     .hero-title span {
-        color: #18aeb8;
+        color: #16b8c4;
     }
+
 
     .hero-description {
         color: #52758b;
@@ -222,7 +251,7 @@
 
         background-image:
             radial-gradient(
-                #45cbd3 1.7px,
+                #35cbd4 1.7px,
                 transparent 1.7px
             );
 
@@ -237,6 +266,7 @@
         z-index: 2;
     }
 
+
     @keyframes dotsFloat {
         0%, 100% {
             transform: translateY(0);
@@ -246,6 +276,7 @@
             transform: translateY(-12px);
         }
     }
+
 
     @keyframes dotsPulse {
         0%, 100% {
@@ -270,15 +301,17 @@
             transform 0.25s ease;
     }
 
+
     .mentor-search:focus,
     .mentor-filter:focus {
-        border-color: #25b9c3 !important;
+        border-color: #16b8c4 !important;
 
         box-shadow:
-            0 0 0 4px rgba(20, 184, 196, 0.10),
-            0 6px 18px rgba(20, 184, 196, 0.08);
+            0 0 0 4px rgba(22, 184, 196, 0.10),
+            0 6px 18px rgba(22, 184, 196, 0.08);
 
         transform: translateY(-1px);
+
         outline: none;
     }
 
@@ -291,16 +324,16 @@
         position: relative;
         overflow: hidden;
 
-        background: rgba(255, 255, 255, 0.96);
+        background: rgba(255, 255, 255, 0.97);
 
-        border: 1px solid #dff1f3;
+        border: 1px solid #dceff2;
 
         border-radius: 18px;
 
         padding: 24px;
 
         box-shadow:
-            0 5px 20px rgba(20, 120, 130, 0.06);
+            0 5px 20px rgba(18, 52, 77, 0.06);
 
         opacity: 0;
 
@@ -329,7 +362,7 @@
         right: -80px;
         top: -80px;
 
-        background: rgba(103, 232, 249, 0.10);
+        background: rgba(72, 221, 228, 0.09);
 
         transition:
             transform 0.5s ease,
@@ -354,7 +387,7 @@
             linear-gradient(
                 90deg,
                 transparent,
-                #25c0c8,
+                #16b8c4,
                 transparent
             );
 
@@ -371,6 +404,7 @@
     @keyframes cardEnter {
         from {
             opacity: 0;
+
             transform:
                 translateY(35px)
                 scale(0.97);
@@ -378,6 +412,7 @@
 
         to {
             opacity: 1;
+
             transform:
                 translateY(0)
                 scale(1);
@@ -394,17 +429,20 @@
             translateY(-9px)
             scale(1.015);
 
-        border-color: #b8e9ed;
+        border-color: #b6e8ec;
 
         box-shadow:
             0 20px 40px rgba(20, 150, 160, 0.13),
             0 5px 15px rgba(20, 150, 160, 0.06);
     }
 
+
     .mentor-card:hover::before {
         transform: scale(1.7);
+
         opacity: 0.7;
     }
+
 
     .mentor-card:hover::after {
         width: 70%;
@@ -419,12 +457,12 @@
         background:
             linear-gradient(
                 135deg,
-                #28c4ce,
+                #20c4ce,
                 #159da8
             );
 
         box-shadow:
-            0 8px 18px rgba(20, 184, 196, 0.20);
+            0 8px 18px rgba(22, 184, 196, 0.20);
 
         animation:
             avatarFloat 4s ease-in-out infinite;
@@ -433,6 +471,7 @@
             transform 0.35s ease,
             box-shadow 0.35s ease;
     }
+
 
     @keyframes avatarFloat {
         0%, 100% {
@@ -444,6 +483,7 @@
         }
     }
 
+
     .mentor-card:hover .mentor-avatar {
         transform:
             translateY(-5px)
@@ -451,7 +491,7 @@
             scale(1.04);
 
         box-shadow:
-            0 13px 25px rgba(20, 184, 196, 0.28);
+            0 13px 25px rgba(22, 184, 196, 0.28);
     }
 
 
@@ -459,13 +499,19 @@
        TEXT
     ========================================================= */
 
+    /* Nama mengikuti navy "Menghubungkan / Client" */
+
     .mentor-name {
-        color: #17384d;
+        color: #12344d;
     }
 
+
+    /* Keahlian mengikuti cyan "Mentor" */
+
     .mentor-skill {
-        color: #119da8;
+        color: #16aeb9;
     }
+
 
     .mentor-experience {
         color: #708898;
@@ -477,22 +523,29 @@
     ========================================================= */
 
     .badge-teknologi {
-        background: #e0f8fa;
-        color: #168d98;
+        background: #dcf8fa;
+
+        color: #138d98;
     }
 
+
     .badge-bisnis {
-        background: #e3f8f1;
+        background: #e2f8f2;
+
         color: #168a72;
     }
 
+
     .badge-desain {
-        background: #e7f6f8;
+        background: #e4f7f9;
+
         color: #278c98;
     }
 
+
     .badge-pendidikan {
-        background: #eef8f6;
+        background: #edf8f6;
+
         color: #43877c;
     }
 
@@ -508,12 +561,12 @@
         background:
             linear-gradient(
                 135deg,
-                #20b6c0,
+                #16bac4,
                 #159da8
             );
 
         box-shadow:
-            0 5px 12px rgba(20, 184, 196, 0.16);
+            0 5px 12px rgba(22, 184, 196, 0.16);
 
         transition:
             transform 0.3s ease,
@@ -547,15 +600,17 @@
         transition: left 0.6s ease;
     }
 
+
     .mentor-button:hover::before {
         left: 130%;
     }
+
 
     .mentor-button:hover {
         transform: translateY(-3px);
 
         box-shadow:
-            0 10px 22px rgba(20, 184, 196, 0.27);
+            0 10px 22px rgba(22, 184, 196, 0.27);
     }
 
 
@@ -642,7 +697,10 @@
             <div class="hero-content">
 
                 <h1 class="hero-title text-4xl font-bold mb-4">
-                    Daftar <span>Mentor</span>
+
+                    Daftar
+                    <span>Mentor</span>
+
                 </h1>
 
                 <p class="hero-description text-lg">
@@ -700,7 +758,7 @@
                             id="search-input"
                             type="text"
                             placeholder="Cari mentor..."
-                            class="mentor-search w-full pl-10 pr-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#17384d] placeholder-[#8ba4af] focus:outline-none"
+                            class="mentor-search w-full pl-10 pr-4 py-2.5 border border-[#dceff2] rounded-xl bg-white text-[#12344d] placeholder-[#8ba4af] focus:outline-none"
                         >
 
                     </div>
@@ -712,7 +770,7 @@
 
                         <select
                             id="filter-select"
-                            class="mentor-filter px-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#36566a] focus:outline-none"
+                            class="mentor-filter px-4 py-2.5 border border-[#dceff2] rounded-xl bg-white text-[#36566a] focus:outline-none"
                         >
 
                             <option value="semua">

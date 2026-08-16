@@ -73,12 +73,14 @@
 <a id="after-gis" class="block"></a>
 
 <!-- =========================================================
-     HERO SECTION EJSC BAKORWIL
+     HERO SECTION — EJSC BAKORWIL
+     VERSION REVISED — STAT CARD HOVER FIX
 ========================================================= -->
 
 <section class="ejsc-hero">
 
-    <!-- BACKGROUND -->
+    <!-- ================= BACKGROUND ================= -->
+
     <div class="ejsc-bg-shape ejsc-bg-shape-1"></div>
     <div class="ejsc-bg-shape ejsc-bg-shape-2"></div>
     <div class="ejsc-bg-shape ejsc-bg-shape-3"></div>
@@ -90,39 +92,30 @@
     <div class="ejsc-floating-dot ejsc-dot-5"></div>
 
 
-    <!-- =====================================================
-         MAIN HERO
-    ====================================================== -->
+    <!-- ================= MAIN ================= -->
 
     <div class="ejsc-hero-container">
 
-        <!-- LEFT -->
+        <!-- ================= LEFT ================= -->
+
         <div class="ejsc-hero-left">
 
-            <!-- BADGE -->
             <div class="ejsc-badge">
-                <span class="ejsc-badge-star">✦</span>
                 <span>Platform Resmi EJSC Bakorwil</span>
             </div>
 
-
-            <!-- TITLE -->
             <h1 class="ejsc-title">
                 Menghubungkan
                 <span>Mentor, Talenta &amp;</span>
                 Client
             </h1>
 
-
-            <!-- DESCRIPTION -->
             <p class="ejsc-description">
                 Platform terpercaya untuk menemukan mentor berpengalaman,
                 mengembangkan talenta terbaik, dan menghubungkan dengan
                 client yang tepat.
             </p>
 
-
-            <!-- BUTTON -->
             <div class="ejsc-buttons">
 
                 <a href="{{ route('mentor') }}"
@@ -143,7 +136,6 @@
 
                 </a>
 
-
                 <a href="{{ route('talenta') }}"
                    class="ejsc-btn-secondary">
 
@@ -156,14 +148,13 @@
         </div>
 
 
-        <!-- =================================================
-             RIGHT
-        ================================================== -->
+        <!-- ================= RIGHT ================= -->
 
         <div class="ejsc-hero-right">
 
 
-            <!-- STAT CARD -->
+            <!-- ================= STAT CARD ================= -->
+
             <div class="ejsc-stat-card">
 
                 <div class="ejsc-stat-header">
@@ -182,6 +173,7 @@
 
 
                     <!-- MENTOR -->
+
                     <div class="ejsc-stat-box">
 
                         <div class="ejsc-stat-icon">
@@ -218,21 +210,15 @@
                         </div>
 
                         <div>
-
-                            <div class="ejsc-stat-number">
-                                150+
-                            </div>
-
-                            <div class="ejsc-stat-label">
-                                Mentor
-                            </div>
-
+                            <div class="ejsc-stat-number">150+</div>
+                            <div class="ejsc-stat-label">Mentor</div>
                         </div>
 
                     </div>
 
 
                     <!-- TALENTA -->
+
                     <div class="ejsc-stat-box">
 
                         <div class="ejsc-stat-icon">
@@ -261,21 +247,15 @@
                         </div>
 
                         <div>
-
-                            <div class="ejsc-stat-number">
-                                500+
-                            </div>
-
-                            <div class="ejsc-stat-label">
-                                Talenta
-                            </div>
-
+                            <div class="ejsc-stat-number">500+</div>
+                            <div class="ejsc-stat-label">Talenta</div>
                         </div>
 
                     </div>
 
 
                     <!-- CLIENT -->
+
                     <div class="ejsc-stat-box">
 
                         <div class="ejsc-stat-icon">
@@ -312,21 +292,15 @@
                         </div>
 
                         <div>
-
-                            <div class="ejsc-stat-number">
-                                80+
-                            </div>
-
-                            <div class="ejsc-stat-label">
-                                Client
-                            </div>
-
+                            <div class="ejsc-stat-number">80+</div>
+                            <div class="ejsc-stat-label">Client</div>
                         </div>
 
                     </div>
 
 
                     <!-- KEPUASAN -->
+
                     <div class="ejsc-stat-box">
 
                         <div class="ejsc-stat-icon">
@@ -356,15 +330,8 @@
                         </div>
 
                         <div>
-
-                            <div class="ejsc-stat-number">
-                                98%
-                            </div>
-
-                            <div class="ejsc-stat-label">
-                                Kepuasan
-                            </div>
-
+                            <div class="ejsc-stat-number">98%</div>
+                            <div class="ejsc-stat-label">Kepuasan</div>
                         </div>
 
                     </div>
@@ -374,16 +341,15 @@
             </div>
 
 
-            <!-- =================================================
-                 ILLUSTRATION
-            ================================================== -->
+            <!-- ================= ILLUSTRATION ================= -->
 
             <div class="ejsc-illustration">
 
                 <div class="ejsc-illustration-glow"></div>
 
 
-                <!-- BOOKS -->
+                <!-- ================= BOOKS ================= -->
+
                 <div class="ejsc-books">
 
                     <div class="ejsc-book book-1"></div>
@@ -393,53 +359,94 @@
                 </div>
 
 
-                <!-- PLANT -->
+                <!-- ================= PLANT ================= -->
+
                 <div class="ejsc-plant">
 
-                    <div class="ejsc-leaf leaf-1"></div>
-                    <div class="ejsc-leaf leaf-2"></div>
-                    <div class="ejsc-leaf leaf-3"></div>
-                    <div class="ejsc-leaf leaf-4"></div>
+                    <div class="ejsc-plant-stem stem-main"></div>
+                    <div class="ejsc-plant-stem stem-left"></div>
+                    <div class="ejsc-plant-stem stem-right"></div>
 
-                    <div class="ejsc-stem"></div>
+                    <div class="ejsc-leaf leaf-1">
+                        <span></span>
+                    </div>
 
-                    <div class="ejsc-pot"></div>
+                    <div class="ejsc-leaf leaf-2">
+                        <span></span>
+                    </div>
+
+                    <div class="ejsc-leaf leaf-3">
+                        <span></span>
+                    </div>
+
+                    <div class="ejsc-leaf leaf-4">
+                        <span></span>
+                    </div>
+
+                    <div class="ejsc-leaf leaf-5">
+                        <span></span>
+                    </div>
+
+                    <div class="ejsc-pot">
+                        <div class="ejsc-pot-rim"></div>
+                        <div class="ejsc-pot-shadow"></div>
+                    </div>
 
                 </div>
 
 
-                <!-- LAPTOP -->
+                <!-- ================= LAPTOP ================= -->
+
                 <div class="ejsc-laptop">
 
-                    <div class="ejsc-screen">
+                    <div class="ejsc-laptop-screen">
 
-                        <div class="ejsc-screen-logo">
-                            EJSC
-                        </div>
+                        <div class="ejsc-camera"></div>
 
-                        <div class="ejsc-screen-line"></div>
-                        <div class="ejsc-screen-line small"></div>
+                        <div class="ejsc-screen-content">
 
-                        <div class="ejsc-chart">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+                            <div class="ejsc-screen-top">
+
+                                <div class="ejsc-screen-logo">
+                                    EJSC
+                                </div>
+
+                                <div class="ejsc-screen-dot"></div>
+
+                            </div>
+
+                            <div class="ejsc-screen-line"></div>
+                            <div class="ejsc-screen-line small"></div>
+
+                            <div class="ejsc-mini-cards">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+
+                            <div class="ejsc-chart">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+
                         </div>
 
                     </div>
-
 
                     <div class="ejsc-laptop-base">
-
                         <div class="ejsc-trackpad"></div>
-
                     </div>
+
+                    <div class="ejsc-laptop-bottom-glow"></div>
 
                 </div>
 
 
-                <!-- ARROW -->
+                <!-- ================= ARROW ================= -->
+
                 <svg
                     class="ejsc-curved-arrow"
                     viewBox="0 0 300 190"
@@ -447,22 +454,23 @@
                 >
 
                     <path
+                        class="ejsc-arrow-path"
                         d="M30 150
-                           C120 170,
-                           210 130,
-                           195 70
-                           C190 45,
-                           215 28,
-                           260 35"
-                        stroke="#51AEB8"
-                        stroke-width="8"
+                           C105 168,
+                           205 142,
+                           195 77
+                           C190 49,
+                           215 30,
+                           258 37"
+                        stroke="#11c5d0"
+                        stroke-width="7"
                         stroke-linecap="round"
                     />
 
                     <path
-                        d="M250 22L272 35L252 53"
-                        stroke="#51AEB8"
-                        stroke-width="8"
+                        d="M248 24L270 37L251 55"
+                        stroke="#11c5d0"
+                        stroke-width="7"
                         stroke-linecap="round"
                         stroke-linejoin="round"
                     />
@@ -476,9 +484,7 @@
     </div>
 
 
-    <!-- =====================================================
-         FEATURE BAR
-    ====================================================== -->
+    <!-- ================= FEATURE BAR ================= -->
 
     <div class="ejsc-feature-wrapper">
 
@@ -486,6 +492,7 @@
 
 
             <!-- 1 -->
+
             <div class="ejsc-feature">
 
                 <div class="ejsc-feature-icon">
@@ -513,20 +520,18 @@
                 </div>
 
                 <div>
-
                     <h4>Terpercaya</h4>
-
                     <p>
                         Sistem aman dan terpercaya
                         dengan verifikasi ketat.
                     </p>
-
                 </div>
 
             </div>
 
 
             <!-- 2 -->
+
             <div class="ejsc-feature">
 
                 <div class="ejsc-feature-icon">
@@ -561,20 +566,18 @@
                 </div>
 
                 <div>
-
                     <h4>Berkualitas</h4>
-
                     <p>
                         Mentor &amp; talenta terbaik
                         di bidangnya.
                     </p>
-
                 </div>
 
             </div>
 
 
             <!-- 3 -->
+
             <div class="ejsc-feature">
 
                 <div class="ejsc-feature-icon">
@@ -595,20 +598,18 @@
                 </div>
 
                 <div>
-
                     <h4>Mudah Digunakan</h4>
-
                     <p>
                         Antarmuka sederhana dan
                         pengalaman terbaik.
                     </p>
-
                 </div>
 
             </div>
 
 
             <!-- 4 -->
+
             <div class="ejsc-feature">
 
                 <div class="ejsc-feature-icon">
@@ -641,14 +642,11 @@
                 </div>
 
                 <div>
-
                     <h4>Data Akurat</h4>
-
                     <p>
                         Informasi real-time untuk
                         keputusan terbaik.
                     </p>
-
                 </div>
 
             </div>
@@ -660,202 +658,178 @@
 </section>
 
 
-<!-- =========================================================
-     CSS
-========================================================= -->
-
 <style>
+
+/* =========================================================
+   RESET
+========================================================= */
 
 .ejsc-hero,
 .ejsc-hero * {
     box-sizing: border-box;
 }
 
-
-/* =========================================================
-   MAIN
-========================================================= */
+.ejsc-hero a {
+    text-decoration: none;
+}
 
 .ejsc-hero {
-
     position: relative;
-
     width: 100%;
-
-    min-height: 920px;
-
+    min-height: 1530px;
     overflow: hidden;
-
-    color: #14263b;
+    color: #102f4a;
 
     background:
-
         radial-gradient(
-            circle at 8% 20%,
-            rgba(120,205,214,.60),
-            transparent 28%
+            circle at 2% 8%,
+            rgba(0,221,229,.28),
+            transparent 20%
         ),
-
         radial-gradient(
-            circle at 90% 65%,
-            rgba(133,213,220,.52),
-            transparent 30%
+            circle at 96% 18%,
+            rgba(100,222,230,.25),
+            transparent 24%
         ),
-
         radial-gradient(
-            circle at 55% 100%,
-            rgba(176,226,230,.38),
-            transparent 35%
+            circle at 73% 61%,
+            rgba(47,211,220,.17),
+            transparent 25%
         ),
-
+        radial-gradient(
+            circle at 15% 78%,
+            rgba(107,226,232,.16),
+            transparent 25%
+        ),
         linear-gradient(
             135deg,
-            #eaf8f9 0%,
-            #ffffff 45%,
-            #edf9fa 100%
+            #ffffff 0%,
+            #f8fdfe 38%,
+            #f1fbfc 70%,
+            #e9fafd 100%
         );
 }
 
 
 /* =========================================================
-   BACKGROUND SHAPES
+   BACKGROUND BLOBS
 ========================================================= */
 
 .ejsc-bg-shape {
-
     position: absolute;
-
     pointer-events: none;
-
+    z-index: 0;
     will-change: transform;
 }
 
-
 .ejsc-bg-shape-1 {
-
-    width: 470px;
-    height: 330px;
-
-    top: -170px;
-    left: -110px;
-
-    border-radius: 50%;
+    width: 390px;
+    height: 300px;
+    left: -170px;
+    top: -120px;
+    border-radius: 45% 55% 60% 40%;
 
     background:
-        rgba(103,197,207,.48);
+        radial-gradient(
+            ellipse at center,
+            #13d7dc 0%,
+            #27cbd5 35%,
+            rgba(62,215,221,.55) 65%,
+            rgba(62,215,221,0) 100%
+        );
 
-    filter: blur(1px);
+    filter: blur(2px);
+    opacity: .95;
 
     animation:
-        ejscBlobOne 7s ease-in-out infinite;
+        ejscBlobOne 8s ease-in-out infinite;
 }
-
 
 .ejsc-bg-shape-2 {
-
-    width: 530px;
-    height: 310px;
-
-    right: -230px;
-    bottom: -120px;
-
-    border-radius: 50%;
+    width: 420px;
+    height: 270px;
+    right: -145px;
+    top: 45px;
+    border-radius: 60% 35% 60% 40%;
 
     background:
-        rgba(103,198,208,.34);
+        linear-gradient(
+            135deg,
+            rgba(183,243,247,.20),
+            rgba(54,211,220,.40)
+        );
+
+    filter: blur(1px);
+    opacity: .9;
 
     animation:
-        ejscBlobTwo 8s ease-in-out infinite;
+        ejscBlobTwo 9s ease-in-out infinite;
 }
-
 
 .ejsc-bg-shape-3 {
-
-    width: 260px;
-    height: 260px;
-
-    right: -90px;
-    top: 190px;
-
+    width: 600px;
+    height: 300px;
+    right: -220px;
+    bottom: 250px;
     border-radius: 50%;
 
     background:
-        rgba(179,228,232,.52);
+        radial-gradient(
+            ellipse at center,
+            rgba(28,216,222,.30),
+            rgba(80,222,228,.12) 55%,
+            transparent 72%
+        );
+
+    filter: blur(12px);
 
     animation:
-        ejscBlobThree 6s ease-in-out infinite;
+        ejscBlobThree 8s ease-in-out infinite;
 }
-
 
 @keyframes ejscBlobOne {
-
-    0%,
-    100% {
+    0%,100% {
         transform:
             translate3d(0,0,0)
-            rotate(0deg)
+            rotate(-18deg)
             scale(1);
-    }
-
-    30% {
-        transform:
-            translate3d(35px,25px,0)
-            rotate(5deg)
-            scale(1.05);
-    }
-
-    60% {
-        transform:
-            translate3d(-15px,55px,0)
-            rotate(-4deg)
-            scale(.96);
-    }
-
-    80% {
-        transform:
-            translate3d(25px,15px,0)
-            rotate(3deg)
-            scale(1.03);
-    }
-}
-
-
-@keyframes ejscBlobTwo {
-
-    0%,
-    100% {
-        transform:
-            translate3d(0,0,0)
-            scale(1);
-    }
-
-    35% {
-        transform:
-            translate3d(-45px,-25px,0)
-            scale(1.08);
-    }
-
-    70% {
-        transform:
-            translate3d(20px,-50px,0)
-            scale(.94);
-    }
-}
-
-
-@keyframes ejscBlobThree {
-
-    0%,
-    100% {
-        transform:
-            translate3d(0,0,0)
-            rotate(0deg);
     }
 
     50% {
         transform:
-            translate3d(-35px,35px,0)
-            rotate(15deg);
+            translate3d(30px,25px,0)
+            rotate(-10deg)
+            scale(1.08);
+    }
+}
+
+@keyframes ejscBlobTwo {
+    0%,100% {
+        transform:
+            translate3d(0,0,0)
+            rotate(-25deg)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate3d(-30px,30px,0)
+            rotate(-18deg)
+            scale(1.07);
+    }
+}
+
+@keyframes ejscBlobThree {
+    0%,100% {
+        transform:
+            translate3d(0,0,0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate3d(-35px,-25px,0)
+            scale(1.12);
     }
 }
 
@@ -865,229 +839,132 @@
 ========================================================= */
 
 .ejsc-floating-dot {
-
     position: absolute;
-
     border-radius: 50%;
+    z-index: 1;
 
     background:
-        #50acb6;
+        radial-gradient(
+            circle at 30% 25%,
+            #b8fbfc,
+            #18cbd3 55%,
+            #08aebc 100%
+        );
 
     box-shadow:
-        0 0 0 5px rgba(80,172,182,.08),
-        0 0 18px rgba(80,172,182,.18);
+        0 0 0 4px rgba(14,201,210,.07),
+        0 5px 16px rgba(11,192,202,.22);
 
     pointer-events: none;
 
-    will-change: transform;
+    animation:
+        ejscDotFloat 5s ease-in-out infinite;
 }
-
 
 .ejsc-dot-1 {
     width: 9px;
     height: 9px;
-    left: 42%;
-    top: 13%;
-
-    animation:
-        ejscDot1 4.5s ease-in-out infinite;
+    left: 37%;
+    top: 4%;
 }
-
 
 .ejsc-dot-2 {
-    width: 14px;
-    height: 14px;
-    left: 47%;
-    top: 42%;
-
-    animation:
-        ejscDot2 5.5s ease-in-out infinite;
+    width: 15px;
+    height: 15px;
+    left: 52%;
+    top: 8%;
+    animation-delay: .8s;
 }
-
 
 .ejsc-dot-3 {
     width: 10px;
     height: 10px;
-    right: 13%;
-    top: 27%;
-
-    animation:
-        ejscDot3 4s ease-in-out infinite;
+    right: 16%;
+    top: 7%;
+    animation-delay: 1.4s;
 }
-
 
 .ejsc-dot-4 {
     width: 13px;
     height: 13px;
     right: 8%;
     bottom: 29%;
-
-    animation:
-        ejscDot4 6s ease-in-out infinite;
+    animation-delay: 2s;
 }
-
 
 .ejsc-dot-5 {
-    width: 12px;
-    height: 12px;
-    left: 5%;
-    bottom: 28%;
-
-    animation:
-        ejscDot5 5s ease-in-out infinite;
+    width: 13px;
+    height: 13px;
+    left: 6%;
+    bottom: 34%;
+    animation-delay: 2.6s;
 }
 
-
-@keyframes ejscDot1 {
-
+@keyframes ejscDotFloat {
     0%,100% {
         transform:
-            translate(0,0)
+            translate3d(0,0,0)
             scale(1);
+        opacity: .8;
     }
 
     50% {
         transform:
-            translate(0,-35px)
-            scale(1.35);
-    }
-}
-
-
-@keyframes ejscDot2 {
-
-    0%,100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    40% {
-        transform:
-            translate(28px,-22px)
-            scale(1.2);
-    }
-
-    70% {
-        transform:
-            translate(-15px,-42px)
-            scale(.85);
-    }
-}
-
-
-@keyframes ejscDot3 {
-
-    0%,100% {
-        transform:
-            translate(0,0);
-    }
-
-    50% {
-        transform:
-            translate(-25px,35px)
-            scale(1.3);
-    }
-}
-
-
-@keyframes ejscDot4 {
-
-    0%,100% {
-        transform:
-            translate(0,0);
-    }
-
-    50% {
-        transform:
-            translate(-30px,-38px)
-            scale(1.3);
-    }
-}
-
-
-@keyframes ejscDot5 {
-
-    0%,100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate(25px,-28px)
-            scale(1.25);
+            translate3d(12px,-20px,0)
+            scale(1.22);
+        opacity: 1;
     }
 }
 
 
 /* =========================================================
-   CONTAINER
+   MAIN CONTAINER
 ========================================================= */
 
 .ejsc-hero-container {
-
     position: relative;
-
     z-index: 5;
 
     width:
-        min(
-            1180px,
-            calc(100% - 60px)
-        );
+        min(940px, calc(100% - 90px));
 
-    min-height: 700px;
+    min-height: 1080px;
 
-    margin: auto;
+    margin: 0 auto;
 
-    padding-top: 115px;
-
-    padding-bottom: 270px;
+    padding-top: 280px;
+    padding-bottom: 360px;
 
     display: grid;
 
     grid-template-columns:
-        minmax(0,1fr)
-        minmax(0,1fr);
+        minmax(0,1.05fr)
+        minmax(0,.95fr);
 
-    gap: 55px;
+    gap: 48px;
 
-    align-items: center;
+    align-items: start;
 }
 
 
 /* =========================================================
-   LEFT MOTION
+   LEFT CONTENT
 ========================================================= */
 
 .ejsc-hero-left {
+    padding-top: 27px;
 
     animation:
-        ejscLeftMotion 5s ease-in-out infinite;
-
-    will-change:
-        transform;
+        ejscLeftFloat 6s ease-in-out infinite;
 }
 
-
-@keyframes ejscLeftMotion {
-
-    0%,
-    100% {
-        transform:
-            translateY(0);
+@keyframes ejscLeftFloat {
+    0%,100% {
+        transform: translateY(0);
     }
 
-    35% {
-        transform:
-            translateY(-7px);
-    }
-
-    70% {
-        transform:
-            translateY(3px);
+    50% {
+        transform: translateY(-6px);
     }
 }
 
@@ -1097,82 +974,59 @@
 ========================================================= */
 
 .ejsc-badge {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 9px;
 
-    padding:
-        9px 17px;
+    min-height: 43px;
 
-    margin-bottom: 27px;
+    padding: 0 17px;
 
-    border:
-        1px solid
-        rgba(60,166,178,.30);
+    margin-bottom: 42px;
 
-    border-radius: 999px;
+    border: 1px solid #0fc9d3;
+    border-radius: 13px;
 
-    background:
-        rgba(215,242,244,.82);
+    background: rgba(255,255,255,.72);
 
-    color: #183043;
+    color: #08aabb;
 
     font-size: 13px;
-
-    font-weight: 600;
+    font-weight: 700;
 
     box-shadow:
-        0 8px 20px
-        rgba(55,160,172,.08);
+        0 8px 25px rgba(15,198,208,.06);
 
     animation:
-        ejscBadgeMotion 3.2s ease-in-out infinite;
+        ejscBadgePulse 4s ease-in-out infinite;
 }
-
-
-@keyframes ejscBadgeMotion {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translateY(-6px)
-            scale(1.015);
-    }
-}
-
 
 .ejsc-badge-star {
-
-    color:
-        #2999a5;
-
-    font-size: 17px;
+    color: #0cc3ce;
+    font-size: 23px;
+    line-height: 1;
 
     animation:
-        ejscStarMotion 2s ease-in-out infinite;
+        ejscStarSpin 5s ease-in-out infinite;
 }
 
-
-@keyframes ejscStarMotion {
-
+@keyframes ejscBadgePulse {
     0%,100% {
-        transform:
-            rotate(0deg)
-            scale(1);
+        transform: translateY(0);
     }
 
     50% {
-        transform:
-            rotate(25deg)
-            scale(1.3);
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes ejscStarSpin {
+    0%,80%,100% {
+        transform: rotate(0deg) scale(1);
+    }
+
+    90% {
+        transform: rotate(15deg) scale(1.12);
     }
 }
 
@@ -1182,87 +1036,77 @@
 ========================================================= */
 
 .ejsc-title {
+    margin: 0 0 29px;
 
-    margin:
-        0 0 27px;
-
-    max-width: 650px;
+    max-width: 500px;
 
     font-family:
         "Inter",
+        "Poppins",
         Arial,
         sans-serif;
 
     font-size:
-        clamp(
-            48px,
-            5.1vw,
-            72px
-        );
+        clamp(48px,5.2vw,58px);
 
-    line-height: 1.04;
-
-    letter-spacing: -3px;
-
+    line-height: 1.18;
+    letter-spacing: -2.6px;
     font-weight: 800;
 
+    color: #102f4a;
+
     animation:
-        ejscTitleMotion 4.5s ease-in-out infinite;
+        ejscTitleFloat 5s ease-in-out infinite;
 }
-
-
-@keyframes ejscTitleMotion {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-6px);
-    }
-}
-
 
 .ejsc-title span {
-
     display: block;
 
-    color: #3198a4;
+    color: #10b9c5;
 
     background:
         linear-gradient(
-            90deg,
-            #258f9c,
-            #58b9c2,
-            #258f9c,
-            #70c8cf
+            110deg,
+            #08aeba 0%,
+            #13c7d0 35%,
+            #ffffff 48%,
+            #ffffff 52%,
+            #13c7d0 65%,
+            #09afbb 100%
         );
 
-    background-size: 300% auto;
+    background-size: 250% 100%;
+    background-position: 200% 0;
 
     -webkit-background-clip: text;
-
     background-clip: text;
-
     -webkit-text-fill-color: transparent;
 
-    animation:
-        ejscTextGradient 3.5s linear infinite;
+    animation: ejscTextShimmer 4s ease-in-out infinite;
 }
 
-
-@keyframes ejscTextGradient {
+@keyframes ejscTextShimmer {
 
     0% {
-        background-position:
-            0% center;
+        background-position: 200% 0;
+    }
+
+    35% {
+        background-position: -20% 0;
     }
 
     100% {
-        background-position:
-            300% center;
+        background-position: -20% 0;
+    }
+}
+
+@keyframes ejscTitleFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
     }
 }
 
@@ -1272,17 +1116,15 @@
 ========================================================= */
 
 .ejsc-description {
+    max-width: 485px;
 
-    max-width: 610px;
+    margin: 0 0 44px;
 
-    margin:
-        0 0 31px;
+    color: #4d6b87;
 
-    color: #4e667d;
-
-    font-size: 17px;
-
-    line-height: 1.8;
+    font-size: 15.5px;
+    line-height: 2;
+    font-weight: 400;
 }
 
 
@@ -1291,162 +1133,112 @@
 ========================================================= */
 
 .ejsc-buttons {
-
     display: flex;
-
     align-items: center;
-
-    gap: 13px;
-
+    gap: 18px;
     flex-wrap: wrap;
 }
 
-
 .ejsc-btn-primary,
 .ejsc-btn-secondary {
+    height: 57px;
+    padding: 0 28px;
 
-    min-width: 158px;
-
-    height: 53px;
-
-    padding:
-        0 21px;
-
-    border-radius: 11px;
+    border-radius: 12px;
 
     display: inline-flex;
-
     align-items: center;
-
     justify-content: center;
 
-    font-size: 14px;
-
+    font-size: 15px;
     font-weight: 700;
 
     transition:
-        transform .25s ease,
-        box-shadow .25s ease,
-        background .25s ease;
+        transform .3s ease,
+        box-shadow .3s ease,
+        background .3s ease;
 }
 
-
 .ejsc-btn-primary {
+    min-width: 188px;
+    gap: 16px;
 
-    gap: 12px;
-
-    color: #ffffff;
+    color: #fff;
 
     background:
         linear-gradient(
             135deg,
-            #56b8c2,
-            #369ca8
+            #11c1cc,
+            #06aeb9
         );
 
     box-shadow:
-        0 12px 28px
-        rgba(55,161,172,.28);
+        0 13px 28px
+        rgba(7,187,199,.25);
 
     animation:
-        ejscButtonMotion 2.8s ease-in-out infinite;
+        ejscButtonFloat 4s ease-in-out infinite;
 }
-
-
-@keyframes ejscButtonMotion {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-7px);
-    }
-}
-
 
 .ejsc-btn-primary:hover {
-
-    transform:
-        translateY(-9px)
-        scale(1.04);
+    transform: translateY(-6px);
 
     box-shadow:
-        0 20px 40px
-        rgba(55,161,172,.38);
+        0 20px 38px
+        rgba(7,187,199,.34);
 }
 
-
 .ejsc-btn-primary svg {
-
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
 
     animation:
         ejscArrowButton 1.8s ease-in-out infinite;
 }
 
+@keyframes ejscButtonFloat {
+    0%,100% {
+        box-shadow:
+            0 13px 28px
+            rgba(7,187,199,.25);
+    }
+
+    50% {
+        box-shadow:
+            0 18px 34px
+            rgba(7,187,199,.34);
+    }
+}
 
 @keyframes ejscArrowButton {
-
     0%,100% {
-        transform:
-            translateX(0);
+        transform: translateX(0);
     }
 
     50% {
-        transform:
-            translateX(7px);
+        transform: translateX(5px);
     }
 }
-
 
 .ejsc-btn-secondary {
+    min-width: 168px;
 
-    color: #1c3348;
+    color: #087f91;
 
-    background:
-        rgba(255,255,255,.88);
+    background: rgba(255,255,255,.90);
 
-    border:
-        1px solid
-        #cfe2e5;
-
-    animation:
-        ejscSecondaryMotion 3.5s ease-in-out infinite;
+    border: 1px solid #08bdca;
 }
-
-
-@keyframes ejscSecondaryMotion {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-4px);
-    }
-}
-
 
 .ejsc-btn-secondary:hover {
+    transform: translateY(-6px);
 
-    transform:
-        translateY(-7px);
-
-    background:
-        #ffffff;
-
-    border-color:
-        #8bcbd1;
+    color: #fff;
+    background: #10b9c5;
 
     box-shadow:
-        0 14px 28px
-        rgba(50,140,151,.12);
+        0 15px 30px
+        rgba(8,185,198,.20);
 }
 
 
@@ -1455,179 +1247,138 @@
 ========================================================= */
 
 .ejsc-hero-right {
-
     position: relative;
 
-    min-height: 590px;
+    min-height: 680px;
 
     display: flex;
-
     justify-content: flex-end;
-
     align-items: flex-start;
-
-    animation:
-        ejscRightMotion 6s ease-in-out infinite;
-
-    will-change:
-        transform;
 }
 
 
-@keyframes ejscRightMotion {
+/* =========================================================
+   STAT CARD — FLOAT + HOVER
+========================================================= */
+
+.ejsc-stat-card {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 34px 31px 32px;
+
+    border: 1px solid rgba(220,238,241,.95);
+    border-radius: 26px;
+
+    background: rgba(255,255,255,.96);
+
+    box-shadow:
+        0 25px 65px rgba(44,93,117,.10),
+        0 5px 18px rgba(0,180,194,.05);
+
+    animation:
+        ejscCardFloat 5s ease-in-out infinite;
+
+    transition:
+        transform .35s ease,
+        box-shadow .35s ease,
+        filter .35s ease;
+}
+
+
+/* =========================================================
+   CARD FLOAT
+========================================================= */
+
+@keyframes ejscCardFloat {
 
     0%,100% {
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-        transform:
-            translateY(-10px);
+        transform: translateY(-8px);
     }
 }
 
 
 /* =========================================================
-   STAT CARD
+   CARD HOVER
 ========================================================= */
 
-.ejsc-stat-card {
+.ejsc-stat-card:hover {
 
-    position: relative;
-
-    z-index: 10;
-
-    width: 100%;
-
-    max-width: 540px;
-
-    padding: 29px;
-
-    border:
-        1px solid
-        rgba(205,228,232,.95);
-
-    border-radius: 27px;
-
-    background:
-        rgba(255,255,255,.94);
-
-    backdrop-filter:
-        blur(20px);
+    transform: translateY(-16px);
 
     box-shadow:
-        0 30px 65px
-        rgba(36,83,107,.13);
+        0 38px 80px rgba(44,93,117,.16),
+        0 12px 30px rgba(0,180,194,.12);
 
-    animation:
-        ejscCardMotion 4.5s ease-in-out infinite;
+    filter: brightness(1.015);
 
-    will-change:
-        transform;
+    animation-play-state: paused;
 }
 
 
-@keyframes ejscCardMotion {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    35% {
-        transform:
-            translateY(-9px)
-            rotate(.3deg);
-    }
-
-    70% {
-        transform:
-            translateY(3px)
-            rotate(-.25deg);
-    }
-}
-
+/* =========================================================
+   STAT HEADER
+========================================================= */
 
 .ejsc-stat-header {
-
     display: flex;
-
     align-items: center;
-
     justify-content: space-between;
 
-    margin-bottom: 22px;
+    margin-bottom: 34px;
 }
-
 
 .ejsc-stat-header h3 {
-
     margin: 0;
 
-    color: #172a40;
+    color: #102d49;
 
-    font-size: 17px;
-
-    font-weight: 700;
+    font-size: 16px;
+    font-weight: 800;
 }
-
 
 .ejsc-live {
-
     display: inline-flex;
-
     align-items: center;
-
     gap: 8px;
 
-    color: #41657a;
+    color: #365873;
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
-
 .ejsc-live span {
-
-    width: 7px;
-    height: 7px;
+    width: 8px;
+    height: 8px;
 
     border-radius: 50%;
 
-    background: #42a9b4;
+    background: #12c6d0;
 
     box-shadow:
-        0 0 10px
-        rgba(66,169,180,.65);
+        0 0 0 4px
+        rgba(18,198,208,.10);
 
     animation:
-        ejscLiveMotion 1.2s ease-in-out infinite;
+        ejscLivePulse 1.5s ease-in-out infinite;
 }
 
-
-@keyframes ejscLiveMotion {
-
+@keyframes ejscLivePulse {
     0%,100% {
-        transform:
-            scale(1);
-
-        box-shadow:
-            0 0 0 3px
-            rgba(66,169,180,.12),
-            0 0 10px
-            rgba(66,169,180,.30);
+        transform: scale(1);
+        opacity: 1;
     }
 
     50% {
-        transform:
-            scale(1.55);
-
-        box-shadow:
-            0 0 0 8px
-            rgba(66,169,180,.04),
-            0 0 18px
-            rgba(66,169,180,.55);
+        transform: scale(1.45);
+        opacity: .6;
     }
 }
 
@@ -1637,39 +1388,27 @@
 ========================================================= */
 
 .ejsc-stat-grid {
-
     display: grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap: 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
 }
 
-
 .ejsc-stat-box {
-
-    min-height: 128px;
-
-    padding: 19px;
+    min-height: 108px;
+    padding: 17px;
 
     display: flex;
-
     align-items: center;
+    gap: 16px;
 
-    gap: 15px;
-
-    border:
-        1px solid
-        #e3eef0;
-
-    border-radius: 18px;
+    border: 1px solid #dcecf0;
+    border-radius: 12px;
 
     background:
         linear-gradient(
             145deg,
-            rgba(255,255,255,.98),
-            rgba(241,250,251,.90)
+            #ffffff,
+            #fbfeff
         );
 
     transition:
@@ -1677,41 +1416,947 @@
         box-shadow .3s ease,
         border-color .3s ease;
 
-    will-change:
-        transform;
-}
-
-
-.ejsc-stat-box:nth-child(1) {
-
     animation:
-        ejscStatOne 3.5s ease-in-out infinite;
+        ejscStatBoxFloat 5s ease-in-out infinite;
 }
-
 
 .ejsc-stat-box:nth-child(2) {
-
-    animation:
-        ejscStatTwo 4s ease-in-out infinite;
+    animation-delay: .3s;
 }
-
 
 .ejsc-stat-box:nth-child(3) {
-
-    animation:
-        ejscStatThree 4.5s ease-in-out infinite;
+    animation-delay: .6s;
 }
-
 
 .ejsc-stat-box:nth-child(4) {
+    animation-delay: .9s;
+}
 
-    animation:
-        ejscStatFour 3.8s ease-in-out infinite;
+@keyframes ejscStatBoxFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+.ejsc-stat-box:hover {
+    transform: translateY(-7px);
+
+    border-color: #8bdfe5;
+
+    box-shadow:
+        0 13px 28px
+        rgba(22,177,188,.10);
 }
 
 
-@keyframes ejscStatOne {
+/* =========================================================
+   STAT ICON
+========================================================= */
 
+.ejsc-stat-icon {
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #0cbac5;
+}
+
+.ejsc-stat-icon svg {
+    width: 42px;
+    height: 42px;
+
+    animation:
+        ejscIconFloat 4s ease-in-out infinite;
+}
+
+@keyframes ejscIconFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-3px);
+    }
+}
+
+
+/* =========================================================
+   STAT NUMBER
+========================================================= */
+
+.ejsc-stat-number {
+    margin-bottom: 7px;
+
+    color: #0bb2bf;
+
+    font-size: 26px;
+    line-height: 1;
+    font-weight: 800;
+}
+
+.ejsc-stat-label {
+    color: #385a75;
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   ILLUSTRATION
+========================================================= */
+
+.ejsc-illustration {
+    position: absolute;
+    z-index: 4;
+
+    width: 580px;
+    height: 390px;
+
+    right: -85px;
+    bottom: -55px;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   GLOW
+========================================================= */
+
+.ejsc-illustration-glow {
+    position: absolute;
+
+    left: 25px;
+    bottom: 0;
+
+    width: 570px;
+    height: 195px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(9,210,218,.48),
+            rgba(18,209,217,.23) 45%,
+            rgba(18,209,217,0) 75%
+        );
+
+    filter: blur(12px);
+
+    animation:
+        ejscGlowMotion 4s ease-in-out infinite;
+}
+
+@keyframes ejscGlowMotion {
+    0%,100% {
+        transform: scale(1);
+        opacity: .72;
+    }
+
+    50% {
+        transform: scale(1.09);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP
+========================================================= */
+
+.ejsc-laptop {
+    position: absolute;
+
+    right: 105px;
+    bottom: 42px;
+
+    width: 330px;
+    height: 220px;
+
+    transform: translateY(0);
+
+    filter:
+        drop-shadow(
+            0 18px 15px
+            rgba(18,96,115,.17)
+        );
+
+    animation:
+        ejscLaptopFloat 4.8s ease-in-out infinite;
+
+    transform-origin: center bottom;
+}
+
+@keyframes ejscLaptopFloat {
+
+    0%,100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-13px);
+    }
+}
+
+
+/* =========================================================
+   LAPTOP SCREEN
+========================================================= */
+
+.ejsc-laptop-screen {
+    position: absolute;
+
+    left: 32px;
+    top: 0;
+
+    width: 270px;
+    height: 170px;
+
+    padding: 9px;
+
+    border: 9px solid #12344d;
+    border-bottom: 5px solid #0e2d45;
+
+    border-radius:
+        15px
+        15px
+        6px
+        6px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #17d2d5,
+            #08afb9
+        );
+
+    box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.20),
+        0 10px 22px rgba(7,91,107,.24);
+
+    overflow: hidden;
+}
+
+.ejsc-camera {
+    position: absolute;
+
+    top: -6px;
+    left: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    transform: translateX(-50%);
+
+    border-radius: 50%;
+
+    background: #6b929e;
+}
+
+.ejsc-laptop-screen::after {
+    content: "";
+
+    position: absolute;
+
+    top: -50%;
+    left: -80%;
+
+    width: 55%;
+    height: 200%;
+
+    transform: rotate(22deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,255,255,.16),
+            transparent
+        );
+
+    animation:
+        ejscScreenShine 5s ease-in-out infinite;
+}
+
+@keyframes ejscScreenShine {
+    0%,65% {
+        left: -80%;
+    }
+
+    100% {
+        left: 160%;
+    }
+}
+
+
+/* =========================================================
+   SCREEN CONTENT
+========================================================= */
+
+.ejsc-screen-content {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+}
+
+.ejsc-screen-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 8px 10px 8px;
+}
+
+.ejsc-screen-logo {
+    color: #fff;
+
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
+
+.ejsc-screen-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #bfffff;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(255,255,255,.12);
+
+    animation:
+        ejscScreenDot 1.6s ease-in-out infinite;
+}
+
+@keyframes ejscScreenDot {
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .55;
+        transform: scale(.7);
+    }
+}
+
+
+/* =========================================================
+   SCREEN LINES
+========================================================= */
+
+.ejsc-screen-line {
+    width: 105px;
+    height: 7px;
+
+    margin: 6px 10px;
+
+    border-radius: 99px;
+
+    background: rgba(255,255,255,.78);
+}
+
+.ejsc-screen-line.small {
+    width: 78px;
+    opacity: .58;
+}
+
+
+/* =========================================================
+   MINI CARDS
+========================================================= */
+
+.ejsc-mini-cards {
+    display: flex;
+
+    gap: 5px;
+
+    margin:
+        12px 10px 0;
+}
+
+.ejsc-mini-cards div {
+    width: 29px;
+    height: 18px;
+
+    border-radius: 4px;
+
+    background:
+        rgba(255,255,255,.18);
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    animation:
+        ejscMiniCardPulse 2.5s ease-in-out infinite;
+}
+
+.ejsc-mini-cards div:nth-child(2) {
+    animation-delay: .3s;
+}
+
+.ejsc-mini-cards div:nth-child(3) {
+    animation-delay: .6s;
+}
+
+@keyframes ejscMiniCardPulse {
+    0%,100% {
+        opacity: .55;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 1;
+        transform: translateY(-2px);
+    }
+}
+
+
+/* =========================================================
+   CHART
+========================================================= */
+
+.ejsc-chart {
+    position: absolute;
+
+    right: 15px;
+    bottom: 13px;
+
+    width: 82px;
+    height: 62px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    gap: 5px;
+}
+
+.ejsc-chart span {
+    display: block;
+
+    width: 11px;
+
+    border-radius:
+        3px 3px 0 0;
+
+    background: #fff;
+
+    transform-origin: bottom;
+
+    animation:
+        ejscChartMotion 1.8s ease-in-out infinite;
+}
+
+.ejsc-chart span:nth-child(1) {
+    height: 20px;
+}
+
+.ejsc-chart span:nth-child(2) {
+    height: 31px;
+    animation-delay: .15s;
+}
+
+.ejsc-chart span:nth-child(3) {
+    height: 44px;
+    animation-delay: .3s;
+}
+
+.ejsc-chart span:nth-child(4) {
+    height: 53px;
+    animation-delay: .45s;
+}
+
+.ejsc-chart span:nth-child(5) {
+    height: 38px;
+    animation-delay: .6s;
+}
+
+@keyframes ejscChartMotion {
+    0%,100% {
+        transform: scaleY(.75);
+        opacity: .75;
+    }
+
+    50% {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+
+/* =========================================================
+   LAPTOP BASE
+========================================================= */
+
+.ejsc-laptop-base {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 330px;
+    height: 38px;
+
+    border-radius:
+        4px
+        4px
+        28px
+        28px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffffff,
+            #cfecef
+        );
+
+    box-shadow:
+        0 13px 20px
+        rgba(31,111,127,.18);
+}
+
+.ejsc-trackpad {
+    position: absolute;
+
+    left: 132px;
+    bottom: 10px;
+
+    width: 68px;
+    height: 11px;
+
+    border: 1px solid #c0dfe3;
+    border-radius: 5px;
+
+    background: #e6f4f5;
+}
+
+.ejsc-laptop-bottom-glow {
+    position: absolute;
+
+    left: 70px;
+    bottom: -5px;
+
+    width: 190px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(9,190,201,.22);
+
+    filter: blur(8px);
+
+    animation:
+        ejscLaptopGlow 4.8s ease-in-out infinite;
+}
+
+@keyframes ejscLaptopGlow {
+    0%,100% {
+        transform: scaleX(1);
+        opacity: .5;
+    }
+
+    50% {
+        transform: scaleX(.8);
+        opacity: .25;
+    }
+}
+
+
+/* =========================================================
+   PLANT
+========================================================= */
+
+.ejsc-plant {
+    position: absolute;
+
+    left: 20px;
+    bottom: 35px;
+
+    width: 170px;
+    height: 235px;
+
+    transform-origin: bottom center;
+
+    animation:
+        ejscPlantSway 5s ease-in-out infinite;
+}
+
+@keyframes ejscPlantSway {
+    0%,100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(1.8deg);
+    }
+}
+
+
+/* =========================================================
+   POT
+========================================================= */
+
+.ejsc-pot {
+    position: absolute;
+
+    left: 52px;
+    bottom: 0;
+
+    width: 76px;
+    height: 73px;
+
+    border-radius:
+        9px
+        9px
+        23px
+        23px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #d5edef
+        );
+
+    box-shadow:
+        0 15px 20px
+        rgba(28,111,126,.16);
+
+    animation:
+        ejscPotFloat 5s ease-in-out infinite;
+}
+
+.ejsc-pot-rim {
+    position: absolute;
+
+    top: -8px;
+    left: 2px;
+
+    width: 72px;
+    height: 18px;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #eaf8f9,
+            #cce6e8
+        );
+
+    box-shadow:
+        inset 0 -3px 4px
+        rgba(45,130,137,.10);
+}
+
+.ejsc-pot-shadow {
+    position: absolute;
+
+    left: 13px;
+    bottom: 11px;
+
+    width: 50px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(52,129,137,.09);
+
+    filter: blur(4px);
+}
+
+@keyframes ejscPotFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-2px);
+    }
+}
+
+
+/* =========================================================
+   PLANT STEMS
+========================================================= */
+
+.ejsc-plant-stem {
+    position: absolute;
+
+    width: 5px;
+
+    border-radius: 99px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #238f91,
+            #20c3b3
+        );
+
+    transform-origin: bottom center;
+}
+
+.stem-main {
+    left: 87px;
+    bottom: 61px;
+    height: 143px;
+    transform: rotate(1deg);
+}
+
+.stem-left {
+    left: 72px;
+    bottom: 64px;
+    height: 103px;
+    transform: rotate(-22deg);
+}
+
+.stem-right {
+    left: 94px;
+    bottom: 63px;
+    height: 116px;
+    transform: rotate(24deg);
+}
+
+
+/* =========================================================
+   MONSTERA LEAVES
+========================================================= */
+
+.ejsc-leaf {
+    position: absolute;
+
+    width: 72px;
+    height: 48px;
+
+    border-radius:
+        85%
+        15%
+        85%
+        15%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #31d0b9 0%,
+            #12b09f 55%,
+            #078e8c 100%
+        );
+
+    box-shadow:
+        inset -6px -6px 12px
+        rgba(0,90,93,.13),
+
+        0 5px 10px
+        rgba(17,130,130,.10);
+
+    transform-origin: bottom right;
+
+    overflow: hidden;
+}
+
+.ejsc-leaf::before {
+    content: "";
+
+    position: absolute;
+
+    left: 8px;
+    bottom: 10px;
+
+    width: 58px;
+    height: 2px;
+
+    border-radius: 99px;
+
+    background:
+        rgba(220,255,248,.35);
+
+    transform: rotate(-22deg);
+}
+
+.ejsc-leaf span {
+    position: absolute;
+
+    width: 8px;
+    height: 22px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(232,255,249,.20);
+
+    transform: rotate(25deg);
+}
+
+.leaf-1 {
+    left: 76px;
+    bottom: 157px;
+
+    transform:
+        rotate(-35deg)
+        scale(1.05);
+
+    animation:
+        ejscLeafOne 4s ease-in-out infinite;
+}
+
+.leaf-2 {
+    left: 10px;
+    bottom: 128px;
+
+    transform:
+        rotate(27deg)
+        scale(.96);
+
+    animation:
+        ejscLeafTwo 4.4s ease-in-out infinite;
+}
+
+.leaf-3 {
+    left: 78px;
+    bottom: 103px;
+
+    transform:
+        rotate(-59deg)
+        scale(.86);
+
+    animation:
+        ejscLeafThree 3.8s ease-in-out infinite;
+}
+
+.leaf-4 {
+    left: 18px;
+    bottom: 171px;
+
+    transform:
+        rotate(9deg)
+        scale(.76);
+
+    animation:
+        ejscLeafFour 4.2s ease-in-out infinite;
+}
+
+.leaf-5 {
+    left: 98px;
+    bottom: 132px;
+
+    transform:
+        rotate(42deg)
+        scale(.70);
+
+    animation:
+        ejscLeafFive 4.6s ease-in-out infinite;
+}
+
+@keyframes ejscLeafOne {
+    0%,100% {
+        transform:
+            rotate(-35deg)
+            scale(1.05);
+    }
+
+    50% {
+        transform:
+            rotate(-41deg)
+            scale(1.08);
+    }
+}
+
+@keyframes ejscLeafTwo {
+    0%,100% {
+        transform:
+            rotate(27deg)
+            scale(.96);
+    }
+
+    50% {
+        transform:
+            rotate(20deg)
+            scale(1);
+    }
+}
+
+@keyframes ejscLeafThree {
+    0%,100% {
+        transform:
+            rotate(-59deg)
+            scale(.86);
+    }
+
+    50% {
+        transform:
+            rotate(-52deg)
+            scale(.91);
+    }
+}
+
+@keyframes ejscLeafFour {
+    0%,100% {
+        transform:
+            rotate(9deg)
+            scale(.76);
+    }
+
+    50% {
+        transform:
+            rotate(17deg)
+            scale(.80);
+    }
+}
+
+@keyframes ejscLeafFive {
+    0%,100% {
+        transform:
+            rotate(42deg)
+            scale(.70);
+    }
+
+    50% {
+        transform:
+            rotate(35deg)
+            scale(.75);
+    }
+}
+
+
+/* =========================================================
+   BOOKS
+========================================================= */
+
+.ejsc-books {
+    position: absolute;
+
+    right: -15px;
+    bottom: 40px;
+
+    width: 150px;
+    height: 115px;
+
+    animation:
+        ejscBooksMotion 5s ease-in-out infinite;
+}
+
+@keyframes ejscBooksMotion {
     0%,100% {
         transform:
             translateY(0);
@@ -1723,913 +2368,149 @@
     }
 }
 
-
-@keyframes ejscStatTwo {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(7px);
-    }
-}
-
-
-@keyframes ejscStatThree {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-6px);
-    }
-}
-
-
-@keyframes ejscStatFour {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(8px);
-    }
-}
-
-
-.ejsc-stat-box:hover {
-
-    transform:
-        translateY(-10px)
-        scale(1.03) !important;
-
-    border-color:
-        rgba(77,175,185,.40);
-
-    box-shadow:
-        0 18px 35px
-        rgba(44,116,132,.13);
-}
-
-
-/* =========================================================
-   STAT ICON
-========================================================= */
-
-.ejsc-stat-icon {
-
-    flex:
-        0 0 55px;
-
-    width: 55px;
-    height: 55px;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    border-radius: 16px;
-
-    color: #46a9b4;
-
-    background:
-        linear-gradient(
-            145deg,
-            #d9f3f5,
-            #f1fafb
-        );
-
-    box-shadow:
-        inset 0 0 0 1px
-        rgba(72,173,183,.08);
-
-    animation:
-        ejscIconMotion 2.8s ease-in-out infinite;
-}
-
-
-@keyframes ejscIconMotion {
-
-    0%,100% {
-        transform:
-            rotate(0deg)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            rotate(5deg)
-            scale(1.09);
-    }
-}
-
-
-.ejsc-stat-icon svg {
-
-    width: 28px;
-    height: 28px;
-}
-
-
-.ejsc-stat-number {
-
-    margin-bottom: 7px;
-
-    color: #172a40;
-
-    font-size: 27px;
-
-    line-height: 1;
-
-    font-weight: 800;
-
-    animation:
-        ejscNumberMotion 2.5s ease-in-out infinite;
-}
-
-
-@keyframes ejscNumberMotion {
-
-    0%,100% {
-        transform:
-            scale(1);
-
-        color:
-            #172a40;
-    }
-
-    50% {
-        transform:
-            scale(1.05);
-
-        color:
-            #278f9c;
-    }
-}
-
-
-.ejsc-stat-label {
-
-    color: #526a80;
-
-    font-size: 13px;
-}
-
-
-/* =========================================================
-   ILLUSTRATION
-========================================================= */
-
-.ejsc-illustration {
-
+.ejsc-book {
     position: absolute;
 
-    z-index: 4;
-
-    width: 470px;
-
-    height: 285px;
-
-    right: -5px;
-
-    bottom: -55px;
-
-    pointer-events: none;
-}
-
-
-.ejsc-illustration-glow {
-
-    position: absolute;
-
-    right: 5px;
-
-    bottom: 0;
-
-    width: 410px;
-
-    height: 110px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(86,194,204,.32);
-
-    filter:
-        blur(20px);
-
-    animation:
-        ejscGlowMotion 3.5s ease-in-out infinite;
-}
-
-
-@keyframes ejscGlowMotion {
-
-    0%,100% {
-        transform:
-            scale(1);
-
-        opacity:
-            .55;
-    }
-
-    50% {
-        transform:
-            scale(1.18);
-
-        opacity:
-            .95;
-    }
-}
-
-
-/* =========================================================
-   LAPTOP
-========================================================= */
-
-.ejsc-laptop {
-
-    position: absolute;
-
-    right: 85px;
-
-    bottom: 5px;
-
-    width: 245px;
-
-    height: 165px;
-
-    animation:
-        ejscLaptopMotion 3.8s ease-in-out infinite;
-
-    will-change:
-        transform;
-}
-
-
-@keyframes ejscLaptopMotion {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    25% {
-        transform:
-            translateY(-7px)
-            rotate(-1deg);
-    }
-
-    50% {
-        transform:
-            translateY(-15px)
-            rotate(-1.5deg);
-    }
-
-    75% {
-        transform:
-            translateY(-6px)
-            rotate(-.5deg);
-    }
-}
-
-
-/* =========================================================
-   SCREEN
-========================================================= */
-
-.ejsc-screen {
-
-    position: absolute;
-
-    left: 20px;
-
-    top: 0;
-
-    width: 205px;
-
-    height: 128px;
-
-    padding: 7px;
-
-    border:
-        7px solid
-        #f7fbfc;
-
-    border-radius:
-        14px
-        14px
-        6px
-        6px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #73cbd0,
-            #40a5b1
-        );
-
-    box-shadow:
-        0 14px 30px
-        rgba(51,140,153,.24);
-}
-
-
-.ejsc-screen-logo {
-
-    margin: 8px;
-
-    color: #ffffff;
-
-    font-size: 13px;
-
-    font-weight: 800;
-
-    animation:
-        ejscLogoMotion 2s ease-in-out infinite;
-}
-
-
-@keyframes ejscLogoMotion {
-
-    0%,100% {
-        opacity:
-            1;
-
-        transform:
-            translateX(0);
-    }
-
-    50% {
-        opacity:
-            .65;
-
-        transform:
-            translateX(4px);
-    }
-}
-
-
-.ejsc-screen-line {
-
-    width: 50px;
-
-    height: 4px;
-
-    margin:
-        5px 8px;
-
-    border-radius: 99px;
-
-    background:
-        rgba(255,255,255,.70);
-}
-
-
-.ejsc-screen-line.small {
-
-    width: 32px;
-
-    opacity: .55;
-}
-
-
-/* =========================================================
-   CHART
-========================================================= */
-
-.ejsc-chart {
-
-    position: absolute;
-
-    right: 14px;
-
-    bottom: 13px;
-
-    width: 64px;
-
-    height: 45px;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    gap: 4px;
-}
-
-
-.ejsc-chart span {
-
-    display: block;
-
-    width: 9px;
-
-    border-radius:
-        3px 3px 0 0;
-
-    background:
-        rgba(255,255,255,.88);
-
-    transform-origin:
-        bottom;
-
-    animation:
-        ejscChartMotion 1.7s ease-in-out infinite;
-}
-
-
-.ejsc-chart span:nth-child(1) {
-    height: 15px;
-}
-
-
-.ejsc-chart span:nth-child(2) {
-    height: 24px;
-    animation-delay: .2s;
-}
-
-
-.ejsc-chart span:nth-child(3) {
-    height: 32px;
-    animation-delay: .4s;
-}
-
-
-.ejsc-chart span:nth-child(4) {
-    height: 41px;
-    animation-delay: .6s;
-}
-
-
-@keyframes ejscChartMotion {
-
-    0%,100% {
-        transform:
-            scaleY(.65);
-    }
-
-    50% {
-        transform:
-            scaleY(1.05);
-    }
-}
-
-
-/* =========================================================
-   LAPTOP BASE
-========================================================= */
-
-.ejsc-laptop-base {
-
-    position: absolute;
-
-    left: 0;
-
-    bottom: 0;
-
-    width: 245px;
+    right: 0;
 
     height: 27px;
-
-    border-radius:
-        4px
-        4px
-        21px
-        21px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #ffffff,
-            #d8ebed
-        );
-
-    box-shadow:
-        0 10px 18px
-        rgba(45,117,132,.16);
-}
-
-
-.ejsc-trackpad {
-
-    position: absolute;
-
-    left: 97px;
-
-    bottom: 8px;
-
-    width: 50px;
-
-    height: 8px;
-
-    border-radius: 5px;
-
-    background:
-        #c4dfe2;
-}
-
-
-/* =========================================================
-   PLANT
-========================================================= */
-
-.ejsc-plant {
-
-    position: absolute;
-
-    left: 15px;
-
-    bottom: 5px;
-
-    width: 115px;
-
-    height: 160px;
-
-    transform-origin:
-        bottom center;
-
-    animation:
-        ejscPlantMotion 3.8s ease-in-out infinite;
-}
-
-
-@keyframes ejscPlantMotion {
-
-    0%,100% {
-        transform:
-            rotate(0deg);
-    }
-
-    25% {
-        transform:
-            rotate(3deg);
-    }
-
-    50% {
-        transform:
-            rotate(-3.5deg);
-    }
-
-    75% {
-        transform:
-            rotate(2deg);
-    }
-}
-
-
-/* =========================================================
-   POT
-========================================================= */
-
-.ejsc-pot {
-
-    position: absolute;
-
-    left: 35px;
-
-    bottom: 0;
-
-    width: 55px;
-
-    height: 58px;
-
-    border-radius:
-        6px 6px 18px 18px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #dceff1
-        );
-
-    box-shadow:
-        0 10px 18px
-        rgba(42,112,126,.12);
-}
-
-
-/* =========================================================
-   STEM
-========================================================= */
-
-.ejsc-stem {
-
-    position: absolute;
-
-    left: 61px;
-
-    bottom: 48px;
-
-    width: 4px;
-
-    height: 75px;
-
-    border-radius: 99px;
-
-    background:
-        #55aeb1;
-}
-
-
-/* =========================================================
-   LEAVES
-========================================================= */
-
-.ejsc-leaf {
-
-    position: absolute;
-
-    width: 49px;
-
-    height: 25px;
-
-    border-radius:
-        100% 0 100% 0;
-
-    background:
-        linear-gradient(
-            135deg,
-            #70cfc4,
-            #42a6a2
-        );
-
-    transform-origin:
-        right bottom;
-}
-
-
-.leaf-1 {
-
-    left: 58px;
-
-    bottom: 105px;
-
-    transform:
-        rotate(-42deg);
-
-    animation:
-        ejscLeaf1Motion 2.5s ease-in-out infinite;
-}
-
-
-.leaf-2 {
-
-    left: 14px;
-
-    bottom: 92px;
-
-    transform:
-        rotate(26deg)
-        scale(.88);
-
-    animation:
-        ejscLeaf2Motion 3s ease-in-out infinite;
-}
-
-
-.leaf-3 {
-
-    left: 55px;
-
-    bottom: 78px;
-
-    transform:
-        rotate(-60deg)
-        scale(.76);
-
-    animation:
-        ejscLeaf3Motion 2.8s ease-in-out infinite;
-}
-
-
-.leaf-4 {
-
-    left: 25px;
-
-    bottom: 115px;
-
-    transform:
-        rotate(10deg)
-        scale(.65);
-
-    animation:
-        ejscLeaf4Motion 2.2s ease-in-out infinite;
-}
-
-
-@keyframes ejscLeaf1Motion {
-
-    0%,100% {
-        transform:
-            rotate(-42deg);
-    }
-
-    50% {
-        transform:
-            rotate(-55deg);
-    }
-}
-
-
-@keyframes ejscLeaf2Motion {
-
-    0%,100% {
-        transform:
-            rotate(26deg)
-            scale(.88);
-    }
-
-    50% {
-        transform:
-            rotate(14deg)
-            scale(.93);
-    }
-}
-
-
-@keyframes ejscLeaf3Motion {
-
-    0%,100% {
-        transform:
-            rotate(-60deg)
-            scale(.76);
-    }
-
-    50% {
-        transform:
-            rotate(-48deg)
-            scale(.82);
-    }
-}
-
-
-@keyframes ejscLeaf4Motion {
-
-    0%,100% {
-        transform:
-            rotate(10deg)
-            scale(.65);
-    }
-
-    50% {
-        transform:
-            rotate(23deg)
-            scale(.72);
-    }
-}
-
-
-/* =========================================================
-   BOOKS
-========================================================= */
-
-.ejsc-books {
-
-    position: absolute;
-
-    right: 0;
-
-    bottom: 0;
-
-    width: 125px;
-
-    height: 95px;
-
-    animation:
-        ejscBooksMotion 4.2s ease-in-out infinite;
-}
-
-
-@keyframes ejscBooksMotion {
-
-    0%,100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    50% {
-        transform:
-            translateY(-14px)
-            rotate(2deg);
-    }
-}
-
-
-.ejsc-book {
-
-    position: absolute;
-
-    right: 0;
-
-    width: 115px;
-
-    height: 23px;
 
     border-radius: 4px;
 
     box-shadow:
         0 7px 10px
-        rgba(50,120,130,.10);
+        rgba(24,111,125,.13);
 }
-
 
 .book-1 {
-
     bottom: 0;
+    width: 140px;
 
     background:
-        #dceff0;
+        linear-gradient(
+            90deg,
+            #0ea9b4,
+            #4acdd2
+        );
 }
-
 
 .book-2 {
+    bottom: 27px;
+    width: 126px;
+    right: 7px;
 
-    bottom: 23px;
+    background: #fff;
 
-    width: 102px;
-
-    right: 8px;
-
-    background:
-        #64b9bd;
+    border:
+        1px solid
+        #b7e3e6;
 }
 
-
 .book-3 {
-
-    bottom: 46px;
-
-    width: 112px;
-
+    bottom: 54px;
+    width: 138px;
     right: 2px;
 
     background:
-        #eff8f8;
+        linear-gradient(
+            90deg,
+            #18bdc6,
+            #7ce0e2
+        );
+}
+
+.book-3::after {
+    content: "";
+
+    position: absolute;
+
+    left: 15px;
+    top: 8px;
+
+    width: 70px;
+    height: 3px;
+
+    border-radius: 99px;
+
+    background:
+        rgba(255,255,255,.65);
 }
 
 
 /* =========================================================
-   ARROW
+   CURVED ARROW
 ========================================================= */
 
 .ejsc-curved-arrow {
-
     position: absolute;
 
     z-index: 8;
 
-    right: -5px;
-
-    top: 42px;
+    right: -20px;
+    top: 100px;
 
     width: 300px;
+    height: 190px;
 
     overflow: visible;
 
     animation:
-        ejscArrowMotion 3.5s ease-in-out infinite;
+        ejscArrowFloat 4s ease-in-out infinite;
+}
 
-    transform-origin:
-        center;
+.ejsc-arrow-path {
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+
+    animation:
+        ejscArrowDraw 4s ease-in-out infinite;
+}
+
+@keyframes ejscArrowFloat {
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes ejscArrowDraw {
+    0% {
+        stroke-dashoffset: 420;
+        opacity: .35;
+    }
+
+    45% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+
+    75%,100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
 }
 
 
-@keyframes ejscArrowMotion {
+/* =========================================================
+   FEATURE WRAPPER
+========================================================= */
 
-    0%,100% {
-        transform:
-            translateY(0)
-            translateX(0)
-            rotate(0deg);
-    }
+.ejsc-feature-wrapper {
+    position: absolute;
 
-    30% {
-        transform:
-            translateY(-8px)
-            translateX(5px)
-            rotate(1deg);
-    }
+    z-index: 20;
 
-    60% {
-        transform:
-            translateY(5px)
-            translateX(-4px)
-            rotate(-1deg);
-    }
+    left: 50%;
+    bottom: 78px;
+
+    width:
+        min(940px, calc(100% - 90px));
+
+    transform:
+        translateX(-50%);
 }
 
 
@@ -2637,35 +2518,13 @@
    FEATURE BAR
 ========================================================= */
 
-.ejsc-feature-wrapper {
-
-    position: absolute;
-
-    z-index: 20;
-
-    left: 50%;
-
-    bottom: 35px;
-
-    width:
-        min(
-            1180px,
-            calc(100% - 60px)
-        );
-
-    transform:
-        translateX(-50%);
-}
-
-
 .ejsc-feature-bar {
+    position: relative;
 
     width: 100%;
+    min-height: 315px;
 
-    min-height: 160px;
-
-    padding:
-        25px 40px;
+    padding: 50px 42px;
 
     display: grid;
 
@@ -2674,100 +2533,78 @@
 
     align-items: center;
 
-    gap: 30px;
-
     border:
         1px solid
-        rgba(210,231,234,.95);
+        rgba(213,236,239,.98);
 
     border-radius: 28px;
 
     background:
-        rgba(255,255,255,.93);
-
-    backdrop-filter:
-        blur(18px);
+        rgba(255,255,255,.96);
 
     box-shadow:
-        0 22px 50px
-        rgba(36,83,107,.11);
+        0 25px 60px
+        rgba(44,92,112,.10),
+
+        0 8px 20px
+        rgba(24,184,194,.04);
+
+    backdrop-filter:
+        blur(20px);
 
     animation:
-        ejscFeatureBarMotion 5s ease-in-out infinite;
+        ejscFeatureBarFloat 6s ease-in-out infinite;
 }
 
-
-@keyframes ejscFeatureBarMotion {
-
+@keyframes ejscFeatureBarFloat {
     0%,100% {
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-        transform:
-            translateY(-7px);
+        transform: translateY(-5px);
     }
 }
 
+
+/* =========================================================
+   FEATURE
+========================================================= */
 
 .ejsc-feature {
+    position: relative;
 
     min-width: 0;
+    min-height: 205px;
+
+    padding: 0 28px;
 
     display: flex;
+    flex-direction: column;
 
     align-items: center;
+    justify-content: center;
 
-    gap: 17px;
-
-    transition:
-        transform .3s ease;
-
-    animation:
-        ejscFeatureMotion 4s ease-in-out infinite;
+    text-align: center;
 }
 
 
-.ejsc-feature:nth-child(1) {
-    animation-delay: 0s;
-}
+/* =========================================================
+   DIVIDERS
+========================================================= */
 
+.ejsc-feature:not(:last-child)::after {
+    content: "";
 
-.ejsc-feature:nth-child(2) {
-    animation-delay: .4s;
-}
+    position: absolute;
 
+    right: 0;
+    top: 8px;
 
-.ejsc-feature:nth-child(3) {
-    animation-delay: .8s;
-}
+    width: 1px;
+    height: calc(100% - 16px);
 
-
-.ejsc-feature:nth-child(4) {
-    animation-delay: 1.2s;
-}
-
-
-@keyframes ejscFeatureMotion {
-
-    0%,100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-6px);
-    }
-}
-
-
-.ejsc-feature:hover {
-
-    transform:
-        translateY(-10px)
-        scale(1.02);
+    background: #dcebed;
 }
 
 
@@ -2776,383 +2613,487 @@
 ========================================================= */
 
 .ejsc-feature-icon {
+    width: 88px;
+    height: 88px;
 
-    flex:
-        0 0 58px;
-
-    width: 58px;
-
-    height: 58px;
+    margin-bottom: 24px;
 
     display: flex;
-
     align-items: center;
-
     justify-content: center;
 
     border:
         1px solid
-        rgba(71,174,185,.22);
+        rgba(16,198,208,.27);
 
     border-radius: 50%;
 
-    color:
-        #42a8b3;
+    color: #0dbac5;
 
     background:
         linear-gradient(
             145deg,
-            #dff5f6,
-            #f9fcfc
+            #fff,
+            #f8feff
         );
 
     box-shadow:
-        0 8px 18px
-        rgba(62,163,174,.08);
+        0 9px 24px
+        rgba(16,190,201,.08),
+
+        inset 0 0 0 5px
+        rgba(16,198,208,.025);
 
     animation:
-        ejscFeatureIconMotion 2.8s ease-in-out infinite;
+        ejscFeatureIconFloat 4s ease-in-out infinite;
 }
 
-
-.ejsc-feature:nth-child(2)
-.ejsc-feature-icon {
-
-    animation-delay:
-        .5s;
+.ejsc-feature:nth-child(2) .ejsc-feature-icon {
+    animation-delay: .4s;
 }
 
-
-.ejsc-feature:nth-child(3)
-.ejsc-feature-icon {
-
-    animation-delay:
-        1s;
+.ejsc-feature:nth-child(3) .ejsc-feature-icon {
+    animation-delay: .8s;
 }
 
-
-.ejsc-feature:nth-child(4)
-.ejsc-feature-icon {
-
-    animation-delay:
-        1.5s;
+.ejsc-feature:nth-child(4) .ejsc-feature-icon {
+    animation-delay: 1.2s;
 }
 
-
-@keyframes ejscFeatureIconMotion {
-
+@keyframes ejscFeatureIconFloat {
     0%,100% {
         transform:
             translateY(0)
-            rotate(0deg);
+            scale(1);
     }
 
     50% {
         transform:
             translateY(-7px)
-            rotate(7deg);
+            scale(1.04);
     }
 }
 
-
 .ejsc-feature-icon svg {
+    width: 42px;
+    height: 42px;
 
-    width: 28px;
-
-    height: 28px;
+    animation:
+        ejscFeatureSvg 4s ease-in-out infinite;
 }
 
+@keyframes ejscFeatureSvg {
+    0%,100% {
+        transform: scale(1);
+    }
 
-.ejsc-feature h4 {
-
-    margin:
-        0 0 7px;
-
-    color:
-        #172a40;
-
-    font-size:
-        16px;
-
-    font-weight:
-        700;
-}
-
-
-.ejsc-feature p {
-
-    max-width:
-        180px;
-
-    margin:
-        0;
-
-    color:
-        #526a80;
-
-    font-size:
-        12px;
-
-    line-height:
-        1.7;
+    50% {
+        transform: scale(1.07);
+    }
 }
 
 
 /* =========================================================
-   RESPONSIVE
+   FEATURE TITLE
 ========================================================= */
 
-@media (max-width: 1100px) {
+.ejsc-feature h4 {
+    margin: 0 0 12px;
 
-    .ejsc-title {
-        font-size: 56px;
+    color: #0bb2be;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   FEATURE TEXT
+========================================================= */
+
+.ejsc-feature p {
+    max-width: 190px;
+
+    margin: 0;
+
+    color: #526f89;
+
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   RESPONSIVE 1100
+========================================================= */
+
+@media (max-width:1100px) {
+
+    .ejsc-hero {
+        min-height: 1450px;
     }
 
     .ejsc-hero-container {
+        width: calc(100% - 60px);
+
+        grid-template-columns:
+            1fr 1fr;
+
         gap: 30px;
+
+        padding-top: 230px;
+    }
+
+    .ejsc-title {
+        font-size: 48px;
+    }
+
+    .ejsc-stat-card {
+        max-width: 390px;
     }
 
     .ejsc-illustration {
+        transform: scale(.88);
+        transform-origin: bottom right;
 
-        transform:
-            scale(.85);
+        right: -80px;
+    }
 
-        transform-origin:
-            bottom right;
+    .ejsc-feature-wrapper {
+        width: calc(100% - 60px);
     }
 
     .ejsc-feature-bar {
+        padding: 40px 25px;
+    }
 
-        padding:
-            24px;
+    .ejsc-feature {
+        padding: 0 17px;
     }
 }
 
 
-@media (max-width: 900px) {
+/* =========================================================
+   RESPONSIVE 900
+========================================================= */
+
+@media (max-width:900px) {
 
     .ejsc-hero {
-
-        min-height:
-            auto;
-
-        padding-bottom:
-            35px;
+        min-height: auto;
+        padding-bottom: 50px;
     }
-
 
     .ejsc-hero-container {
+        min-height: auto;
 
-        min-height:
-            auto;
+        width: calc(100% - 50px);
 
-        padding-top:
-            105px;
+        padding-top: 170px;
+        padding-bottom: 60px;
 
-        padding-bottom:
-            40px;
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1fr;
-
-        gap:
-            45px;
+        gap: 70px;
     }
 
+    .ejsc-hero-left {
+        padding-top: 0;
+    }
 
     .ejsc-title {
-
-        max-width:
-            700px;
-
-        font-size:
-            55px;
+        max-width: 650px;
+        font-size: 56px;
     }
 
+    .ejsc-description {
+        max-width: 600px;
+    }
 
     .ejsc-hero-right {
-
-        min-height:
-            600px;
-
-        justify-content:
-            center;
+        min-height: 680px;
+        justify-content: center;
     }
-
 
     .ejsc-stat-card {
-
-        max-width:
-            650px;
+        max-width: 620px;
     }
 
-
     .ejsc-illustration {
-
-        right:
-            50%;
-
-        bottom:
-            -25px;
+        right: 50%;
+        bottom: -30px;
 
         transform:
             translateX(50%)
-            scale(.85);
+            scale(.9);
 
         transform-origin:
             bottom center;
     }
 
-
     .ejsc-feature-wrapper {
+        position: relative;
 
-        position:
-            relative;
+        left: auto;
+        bottom: auto;
 
-        left:
-            auto;
+        width: calc(100% - 50px);
 
-        bottom:
-            auto;
+        margin: 0 auto;
 
-        width:
-            min(
-                calc(100% - 40px),
-                700px
-            );
-
-        margin:
-            0 auto;
-
-        transform:
-            none;
+        transform: none;
     }
 
-
     .ejsc-feature-bar {
+        grid-template-columns: 1fr 1fr;
+        min-height: 400px;
+    }
 
-        grid-template-columns:
-            1fr 1fr;
+    .ejsc-feature {
+        min-height: 175px;
+    }
+
+    .ejsc-feature:nth-child(2)::after,
+    .ejsc-feature:nth-child(3)::after {
+        display: none;
+    }
+
+    .ejsc-feature:nth-child(1),
+    .ejsc-feature:nth-child(2) {
+        border-bottom:
+            1px solid #dcebed;
     }
 }
 
 
-@media (max-width: 640px) {
+/* =========================================================
+   RESPONSIVE 640
+========================================================= */
+
+@media (max-width:640px) {
+
+    .ejsc-bg-shape-1 {
+        width: 280px;
+        height: 230px;
+
+        left: -145px;
+        top: -80px;
+    }
+
+    .ejsc-bg-shape-2 {
+        width: 300px;
+        height: 210px;
+
+        right: -160px;
+    }
 
     .ejsc-hero-container {
+        width: calc(100% - 30px);
 
-        width:
-            calc(100% - 30px);
+        padding-top: 110px;
+        padding-bottom: 30px;
 
-        padding-top:
-            95px;
+        gap: 55px;
     }
 
+    .ejsc-badge {
+        margin-bottom: 30px;
+
+        font-size: 11px;
+        padding: 0 13px;
+    }
 
     .ejsc-title {
+        font-size: 41px;
 
-        font-size:
-            43px;
+        line-height: 1.12;
+        letter-spacing: -1.8px;
 
-        line-height:
-            1.06;
-
-        letter-spacing:
-            -2px;
+        margin-bottom: 23px;
     }
-
 
     .ejsc-description {
+        font-size: 14px;
+        line-height: 1.85;
 
-        font-size:
-            15px;
+        margin-bottom: 30px;
     }
-
 
     .ejsc-buttons {
-
-        width:
-            100%;
+        width: 100%;
+        gap: 10px;
     }
-
 
     .ejsc-btn-primary,
     .ejsc-btn-secondary {
+        flex: 1;
 
-        flex:
-            1;
+        min-width: 0;
+        height: 53px;
 
-        min-width:
-            140px;
+        padding: 0 14px;
+
+        font-size: 13px;
     }
-
 
     .ejsc-stat-card {
-
-        padding:
-            20px;
-
-        border-radius:
-            22px;
+        padding: 23px 18px;
+        border-radius: 22px;
     }
 
+    .ejsc-stat-header {
+        margin-bottom: 23px;
+    }
+
+    .ejsc-stat-header h3 {
+        font-size: 15px;
+    }
+
+    .ejsc-live {
+        font-size: 10px;
+    }
 
     .ejsc-stat-grid {
-
-        grid-template-columns:
-            1fr;
+        grid-template-columns: 1fr;
+        gap: 10px;
     }
-
 
     .ejsc-stat-box {
-
-        min-height:
-            90px;
+        min-height: 85px;
+        padding: 14px;
     }
 
+    .ejsc-stat-number {
+        font-size: 23px;
+    }
+
+    .ejsc-stat-icon {
+        flex-basis: 45px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .ejsc-stat-icon svg {
+        width: 36px;
+        height: 36px;
+    }
 
     .ejsc-hero-right {
-
-        min-height:
-            670px;
+        min-height: 600px;
     }
 
-
     .ejsc-illustration {
+        width: 580px;
+        height: 360px;
 
-        bottom:
-            -5px;
+        right: 50%;
+        bottom: -10px;
 
         transform:
             translateX(50%)
-            scale(.68);
+            scale(.58);
     }
-
 
     .ejsc-feature-wrapper {
-
-        width:
-            calc(100% - 30px);
+        width: calc(100% - 30px);
     }
-
 
     .ejsc-feature-bar {
+        grid-template-columns: 1fr;
 
-        grid-template-columns:
-            1fr;
+        min-height: auto;
 
-        gap:
-            20px;
+        padding: 25px 20px;
 
-        padding:
-            25px;
+        gap: 0;
+
+        border-radius: 23px;
     }
 
+    .ejsc-feature {
+        min-height: 190px;
+        padding: 25px 15px;
+
+        border-bottom:
+            1px solid #dcebed;
+    }
+
+    .ejsc-feature:last-child {
+        border-bottom: none;
+    }
+
+    .ejsc-feature:not(:last-child)::after {
+        display: none;
+    }
+
+    .ejsc-feature-icon {
+        width: 72px;
+        height: 72px;
+
+        margin-bottom: 17px;
+    }
+
+    .ejsc-feature-icon svg {
+        width: 35px;
+        height: 35px;
+    }
+
+    .ejsc-feature h4 {
+        font-size: 16px;
+    }
 
     .ejsc-feature p {
+        max-width: 260px;
+        font-size: 12px;
+    }
 
-        max-width:
-            100%;
+    .ejsc-dot-1,
+    .ejsc-dot-2 {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE 430
+========================================================= */
+
+@media (max-width:430px) {
+
+    .ejsc-title {
+        font-size: 37px;
+    }
+
+    .ejsc-badge {
+        max-width: 100%;
+        white-space: nowrap;
+    }
+
+    .ejsc-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ejsc-btn-primary,
+    .ejsc-btn-secondary {
+        width: 100%;
+        flex: none;
+    }
+
+    .ejsc-hero-right {
+        min-height: 540px;
+    }
+
+    .ejsc-illustration {
+        transform:
+            translateX(50%)
+            scale(.47);
+
+        bottom: -5px;
+    }
+
+    .ejsc-stat-card {
+        width: 100%;
     }
 }
 
@@ -3177,6 +3118,38 @@
             0.01ms !important;
     }
 }
+@media (prefers-reduced-motion: reduce) {
+
+    .ejsc-hero *,
+    .ejsc-hero *::before,
+    .ejsc-hero *::after {
+
+        animation-duration:
+            0.01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        transition-duration:
+            0.01ms !important;
+    }
+}
+
+
+/* =========================================================
+   HIDE PLANT & ARROW
+========================================================= */
+
+.ejsc-plant,
+.ejsc-curved-arrow {
+    display: none !important;
+}
+
+.ejsc-stat-label {
+    position: relative;
+    animation: none !important;
+}
+
 
 </style>
 
@@ -3667,11 +3640,6 @@
    SAFE / SCOPED VERSION
 ========================================================= */
 
-
-/* =========================================================
-   RESET
-========================================================= */
-
 .ejsc-services,
 .ejsc-services *,
 .ejsc-services *::before,
@@ -3701,22 +3669,33 @@
 
     overflow: hidden;
 
+    /* BACKGROUND BIRU CERAH */
+
     background:
+
         radial-gradient(
-            circle at 8% 10%,
-            rgba(74,194,199,.13),
-            transparent 25%
+            circle at 5% 8%,
+            rgba(67, 197, 211, 0.32),
+            transparent 28%
         ),
+
         radial-gradient(
-            circle at 92% 75%,
-            rgba(67,183,193,.10),
-            transparent 27%
+            circle at 95% 25%,
+            rgba(62, 190, 207, 0.24),
+            transparent 30%
         ),
+
+        radial-gradient(
+            circle at 50% 105%,
+            rgba(74, 202, 211, 0.20),
+            transparent 32%
+        ),
+
         linear-gradient(
             145deg,
             #ffffff 0%,
-            #fafdfe 48%,
-            #f2fafb 100%
+            #f7fdfe 42%,
+            #eaf9fb 100%
         );
 
     color: var(--ejsc-dark);
@@ -4146,7 +4125,6 @@
 
 /* =========================================================
    MAIN TITLE
-   REVISED: SMALLER & MORE BALANCED
 ========================================================= */
 
 .ejsc-main-title {
@@ -4158,12 +4136,6 @@
         "Poppins",
         Arial,
         sans-serif;
-
-    /*
-     * Sebelumnya max 82px.
-     * Sekarang dibuat lebih kecil agar
-     * lebih seimbang dengan section lain.
-     */
 
     font-size:
         clamp(
@@ -4392,10 +4364,6 @@
 
     overflow: hidden;
 
-    /*
-     * BORDER DIPERKUAT
-     */
-
     border: 1px solid #c9e4e7;
 
     border-radius: 26px;
@@ -4406,11 +4374,6 @@
             #ffffff 0%,
             #fbfefe 100%
         );
-
-    /*
-     * Border luar + shadow agar
-     * sisi card tetap terlihat jelas.
-     */
 
     box-shadow:
         0 0 0 1px rgba(255,255,255,.8) inset,
@@ -4435,16 +4398,16 @@
 
 .ejsc-card-mentor {
 
-    --accent: #0d9ca5;
-    --accent-soft: rgba(13,156,165,.11);
+    --accent: #35BFD1;
+    --accent-soft: rgba(53,191,209,.11);
 
 }
 
 
 .ejsc-card-talenta {
 
-    --accent: #2b9fd0;
-    --accent-soft: rgba(43,159,208,.11);
+    --accent: #B9E52D;
+    --accent-soft: rgba(185,229,45,.12);
 
     animation-delay: -2s;
 
@@ -5300,10 +5263,6 @@
     }
 
 
-    /* ---------------------------------------------
-       TITLE MOBILE
-    --------------------------------------------- */
-
     .ejsc-main-title {
 
         font-size:
@@ -5364,10 +5323,6 @@
 
     }
 
-
-    /* ---------------------------------------------
-       CARD
-    --------------------------------------------- */
 
     .ejsc-service-card {
 
@@ -5548,6 +5503,7 @@
 }
 
 </style>
+
 {{-- =========================================================
     HOW IT WORKS
 ========================================================= --}}
@@ -5778,146 +5734,26 @@
 
 
 {{-- =========================================================
-    CTA SECTION
-========================================================= --}}
-<section class="cta-section relative overflow-hidden">
-
-    {{-- Decorative background --}}
-    <div class="cta-orb cta-orb-1"></div>
-    <div class="cta-orb cta-orb-2"></div>
-    <div class="cta-orb cta-orb-3"></div>
-    <div class="cta-orb cta-orb-4"></div>
-
-    <div class="cta-wave"></div>
-
-    <span class="cta-dot cta-dot-1"></span>
-    <span class="cta-dot cta-dot-2"></span>
-    <span class="cta-dot cta-dot-3"></span>
-    <span class="cta-dot cta-dot-4"></span>
-    <span class="cta-dot cta-dot-5"></span>
-
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-
-        <div class="cta-content">
-
-            <div class="cta-badge">
-
-                <span></span>
-
-                MULAI BERSAMA KAMI
-
-            </div>
-
-
-            <h2>
-                Siap <span>Memulai?</span>
-            </h2>
-
-
-            <div class="cta-line">
-                <span></span>
-                <i></i>
-            </div>
-
-
-            <p>
-                Bergabunglah dengan ribuan pengguna yang telah
-                merasakan manfaat platform kami
-            </p>
-
-
-            <div class="cta-buttons">
-
-                <a
-                    href="{{ route('kelola.mentor') }}"
-                    class="cta-primary"
-                >
-
-                    <span>
-                        Kelola Data
-                    </span>
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M5 12h14"/>
-                        <path d="m13 6 6 6-6 6"/>
-                    </svg>
-
-                    <div class="button-shine"></div>
-
-                </a>
-
-
-                <a
-                    href="{{ route('client') }}"
-                    class="cta-secondary"
-                >
-
-                    <span>
-                        Hubungi Kami
-                    </span>
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path d="M5 12h14"/>
-                        <path d="m13 6 6 6-6 6"/>
-                    </svg>
-
-                </a>
-
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-
-
-{{-- =========================================================
-    CSS
+    CSS : CARA KERJA
+    TEXT STEP DIKUNCI / TIDAK BERGERAK
+    ANIMASI ELEMEN LAIN TETAP AKTIF
 ========================================================= --}}
 <style>
 
 /* =========================================================
    COLOR SYSTEM
-   Biru telur asin / seafoam yang lebih cerah
 ========================================================= */
 
-:root {
+.how-it-works-section {
 
-    --egg-dark:
-        #176b68;
-
-    --egg-primary:
-        #2aa9a2;
-
-    --egg-light:
-        #65d6d0;
-
-    --egg-soft:
-        #bcefeb;
-
-    --egg-pale:
-        #e9fbfa;
-
-    --egg-white:
-        #f8ffff;
-
-    --egg-text:
-        #214d5a;
-
-    --egg-muted:
-        #587782;
-
+    --how-dark: #087f89;
+    --how-primary: #16b8c0;
+    --how-light: #67dce0;
+    --how-soft: #b8eef1;
+    --how-pale: #e3f9fa;
+    --how-white: #f8ffff;
+    --how-text: #245b66;
+    --how-muted: #5f7f87;
 }
 
 
@@ -5925,8 +5761,7 @@
    RESET
 ========================================================= */
 
-.how-it-works-section *,
-.cta-section * {
+.how-it-works-section * {
     box-sizing: border-box;
 }
 
@@ -5946,28 +5781,23 @@
     background:
 
         radial-gradient(
-            circle at 7% 20%,
-            rgba(101,214,208,.18),
-            transparent 28%
+            circle at 8% 18%,
+            rgba(74, 207, 215, .16),
+            transparent 25%
         ),
 
         radial-gradient(
-            circle at 92% 65%,
-            rgba(78,195,190,.15),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 50% 115%,
-            rgba(188,239,235,.30),
-            transparent 34%
+            circle at 92% 72%,
+            rgba(37, 190, 201, .13),
+            transparent 27%
         ),
 
         linear-gradient(
             180deg,
-            #f5fffe 0%,
-            #ffffff 46%,
-            #f3fcfb 100%
+            #eefdfe 0%,
+            #f8ffff 38%,
+            #ffffff 68%,
+            #eefbfc 100%
         );
 
     isolation: isolate;
@@ -5976,6 +5806,7 @@
 
 /* =========================================================
    BACKGROUND BLOBS
+   DIBUAT LEBIH SEDIKIT & LEBIH HALUS
 ========================================================= */
 
 .how-blob {
@@ -5986,11 +5817,11 @@
 
     pointer-events: none;
 
-    filter: blur(4px);
+    filter: blur(8px);
 
     z-index: -2;
 
-    opacity: .85;
+    opacity: .38;
 }
 
 
@@ -6003,7 +5834,7 @@
     top: 70px;
 
     background:
-        rgba(101,214,208,.17);
+        rgba(53, 201, 211, .16);
 
     animation:
         blobFloatOne
@@ -6022,7 +5853,7 @@
     bottom: 70px;
 
     background:
-        rgba(78,195,190,.14);
+        rgba(41, 191, 202, .12);
 
     animation:
         blobFloatTwo
@@ -6031,6 +5862,8 @@
         infinite;
 }
 
+
+/* Blob tambahan dibuat sangat samar */
 
 .blob-three {
 
@@ -6041,7 +5874,9 @@
     top: -80px;
 
     background:
-        rgba(188,239,235,.20);
+        rgba(105, 220, 225, .07);
+
+    opacity: .18;
 
     animation:
         blobFloatThree
@@ -6060,7 +5895,9 @@
     bottom: 8%;
 
     background:
-        rgba(42,169,162,.09);
+        rgba(62, 202, 211, .05);
+
+    opacity: .12;
 
     animation:
         blobFloatFour
@@ -6082,7 +5919,7 @@
 
     border:
         1px solid
-        rgba(42,169,162,.12);
+        rgba(50, 190, 201, .10);
 
     pointer-events: none;
 
@@ -6140,13 +5977,13 @@
     background:
         linear-gradient(
             135deg,
-            rgba(42,169,162,.65),
-            rgba(101,214,208,.20)
+            rgba(34, 190, 202, .55),
+            rgba(112, 224, 228, .15)
         );
 
     box-shadow:
         0 0 20px
-        rgba(42,169,162,.22);
+        rgba(35, 190, 202, .18);
 
     pointer-events: none;
 
@@ -6248,14 +6085,14 @@
     border-radius: 999px;
 
     background:
-        rgba(233,251,250,.92);
+        rgba(227,249,250,.92);
 
     border:
         1px solid
-        rgba(42,169,162,.18);
+        rgba(42,190,201,.16);
 
     color:
-        #38636b;
+        #3e7079;
 
     font-size: 13px;
 
@@ -6265,7 +6102,7 @@
 
     box-shadow:
         0 8px 25px
-        rgba(42,169,162,.08);
+        rgba(42,190,201,.06);
 
     backdrop-filter:
         blur(8px);
@@ -6286,11 +6123,11 @@
     border-radius: 50%;
 
     background:
-        #2aa9a2;
+        #20b9c1;
 
     box-shadow:
         0 0 0 5px
-        rgba(42,169,162,.11);
+        rgba(32,185,193,.10);
 
     animation:
         dotPulse
@@ -6318,11 +6155,11 @@
     letter-spacing: -2.5px;
 
     color:
-        #244e5a;
+        #245967;
 
     text-shadow:
         0 3px 20px
-        rgba(42,169,162,.06);
+        rgba(38,190,201,.06);
 }
 
 
@@ -6333,10 +6170,10 @@
     background:
         linear-gradient(
             90deg,
-            #247c79,
-            #2aa9a2,
-            #65d6d0,
-            #247c79
+            #087f89,
+            #18b9c1,
+            #69dce0,
+            #087f89
         );
 
     background-size: 300% auto;
@@ -6385,9 +6222,9 @@
     background:
         linear-gradient(
             90deg,
-            #2aa9a2,
-            #8ae3de,
-            #2aa9a2
+            #19b9c1,
+            #8ae5e8,
+            #19b9c1
         );
 
     background-size: 200% 100%;
@@ -6408,11 +6245,11 @@
     border-radius: 50%;
 
     background:
-        #2aa9a2;
+        #19b9c1;
 
     box-shadow:
         0 0 15px
-        rgba(42,169,162,.45);
+        rgba(25,185,193,.40);
 
     animation:
         dotPulse
@@ -6433,7 +6270,7 @@
     margin: auto;
 
     color:
-        #587782;
+        #5c7c84;
 
     font-size: 18px;
 
@@ -6486,7 +6323,7 @@
     border-radius: 999px;
 
     background:
-        rgba(42,169,162,.13);
+        rgba(35,190,201,.12);
 }
 
 
@@ -6506,15 +6343,15 @@
         linear-gradient(
             90deg,
             transparent,
-            #2aa9a2,
-            #8ae3de,
-            #2aa9a2,
+            #1bbac2,
+            #9be8eb,
+            #1bbac2,
             transparent
         );
 
     box-shadow:
         0 0 20px
-        rgba(42,169,162,.55);
+        rgba(27,186,194,.45);
 
     animation:
         lineTravel
@@ -6541,7 +6378,7 @@
         linear-gradient(
             90deg,
             transparent,
-            rgba(42,169,162,.13),
+            rgba(35,190,201,.11),
             transparent
         );
 
@@ -6569,41 +6406,25 @@
 
     padding: 5px 15px 10px;
 
-    animation:
-        stepFloat
-        4.2s
-        ease-in-out
-        infinite;
+    animation: none !important;
 
-    transition:
-        transform .4s ease;
+    transition: none;
 }
 
 
-.step-1 {
-    animation-delay: 0s;
-}
-
-.step-2 {
-    animation-delay: .55s;
-}
-
-.step-3 {
-    animation-delay: 1.1s;
-}
-
+.step-1,
+.step-2,
+.step-3,
 .step-4 {
-    animation-delay: 1.65s;
+    animation: none !important;
 }
 
 
 .step-card:hover {
 
-    animation-play-state:
-        paused;
+    animation: none !important;
 
-    transform:
-        translateY(-10px);
+    transform: none !important;
 }
 
 
@@ -6625,7 +6446,7 @@
 
     border:
         1px dashed
-        rgba(42,169,162,.18);
+        rgba(35,190,201,.16);
 
     border-radius: 50%;
 
@@ -6656,11 +6477,11 @@
     border-radius: 50%;
 
     background:
-        #2aa9a2;
+        #20bac2;
 
     box-shadow:
         0 0 14px
-        rgba(42,169,162,.55);
+        rgba(32,186,194,.50);
 }
 
 
@@ -6688,15 +6509,15 @@
         linear-gradient(
             145deg,
             rgba(255,255,255,.98),
-            rgba(235,252,250,.94)
+            rgba(226,249,250,.94)
         );
 
     border:
         1px solid
-        rgba(42,169,162,.18);
+        rgba(35,190,201,.17);
 
     color:
-        #247c79;
+        #15949d;
 
     font-size: 25px;
 
@@ -6704,7 +6525,7 @@
 
     box-shadow:
         0 15px 35px
-        rgba(42,169,162,.11),
+        rgba(35,190,201,.10),
 
         inset 0 1px 0
         rgba(255,255,255,.95);
@@ -6749,7 +6570,7 @@
 
     border:
         1px solid
-        rgba(42,169,162,.13);
+        rgba(35,190,201,.12);
 
     animation:
         ringPulse
@@ -6774,11 +6595,11 @@
     border-radius: 50%;
 
     background:
-        rgba(101,214,208,.75);
+        rgba(103,220,224,.70);
 
     box-shadow:
         0 0 14px
-        rgba(101,214,208,.60);
+        rgba(103,220,224,.55);
 
     animation:
         tinyOrbit
@@ -6796,7 +6617,7 @@
 
     box-shadow:
         0 25px 50px
-        rgba(42,169,162,.22);
+        rgba(35,190,201,.20);
 }
 
 
@@ -6821,22 +6642,22 @@
     border-radius: 18px;
 
     color:
-        #247c79;
+        #15949d;
 
     background:
         linear-gradient(
             135deg,
-            rgba(213,247,244,.95),
-            rgba(232,250,249,.90)
+            rgba(215,246,247,.95),
+            rgba(239,252,252,.90)
         );
 
     border:
         1px solid
-        rgba(42,169,162,.10);
+        rgba(35,190,201,.10);
 
     box-shadow:
         0 10px 25px
-        rgba(42,169,162,.10);
+        rgba(35,190,201,.09);
 
     animation:
         iconFloat
@@ -6858,7 +6679,7 @@
 
     border:
         1px solid
-        rgba(42,169,162,.10);
+        rgba(35,190,201,.09);
 
     animation:
         iconRing
@@ -6895,7 +6716,7 @@
     border-radius: 50%;
 
     background:
-        rgba(101,214,208,.32);
+        rgba(103,220,224,.28);
 
     filter:
         blur(8px);
@@ -6921,13 +6742,13 @@
     font-weight: 700;
 
     color:
-        #244e5a;
+        #315f68;
 
-    animation:
-        textLift
-        4s
-        ease-in-out
-        infinite;
+    animation: none !important;
+
+    transform: none !important;
+
+    transition: none !important;
 }
 
 
@@ -6938,11 +6759,17 @@
     margin: auto;
 
     color:
-        #587782;
+        #63838a;
 
     font-size: 14px;
 
     line-height: 1.8;
+
+    animation: none !important;
+
+    transform: none !important;
+
+    transition: none !important;
 }
 
 
@@ -6966,7 +6793,7 @@
 
     border:
         1px solid
-        rgba(42,169,162,.14);
+        rgba(35,190,201,.13);
 
     pointer-events: none;
 
@@ -6992,7 +6819,726 @@
 
 
 /* =========================================================
-   CTA
+   ANIMATIONS
+========================================================= */
+
+@keyframes stepFloat {
+    0%, 100% { transform: translateY(0); }
+    25% { transform: translateY(-5px); }
+    50% { transform: translateY(-13px); }
+    75% { transform: translateY(-4px); }
+}
+
+
+@keyframes numberBounce {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-4px) rotate(-2deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(2deg);
+    }
+    75% {
+        transform: translateY(-3px) rotate(-1deg);
+    }
+}
+
+
+@keyframes numberScale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-4px) rotate(-3deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(3deg);
+    }
+    75% {
+        transform: translateY(-3px) rotate(-1deg);
+    }
+}
+
+
+@keyframes iconRotate {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(3deg) scale(1.08);
+    }
+}
+
+
+@keyframes iconGlow {
+    0%, 100% {
+        opacity: .35;
+        transform: scale(.8);
+    }
+    50% {
+        opacity: .90;
+        transform: scale(1.35);
+    }
+}
+
+
+@keyframes iconRing {
+    0%, 100% {
+        opacity: .25;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .80;
+        transform: scale(1.12);
+    }
+}
+
+
+@keyframes stepPulse {
+    0% {
+        opacity: 0;
+        transform: scale(.8);
+    }
+    35% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.35);
+    }
+}
+
+
+@keyframes tinyOrbit {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    25% {
+        transform: translate(4px,-3px) scale(1.1);
+    }
+    50% {
+        transform: translate(0,-5px) scale(.85);
+    }
+    75% {
+        transform: translate(-4px,-2px) scale(1.1);
+    }
+}
+
+
+@keyframes orbitRotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+@keyframes lineTravel {
+    0% { left: -20%; }
+    100% { left: 110%; }
+}
+
+
+@keyframes lineGlow {
+    0%, 100% { opacity: .25; }
+    50% { opacity: .85; }
+}
+
+
+@keyframes textLift {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+}
+
+
+@keyframes headerFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+
+@keyframes badgePulse {
+    0%, 100% {
+        transform: translateY(0);
+        box-shadow:
+            0 8px 25px
+            rgba(35,190,201,.06);
+    }
+    50% {
+        transform: translateY(-4px);
+        box-shadow:
+            0 15px 35px
+            rgba(35,190,201,.12);
+    }
+}
+
+
+@keyframes dotPulse {
+    0%, 100% {
+        opacity: .55;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.4);
+    }
+}
+
+
+@keyframes ringPulse {
+    0%, 100% {
+        opacity: .20;
+        transform: scale(1);
+    }
+    50% {
+        opacity: .75;
+        transform: scale(1.1);
+    }
+}
+
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+}
+
+
+@keyframes blobFloatOne {
+    0%, 100% {
+        transform: translate(0,0) scale(1) rotate(0deg);
+    }
+    50% {
+        transform: translate(45px,-30px) scale(1.1) rotate(12deg);
+    }
+}
+
+
+@keyframes blobFloatTwo {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(-40px,-35px) scale(1.14);
+    }
+}
+
+
+@keyframes blobFloatThree {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(35px,25px) scale(1.12);
+    }
+}
+
+
+@keyframes blobFloatFour {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    50% {
+        transform: translate(-20px,-30px);
+    }
+}
+
+
+@keyframes ringRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+
+@keyframes ringRotateReverse {
+    from { transform: rotate(360deg); }
+    to { transform: rotate(0deg); }
+}
+
+
+/* =========================================================
+   PARTICLE PATHS
+========================================================= */
+
+@keyframes dotPathOne {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    25% {
+        transform: translate(12px,-18px) scale(1.15);
+    }
+    50% {
+        transform: translate(-5px,-34px) scale(.9);
+    }
+    75% {
+        transform: translate(-15px,-12px) scale(1.08);
+    }
+}
+
+
+@keyframes dotPathTwo {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    50% {
+        transform: translate(-25px,30px);
+    }
+}
+
+
+@keyframes dotPathThree {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(25px,-25px) scale(1.3);
+    }
+}
+
+
+@keyframes dotPathFour {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    25% {
+        transform: translate(-15px,-10px);
+    }
+    50% {
+        transform: translate(-30px,-35px);
+    }
+    75% {
+        transform: translate(-10px,-50px);
+    }
+}
+
+
+@keyframes dotPathFive {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    50% {
+        transform: translate(18px,-20px);
+    }
+}
+
+
+@keyframes dotPathSix {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    50% {
+        transform: translate(-20px,15px);
+    }
+}
+
+
+@keyframes dotPathSeven {
+    0%, 100% {
+        transform: translate(0,0) scale(1);
+    }
+    50% {
+        transform: translate(20px,20px) scale(1.4);
+    }
+}
+
+
+@keyframes dotPathEight {
+    0%, 100% {
+        transform: translate(0,0);
+    }
+    50% {
+        transform: translate(-25px,-18px);
+    }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .how-it-works-section {
+        padding: 90px 0 100px;
+    }
+
+    .how-header {
+        margin-bottom: 60px;
+    }
+
+    .steps-wrapper {
+        gap: 25px;
+    }
+
+    .steps-line {
+        left: 8%;
+        right: 8%;
+    }
+
+    .step-card {
+        padding-left: 5px;
+        padding-right: 5px;
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .step-card p {
+        font-size: 13px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .how-it-works-section {
+        padding: 80px 0;
+    }
+
+    .how-header {
+        margin-bottom: 55px;
+    }
+
+    .how-title {
+        font-size: 44px;
+    }
+
+    .steps-wrapper {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 60px 20px;
+    }
+
+    .steps-line {
+        display: none;
+    }
+
+    .step-orbit {
+        display: none;
+    }
+
+    .step-card {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .step-number {
+
+        width: 68px;
+        height: 68px;
+    }
+
+    .step-pulse {
+
+        width: 68px;
+        height: 68px;
+
+        margin-left: -34px;
+
+        top: 26px;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .how-it-works-section {
+        padding: 70px 0;
+    }
+
+    .section-badge {
+
+        font-size: 11px;
+
+        padding: 9px 15px;
+    }
+
+    .how-title {
+
+        font-size: 38px;
+
+        letter-spacing: -1.8px;
+    }
+
+    .how-subtitle {
+        font-size: 16px;
+    }
+
+    .steps-wrapper {
+
+        grid-template-columns: 1fr;
+
+        gap: 55px;
+    }
+
+    .step-card {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .step-card h3,
+    .step-card p {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .step-card p {
+
+        max-width: 280px;
+
+        font-size: 14px;
+    }
+
+    .how-ring {
+        opacity: .5;
+    }
+}
+
+
+/* =========================================================
+   FINAL TEXT LOCK
+========================================================= */
+
+.how-it-works-section .step-card h3,
+.how-it-works-section .step-card p {
+
+    animation: none !important;
+
+    transform: none !important;
+
+    transition: none !important;
+}
+
+
+.how-it-works-section .step-card {
+
+    animation: none !important;
+
+    transform: none !important;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .how-it-works-section *,
+    .how-it-works-section *::before,
+    .how-it-works-section *::after {
+
+        animation-duration:
+            .01ms !important;
+
+        animation-iteration-count:
+            1 !important;
+
+        scroll-behavior:
+            auto !important;
+    }
+}
+
+</style>
+
+
+{{-- =========================================================
+    CTA / SIAP MEMULAI
+    CSS DIPISAH DARI CARA KERJA
+    WARNA DISESUAIKAN DENGAN CARA KERJA
+    ANIMASI TETAP
+========================================================= --}}
+
+<section class="cta-section relative overflow-hidden">
+
+    {{-- =====================================================
+         DECORATIVE BACKGROUND
+    ====================================================== --}}
+
+    <div class="cta-orb cta-orb-1"></div>
+    <div class="cta-orb cta-orb-2"></div>
+    <div class="cta-orb cta-orb-3"></div>
+    <div class="cta-orb cta-orb-4"></div>
+
+    <div class="cta-wave"></div>
+
+    <span class="cta-dot cta-dot-1"></span>
+    <span class="cta-dot cta-dot-2"></span>
+    <span class="cta-dot cta-dot-3"></span>
+    <span class="cta-dot cta-dot-4"></span>
+    <span class="cta-dot cta-dot-5"></span>
+
+
+    {{-- =====================================================
+         CONTAINER
+    ====================================================== --}}
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+
+        <div class="cta-content">
+
+
+            {{-- =================================================
+                 BADGE
+            ================================================== --}}
+
+            <div class="cta-badge">
+
+                <span></span>
+
+                MULAI BERSAMA KAMI
+
+            </div>
+
+
+            {{-- =================================================
+                 TITLE
+            ================================================== --}}
+
+            <h2>
+                Siap <span>Memulai?</span>
+            </h2>
+
+
+            {{-- =================================================
+                 DECORATIVE LINE
+            ================================================== --}}
+
+            <div class="cta-line">
+
+                <span></span>
+
+                <i></i>
+
+            </div>
+
+
+            {{-- =================================================
+                 DESCRIPTION
+            ================================================== --}}
+
+            <p>
+                Bergabunglah dengan ribuan pengguna yang telah
+                merasakan manfaat platform kami
+            </p>
+
+
+            {{-- =================================================
+                 BUTTONS
+            ================================================== --}}
+
+            <div class="cta-buttons">
+
+
+                {{-- =================================================
+                     PRIMARY BUTTON
+                ================================================== --}}
+
+                <a
+                    href="{{ route('kelola.mentor') }}"
+                    class="cta-primary"
+                >
+
+                    <span>
+                        Kelola Data
+                    </span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+
+                        <path d="M5 12h14"/>
+
+                        <path d="m13 6 6 6-6 6"/>
+
+                    </svg>
+
+                    <div class="button-shine"></div>
+
+                </a>
+
+
+                {{-- =================================================
+                     SECONDARY BUTTON
+                ================================================== --}}
+
+                <a
+                    href="{{ route('client') }}"
+                    class="cta-secondary"
+                >
+
+                    <span>
+                        Hubungi Kami
+                    </span>
+
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        aria-hidden="true"
+                    >
+
+                        <path d="M5 12h14"/>
+
+                        <path d="m13 6 6 6-6 6"/>
+
+                    </svg>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+{{-- =========================================================
+    CSS : SIAP MEMULAI
+    KHUSUS CTA
+    TIDAK DIGABUNG DENGAN CSS CARA KERJA
+========================================================= --}}
+
+<style>
+
+/* =========================================================
+   CTA RESET
+========================================================= */
+
+.cta-section *,
+.cta-section *::before,
+.cta-section *::after {
+
+    box-sizing: border-box;
+
+}
+
+
+/* =========================================================
+   CTA SECTION
+   BIRU MUDA / TOSCA CERAH
 ========================================================= */
 
 .cta-section {
@@ -7001,32 +7547,24 @@
 
     padding: 120px 0;
 
+    overflow: hidden;
+
     isolation: isolate;
 
     background:
 
-        radial-gradient(
-            circle at 12% 50%,
-            rgba(101,214,208,.28),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 88% 50%,
-            rgba(78,195,190,.22),
-            transparent 30%
-        ),
-
         linear-gradient(
             110deg,
-            #e3f8f6,
-            #effcfb,
-            #f9ffff
+            #aeeaf1 0%,
+            #bceff4 35%,
+            #d2f5f7 70%,
+            #e5fafb 100%
         );
 
     border-top:
         1px solid
         rgba(42,169,162,.06);
+
 }
 
 
@@ -7039,17 +7577,21 @@
     position: absolute;
 
     left: -10%;
+
     bottom: -80px;
 
     width: 120%;
+
     height: 160px;
 
-    border-radius: 50% 50% 0 0;
+    border-radius:
+        50% 50% 0 0;
 
     background:
         rgba(255,255,255,.35);
 
-    filter: blur(1px);
+    filter:
+        blur(1px);
 
     animation:
         waveMove
@@ -7058,6 +7600,7 @@
         infinite;
 
     z-index: -1;
+
 }
 
 
@@ -7072,6 +7615,7 @@
         5s
         ease-in-out
         infinite;
+
 }
 
 
@@ -7119,13 +7663,21 @@
         3s
         ease-in-out
         infinite;
+
 }
 
+
+/* =========================================================
+   BADGE DOT
+========================================================= */
 
 .cta-badge span {
 
     width: 9px;
+
     height: 9px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -7140,6 +7692,7 @@
         dotPulse
         2s
         infinite;
+
 }
 
 
@@ -7152,7 +7705,9 @@
     margin-top: 25px;
 
     font-size:
-        clamp(40px,5vw,62px);
+        clamp(40px, 5vw, 62px);
+
+    line-height: 1.1;
 
     font-weight: 800;
 
@@ -7160,8 +7715,13 @@
 
     color:
         #244e5a;
+
 }
 
+
+/* =========================================================
+   CTA TITLE COLOR
+========================================================= */
 
 .cta-section h2 span {
 
@@ -7176,9 +7736,11 @@
             #247c79
         );
 
-    background-size: 300% auto;
+    background-size:
+        300% auto;
 
     -webkit-background-clip: text;
+
     background-clip: text;
 
     color: transparent;
@@ -7188,6 +7750,7 @@
         4s
         linear
         infinite;
+
 }
 
 
@@ -7200,17 +7763,24 @@
     display: flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 9px;
 
     margin: 22px auto;
+
 }
 
+
+/* =========================================================
+   CTA LINE LEFT / RIGHT
+========================================================= */
 
 .cta-line span {
 
     width: 65px;
+
     height: 4px;
 
     border-radius: 999px;
@@ -7223,20 +7793,29 @@
             #2aa9a2
         );
 
-    background-size: 200%;
+    background-size:
+        200%;
 
     animation:
         gradientMove
         3s
         linear
         infinite;
+
 }
 
+
+/* =========================================================
+   CTA LINE CENTER
+========================================================= */
 
 .cta-line i {
 
     width: 7px;
+
     height: 7px;
+
+    flex-shrink: 0;
 
     border-radius: 50%;
 
@@ -7251,6 +7830,7 @@
         dotPulse
         2s
         infinite;
+
 }
 
 
@@ -7270,27 +7850,34 @@
     font-size: 18px;
 
     line-height: 1.8;
+
 }
 
 
 /* =========================================================
-   CTA BUTTONS
+   CTA BUTTON WRAPPER
 ========================================================= */
 
 .cta-buttons {
 
     display: flex;
 
-    justify-content: center;
     align-items: center;
+
+    justify-content: center;
 
     gap: 16px;
 
     margin-top: 35px;
 
     flex-wrap: wrap;
+
 }
 
+
+/* =========================================================
+   BOTH BUTTONS
+========================================================= */
 
 .cta-primary,
 .cta-secondary {
@@ -7302,6 +7889,7 @@
     display: inline-flex;
 
     align-items: center;
+
     justify-content: center;
 
     gap: 10px;
@@ -7319,14 +7907,18 @@
     transition:
         transform .35s ease,
         box-shadow .35s ease;
+
 }
 
 
-/* PRIMARY */
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
 
 .cta-primary {
 
-    color: white;
+    color:
+        #ffffff;
 
     background:
         linear-gradient(
@@ -7336,7 +7928,8 @@
             #4ccbc4
         );
 
-    background-size: 200% 200%;
+    background-size:
+        200% 200%;
 
     box-shadow:
         0 12px 30px
@@ -7347,10 +7940,13 @@
         5s
         ease
         infinite;
+
 }
 
 
-/* SECONDARY */
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
 
 .cta-secondary {
 
@@ -7373,28 +7969,56 @@
         4s
         ease-in-out
         infinite;
+
 }
 
+
+/* =========================================================
+   BUTTON ICON / PANAH
+========================================================= */
 
 .cta-primary svg,
 .cta-secondary svg {
 
     width: 19px;
+
     height: 19px;
+
+    flex-shrink: 0;
 
     transition:
         transform .3s ease;
+
 }
 
+
+/* =========================================================
+   PANAH BERGERAK SAAT HOVER
+========================================================= */
+
+.cta-primary:hover svg,
+.cta-secondary:hover svg {
+
+    transform:
+        translateX(5px);
+
+}
+
+
+/* =========================================================
+   BUTTON SHINE
+========================================================= */
 
 .button-shine {
 
     position: absolute;
 
     top: -50%;
+
     left: -120%;
 
     width: 60%;
+
     height: 200%;
 
     background:
@@ -7405,7 +8029,8 @@
             transparent
         );
 
-    transform: rotate(20deg);
+    transform:
+        rotate(20deg);
 
     animation:
         buttonShine
@@ -7414,8 +8039,13 @@
         infinite;
 
     pointer-events: none;
+
 }
 
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
 
 .cta-primary:hover,
 .cta-secondary:hover {
@@ -7423,27 +8053,26 @@
     transform:
         translateY(-7px)
         scale(1.03);
+
 }
 
 
-.cta-primary:hover svg,
-.cta-secondary:hover svg {
-
-    transform:
-        translateX(5px);
-}
-
+/* =========================================================
+   PRIMARY HOVER SHADOW
+========================================================= */
 
 .cta-primary:hover {
 
     box-shadow:
         0 20px 45px
         rgba(42,169,162,.32);
+
 }
 
 
 /* =========================================================
    CTA ORBS
+   DIKURANGI AGAR TIDAK TERLALU BANYAK BUBBLE
 ========================================================= */
 
 .cta-orb {
@@ -7454,83 +8083,117 @@
 
     pointer-events: none;
 
-    filter: blur(1px);
+    filter:
+        blur(2px);
+
 }
 
 
+/* =========================================================
+   ORB 1
+   BUBBLE KIRI - HALUS
+========================================================= */
+
 .cta-orb-1 {
 
-    width: 270px;
-    height: 270px;
+    width: 230px;
 
-    left: -100px;
+    height: 230px;
+
+    left: -110px;
+
     top: 20px;
 
     background:
-        rgba(101,214,208,.15);
+        rgba(255,255,255,.12);
 
     animation:
         orbFloat
         9s
         ease-in-out
         infinite;
+
 }
 
 
+/* =========================================================
+   ORB 2
+   BUBBLE KANAN - HALUS
+========================================================= */
+
 .cta-orb-2 {
 
-    width: 200px;
-    height: 200px;
+    width: 170px;
 
-    right: -60px;
+    height: 170px;
+
+    right: -80px;
+
     bottom: 20px;
 
     background:
-        rgba(42,169,162,.12);
+        rgba(42,169,162,.07);
 
     animation:
         orbFloatReverse
         7s
         ease-in-out
         infinite;
+
 }
 
 
+/* =========================================================
+   ORB 3
+   BUBBLE KECIL - SANGAT HALUS
+========================================================= */
+
 .cta-orb-3 {
 
-    width: 85px;
-    height: 85px;
+    width: 55px;
+
+    height: 55px;
 
     left: 20%;
+
     bottom: 20px;
 
     background:
-        rgba(188,239,235,.30);
+        rgba(255,255,255,.10);
 
     animation:
         orbSmallFloat
         5s
         ease-in-out
         infinite;
+
 }
 
 
+/* =========================================================
+   ORB 4
+   BUBBLE KECIL - SANGAT HALUS
+========================================================= */
+
 .cta-orb-4 {
 
-    width: 55px;
-    height: 55px;
+    width: 40px;
+
+    height: 40px;
 
     right: 25%;
+
     top: 20px;
 
     background:
-        rgba(101,214,208,.15);
+        rgba(255,255,255,.09);
 
     animation:
         orbSmallFloatReverse
         4s
         ease-in-out
         infinite;
+
 }
 
 
@@ -7543,6 +8206,7 @@
     position: absolute;
 
     width: 10px;
+
     height: 10px;
 
     border-radius: 50%;
@@ -7555,39 +8219,103 @@
         rgba(42,169,162,.18);
 
     pointer-events: none;
+
 }
 
+
+/* =========================================================
+   DOT 1
+========================================================= */
 
 .cta-dot-1 {
+
     left: 20%;
+
     top: 20%;
-    animation: dotPathOne 5s infinite;
+
+    animation:
+        dotPathOne
+        5s
+        infinite;
+
 }
+
+
+/* =========================================================
+   DOT 2
+========================================================= */
 
 .cta-dot-2 {
+
     right: 20%;
+
     top: 25%;
-    animation: dotPathTwo 7s infinite reverse;
+
+    animation:
+        dotPathTwo
+        7s
+        infinite
+        reverse;
+
 }
+
+
+/* =========================================================
+   DOT 3
+========================================================= */
 
 .cta-dot-3 {
+
     left: 30%;
+
     bottom: 20%;
-    animation: dotPathThree 6s infinite;
+
+    animation:
+        dotPathThree
+        6s
+        infinite;
+
 }
+
+
+/* =========================================================
+   DOT 4
+========================================================= */
 
 .cta-dot-4 {
+
     right: 30%;
+
     bottom: 15%;
-    animation: dotPathFour 4s infinite reverse;
+
+    animation:
+        dotPathFour
+        4s
+        infinite
+        reverse;
+
 }
 
+
+/* =========================================================
+   DOT 5
+========================================================= */
+
 .cta-dot-5 {
+
     left: 50%;
+
     top: 15%;
+
     width: 6px;
+
     height: 6px;
-    animation: dotPathFive 5s infinite;
+
+    animation:
+        dotPathFive
+        5s
+        infinite;
+
 }
 
 
@@ -7595,253 +8323,22 @@
    ANIMATIONS
 ========================================================= */
 
-@keyframes stepFloat {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    25% {
-        transform: translateY(-5px);
-    }
-
-    50% {
-        transform: translateY(-13px);
-    }
-
-    75% {
-        transform: translateY(-4px);
-    }
-}
-
-
-@keyframes numberBounce {
-
-    0%, 100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    25% {
-        transform:
-            translateY(-4px)
-            rotate(-2deg);
-    }
-
-    50% {
-        transform:
-            translateY(-8px)
-            rotate(2deg);
-    }
-
-    75% {
-        transform:
-            translateY(-3px)
-            rotate(-1deg);
-    }
-}
-
-
-@keyframes numberScale {
-
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.08);
-    }
-}
-
-
-@keyframes iconFloat {
-
-    0%, 100% {
-        transform:
-            translateY(0)
-            rotate(0deg);
-    }
-
-    25% {
-        transform:
-            translateY(-4px)
-            rotate(-3deg);
-    }
-
-    50% {
-        transform:
-            translateY(-8px)
-            rotate(3deg);
-    }
-
-    75% {
-        transform:
-            translateY(-3px)
-            rotate(-1deg);
-    }
-}
-
-
-@keyframes iconRotate {
-
-    0%, 100% {
-        transform:
-            rotate(0deg)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            rotate(3deg)
-            scale(1.08);
-    }
-}
-
-
-@keyframes iconGlow {
-
-    0%, 100% {
-        opacity: .35;
-        transform: scale(.8);
-    }
-
-    50% {
-        opacity: .90;
-        transform: scale(1.35);
-    }
-}
-
-
-@keyframes iconRing {
-
-    0%, 100% {
-        opacity: .25;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: .80;
-        transform: scale(1.12);
-    }
-}
-
-
-@keyframes stepPulse {
-
-    0% {
-        opacity: 0;
-        transform: scale(.8);
-    }
-
-    35% {
-        opacity: .5;
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(1.35);
-    }
-}
-
-
-@keyframes tinyOrbit {
-
-    0%, 100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    25% {
-        transform:
-            translate(4px,-3px)
-            scale(1.1);
-    }
-
-    50% {
-        transform:
-            translate(0,-5px)
-            scale(.85);
-    }
-
-    75% {
-        transform:
-            translate(-4px,-2px)
-            scale(1.1);
-    }
-}
-
-
-@keyframes orbitRotate {
-
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-
-@keyframes lineTravel {
-
-    0% {
-        left: -20%;
-    }
-
-    100% {
-        left: 110%;
-    }
-}
-
-
-@keyframes lineGlow {
-
-    0%, 100% {
-        opacity: .25;
-    }
-
-    50% {
-        opacity: .85;
-    }
-}
-
-
-@keyframes textLift {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-2px);
-    }
-}
-
-
-@keyframes headerFloat {
-
-    0%, 100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
-}
-
-
 @keyframes ctaFloat {
 
     0%, 100% {
-        transform: translateY(0);
+
+        transform:
+            translateY(0);
+
     }
 
     50% {
-        transform: translateY(-7px);
+
+        transform:
+            translateY(-7px);
+
     }
+
 }
 
 
@@ -7849,93 +8346,120 @@
 
     0%, 100% {
 
-        transform: translateY(0);
+        transform:
+            translateY(0);
 
         box-shadow:
             0 8px 25px
             rgba(42,169,162,.06);
+
     }
 
     50% {
 
-        transform: translateY(-4px);
+        transform:
+            translateY(-4px);
 
         box-shadow:
             0 15px 35px
             rgba(42,169,162,.13);
+
     }
+
 }
 
 
 @keyframes dotPulse {
 
     0%, 100% {
+
         opacity: .55;
-        transform: scale(1);
+
+        transform:
+            scale(1);
+
     }
 
     50% {
+
         opacity: 1;
-        transform: scale(1.4);
-    }
-}
 
+        transform:
+            scale(1.4);
 
-@keyframes ringPulse {
-
-    0%, 100% {
-        opacity: .20;
-        transform: scale(1);
     }
 
-    50% {
-        opacity: .75;
-        transform: scale(1.1);
-    }
 }
 
 
 @keyframes gradientMove {
 
     0% {
-        background-position: 0% 50%;
+
+        background-position:
+            0% 50%;
+
     }
 
     100% {
-        background-position: 300% 50%;
+
+        background-position:
+            300% 50%;
+
     }
+
 }
 
 
 @keyframes buttonGradient {
 
     0% {
-        background-position: 0% 50%;
+
+        background-position:
+            0% 50%;
+
     }
 
     50% {
-        background-position: 100% 50%;
+
+        background-position:
+            100% 50%;
+
     }
 
     100% {
-        background-position: 0% 50%;
+
+        background-position:
+            0% 50%;
+
     }
+
 }
 
 
 @keyframes buttonShine {
 
     0% {
-        left: -120%;
+
+        left:
+            -120%;
+
     }
 
     35% {
-        left: 140%;
+
+        left:
+            140%;
+
     }
 
     100% {
-        left: 140%;
+
+        left:
+            140%;
+
     }
+
 }
 
 
@@ -7946,6 +8470,7 @@
         box-shadow:
             0 10px 25px
             rgba(42,169,162,.06);
+
     }
 
     50% {
@@ -7953,95 +8478,110 @@
         box-shadow:
             0 15px 35px
             rgba(42,169,162,.13);
+
     }
+
 }
 
 
-@keyframes blobFloatOne {
+@keyframes orbFloat {
 
     0%, 100% {
-        transform:
-            translate(0,0)
-            scale(1)
-            rotate(0deg);
-    }
 
-    50% {
-        transform:
-            translate(45px,-30px)
-            scale(1.1)
-            rotate(12deg);
-    }
-}
-
-
-@keyframes blobFloatTwo {
-
-    0%, 100% {
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     50% {
+
         transform:
-            translate(-40px,-35px)
-            scale(1.14);
+            translate(40px,-35px)
+            scale(1.1);
+
     }
+
 }
 
 
-@keyframes blobFloatThree {
+@keyframes orbFloatReverse {
 
     0%, 100% {
+
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     50% {
+
         transform:
-            translate(35px,25px)
+            translate(-35px,-30px)
             scale(1.12);
+
     }
+
 }
 
 
-@keyframes blobFloatFour {
+@keyframes orbSmallFloat {
 
     0%, 100% {
+
+        transform:
+            translateY(0);
+
+    }
+
+    50% {
+
+        transform:
+            translateY(-28px);
+
+    }
+
+}
+
+
+@keyframes orbSmallFloatReverse {
+
+    0%, 100% {
+
         transform:
             translate(0,0);
+
     }
 
     50% {
+
         transform:
-            translate(-20px,-30px);
+            translate(-20px,25px);
+
     }
+
 }
 
 
-@keyframes ringRotate {
+@keyframes waveMove {
 
-    from {
-        transform: rotate(0deg);
+    0%, 100% {
+
+        transform:
+            translateX(0)
+            scaleX(1);
+
     }
 
-    to {
-        transform: rotate(360deg);
-    }
-}
+    50% {
 
+        transform:
+            translateX(35px)
+            scaleX(1.03);
 
-@keyframes ringRotateReverse {
-
-    from {
-        transform: rotate(360deg);
     }
 
-    to {
-        transform: rotate(0deg);
-    }
 }
 
 
@@ -8052,220 +8592,129 @@
 @keyframes dotPathOne {
 
     0%, 100% {
+
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     25% {
+
         transform:
             translate(12px,-18px)
             scale(1.15);
+
     }
 
     50% {
+
         transform:
             translate(-5px,-34px)
             scale(.9);
+
     }
 
     75% {
+
         transform:
             translate(-15px,-12px)
             scale(1.08);
+
     }
+
 }
 
 
 @keyframes dotPathTwo {
 
     0%, 100% {
+
         transform:
             translate(0,0);
+
     }
 
     50% {
+
         transform:
             translate(-25px,30px);
+
     }
+
 }
 
 
 @keyframes dotPathThree {
 
     0%, 100% {
+
         transform:
             translate(0,0)
             scale(1);
+
     }
 
     50% {
+
         transform:
             translate(25px,-25px)
             scale(1.3);
+
     }
+
 }
 
 
 @keyframes dotPathFour {
 
     0%, 100% {
+
         transform:
             translate(0,0);
+
     }
 
     25% {
+
         transform:
             translate(-15px,-10px);
+
     }
 
     50% {
+
         transform:
             translate(-30px,-35px);
+
     }
 
     75% {
+
         transform:
             translate(-10px,-50px);
+
     }
+
 }
 
 
 @keyframes dotPathFive {
 
     0%, 100% {
+
         transform:
             translate(0,0);
+
     }
 
     50% {
+
         transform:
             translate(18px,-20px);
-    }
-}
 
-
-@keyframes dotPathSix {
-
-    0%, 100% {
-        transform:
-            translate(0,0);
     }
 
-    50% {
-        transform:
-            translate(-20px,15px);
-    }
-}
-
-
-@keyframes dotPathSeven {
-
-    0%, 100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate(20px,20px)
-            scale(1.4);
-    }
-}
-
-
-@keyframes dotPathEight {
-
-    0%, 100% {
-        transform:
-            translate(0,0);
-    }
-
-    50% {
-        transform:
-            translate(-25px,-18px);
-    }
-}
-
-
-/* =========================================================
-   CTA ORB ANIMATION
-========================================================= */
-
-@keyframes orbFloat {
-
-    0%, 100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate(40px,-35px)
-            scale(1.1);
-    }
-}
-
-
-@keyframes orbFloatReverse {
-
-    0%, 100% {
-        transform:
-            translate(0,0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate(-35px,-30px)
-            scale(1.12);
-    }
-}
-
-
-@keyframes orbSmallFloat {
-
-    0%, 100% {
-        transform:
-            translateY(0);
-    }
-
-    50% {
-        transform:
-            translateY(-28px);
-    }
-}
-
-
-@keyframes orbSmallFloatReverse {
-
-    0%, 100% {
-        transform:
-            translate(0,0);
-    }
-
-    50% {
-        transform:
-            translate(-20px,25px);
-    }
-}
-
-
-@keyframes waveMove {
-
-    0%, 100% {
-        transform:
-            translateX(0)
-            scaleX(1);
-    }
-
-    50% {
-        transform:
-            translateX(35px)
-            scaleX(1.03);
-    }
 }
 
 
@@ -8275,35 +8724,13 @@
 
 @media (max-width: 900px) {
 
-    .how-it-works-section {
-        padding: 90px 0 100px;
-    }
-
-    .how-header {
-        margin-bottom: 60px;
-    }
-
-    .steps-wrapper {
-        gap: 25px;
-    }
-
-    .steps-line {
-        left: 8%;
-        right: 8%;
-    }
-
-    .step-card {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
-    .step-card p {
-        font-size: 13px;
-    }
-
     .cta-section {
-        padding: 100px 0;
+
+        padding:
+            100px 0;
+
     }
+
 }
 
 
@@ -8313,57 +8740,20 @@
 
 @media (max-width: 768px) {
 
-    .how-it-works-section {
-        padding: 80px 0;
-    }
-
-    .how-header {
-        margin-bottom: 55px;
-    }
-
-    .how-title {
-        font-size: 44px;
-    }
-
-    .steps-wrapper {
-
-        grid-template-columns:
-            repeat(2, minmax(0, 1fr));
-
-        gap: 60px 20px;
-    }
-
-    .steps-line {
-        display: none;
-    }
-
-    .step-orbit {
-        display: none;
-    }
-
-    .step-number {
-
-        width: 68px;
-        height: 68px;
-    }
-
-    .step-pulse {
-
-        width: 68px;
-        height: 68px;
-
-        margin-left: -34px;
-
-        top: 26px;
-    }
-
     .cta-section {
-        padding: 85px 0;
+
+        padding:
+            85px 0;
+
     }
 
     .cta-section h2 {
-        font-size: 44px;
+
+        font-size:
+            44px;
+
     }
+
 }
 
 
@@ -8373,69 +8763,45 @@
 
 @media (max-width: 480px) {
 
-    .how-it-works-section {
-        padding: 70px 0;
-    }
-
-    .section-badge {
-
-        font-size: 11px;
-
-        padding: 9px 15px;
-    }
-
-    .how-title {
-
-        font-size: 38px;
-
-        letter-spacing: -1.8px;
-    }
-
-    .how-subtitle {
-        font-size: 16px;
-    }
-
-    .steps-wrapper {
-
-        grid-template-columns: 1fr;
-
-        gap: 55px;
-    }
-
-    .step-card p {
-
-        max-width: 280px;
-
-        font-size: 14px;
-    }
-
     .cta-section {
-        padding: 75px 0;
+
+        padding:
+            75px 0;
+
     }
 
     .cta-section h2 {
-        font-size: 38px;
+
+        font-size:
+            38px;
+
     }
 
     .cta-section p {
-        font-size: 16px;
+
+        font-size:
+            16px;
+
     }
 
     .cta-buttons {
-        flex-direction: column;
+
+        flex-direction:
+            column;
+
     }
 
     .cta-primary,
     .cta-secondary {
 
-        width: 100%;
+        width:
+            100%;
 
-        max-width: 280px;
+        max-width:
+            280px;
+
     }
 
-    .how-ring {
-        opacity: .5;
-    }
 }
 
 
@@ -8445,9 +8811,6 @@
 
 @media (prefers-reduced-motion: reduce) {
 
-    .how-it-works-section *,
-    .how-it-works-section *::before,
-    .how-it-works-section *::after,
     .cta-section *,
     .cta-section *::before,
     .cta-section *::after {
@@ -8460,7 +8823,9 @@
 
         scroll-behavior:
             auto !important;
+
     }
+
 }
 
 </style>
