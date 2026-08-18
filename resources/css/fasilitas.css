@@ -1,0 +1,116 @@
+.fasilitas-page {
+    position: relative;
+    overflow: hidden;
+    background: #f8feff;
+    min-height: 100vh;
+}
+
+.fasilitas-page::before,
+.fasilitas-page::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.fasilitas-page::before {
+    width: 320px;
+    height: 320px;
+    left: -160px;
+    top: 300px;
+    background: rgba(103, 232, 249, 0.10);
+    animation: floatingBubble 8s ease-in-out infinite;
+}
+
+.fasilitas-page::after {
+    width: 380px;
+    height: 380px;
+    right: -200px;
+    bottom: 100px;
+    background: rgba(20, 184, 196, 0.07);
+    animation: floatingBubble2 10s ease-in-out infinite;
+}
+
+@keyframes floatingBubble {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(35px, -25px) scale(1.08); }
+}
+
+@keyframes floatingBubble2 {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(-30px, 25px); }
+}
+
+.fasilitas-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 10% 20%, rgba(103, 232, 249, 0.28), transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(20, 184, 196, 0.12), transparent 35%),
+        linear-gradient(135deg, #dffbfc, #c9f5f7, #effdfe);
+    background-size: 180% 180%;
+    animation: heroGradient 10s ease-in-out infinite;
+}
+
+@keyframes heroGradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero-title span { color: #14b8c4; }
+.hero-title { color: #17384d; }
+.hero-description { color: #3d6473; }
+
+.fasilitas-card {
+    position: relative;
+    background: #ffffff;
+    border: 1px solid #e3f6f8;
+    border-radius: 20px;
+    padding: 28px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.fasilitas-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(20, 184, 196, 0.15);
+    border-color: #a9e8ec;
+}
+
+.fasilitas-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #67e8f9, #14b8c4);
+    color: #fff;
+    margin-bottom: 18px;
+}
+
+.fasilitas-card h3 {
+    color: #17384d;
+    font-weight: 700;
+    font-size: 1.02rem;
+    margin-bottom: 8px;
+}
+
+.fasilitas-card p {
+    color: #5b7b87;
+    font-size: 0.925rem;
+    line-height: 1.6;
+}
+
+.fasilitas-badge {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #14b8c4;
+    background: #eafcfd;
+    padding: 4px 12px;
+    border-radius: 9999px;
+}
