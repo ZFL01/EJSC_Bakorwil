@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+use App\Http\Controllers\GisMapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,15 @@ Route::get('/client', function () {
 Route::get('/gis', function () {
     return view('gis');
 })->name('gis');
+
+/*
+|--------------------------------------------------------------------------
+| GIS API (dipakai oleh peta interaktif di home & gis)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/api/gis/tahun', [GisMapController::class, 'years']);
+Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
 
 Route::get('/fasilitas', function () {
     return view('fasilitas');

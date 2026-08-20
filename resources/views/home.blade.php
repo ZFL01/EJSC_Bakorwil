@@ -7,63 +7,137 @@
 <!-- ============================================ -->
 <!-- GIS MAP SECTION (Full-Width, Top of Landing) -->
 <!-- ============================================ -->
-<section id="gis-section" class="relative w-full bg-[#0e4f81]">
-    <!-- Leaflet CSS -->
+<section id="gis-section" class="relative w-full bg-[#0e4f81] overflow-hidden border-0 m-0 p-0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-<!-- Map Header Bar -->
-    <div class="absolute top-0 left-0 right-0 z-20 bg-gradient-to-r from-sky-200 via-cyan-200 to-slate-100 text-slate-900 px-6 py-4 shadow-lg">
-        <div class="flex items-center justify-between">
-            <div>
-                <h1 class="text-xl lg:text-2xl font-bold">Peta Wilayah Bakorwil</h1>
-                <p class="text-sm text-slate-700">Sistem Informasi Geografis 7 Daerah Tapal Kuda - Jawa Timur</p>
+    <style>
+        #gis-section {
+            position: relative;
+            z-index: 1;
+            margin-top: 72px;
+            border-top: 0 !important;
+            border-bottom: 0 !important;
+        }
+
+        #after-gis {
+            scroll-margin-top: 90px;
+        }
+
+        #qgis-map {
+            position: relative;
+            z-index: 1;
+            height: clamp(500px, 78vh, 780px) !important;
+            min-height: 500px;
+            background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);
+        }
+
+        #gis-placeholder,
+        #qgis-info {
+            z-index: 20;
+        }
+
+        #gis-map-header {
+            top: max(12px, env(safe-area-inset-top));
+            left: max(12px, env(safe-area-inset-left));
+            right: max(12px, env(safe-area-inset-right));
+        }
+
+        #gis-map-header .gis-header-card {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            padding: 12px 16px;
+            border-radius: 16px;
+            background: rgba(255,255,255,.92);
+            border: 1px solid rgba(255,255,255,.78);
+            box-shadow: 0 12px 30px rgba(15, 73, 99, .18);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+
+        #gis-map-header select {
+            min-width: 118px;
+        }
+
+        @media (max-width: 640px) {
+            #qgis-map {
+                height: 68svh !important;
+                min-height: 460px;
+            }
+
+            #gis-map-header {
+                top: 10px;
+                left: 10px;
+                right: 10px;
+            }
+
+            #gis-map-header .gis-header-card {
+                padding: 11px 12px;
+                border-radius: 14px;
+            }
+
+            #gis-map-header h1 {
+                font-size: 1rem;
+                line-height: 1.25;
+            }
+
+            #gis-map-header p {
+                font-size: .72rem;
+                line-height: 1.35;
+            }
+
+            #gis-map-header select {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    </style>
+
+    <div id="gis-map-header" class="absolute z-[1000] pointer-events-none">
+        <div class="gis-header-card pointer-events-auto">
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div class="min-w-0">
+                    <h1 class="text-xl lg:text-2xl font-bold text-slate-900">Peta Wilayah Bakorwil</h1>
+                    <p class="text-sm text-slate-700">Sistem Informasi Geografis 7 Daerah Tapal Kuda - Jawa Timur</p>
+                </div>
+
+                <div class="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-3">
+                    <div class="flex items-center gap-2">
+                        <label for="gis-year" class="shrink-0 text-sm font-semibold text-slate-700">Tahun</label>
+                        <select id="gis-year" class="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-800 shadow-sm outline-none transition focus:border-teal-500 focus:ring-2 focus:ring-teal-200">
+                            <option value="">Memuat...</option>
+                        </select>
+                    </div>
+
+                    <span id="gis-status" class="inline-flex w-fit items-center px-3 py-1 bg-yellow-400 text-teal-900 text-xs font-bold rounded-full">
+                        <span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>
+                        Memuat data
+                    </span>
+                </div>
             </div>
-            <span class="hidden sm:inline-flex items-center px-3 py-1 bg-yellow-400 text-teal-900 text-xs font-bold rounded-full">
-                <span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>
-                QGIS Map
-            </span>
         </div>
     </div>
 
-    <!-- Leaflet Map Container (full width, large height) -->
-    <div id="qgis-map" class="w-full relative z-0" style="height: 80vh; background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);"></div>
+    <div id="qgis-map" class="w-full relative z-0"></div>
 
-<!-- Placeholder Overlay (shown until GeoJSON data is loaded) -->
-    <div id="gis-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-center px-6 text-slate-900" style="background: linear-gradient(135deg, rgba(173,216,230,0.96), rgba(199,229,255,0.96)); z-index: 10;">
-        <div class="w-20 h-20 bg-white/15 border border-yellow-400/50 rounded-2xl flex items-center justify-center mb-6">
-            <svg class="w-10 h-10 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
-            </svg>
-        </div>
-        <h2 class="text-2xl lg:text-3xl font-bold text-slate-900 mb-3">Tempat Peta QGIS</h2>
-        <p class="text-slate-700 max-w-xl mb-6 leading-relaxed">
-            Area ini disiapkan untuk menampilkan peta interaktif hasil QGIS.
-            Unggah file <span class="font-mono text-yellow-300">GeoJSON</span> hasil ekspor QGIS ke
-            <span class="font-mono text-yellow-300">public/maps/bakorwil.geojson</span>
-            untuk menampilkan 7 daerah Tapal Kuda secara interaktif.
-        </p>
-        <div class="flex flex-wrap gap-3 justify-center">
-            <button onclick="loadQGISData()" class="px-6 py-3 bg-yellow-400 hover:bg-yellow-300 text-teal-900 font-bold rounded-lg transition shadow-lg">
-                Muat Data Peta
-            </button>
-            <a href="#after-gis" class="px-6 py-3 bg-white border border-slate-300 text-slate-900 font-semibold rounded-lg hover:bg-slate-100 transition">
-                Lihat Layanan
-            </a>
+    <div id="gis-placeholder" class="absolute inset-x-0 bottom-0 flex items-center justify-center text-center px-6 pointer-events-none" style="top:0; background:linear-gradient(135deg,rgba(173,216,230,.88),rgba(199,229,255,.88)); z-index:10;">
+        <div class="pointer-events-auto bg-white/90 rounded-2xl shadow-xl border border-white p-6 max-w-lg">
+            <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.6" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618A1 1 0 014.447 4.724L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            </div>
+            <h2 class="text-xl lg:text-2xl font-bold text-slate-900 mb-2">Memuat Peta Bakorwil</h2>
+            <p id="gis-placeholder-text" class="text-sm text-slate-600">Mengambil data wilayah dan statistik dari PostGIS.</p>
         </div>
     </div>
 
-    <!-- Map Info Panel (populated on region click) -->
-    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index: 20;">
-        <div class="flex items-start justify-between">
-            <div>
+    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index:20;">
+        <div class="flex items-start justify-between gap-3">
+            <div class="min-w-0">
                 <h3 id="qgis-info-name" class="text-lg font-bold text-teal-900"></h3>
-                <p id="qgis-info-type" class="text-sm font-medium text-teal-600 mb-1"></p>
-                <p id="qgis-info-desc" class="text-sm text-gray-600"></p>
+                <p id="qgis-info-type" class="text-sm font-medium text-teal-600 mb-2"></p>
+                <div id="qgis-info-stats" class="grid grid-cols-2 gap-2 text-sm"></div>
             </div>
-            <button onclick="document.getElementById('qgis-info').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 p-1">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                </svg>
+            <button onclick="document.getElementById('qgis-info').classList.add('hidden')" class="text-gray-400 hover:text-gray-600 p-1 shrink-0" aria-label="Tutup">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
         </div>
     </div>
@@ -8836,397 +8910,242 @@
     LEAFLET / QGIS SCRIPT
 ========================================================= --}}
 @section('scripts')
-
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <script>
+(() => {
+    const mapElement = document.getElementById('qgis-map');
+    const yearSelect = document.getElementById('gis-year');
+    const statusEl = document.getElementById('gis-status');
+    const placeholder = document.getElementById('gis-placeholder');
+    const placeholderText = document.getElementById('gis-placeholder-text');
+    const infoPanel = document.getElementById('qgis-info');
+    const infoName = document.getElementById('qgis-info-name');
+    const infoType = document.getElementById('qgis-info-type');
+    const infoStats = document.getElementById('qgis-info-stats');
 
     let qgisMap = null;
-
     let geoLayer = null;
+    let initialBoundsApplied = false;
 
-
-    // =====================================================
-    // INITIALIZE MAP
-    // =====================================================
-
-    function initQGISMap() {
-
-        if (qgisMap) return;
-
-
-        const mapElement =
-            document.getElementById('qgis-map');
-
-
-        if (!mapElement) return;
-
-
-        qgisMap = L.map(
-            'qgis-map',
-            {
-
-                center:
-                    [-8.0, 113.8],
-
-                zoom:
-                    8,
-
-                scrollWheelZoom:
-                    true
-
-            }
-        );
-
-
-        // =================================================
-        // OPEN STREET MAP
-        // =================================================
-
-        L.tileLayer(
-
-            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-
-            {
-
-                maxZoom:
-                    18,
-
-                attribution:
-                    '&copy; <a href="https://www.openstreetmap.org/copyright">' +
-                    'OpenStreetMap</a> contributors'
-
-            }
-
-        ).addTo(qgisMap);
-
-
-        setTimeout(
-
-            function () {
-
-                qgisMap.invalidateSize();
-
-            },
-
-            300
-
-        );
-
+    function initMap() {
+        if (qgisMap || !mapElement) return;
+        qgisMap = L.map(mapElement, { center: [-8.1, 113.7], zoom: 8, scrollWheelZoom: true });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(qgisMap);
+        addRegionLegend();
+        setTimeout(() => qgisMap.invalidateSize(), 300);
     }
 
+    function n(value) { return Number(value ?? 0).toLocaleString('id-ID'); }
+    function prop(props, ...keys) {
+        for (const key of keys) if (props[key] !== undefined && props[key] !== null) return props[key];
+        return null;
+    }
 
+    // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan.
+    // Bondowoso memakai hijau dengan outline kuning emas.
+    const regionStyles = {
+        'Jember': { fill: '#f3a6c8', border: '#be185d' },
+        'Kota Probolinggo': { fill: '#9bdcf5', border: '#0284c7' },
+        'Probolinggo': { fill: '#f7d45a', border: '#d97706' },
+        'Lumajang': { fill: '#2f7d32', border: '#14532d' },
+        'Bondowoso': { fill: '#69b86b', border: '#d4a017' },
+        'Banyuwangi': { fill: '#3B82F6', border: '#166534' },
+        'Situbondo': { fill: '#e8bd45', border: '#a16207' }
+    };
 
-    // =====================================================
-    // LOAD QGIS DATA
-    // =====================================================
+    function getRegionStyle(feature) {
+        const p = feature.properties || {};
+        const name = String(prop(p, 'nama_wilayah', 'NAMA_WILAYAH', 'name', 'NAME') || '').trim();
+        return regionStyles[name] || { fill: '#94a3b8', border: '#475569' };
+    }
 
-    function loadQGISData() {
+    function styleFeature(feature) {
+        const style = getRegionStyle(feature);
+        return {
+            color: style.border,
+            weight: 2.5,
+            fillColor: style.fill,
+            fillOpacity: 0.68
+        };
+    }
 
-        initQGISMap();
+    function showInfo(props) {
+        const name = prop(props, 'nama_wilayah', 'NAMA_WILAYAH', 'name', 'NAME') || 'Wilayah';
+        const type = prop(props, 'jenis_wilayah', 'JENIS_WILAYAH', 'type', 'TYPE') || 'Wilayah';
+        const project = prop(props, 'jumlah_project', 'JUMLAH_PROJECT') ?? 0;
+        const mentor = prop(props, 'jumlah_mentor', 'JUMLAH_MENTOR') ?? 0;
+        const talenta = prop(props, 'jumlah_talenta', 'JUMLAH_TALENTA') ?? 0;
+        const client = prop(props, 'jumlah_client', 'JUMLAH_CLIENT') ?? 0;
 
+        infoName.textContent = name;
+        infoType.textContent = `${type} · Tahun ${yearSelect.value}`;
+        infoStats.innerHTML = `
+            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Project</div><div class="font-bold text-slate-900">${n(project)}</div></div>
+            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Mentor</div><div class="font-bold text-slate-900">${n(mentor)}</div></div>
+            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Talenta</div><div class="font-bold text-slate-900">${n(talenta)}</div></div>
+            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Client</div><div class="font-bold text-slate-900">${n(client)}</div></div>
+        `;
+        infoPanel.classList.remove('hidden');
+    }
 
-        if (!qgisMap) {
+    function addRegionLegend() {
+        if (!qgisMap || qgisMap._regionLegendAdded) return;
 
-            console.error(
-                'Elemen #qgis-map tidak ditemukan.'
-            );
+        const legend = L.control({ position: 'bottomright' });
+        legend.onAdd = function() {
+            const div = L.DomUtil.create('div', 'leaflet-control region-legend');
+            div.innerHTML = '<div class=\"font-semibold text-slate-800 mb-2\">Legenda Wilayah</div>' +
+                Object.entries(regionStyles).map(([name, style]) => `
+                    <div style=\"display:flex;align-items:center;gap:7px;margin:4px 0;font-size:12px;line-height:1.2;\">
+                        <span style=\"display:inline-block;width:14px;height:14px;border-radius:3px;background:${style.fill};border:2px solid ${style.border};\"></span>
+                        <span>${name}</span>
+                    </div>`).join('');
 
-            return;
+            div.style.background = 'rgba(255,255,255,.94)';
+            div.style.padding = '10px 12px';
+            div.style.borderRadius = '12px';
+            div.style.boxShadow = '0 8px 22px rgba(15,23,42,.12)';
+            div.style.border = '1px solid rgba(148,163,184,.25)';
 
+            L.DomEvent.disableClickPropagation(div);
+            return div;
+        };
+
+        legend.addTo(qgisMap);
+        qgisMap._regionLegendAdded = true;
+    }
+
+    function createLayer(data) {
+        if (geoLayer) qgisMap.removeLayer(geoLayer);
+        geoLayer = L.geoJSON(data, {
+            style: styleFeature,
+            onEachFeature(feature, layer) {
+                const props = feature.properties || {};
+                const name = prop(props, 'nama_wilayah', 'NAMA_WILAYAH', 'name', 'NAME') || 'Wilayah';
+                layer.bindTooltip(name, { sticky: true, direction: 'top', opacity: 0.92 });
+                layer.on({
+                    mouseover() {
+                        const style = getRegionStyle(feature);
+                        layer.setStyle({
+                            color: style.border,
+                            weight: 4,
+                            fillColor: style.fill,
+                            fillOpacity: 0.88
+                        });
+                    },
+                    mouseout() { geoLayer.resetStyle(layer); },
+                    click() { showInfo(props); }
+                });
+            }
+        }).addTo(qgisMap);
+        const bounds = geoLayer.getBounds();
+        if (bounds.isValid()) {
+            if (!initialBoundsApplied) {
+                qgisMap.fitBounds(bounds, { padding: [20, 20] });
+                initialBoundsApplied = true;
+            } else {
+                qgisMap.fitBounds(bounds, { padding: [20, 20] });
+            }
         }
-
-
-        const geoJsonPath =
-            '/maps/bakorwil.geojson';
-
-
-        fetch(geoJsonPath)
-
-            .then(
-
-                function (res) {
-
-                    if (!res.ok) {
-
-                        throw new Error(
-                            'File GeoJSON belum tersedia'
-                        );
-
-                    }
-
-                    return res.json();
-
-                }
-
-            )
-
-            .then(
-
-                function (data) {
-
-                    // Hapus layer lama
-
-                    if (geoLayer) {
-
-                        qgisMap.removeLayer(
-                            geoLayer
-                        );
-
-                    }
-
-
-                    // Buat GeoJSON
-
-                    geoLayer =
-                        L.geoJSON(
-
-                            data,
-
-                            {
-
-                                style: {
-
-                                    color:
-                                        '#ffffff',
-
-                                    weight:
-                                        2,
-
-                                    fillColor:
-                                        '#2aa9a2',
-
-                                    fillOpacity:
-                                        0.58
-
-                                },
-
-
-                                onEachFeature:
-
-                                    function (
-                                        feature,
-                                        layer
-                                    ) {
-
-                                        const props =
-                                            feature.properties || {};
-
-
-                                        const name =
-                                            props.NAME ||
-                                            props.name ||
-                                            'Wilayah';
-
-
-                                        const type =
-                                            props.TYPE ||
-                                            props.type ||
-                                            '';
-
-
-                                        layer.bindPopup(
-
-                                            `<strong>
-                                                ${name}
-                                            </strong>
-
-                                            ${
-                                                type
-                                                ? '<br><small>' +
-                                                  type +
-                                                  '</small>'
-                                                : ''
-                                            }`
-
-                                        );
-
-
-                                        // =================================
-                                        // HOVER
-                                        // =================================
-
-                                        layer.on(
-
-                                            'mouseover',
-
-                                            function () {
-
-                                                layer.setStyle({
-
-                                                    fillColor:
-                                                        '#f3b64b',
-
-                                                    fillOpacity:
-                                                        0.82,
-
-                                                    weight:
-                                                        3
-
-                                                });
-
-                                            }
-
-                                        );
-
-
-                                        layer.on(
-
-                                            'mouseout',
-
-                                            function () {
-
-                                                geoLayer.resetStyle(
-                                                    layer
-                                                );
-
-                                            }
-
-                                        );
-
-
-                                        // =================================
-                                        // CLICK
-                                        // =================================
-
-                                        layer.on(
-
-                                            'click',
-
-                                            function () {
-
-                                                const nameElement =
-                                                    document.getElementById(
-                                                        'qgis-info-name'
-                                                    );
-
-
-                                                const typeElement =
-                                                    document.getElementById(
-                                                        'qgis-info-type'
-                                                    );
-
-
-                                                const descElement =
-                                                    document.getElementById(
-                                                        'qgis-info-desc'
-                                                    );
-
-
-                                                const infoElement =
-                                                    document.getElementById(
-                                                        'qgis-info'
-                                                    );
-
-
-                                                if (nameElement) {
-
-                                                    nameElement.textContent =
-                                                        name;
-
-                                                }
-
-
-                                                if (typeElement) {
-
-                                                    typeElement.textContent =
-                                                        type;
-
-                                                }
-
-
-                                                if (descElement) {
-
-                                                    descElement.textContent =
-                                                        props.DESCRIPTION ||
-                                                        props.desc ||
-                                                        'Detail wilayah belum tersedia.';
-
-                                                }
-
-
-                                                if (infoElement) {
-
-                                                    infoElement.classList.remove(
-                                                        'hidden'
-                                                    );
-
-                                                }
-
-                                            }
-
-                                        );
-
-                                    }
-
-                            }
-
-                        ).addTo(qgisMap);
-
-
-                    // =============================================
-                    // SESUAIKAN POSISI MAP
-                    // =============================================
-
-                    if (
-                        geoLayer.getBounds().isValid()
-                    ) {
-
-                        qgisMap.fitBounds(
-                            geoLayer.getBounds()
-                        );
-
-                    }
-
-
-                    // =============================================
-                    // HILANGKAN PLACEHOLDER
-                    // =============================================
-
-                    const placeholder =
-                        document.getElementById(
-                            'gis-placeholder'
-                        );
-
-
-                    if (placeholder) {
-
-                        placeholder.style.display =
-                            'none';
-
-                    }
-
-                }
-
-            )
-
-
-            .catch(
-
-                function (err) {
-
-                    console.error(
-                        'Gagal memuat peta:',
-                        err
-                    );
-
-
-                    alert(
-
-                        'Gagal memuat peta: ' +
-                        err.message +
-                        '\n\n' +
-                        'Tempatkan file GeoJSON hasil ekspor QGIS di:' +
-                        '\npublic/maps/bakorwil.geojson'
-
-                    );
-
-                }
-
-            );
-
     }
 
-</script>
+    async function loadYears() {
+        if (!yearSelect) return;
 
+        try {
+            const res = await fetch('/api/gis/tahun', {
+                headers: { 'Accept': 'application/json' },
+                cache: 'no-store'
+            });
+
+            if (!res.ok) {
+                throw new Error(`Endpoint tahun mengembalikan ${res.status}`);
+            }
+
+            const data = await res.json();
+            const years = Array.isArray(data)
+                ? data
+                : (data.years || data.data || []);
+
+            const normalized = [...new Set(
+                years
+                    .map(value => Number(value))
+                    .filter(Number.isFinite)
+            )].sort((a, b) => b - a);
+
+            if (!normalized.length) {
+                throw new Error('Belum ada tahun tersedia dari database.');
+            }
+
+            yearSelect.innerHTML = normalized
+                .map(year => `<option value="${year}">${year}</option>`)
+                .join('');
+
+            yearSelect.value = String(normalized[0]);
+            await loadYear(normalized[0]);
+        } catch (err) {
+            console.error('Gagal memuat daftar tahun:', err);
+            yearSelect.innerHTML = '<option value="">Tidak tersedia</option>';
+            yearSelect.value = '';
+            statusEl.classList.remove('hidden');
+            statusEl.innerHTML = '<span class="w-2 h-2 bg-red-700 rounded-full mr-2"></span>Error tahun';
+            placeholder.classList.remove('hidden');
+            placeholderText.textContent = `Gagal mengambil daftar tahun dari PostGIS: ${err.message}`;
+        }
+    }
+
+    async function loadYear(year) {
+        if (!year || !yearSelect) return;
+
+        initMap();
+        statusEl.classList.remove('hidden');
+        statusEl.innerHTML = '<span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>Memuat ' + year;
+        placeholder.classList.remove('hidden');
+        placeholderText.textContent = `Mengambil data 7 wilayah tahun ${year} dari PostGIS...`;
+        infoPanel.classList.add('hidden');
+
+        try {
+            const res = await fetch(
+                `/api/gis/wilayah?tahun=${encodeURIComponent(year)}`,
+                {
+                    headers: { 'Accept': 'application/json' },
+                    cache: 'no-store'
+                }
+            );
+
+            if (!res.ok) {
+                throw new Error(`Server mengembalikan ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            if (!data || data.type !== 'FeatureCollection' || !Array.isArray(data.features)) {
+                throw new Error('Format GeoJSON tidak valid.');
+            }
+
+            if (data.features.length !== 7) {
+                console.warn(`API tahun ${year} mengembalikan ${data.features.length} feature; target sistem adalah 7 wilayah.`);
+            }
+
+            yearSelect.value = String(year);
+            createLayer(data);
+            placeholder.classList.add('hidden');
+            statusEl.innerHTML = `<span class="w-2 h-2 bg-green-700 rounded-full mr-2"></span>${year} · ${data.features.length} wilayah`;
+        } catch (err) {
+            console.error('Gagal memuat peta:', err);
+            placeholder.classList.remove('hidden');
+            placeholderText.textContent = `Gagal memuat data tahun ${year}: ${err.message}`;
+            statusEl.innerHTML = '<span class="w-2 h-2 bg-red-700 rounded-full mr-2"></span>Error';
+        }
+    }
+
+    yearSelect.addEventListener('change', () => loadYear(yearSelect.value));
+    window.loadQGISData = () => loadYear(yearSelect.value || 2025);
+    initMap();
+    loadYears();
+})();
+</script>
 @endsection
