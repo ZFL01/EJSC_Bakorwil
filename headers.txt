@@ -1,0 +1,20 @@
+HTTP/1.1 302 Found
+Host: 127.0.0.1:8000
+Connection: close
+X-Powered-By: PHP/8.4.12
+Cache-Control: no-cache, private
+Date: Sun, 23 Aug 2026 09:46:39 GMT
+Location: http://127.0.0.1:8000/admin/dashboard
+Content-Type: text/html; charset=utf-8
+Set-Cookie: XSRF-TOKEN=eyJpdiI6ImxmbmhZcEFQNVNrb2tpU0g1QmFENnc9PSIsInZhbHVlIjoiWUl2VEVLSGx3UmcyOWFTekNlQ3g1OGlQekhlV3ZsSmFxSXpEMFhZNy9SNzk5M0VscGNSellpT29MMFdkUjdvU0ZTcDJjVUZoQWZ3MG5FUUZuQTNxSW5NWEd2OElHdlB4dkJMOHNwaDNCdEJaTTNlbkp0a1FyNjRkSFB1YUppY04iLCJtYWMiOiJlNDNiNWYzODlkMjQwNjhkNjRhMjg4ZDc5MWE2ZDZiZTg2MWY0N2U3ZDU3NWZhOTZkNzMyYTQ0MDJiODU1Y2ZiIiwidGFnIjoiIn0%3D; expires=Sun, 23 Aug 2026 11:46:39 GMT; Max-Age=7200; path=/; samesite=lax
+Set-Cookie: laravel-session=eyJpdiI6Ikc3aUZYYmpMOEJDTWhxTmxhMHY2Q3c9PSIsInZhbHVlIjoidTFJcjBPOUo5VUdCd2ZtVGQrTU11WGhsWVdqOXpmcU5lSStjUkxySTZYSzllamVUV3Ivc1ZLY3liYk1OVDYwWDZYdjNSTG9kcFAzNXJUMHg2ZGQ0RWxTZDhObXdYNFR2YW9MKzhRSDRKM1lCN1FheHdUd3hsTS96OVBpSzBsNDkiLCJtYWMiOiI4OGRkMDlhNTRkZThmMTNjMjI2ZmE3ZGMyNjQ3NjgzNDRjMjg2MTcyZTI2ZGUyOTkzY2IxZWYyNThhNTJjMGY4IiwidGFnIjoiIn0%3D; expires=Sun, 23 Aug 2026 11:46:39 GMT; Max-Age=7200; path=/; httponly; samesite=lax
+
+HTTP/1.1 405 Method Not Allowed
+Host: 127.0.0.1:8000
+Connection: close
+X-Powered-By: PHP/8.4.12
+allow: GET, HEAD
+Cache-Control: no-cache, private
+date: Sun, 23 Aug 2026 09:46:45 GMT
+Content-Type: text/html; charset=utf-8
+

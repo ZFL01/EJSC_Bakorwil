@@ -150,15 +150,23 @@
             <div class="flex items-center justify-between h-14 md:h-16">
                 <!-- Logo -->
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center close-all-dropdowns">
-                        <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="EJSC Bakorwil" class="logo-img">
+
+                    <a href="{{ route('public.index') }}"
+                       class="flex items-center close-all-dropdowns">
+
+                        <img src="{{ Vite::asset('resources/images/logo.png') }}"
+                             alt="EJSC Bakorwil"
+                             class="logo-img">
+
                     </a>
                 </div>
 
                 <!-- Desktop Menu (tanpa tombol login/daftar) -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="{{ route('home') }}"
-                       class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition">
+
+                    <a href="{{ route('public.index') }}"
+                       class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#35BFD1] rounded-md hover:bg-[#f0fcfd] transition">
+
                         Home
                     </a>
 
@@ -169,12 +177,34 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                             </svg>
                         </button>
-                        <div id="menu-menu" class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
-                            <a href="{{ route('mentor') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Mentor</a>
-                            <a href="{{ route('talenta') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Talenta</a>
-                            <a href="{{ route('client') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Client</a>
-                            <a href="{{ route('gis') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">GIS Map</a>
-                        </div>
+
+
+                        <div id="menu-menu"
+                             class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
+
+                            <a href="{{ route('mentor') }}"
+                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                                Mentor
+
+                            </a>
+
+                            <a href="{{ route('talenta') }}"
+                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                                Talenta
+
+                            </a>
+
+                            <a href="{{ route('client') }}"
+                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                                Client
+
+                            </a>
+
+                            </div>
+
                     </div>
 
                     <div class="relative menu-group">
@@ -208,14 +238,45 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-4 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Home</a>
+
+                <a href="{{ route('public.index') }}"
+                   class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                    Home
+
+                </a>
+
 
                 <div class="pt-2">
-                    <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu</p>
-                    <a href="{{ route('mentor') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Mentor</a>
-                    <a href="{{ route('talenta') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Talenta</a>
-                    <a href="{{ route('client') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Client</a>
-                    <a href="{{ route('gis') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">GIS Map</a>
+
+                    <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                        Menu
+                    </p>
+
+
+                    <a href="{{ route('mentor') }}"
+                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                        Mentor
+
+                    </a>
+
+
+                    <a href="{{ route('talenta') }}"
+                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                        Talenta
+
+                    </a>
+
+
+                    <a href="{{ route('client') }}"
+                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
+
+                        Client
+
+                    </a>
+
                 </div>
 
                 <div class="pt-2">

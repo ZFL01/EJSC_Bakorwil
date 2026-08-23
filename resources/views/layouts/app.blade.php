@@ -65,7 +65,7 @@
             <div class="flex items-center justify-between h-16">
                 <!-- Logo with image -->
                 <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center close-all-dropdowns">
+                    <a href="{{ route('public.index') }}" class="flex items-center close-all-dropdowns">
                         <img src="{{ Vite::asset('resources/images/logo.png') }}" alt="EJSC Bakorwil" class="logo-img">
                     </a>
                 </div>
@@ -73,8 +73,8 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-1">
                     <!-- Home -->
-                    <a href="{{ route('home') }}"
-                       class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition {{ request()->routeIs('home') ? : '' }}">
+                    <a href="{{ route('public.index') }}"
+                       class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition {{ request()->routeIs('public.index') ? 'text-[#56b8c2] bg-[#f0f9fa]' : '' }}">
                         Home
                     </a>
 
@@ -90,7 +90,6 @@
                             <a href="{{ route('mentor') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Mentor</a>
                             <a href="{{ route('talenta') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Talenta</a>
                             <a href="{{ route('client') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Client</a>
-                            <a href="{{ route('gis') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">GIS Map</a>
                         </div>
                     </div>
 
@@ -129,14 +128,13 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-4 pt-2 pb-3 space-y-1">
-                <a href="{{ route('home') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Home</a>
+                <a href="{{ route('public.index') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Home</a>
 
                 <div class="pt-2">
                     <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu</p>
                     <a href="{{ route('mentor') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Mentor</a>
                     <a href="{{ route('talenta') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Talenta</a>
                     <a href="{{ route('client') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Client</a>
-                    <a href="{{ route('gis') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">GIS Map</a>
                 </div>
 
                 <div class="pt-2">
