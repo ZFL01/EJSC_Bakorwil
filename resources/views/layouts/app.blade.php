@@ -78,6 +78,21 @@
                         Home
                     </a>
 
+                    <!-- Tentang Kami Dropdown -->
+                    <div class="relative menu-group">
+                        <button data-menu="tentang" class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition flex items-center gap-1 {{ request()->routeIs('tentang-kami') ? 'text-[#56b8c2] bg-[#f0f9fa]' : '' }}">
+                            Tentang Kami
+                            <svg class="w-4 h-4 menu-arrow transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </button>
+                        <div id="menu-tentang" class="menu-dropdown absolute left-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
+                            <a href="{{ route('tentang-kami') }}#about" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2] {{ request()->routeIs('tentang-kami') ? 'text-[#56b8c2] bg-[#f0f9fa]' : '' }}">Tentang Kami</a>
+                            <a href="{{ route('tentang-kami') }}#fasilitas" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Fasilitas</a>
+                            <a href="{{ route('tentang-kami') }}#kegiatan" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kegiatan</a>
+                        </div>
+                    </div>
+
                     <!-- Menu Dropdown -->
                     <div class="relative menu-group">
                         <button data-menu="menu" class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition flex items-center gap-1">
@@ -129,6 +144,13 @@
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
             <div class="px-4 pt-2 pb-3 space-y-1">
                 <a href="{{ route('public.index') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Home</a>
+
+                <div class="pt-2">
+                    <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Tentang Kami</p>
+                    <a href="{{ route('tentang-kami') }}#about" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Tentang Kami</a>
+                    <a href="{{ route('tentang-kami') }}#fasilitas" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Fasilitas</a>
+                    <a href="{{ route('tentang-kami') }}#kegiatan" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kegiatan</a>
+                </div>
 
                 <div class="pt-2">
                     <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Menu</p>

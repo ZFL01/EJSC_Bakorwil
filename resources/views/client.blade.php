@@ -6,15 +6,17 @@
 
 <style>
     /* =========================================================
-       DAFTAR CLIENT - AQUA / TEAL THEME
+       DAFTAR CLIENT - SOFT BRIGHT YELLOW THEME
+       PRIMARY COLOR : #E5CD35
     ========================================================= */
 
     .client-page {
         position: relative;
         overflow: hidden;
-        background: #f8feff;
+        background: #fffef5;
         min-height: 100vh;
     }
+
 
     /* =========================================================
        BACKGROUND BUBBLES
@@ -34,8 +36,14 @@
         height: 320px;
         left: -160px;
         top: 300px;
-        background: rgba(103, 232, 249, 0.10);
-        animation: clientBubble 8s ease-in-out infinite;
+
+        background: rgba(229, 205, 53, 0.09);
+
+        animation:
+            clientBubble
+            8s
+            ease-in-out
+            infinite;
     }
 
     .client-page::after {
@@ -43,27 +51,41 @@
         height: 380px;
         right: -200px;
         bottom: 100px;
-        background: rgba(20, 184, 196, 0.07);
-        animation: clientBubble2 10s ease-in-out infinite;
+
+        background: rgba(229, 205, 53, 0.07);
+
+        animation:
+            clientBubble2
+            10s
+            ease-in-out
+            infinite;
     }
 
     @keyframes clientBubble {
+
         0%, 100% {
-            transform: translate(0, 0) scale(1);
+            transform:
+                translate(0, 0)
+                scale(1);
         }
 
         50% {
-            transform: translate(35px, -25px) scale(1.08);
+            transform:
+                translate(35px, -25px)
+                scale(1.08);
         }
     }
 
     @keyframes clientBubble2 {
+
         0%, 100% {
-            transform: translate(0, 0);
+            transform:
+                translate(0, 0);
         }
 
         50% {
-            transform: translate(-30px, 25px);
+            transform:
+                translate(-30px, 25px);
         }
     }
 
@@ -79,26 +101,34 @@
         background:
             radial-gradient(
                 circle at 10% 20%,
-                rgba(103, 232, 249, 0.28),
+                rgba(229, 205, 53, 0.22),
                 transparent 30%
             ),
+
             radial-gradient(
                 circle at 90% 80%,
-                rgba(20, 184, 196, 0.12),
+                rgba(229, 205, 53, 0.12),
                 transparent 35%
             ),
+
             linear-gradient(
                 135deg,
-                #dffbfc,
-                #c9f5f7,
-                #effdfe
+                #fffbe0,
+                #fff8c4,
+                #fffef0
             );
 
         background-size: 180% 180%;
-        animation: clientHeroGradient 10s ease-in-out infinite;
+
+        animation:
+            clientHeroGradient
+            10s
+            ease-in-out
+            infinite;
     }
 
     @keyframes clientHeroGradient {
+
         0% {
             background-position: 0% 50%;
         }
@@ -119,6 +149,7 @@
 
     .client-hero::before {
         content: "";
+
         position: absolute;
 
         width: 360px;
@@ -126,16 +157,22 @@
 
         border-radius: 50%;
 
-        background: rgba(255, 255, 255, 0.28);
+        background:
+            rgba(255, 255, 255, 0.42);
 
         right: -120px;
         top: -220px;
 
-        animation: clientHeroBubble 7s ease-in-out infinite;
+        animation:
+            clientHeroBubble
+            7s
+            ease-in-out
+            infinite;
     }
 
     .client-hero::after {
         content: "";
+
         position: absolute;
 
         width: 170px;
@@ -143,31 +180,42 @@
 
         border-radius: 50%;
 
-        background: rgba(103, 232, 249, 0.16);
+        background:
+            rgba(229, 205, 53, 0.13);
 
         left: 4%;
         bottom: -110px;
 
-        animation: clientHeroBubble2 6s ease-in-out infinite;
+        animation:
+            clientHeroBubble2
+            6s
+            ease-in-out
+            infinite;
     }
 
     @keyframes clientHeroBubble {
+
         0%, 100% {
-            transform: translateY(0);
+            transform:
+                translateY(0);
         }
 
         50% {
-            transform: translateY(20px);
+            transform:
+                translateY(20px);
         }
     }
 
     @keyframes clientHeroBubble2 {
+
         0%, 100% {
-            transform: translate(0, 0);
+            transform:
+                translate(0, 0);
         }
 
         50% {
-            transform: translate(20px, -15px);
+            transform:
+                translate(20px, -15px);
         }
     }
 
@@ -179,31 +227,45 @@
     .client-hero-content {
         position: relative;
         z-index: 3;
-        animation: clientHeroEnter 0.9s ease-out;
+
+        animation:
+            clientHeroEnter
+            0.9s
+            ease-out;
     }
 
     @keyframes clientHeroEnter {
+
         from {
             opacity: 0;
-            transform: translateY(25px);
+
+            transform:
+                translateY(25px);
         }
 
         to {
             opacity: 1;
-            transform: translateY(0);
+
+            transform:
+                translateY(0);
         }
     }
 
+
+    /* =========================================================
+       HERO TEXT
+    ========================================================= */
+
     .client-title {
-        color: #12344d;
+        color: #263238;
     }
 
     .client-title span {
-        color: #18aeb8;
+        color: #E5CD35;
     }
 
     .client-description {
-        color: #52758b;
+        color: #6d6a50;
     }
 
 
@@ -222,38 +284,49 @@
 
         background-image:
             radial-gradient(
-                #45cbd3 1.7px,
+                #E5CD35 1.7px,
                 transparent 1.7px
             );
 
         background-size: 14px 14px;
 
-        opacity: 0.35;
+        opacity: 0.32;
 
         animation:
-            clientDotsFloat 5s ease-in-out infinite,
-            clientDotsPulse 3s ease-in-out infinite;
+            clientDotsFloat
+            5s
+            ease-in-out
+            infinite,
+
+            clientDotsPulse
+            3s
+            ease-in-out
+            infinite;
 
         z-index: 2;
     }
 
     @keyframes clientDotsFloat {
+
         0%, 100% {
-            transform: translateY(0);
+            transform:
+                translateY(0);
         }
 
         50% {
-            transform: translateY(-12px);
+            transform:
+                translateY(-12px);
         }
     }
 
     @keyframes clientDotsPulse {
+
         0%, 100% {
-            opacity: 0.25;
+            opacity: 0.22;
         }
 
         50% {
-            opacity: 0.55;
+            opacity: 0.48;
         }
     }
 
@@ -264,6 +337,7 @@
 
     .client-search,
     .client-filter {
+
         transition:
             border-color 0.3s ease,
             box-shadow 0.3s ease,
@@ -272,13 +346,16 @@
 
     .client-search:focus,
     .client-filter:focus {
-        border-color: #25b9c3 !important;
+
+        border-color:
+            #E5CD35 !important;
 
         box-shadow:
-            0 0 0 4px rgba(20, 184, 196, 0.10),
-            0 6px 18px rgba(20, 184, 196, 0.08);
+            0 0 0 4px rgba(229, 205, 53, 0.13),
+            0 6px 18px rgba(180, 155, 25, 0.08);
 
-        transform: translateY(-1px);
+        transform:
+            translateY(-1px);
 
         outline: none;
     }
@@ -289,38 +366,60 @@
     ========================================================= */
 
     .client-card {
+
         position: relative;
         overflow: hidden;
 
-        background: rgba(255, 255, 255, 0.96);
+        background:
+            rgba(255, 255, 255, 0.97);
 
-        border: 1px solid #dff1f3;
+        border:
+            1px solid #eee7b8;
 
-        border-radius: 18px;
+        border-radius:
+            18px;
 
-        padding: 24px;
+        padding:
+            24px;
 
         box-shadow:
-            0 5px 20px rgba(20, 120, 130, 0.06);
+            0 5px 20px
+            rgba(130, 110, 20, 0.06);
 
         opacity: 0;
 
         animation:
             clientCardEnter
             0.65s
-            cubic-bezier(0.22, 0.61, 0.36, 1)
+            cubic-bezier(
+                0.22,
+                0.61,
+                0.36,
+                1
+            )
             forwards;
 
         transition:
-            transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+            transform 0.4s
+            cubic-bezier(
+                0.22,
+                0.61,
+                0.36,
+                1
+            ),
+
             box-shadow 0.4s ease,
+
             border-color 0.4s ease;
     }
 
 
-    /* Lingkaran cahaya */
+    /* =========================================================
+       CARD LIGHT CIRCLE
+    ========================================================= */
 
     .client-card::before {
+
         content: "";
 
         position: absolute;
@@ -333,7 +432,8 @@
         right: -80px;
         top: -80px;
 
-        background: rgba(103, 232, 249, 0.10);
+        background:
+            rgba(229, 205, 53, 0.10);
 
         transition:
             transform 0.5s ease,
@@ -341,9 +441,12 @@
     }
 
 
-    /* Garis cahaya */
+    /* =========================================================
+       CARD BOTTOM LIGHT
+    ========================================================= */
 
     .client-card::after {
+
         content: "";
 
         position: absolute;
@@ -358,13 +461,15 @@
             linear-gradient(
                 90deg,
                 transparent,
-                #25c0c8,
+                #E5CD35,
                 transparent
             );
 
-        transform: translateX(-50%);
+        transform:
+            translateX(-50%);
 
-        transition: width 0.5s ease;
+        transition:
+            width 0.5s ease;
     }
 
 
@@ -373,8 +478,10 @@
     ========================================================= */
 
     @keyframes clientCardEnter {
+
         from {
             opacity: 0;
+
             transform:
                 translateY(35px)
                 scale(0.97);
@@ -382,6 +489,7 @@
 
         to {
             opacity: 1;
+
             transform:
                 translateY(0)
                 scale(1);
@@ -394,24 +502,36 @@
     ========================================================= */
 
     .client-card:hover {
+
         transform:
             translateY(-9px)
             scale(1.015);
 
-        border-color: #b8e9ed;
+        border-color:
+            #e5cd35;
 
         box-shadow:
-            0 20px 40px rgba(20, 150, 160, 0.13),
-            0 5px 15px rgba(20, 150, 160, 0.06);
+
+            0 20px 40px
+            rgba(160, 135, 20, 0.13),
+
+            0 5px 15px
+            rgba(160, 135, 20, 0.06);
     }
 
     .client-card:hover::before {
-        transform: scale(1.7);
-        opacity: 0.7;
+
+        transform:
+            scale(1.7);
+
+        opacity:
+            0.7;
     }
 
     .client-card:hover::after {
-        width: 70%;
+
+        width:
+            70%;
     }
 
 
@@ -420,18 +540,23 @@
     ========================================================= */
 
     .client-avatar {
+
         background:
             linear-gradient(
                 135deg,
-                #28c4ce,
-                #159da8
+                #E5CD35,
+                #CDB62D
             );
 
         box-shadow:
-            0 8px 18px rgba(20, 184, 196, 0.20);
+            0 8px 18px
+            rgba(190, 165, 25, 0.22);
 
         animation:
-            clientAvatarFloat 4s ease-in-out infinite;
+            clientAvatarFloat
+            4s
+            ease-in-out
+            infinite;
 
         transition:
             transform 0.35s ease,
@@ -439,23 +564,28 @@
     }
 
     @keyframes clientAvatarFloat {
+
         0%, 100% {
-            transform: translateY(0);
+            transform:
+                translateY(0);
         }
 
         50% {
-            transform: translateY(-4px);
+            transform:
+                translateY(-4px);
         }
     }
 
     .client-card:hover .client-avatar {
+
         transform:
             translateY(-5px)
             rotate(3deg)
             scale(1.04);
 
         box-shadow:
-            0 13px 25px rgba(20, 184, 196, 0.28);
+            0 13px 25px
+            rgba(190, 165, 25, 0.30);
     }
 
 
@@ -464,15 +594,18 @@
     ========================================================= */
 
     .client-name {
-        color: #17384d;
+        color:
+            #30352f;
     }
 
     .client-industry {
-        color: #119da8;
+        color:
+            #a28d20;
     }
 
     .client-info {
-        color: #708898;
+        color:
+            #7c806f;
     }
 
 
@@ -481,23 +614,39 @@
     ========================================================= */
 
     .badge-korporasi {
-        background: #e0f8fa;
-        color: #168d98;
+
+        background:
+            #fff7c7;
+
+        color:
+            #9b8518;
     }
 
     .badge-startup {
-        background: #e7f6f8;
-        color: #278c98;
+
+        background:
+            #fff9dc;
+
+        color:
+            #9e8b27;
     }
 
     .badge-umkm {
-        background: #e3f8f1;
-        color: #168a72;
+
+        background:
+            #f7f2cf;
+
+        color:
+            #8f7c19;
     }
 
     .badge-pemerintahan {
-        background: #eef8f6;
-        color: #43877c;
+
+        background:
+            #f2edc8;
+
+        color:
+            #817019;
     }
 
 
@@ -506,7 +655,9 @@
     ========================================================= */
 
     .trusted-client {
-        color: #159da8;
+
+        color:
+            #b19a20;
     }
 
 
@@ -515,18 +666,20 @@
     ========================================================= */
 
     .client-button {
+
         position: relative;
         overflow: hidden;
 
         background:
             linear-gradient(
                 135deg,
-                #20b6c0,
-                #159da8
+                #E5CD35,
+                #CDB62D
             );
 
         box-shadow:
-            0 5px 12px rgba(20, 184, 196, 0.16);
+            0 5px 12px
+            rgba(190, 165, 25, 0.18);
 
         transition:
             transform 0.3s ease,
@@ -534,9 +687,12 @@
     }
 
 
-    /* Shine */
+    /* =========================================================
+       BUTTON SHINE
+    ========================================================= */
 
     .client-button::before {
+
         content: "";
 
         position: absolute;
@@ -551,24 +707,31 @@
             linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 255, 255, 0.35),
+                rgba(255, 255, 255, 0.42),
                 transparent
             );
 
-        transform: skewX(-20deg);
+        transform:
+            skewX(-20deg);
 
-        transition: left 0.6s ease;
+        transition:
+            left 0.6s ease;
     }
 
     .client-button:hover::before {
-        left: 130%;
+
+        left:
+            130%;
     }
 
     .client-button:hover {
-        transform: translateY(-3px);
+
+        transform:
+            translateY(-3px);
 
         box-shadow:
-            0 10px 22px rgba(20, 184, 196, 0.27);
+            0 10px 22px
+            rgba(190, 165, 25, 0.28);
     }
 
 
@@ -620,18 +783,22 @@
     @media (max-width: 768px) {
 
         .client-hero::before {
-            right: -160px;
+            right:
+                -160px;
         }
 
         .client-card {
-            padding: 20px;
+            padding:
+                20px;
         }
 
         .client-dots {
-            right: -20px;
+            right:
+                -20px;
         }
 
     }
+
 </style>
 
 
@@ -650,16 +817,40 @@
 
         <div class="client-dots"></div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="
+                max-w-7xl
+                mx-auto
+                px-4
+                sm:px-6
+                lg:px-8
+            "
+        >
 
             <div class="client-hero-content">
 
-                <h1 class="client-title text-4xl font-bold mb-4">
-                    Daftar <span>Client</span>
+                <h1
+                    class="
+                        client-title
+                        text-4xl
+                        font-bold
+                        mb-4
+                    "
+                >
+
+                    Daftar
+                    <span>Client</span>
+
                 </h1>
 
-                <p class="client-description text-lg">
-                    Terhubung dengan client yang membutuhkan layanan dan keahlian terbaik
+                <p
+                    class="
+                        client-description
+                        text-lg
+                    "
+                >
+                    Terhubung dengan client yang membutuhkan
+                    layanan dan keahlian terbaik
                 </p>
 
             </div>
@@ -675,7 +866,15 @@
 
     <section class="py-12">
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+            class="
+                max-w-7xl
+                mx-auto
+                px-4
+                sm:px-6
+                lg:px-8
+            "
+        >
 
 
             <!-- =================================================
@@ -685,7 +884,14 @@
             <div class="mb-8">
 
                 <div
-                    class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between"
+                    class="
+                        flex
+                        flex-col
+                        md:flex-row
+                        gap-4
+                        md:items-center
+                        md:justify-between
+                    "
                 >
 
 
@@ -694,7 +900,15 @@
                     <div class="relative md:w-80">
 
                         <svg
-                            class="w-5 h-5 text-[#7da0ad] absolute left-3 top-1/2 -translate-y-1/2"
+                            class="
+                                w-5
+                                h-5
+                                text-[#a99b4c]
+                                absolute
+                                left-3
+                                top-1/2
+                                -translate-y-1/2
+                            "
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -704,7 +918,13 @@
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
                                 stroke-width="2"
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                                d="
+                                    M21 21l-6-6
+                                    m2-5a7 7 0
+                                    11-14 0
+                                    7 7 0
+                                    0114 0z
+                                "
                             />
 
                         </svg>
@@ -713,7 +933,20 @@
                             id="search-input"
                             type="text"
                             placeholder="Cari client..."
-                            class="client-search w-full pl-10 pr-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#17384d] placeholder-[#8ba4af] focus:outline-none"
+                            class="
+                                client-search
+                                w-full
+                                pl-10
+                                pr-4
+                                py-2.5
+                                border
+                                border-[#eee7b8]
+                                rounded-xl
+                                bg-white
+                                text-[#30352f]
+                                placeholder-[#a6a48c]
+                                focus:outline-none
+                            "
                         >
 
                     </div>
@@ -725,7 +958,17 @@
 
                         <select
                             id="filter-select"
-                            class="client-filter px-4 py-2.5 border border-[#d5ebee] rounded-xl bg-white text-[#36566a] focus:outline-none"
+                            class="
+                                client-filter
+                                px-4
+                                py-2.5
+                                border
+                                border-[#eee7b8]
+                                rounded-xl
+                                bg-white
+                                text-[#55583f]
+                                focus:outline-none
+                            "
                         >
 
                             <option value="semua">
@@ -763,7 +1006,12 @@
 
             <div
                 id="client-list"
-                class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                class="
+                    grid
+                    md:grid-cols-2
+                    lg:grid-cols-3
+                    gap-6
+                "
             >
                 <!-- Client cards dirender oleh JavaScript -->
             </div>
@@ -775,11 +1023,21 @@
 
             <div
                 id="empty-state"
-                class="hidden text-center py-16"
+                class="
+                    hidden
+                    text-center
+                    py-16
+                "
             >
 
                 <svg
-                    class="w-16 h-16 mx-auto text-[#9edce1] mb-4"
+                    class="
+                        w-16
+                        h-16
+                        mx-auto
+                        text-[#d9c83a]
+                        mb-4
+                    "
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -789,19 +1047,31 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        d="
+                            M21 21l-6-6
+                            m2-5a7 7 0
+                            11-14 0
+                            7 7 0
+                            0114 0z
+                        "
                     />
 
                 </svg>
 
                 <h3
-                    class="text-xl font-semibold text-[#31566a] mb-2"
+                    class="
+                        text-xl
+                        font-semibold
+                        text-[#55583f]
+                        mb-2
+                    "
                 >
                     Client tidak ditemukan
                 </h3>
 
-                <p class="text-[#78909c]">
-                    Coba ubah kata kunci pencarian atau filter kategori
+                <p class="text-[#85856f]">
+                    Coba ubah kata kunci pencarian
+                    atau filter kategori
                 </p>
 
             </div>
@@ -935,16 +1205,24 @@
     ========================================================= */
 
     const searchInput =
-        document.getElementById('search-input');
+        document.getElementById(
+            'search-input'
+        );
 
     const filterSelect =
-        document.getElementById('filter-select');
+        document.getElementById(
+            'filter-select'
+        );
 
     const clientList =
-        document.getElementById('client-list');
+        document.getElementById(
+            'client-list'
+        );
 
     const emptyState =
-        document.getElementById('empty-state');
+        document.getElementById(
+            'empty-state'
+        );
 
 
     /* =========================================================
@@ -954,7 +1232,9 @@
     function renderClients() {
 
         const keyword =
-            searchInput.value.toLowerCase();
+            searchInput.value
+                .toLowerCase()
+                .trim();
 
         const kategori =
             filterSelect.value;
@@ -964,6 +1244,7 @@
             clients.filter(c => {
 
                 const matchKeyword =
+
                     c.nama
                         .toLowerCase()
                         .includes(keyword)
@@ -976,17 +1257,25 @@
 
 
                 const matchKategori =
-                    kategori === 'semua' ||
+
+                    kategori === 'semua'
+
+                    ||
+
                     c.kategori === kategori;
 
 
-                return matchKeyword &&
-                       matchKategori;
+                return (
+                    matchKeyword &&
+                    matchKategori
+                );
 
             });
 
 
-        /* EMPTY STATE */
+        /* =====================================================
+           EMPTY STATE
+        ====================================================== */
 
         emptyState.classList.toggle(
             'hidden',
@@ -999,20 +1288,26 @@
         ====================================================== */
 
         clientList.innerHTML =
+
             filtered
+
                 .map((c, index) => {
 
                     const k =
-                        kategoriLabel[c.kategori];
+                        kategoriLabel[
+                            c.kategori
+                        ];
 
 
                     return `
 
                         <div
                             class="client-card"
-                            style="animation-delay: ${index * 0.07}s"
+                            style="
+                                animation-delay:
+                                ${index * 0.07}s
+                            "
                         >
-
 
                             <!-- TOP -->
 
@@ -1024,7 +1319,6 @@
                                     mb-4
                                 "
                             >
-
 
                                 <!-- AVATAR -->
 
@@ -1113,15 +1407,21 @@
                                 "
                             >
 
-
                                 <!-- PROJECT -->
 
                                 <span
-                                    class="inline-flex items-center"
+                                    class="
+                                        inline-flex
+                                        items-center
+                                    "
                                 >
 
                                     <svg
-                                        class="w-4 h-4 mr-1"
+                                        class="
+                                            w-4
+                                            h-4
+                                            mr-1
+                                        "
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -1131,7 +1431,14 @@
                                             stroke-linecap="round"
                                             stroke-linejoin="round"
                                             stroke-width="2"
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                            d="
+                                                M9 12l2 2
+                                                4-4m6 2
+                                                a9 9 0
+                                                11-18 0
+                                                9 9 0
+                                                0118 0z
+                                            "
                                         />
 
                                     </svg>
@@ -1152,13 +1459,29 @@
                                 >
 
                                     <svg
-                                        class="w-4 h-4 mr-1"
+                                        class="
+                                            w-4
+                                            h-4
+                                            mr-1
+                                        "
                                         fill="currentColor"
                                         viewBox="0 0 24 24"
                                     >
 
                                         <path
-                                            d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                            d="
+                                                M12 2
+                                                l3.09 6.26
+                                                L22 9.27
+                                                l-5 4.87
+                                                1.18 6.88
+                                                L12 17.77
+                                                l-6.18 3.25
+                                                L7 14.14
+                                                2 9.27
+                                                l6.91-1.01
+                                                L12 2z
+                                            "
                                         />
 
                                     </svg>
@@ -1183,7 +1506,12 @@
                                 "
                             >
 
-                                <span class="relative z-10">
+                                <span
+                                    class="
+                                        relative
+                                        z-10
+                                    "
+                                >
                                     Hubungi Client
                                 </span>
 
@@ -1194,6 +1522,7 @@
                     `;
 
                 })
+
                 .join('');
 
     }
