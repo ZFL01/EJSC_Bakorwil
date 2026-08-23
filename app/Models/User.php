@@ -22,6 +22,8 @@ class User extends Authenticatable
         'role',
         'profile_photo',
         'email_verified_at',
+        'status',
+        'last_login',
     ];
 
     protected $hidden = [
@@ -42,6 +44,19 @@ class User extends Authenticatable
     public function getAuthPassword()
     {
         return $this->password_hash;
+    }
+
+    /**
+     * Nama kolom password pada tabel users.
+     *
+     * WAJIB di-override karena skema database memakai "password_hash"
+     * (bukan "password" bawaan Laravel). Tanpa ini, fitur rehash
+     * otomatis Laravel saat login akan error:
+     * SQLSTATE[42703]: column "password" of relation "users" does not exist
+     */
+    public function getAuthPasswordName()
+    {
+        return 'password_hash';
     }
 
     public function isAdmin(): bool

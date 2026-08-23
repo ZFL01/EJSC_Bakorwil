@@ -123,10 +123,31 @@
                         </div>
                     </div>
 
-                    <!-- LOGIN BUTTON (aksen #56b8c2 + shadow) -->
-                    <a href="{{ route('login') }}" class="btn-login ml-2 close-all-dropdowns">
-                        Login
-                    </a>
+                    @guest
+                        <!-- LOGIN BUTTON (aksen #56b8c2 + shadow) -->
+                        <a href="{{ route('login') }}" class="btn-login ml-2 close-all-dropdowns">
+                            Login
+                        </a>
+                    @else
+                        <!-- USER DROPDOWN (saat sudah login) -->
+                        <div class="relative menu-group">
+                            <button data-menu="user" class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition flex items-center gap-1 max-w-[200px]">
+                                <span class="truncate">{{ auth()->user()->name ?? 'Akun' }}</span>
+                                <svg class="w-4 h-4 menu-arrow transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div id="menu-user" class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
+                                <a href="{{ route('profile.show') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Profil Saya</a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                        Logout
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endguest
                 </div>
 
                 <!-- Mobile Menu Button - TANPA tombol login terpisah -->
@@ -166,12 +187,27 @@
                     <a href="{{ route('kelola.client') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Client</a>
                 </div>
 
-                <!-- Login di mobile - hanya muncul dalam menu dropdown -->
-                <div class="pt-3 border-t border-gray-100">
-                    <a href="{{ route('login') }}" class="close-all-dropdowns block w-full text-center btn-login">
-                        Login
-                    </a>
-                </div>
+                @guest
+                    <!-- Login di mobile - hanya muncul dalam menu dropdown -->
+                    <div class="pt-3 border-t border-gray-100">
+                        <a href="{{ route('login') }}" class="close-all-dropdowns block w-full text-center btn-login">
+                            Login
+                        </a>
+                    </div>
+                @else
+                    <!-- Akun di mobile (saat sudah login) -->
+                    <div class="pt-3 border-t border-gray-100">
+                        <a href="{{ route('profile.show') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">
+                            {{ auth()->user()->name ?? 'Akun' }}
+                        </a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-center px-3 py-2 rounded-md text-sm font-medium text-red-600 hover:bg-red-50">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                @endguest
             </div>
         </div>
     </nav>
