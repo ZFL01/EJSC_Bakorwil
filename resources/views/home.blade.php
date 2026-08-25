@@ -31,6 +31,15 @@
             background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);
         }
 
+        /* Hapus garis kotak fokus (outline) yang muncul di Chrome
+           saat wilayah diklik. Firefox tidak menampilkan outline ini. */
+        #qgis-map svg path,
+        #qgis-map .leaflet-interactive,
+        #qgis-map .leaflet-interactive:focus {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         #gis-placeholder,
         #qgis-info {
             z-index: 20;
@@ -8960,8 +8969,25 @@
 
     function initMap() {
         if (qgisMap || !mapElement) return;
-        qgisMap = L.map(mapElement, { center: [-8.1, 113.7], zoom: 8, scrollWheelZoom: true });
+        // Batas zoom peta: tidak boleh zoom out terlalu jauh
+        // (minZoom) dan tidak boleh terlalu dekat (maxZoom).
+        const mapBounds = L.latLngBounds(
+            [-10.2, 112.6], // batas barat-daya (SW)
+            [-5.5, 115.2]   // batas timur-laut (NE)
+        );
+
+        qgisMap = L.map(mapElement, {
+            center: [-8.1, 113.7],
+            zoom: 8,
+            minZoom: 6,            // batas paling jauh saat zoom out
+            maxZoom: 18,           // batas paling dekat saat zoom in
+            maxBounds: mapBounds,  // wilayah tampilan peta dibatasi
+            maxBoundsViscosity: 1.0, // tidak bisa geser keluar dari batas
+            scrollWheelZoom: true
+        });
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 6,
             maxZoom: 19,
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(qgisMap);
@@ -8975,8 +9001,8 @@
         return null;
     }
 
-    // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan.
-    // Bondowoso memakai hijau dengan outline kuning emas.
+    // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan
+    // (semua memiliki ciri khas / warna yang unik).
     const regionStyles = {
         'Jember': { fill: '#f3a6c8', border: '#be185d' },
         'Kota Probolinggo': { fill: '#9bdcf5', border: '#0284c7' },
@@ -8984,7 +9010,7 @@
         'Lumajang': { fill: '#2f7d32', border: '#14532d' },
         'Bondowoso': { fill: '#69b86b', border: '#d4a017' },
         'Banyuwangi': { fill: '#3B82F6', border: '#166534' },
-        'Situbondo': { fill: '#e8bd45', border: '#a16207' }
+        'Situbondo': { fill: '#fb923c', border: '#c2410c' }
     };
 
     function getRegionStyle(feature) {
