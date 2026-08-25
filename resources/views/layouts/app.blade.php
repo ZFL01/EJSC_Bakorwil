@@ -59,7 +59,7 @@
         }
     </style>
 </head>
-<body class="font-sans antialiased bg-gray-50 text-gray-900">
+<body class="min-h-screen flex flex-col font-sans antialiased bg-gray-50 text-gray-900">
     <nav id="navbar" class="fixed top-0 left-0 w-full bg-white border-b border-gray-200 transition-all duration-300" style="z-index:99999!important;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -108,21 +108,6 @@
                         </div>
                     </div>
 
-                    <!-- Kelola Dropdown -->
-                    <div class="relative menu-group">
-                        <button data-menu="kelola" class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#56b8c2] rounded-md hover:bg-[#f0f9fa] transition flex items-center gap-1">
-                            Kelola
-                            <svg class="w-4 h-4 menu-arrow transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                            </svg>
-                        </button>
-                        <div id="menu-kelola" class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
-                            <a href="{{ route('kelola.mentor') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Mentor</a>
-                            <a href="{{ route('kelola.talenta') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Talenta</a>
-                            <a href="{{ route('kelola.client') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Client</a>
-                        </div>
-                    </div>
-
                     @guest
                         <!-- LOGIN BUTTON (aksen #56b8c2 + shadow) -->
                         <a href="{{ route('login') }}" class="btn-login ml-2 close-all-dropdowns">
@@ -138,6 +123,15 @@
                                 </svg>
                             </button>
                             <div id="menu-user" class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
+                                @if(auth()->check() && auth()->user()->isAdmin())
+                                    <a href="{{ route('admin.dashboard') }}" class="close-all-dropdowns flex items-center gap-2 px-4 py-2 text-sm font-semibold text-[#56b8c2] hover:bg-[#f0f9fa]">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Panel Admin
+                                    </a>
+                                    <div class="my-1 border-t border-gray-100"></div>
+                                @endif
                                 <a href="{{ route('profile.show') }}" class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Profil Saya</a>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
@@ -180,13 +174,6 @@
                     <a href="{{ route('client') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Client</a>
                 </div>
 
-                <div class="pt-2">
-                    <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kelola</p>
-                    <a href="{{ route('kelola.mentor') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Mentor</a>
-                    <a href="{{ route('kelola.talenta') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Talenta</a>
-                    <a href="{{ route('kelola.client') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">Kelola Client</a>
-                </div>
-
                 @guest
                     <!-- Login di mobile - hanya muncul dalam menu dropdown -->
                     <div class="pt-3 border-t border-gray-100">
@@ -197,6 +184,14 @@
                 @else
                     <!-- Akun di mobile (saat sudah login) -->
                     <div class="pt-3 border-t border-gray-100">
+                        @if(auth()->check() && auth()->user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="close-all-dropdowns flex items-center gap-2 px-3 py-2 rounded-md text-sm font-semibold text-[#56b8c2] hover:bg-[#f0f9fa]">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                Panel Admin
+                            </a>
+                        @endif
                         <a href="{{ route('profile.show') }}" class="close-all-dropdowns block px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#56b8c2]">
                             {{ auth()->user()->name ?? 'Akun' }}
                         </a>
@@ -212,7 +207,7 @@
         </div>
     </nav>
 
-    <main class="pt-16">
+    <main class="pt-16 flex-1">
         @yield('content')
     </main>
 

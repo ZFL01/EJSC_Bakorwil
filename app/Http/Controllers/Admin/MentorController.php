@@ -107,7 +107,7 @@ class MentorController extends Controller
                 'expertise_tags' => $expertiseTags,
                 'is_available' => $validated['is_available'] ?? true,
                 'jumlah_mentee' => 0,
-                'url_foto_ktp' => $ktpPath,
+                'url_ktp' => $ktpPath,
                 'url_cv' => $cvPath,
                 'status' => $validated['status'],
                 'created_by' => auth()->id(),
@@ -182,10 +182,10 @@ class MentorController extends Controller
             $oldValues = $mentor->toArray();
 
             if ($request->hasFile('url_foto_ktp')) {
-                if ($mentor->url_foto_ktp) {
-                    Storage::disk('public')->delete($mentor->url_foto_ktp);
+                if ($mentor->url_ktp) {
+                    Storage::disk('public')->delete($mentor->url_ktp);
                 }
-                $validated['url_foto_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+                $validated['url_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
             }
 
             if ($request->hasFile('url_cv')) {
@@ -236,8 +236,8 @@ class MentorController extends Controller
             $oldValues = $mentor->toArray();
             $mentorId = $mentor->id_mentor;
 
-            if ($mentor->url_foto_ktp) {
-                Storage::disk('public')->delete($mentor->url_foto_ktp);
+            if ($mentor->url_ktp) {
+                Storage::disk('public')->delete($mentor->url_ktp);
             }
             if ($mentor->url_cv) {
                 Storage::disk('public')->delete($mentor->url_cv);

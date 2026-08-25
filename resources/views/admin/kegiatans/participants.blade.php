@@ -1,7 +1,7 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Kelola Peserta')
-@section('header', 'Kelola Peserta: ' . $kegiatan->nama_kegiatan)
+@section('header', 'Kelola Peserta: ' . $kegiatan->judul_kegiatan)
 
 @section('content')
 <div class="space-y-6">
@@ -73,4 +73,3 @@
     </div>
 </div>
 @endsection
-"

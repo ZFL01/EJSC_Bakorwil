@@ -8,7 +8,7 @@
     <div class="flex justify-between items-center border-b pb-4">
         <div>
             <h3 class="text-xl font-bold text-gray-800">{{ $client->nama_ukm }}</h3>
-            <p class="text-sm text-gray-500">Jenis Produk: {{ $client->jenis_produk }}</p>
+            <p class="text-sm text-gray-500">Nama Produk: {{ $client->nama_produk ?? '-' }}</p>
         </div>
         <div class="flex items-center gap-2">
             <span class="px-3 py-1 rounded-full text-xs font-semibold {{ $client->status === 'aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600' }}">
@@ -49,18 +49,18 @@
             <dl class="space-y-3 text-sm">
                 <div>
                     <dt class="text-xs text-rose-500">No. WhatsApp</dt>
-                    <dd class="font-semibold text-gray-800">{{ $client->no_wa }}</dd>
+                    <dd class="font-semibold text-gray-800">{{ $client->no_hp }}</dd>
                 </div>
                 <div>
                     <dt class="text-xs text-rose-500">Alamat Lengkap</dt>
                     <dd class="text-gray-800">{{ $client->alamat_lengkap }}</dd>
                 </div>
                 <div>
-                    <dt class="text-xs text-rose-500 mb-1">Foto KTP</dt>
+                    <dt class="text-xs text-rose-500 mb-1">Foto Logo/Produk</dt>
                     <dd>
-                        @if($client->url_foto_ktp)
-                            <a href="{{ asset('storage/' . $client->url_foto_ktp) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">
-                                Lihat Dokumen KTP
+                        @if($client->foto_logo)
+                            <a href="{{ asset('storage/' . $client->foto_logo) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">
+                                Lihat Foto
                             </a>
                         @else
                             <span class="text-xs text-gray-400 italic">Tidak ada file</span>
@@ -71,10 +71,10 @@
         </div>
     </div>
 
-    @if($client->url_foto_usaha)
+    @if($client->foto_logo)
         <div class="border-t pt-4">
-            <h4 class="text-sm font-bold text-gray-700 mb-2">Foto Usaha / Produk</h4>
-            <img src="{{ asset('storage/' . $client->url_foto_usaha) }}" alt="Foto Usaha" class="max-h-60 rounded-lg border object-cover">
+            <h4 class="text-sm font-bold text-gray-700 mb-2">Foto Logo / Produk</h4>
+            <img src="{{ asset('storage/' . $client->foto_logo) }}" alt="Foto Logo" class="max-h-60 rounded-lg border object-cover">
         </div>
     @endif
 </div>

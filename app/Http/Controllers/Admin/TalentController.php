@@ -121,7 +121,7 @@ class TalentController extends Controller
                 'skill_tags' => $skillTags,
                 'mentor_id' => $validated['mentor_id'],
                 'status_pekerjaan' => $validated['status_pekerjaan'],
-                'url_foto_ktp' => $ktpPath,
+                'url_ktp' => $ktpPath,
                 'url_cv' => $cvPath,
                 'url_butap' => $butapPath,
                 'status' => $validated['status'],
@@ -208,10 +208,10 @@ class TalentController extends Controller
             $oldMentorId = $talent->mentor_id;
 
             if ($request->hasFile('url_foto_ktp')) {
-                if ($talent->url_foto_ktp) {
-                    Storage::disk('public')->delete($talent->url_foto_ktp);
+                if ($talent->url_ktp) {
+                    Storage::disk('public')->delete($talent->url_ktp);
                 }
-                $validated['url_foto_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+                $validated['url_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
             }
 
             if ($request->hasFile('url_cv')) {
@@ -280,8 +280,8 @@ class TalentController extends Controller
             $talentId = $talent->id_talenta;
             $mentorId = $talent->mentor_id;
 
-            if ($talent->url_foto_ktp) {
-                Storage::disk('public')->delete($talent->url_foto_ktp);
+            if ($talent->url_ktp) {
+                Storage::disk('public')->delete($talent->url_ktp);
             }
             if ($talent->url_cv) {
                 Storage::disk('public')->delete($talent->url_cv);

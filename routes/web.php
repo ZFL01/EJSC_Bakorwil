@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use App\Http\Controllers\GisMapController;
+use App\Http\Controllers\PublicController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,42 +71,7 @@ Route::get('/fasilitas', function () {
     return view('fasilitas');
 })->name('fasilitas');
 
-Route::get('/tentang-kami', function () {
-    // TODO: ganti dengan query database asli (Mentor::count(), Talenta::count(), Client::count(), dst)
-    $statistik = [
-        'mentor'   => 150,
-        'talenta'  => 500,
-        'client'   => 80,
-        'kepuasan' => 98,
-    ];
-
-    // Contoh data pertumbuhan platform per bulan, untuk line chart
-    $pertumbuhan = [
-        'labels'  => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu'],
-        'mentor'  => [40, 55, 70, 85, 100, 118, 135, 150],
-        'talenta' => [120, 180, 230, 290, 350, 410, 460, 500],
-        'client'  => [10, 18, 28, 38, 48, 58, 70, 80],
-    ];
-
-    // Contoh distribusi talenta berdasarkan kategori keahlian, untuk pie/doughnut chart
-    $distribusiTalenta = [
-        'labels' => ['Teknologi', 'Desain', 'Bisnis', 'Marketing', 'Lainnya'],
-        'data'   => [180, 120, 90, 70, 40],
-    ];
-
-    // Contoh distribusi mentor berdasarkan bidang, untuk bar chart
-    $distribusiMentor = [
-        'labels' => ['Teknologi', 'Bisnis', 'Desain', 'Pendidikan', 'Lainnya'],
-        'data'   => [55, 35, 25, 20, 15],
-    ];
-
-    return view('tentang-kami', compact(
-        'statistik',
-        'pertumbuhan',
-        'distribusiTalenta',
-        'distribusiMentor'
-    ));
-})->name('tentang-kami');
+Route::get('/tentang-kami', [PublicController::class, 'tentangKami'])->name('tentang-kami');
 
 Route::get('/kegiatan', function () {
     return view('kegiatan');
@@ -113,72 +79,16 @@ Route::get('/kegiatan', function () {
 
 /*
 |--------------------------------------------------------------------------
-| GIS API (dipakai oleh peta interaktif di home & gis)
+| Kelola (Admin Only)
 |--------------------------------------------------------------------------
+|
+| Fitur kelola data Mentor, Talenta, dan Client hanya dapat diakses
+| oleh Admin melalui panel admin (/admin/...), karena hanya admin
+| yang memiliki hak CRUD penuh. URL lama dialihkan agar tetap kompatibel;
+| middleware auth+admin akan mengarahkan non-admin ke halaman login.
+|
 */
 
-Route::get('/api/gis/tahun', [GisMapController::class, 'years']);
-Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
-
-Route::get('/fasilitas', function () {
-    return view('fasilitas');
-})->name('fasilitas');
-
-Route::get('/tentang-kami', function () {
-    // TODO: ganti dengan query database asli (Mentor::count(), Talenta::count(), Client::count(), dst)
-    $statistik = [
-        'mentor'   => 150,
-        'talenta'  => 500,
-        'client'   => 80,
-        'kepuasan' => 98,
-    ];
-
-    // Contoh data pertumbuhan platform per bulan, untuk line chart
-    $pertumbuhan = [
-        'labels'  => ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu'],
-        'mentor'  => [40, 55, 70, 85, 100, 118, 135, 150],
-        'talenta' => [120, 180, 230, 290, 350, 410, 460, 500],
-        'client'  => [10, 18, 28, 38, 48, 58, 70, 80],
-    ];
-
-    // Contoh distribusi talenta berdasarkan kategori keahlian, untuk pie/doughnut chart
-    $distribusiTalenta = [
-        'labels' => ['Teknologi', 'Desain', 'Bisnis', 'Marketing', 'Lainnya'],
-        'data'   => [180, 120, 90, 70, 40],
-    ];
-
-    // Contoh distribusi mentor berdasarkan bidang, untuk bar chart
-    $distribusiMentor = [
-        'labels' => ['Teknologi', 'Bisnis', 'Desain', 'Pendidikan', 'Lainnya'],
-        'data'   => [55, 35, 25, 20, 15],
-    ];
-
-    return view('tentang-kami', compact(
-        'statistik',
-        'pertumbuhan',
-        'distribusiTalenta',
-        'distribusiMentor'
-    ));
-})->name('tentang-kami');
-
-Route::get('/kegiatan', function () {
-    return view('kegiatan');
-})->name('kegiatan');
-
-/*
-|--------------------------------------------------------------------------
-| Kelola
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/kelola/mentor', function () {
-    return view('kelola.mentor');
-})->name('kelola.mentor');
-
-Route::get('/kelola/talenta', function () {
-    return view('kelola.talenta');
-})->name('kelola.talenta');
-
-Route::get('/kelola/client', function () {
-    return view('kelola.client');
-})->name('kelola.client');
+Route::redirect('/kelola/mentor', '/admin/mentors')->name('kelola.mentor');
+Route::redirect('/kelola/talenta', '/admin/talents')->name('kelola.talenta');
+Route::redirect('/kelola/client', '/admin/clients')->name('kelola.client');

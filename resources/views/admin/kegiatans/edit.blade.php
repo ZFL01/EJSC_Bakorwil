@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Edit Kegiatan')
 @section('header', 'Edit Kegiatan')
@@ -13,20 +13,12 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div class="md:col-span-2">
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Kegiatan</label>
-                <input type="text" name="nama_kegiatan" value="{{ old('nama_kegiatan', $kegiatan->nama_kegiatan) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <input type="text" name="judul_kegiatan" value="{{ old('judul_kegiatan', $kegiatan->judul_kegiatan) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Tanggal</label>
-                <input type="date" name="tanggal" value="{{ old('tanggal', $kegiatan->tanggal) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <input type="date" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', $kegiatan->tanggal_kegiatan?->format('Y-m-d')) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
                 <p class="text-xs text-rose-500 mt-1">* Hanya 1 kegiatan yang diperbolehkan per hari.</p>
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Jenis Kegiatan</label>
-                <select name="jenis_kegiatan" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
-                    <option value="online" {{ old('jenis_kegiatan', $kegiatan->jenis_kegiatan) === 'online' ? 'selected' : '' }}>Online</option>
-                    <option value="offline" {{ old('jenis_kegiatan', $kegiatan->jenis_kegiatan) === 'offline' ? 'selected' : '' }}>Offline</option>
-                    <option value="hybrid" {{ old('jenis_kegiatan', $kegiatan->jenis_kegiatan) === 'hybrid' ? 'selected' : '' }}>Hybrid</option>
-                </select>
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Lokasi / Link</label>
@@ -46,7 +38,7 @@
 
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Keterangan / Deskripsi</label>
-            <textarea name="keterangan" rows="4" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('keterangan', $kegiatan->keterangan) }}</textarea>
+            <textarea name="deskripsi" rows="4" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('deskripsi', $kegiatan->deskripsi) }}</textarea>
         </div>
 
         <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Galeri Foto</h3>
@@ -78,4 +70,4 @@
         </div>
     </form>
 </div>
-@endsection"
+@endsection

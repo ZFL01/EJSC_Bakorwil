@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Kelola Talenta')
 @section('header', 'Kelola Talenta')
@@ -85,4 +85,3 @@
     </div>
 </div>
 @endsection
-"

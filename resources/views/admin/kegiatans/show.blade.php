@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Detail Kegiatan')
 @section('header', 'Detail Kegiatan')
@@ -7,15 +7,16 @@
 <div class="max-w-4xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
     <div class="flex justify-between items-center border-b pb-4">
         <div>
-            <h3 class="text-xl font-bold text-gray-800">{{ $kegiatan->nama_kegiatan }}</h3>
+            <h3 class="text-xl font-bold text-gray-800">{{ $kegiatan->judul_kegiatan }}</h3>
             <p class="text-sm text-gray-500">Dibuat oleh: {{ $kegiatan->organizer->name ?? 'Admin' }}</p>
         </div>
         <div class="flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold 
-                {{ $kegiatan->jenis_kegiatan === 'online' ? 'bg-sky-100 text-sky-700' : '' }}
-                {{ $kegiatan->jenis_kegiatan === 'offline' ? 'bg-amber-100 text-amber-700' : '' }}
-                {{ $kegiatan->jenis_kegiatan === 'hybrid' ? 'bg-purple-100 text-purple-700' : '' }}">
-                {{ ucfirst($kegiatan->jenis_kegiatan) }}
+            <span class="px-3 py-1 rounded-full text-xs font-semibold
+                {{ $kegiatan->status === 'akan_datang' ? 'bg-sky-100 text-sky-700' : '' }}
+                {{ $kegiatan->status === 'berlangsung' ? 'bg-amber-100 text-amber-700' : '' }}
+                {{ $kegiatan->status === 'selesai' ? 'bg-emerald-100 text-emerald-700' : '' }}
+                {{ $kegiatan->status === 'dibatalkan' ? 'bg-rose-100 text-rose-700' : '' }}">
+                {{ ucfirst(str_replace('_', ' ', $kegiatan->status ?? '-')) }}
             </span>
             <a href="{{ route('admin.kegiatans.edit', $kegiatan->id_kegiatan) }}" class="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-medium rounded-lg transition">Edit</a>
             <a href="{{ route('admin.kegiatans.index') }}" class="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs font-medium rounded-lg transition">Kembali</a>
@@ -28,7 +29,7 @@
             <dl class="space-y-2 text-sm">
                 <div>
                     <dt class="text-xs text-gray-400">Tanggal</dt>
-                    <dd class="font-medium text-gray-800">{{ $kegiatan->tanggal ? Carbon::parse($kegiatan->tanggal)->format('d F Y') : '-' }}</dd>
+                    <dd class="font-medium text-gray-800">{{ $kegiatan->tanggal_kegiatan?->format('d F Y') ?? '-' }}</dd>
                 </div>
                 <div>
                     <dt class="text-xs text-gray-400">Lokasi / Link</dt>
@@ -46,7 +47,7 @@
                 </div>
                 <div class="pt-2">
                     <dt class="text-xs text-gray-400 mb-1">Keterangan</dt>
-                    <dd class="text-gray-800 bg-gray-50 p-3 rounded-lg border">{{ $kegiatan->keterangan ?? '-' }}</dd>
+                    <dd class="text-gray-800 bg-gray-50 p-3 rounded-lg border">{{ $kegiatan->deskripsi ?? '-' }}</dd>
                 </div>
             </dl>
         </div>
@@ -93,4 +94,4 @@
         </div>
     @endif
 </div>
-@endsection"
+@endsection

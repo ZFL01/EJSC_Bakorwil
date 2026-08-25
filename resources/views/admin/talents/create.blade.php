@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Tambah Talent')
 @section('header', 'Tambah Talent Baru')
@@ -103,4 +103,3 @@
     </form>
 </div>
 @endsection
-"

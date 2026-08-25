@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Kelola Kegiatan')
 @section('header', 'Kelola Kegiatan')
@@ -9,11 +9,12 @@
         <form action="{{ route('admin.kegiatans.index') }}" method="GET" class="flex flex-wrap gap-2 w-full md:w-auto">
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kegiatan..." 
                    class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
-            <select name="jenis_kegiatan" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
-                <option value="">-- Semua Jenis --</option>
-                <option value="online" {{ request('jenis_kegiatan') === 'online' ? 'selected' : '' }}>Online</option>
-                <option value="offline" {{ request('jenis_kegiatan') === 'offline' ? 'selected' : '' }}>Offline</option>
-                <option value="hybrid" {{ request('jenis_kegiatan') === 'hybrid' ? 'selected' : '' }}>Hybrid</option>
+            <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
+                <option value="">-- Semua Status --</option>
+                <option value="akan_datang" {{ request('status') === 'akan_datang' ? 'selected' : '' }}>Akan Datang</option>
+                <option value="berlangsung" {{ request('status') === 'berlangsung' ? 'selected' : '' }}>Berlangsung</option>
+                <option value="selesai" {{ request('status') === 'selesai' ? 'selected' : '' }}>Selesai</option>
+                <option value="dibatalkan" {{ request('status') === 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
             </select>
             <input type="date" name="date_from" value="{{ request('date_from') }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
             <input type="date" name="date_to" value="{{ request('date_to') }}" class="border border-gray-300 rounded-lg px-3 py-2 text-sm">
@@ -31,7 +32,7 @@
                     <tr>
                         <th class="p-4">Nama Kegiatan</th>
                         <th class="p-4">Tanggal</th>
-                        <th class="p-4">Jenis</th>
+                        <th class="p-4">Status</th>
                         <th class="p-4">Lokasi</th>
                         <th class="p-4">Kuota</th>
                         <th class="p-4">Publik</th>
@@ -41,14 +42,16 @@
                 <tbody class="divide-y divide-gray-100">
                     @forelse($kegiatans as $k)
                         <tr class="hover:bg-gray-50 transition">
-                            <td class="p-4 font-semibold text-gray-800">{{ $k->nama_kegiatan }}</td>
-                            <td class="p-4 text-gray-600">{{ $k->tanggal ? \Carbon\Carbon::parse($k->tanggal)->format('d M Y') : '-' }}</td>
+                            <td class="p-4 font-semibold text-gray-800">{{ $k->judul_kegiatan }}</td>
+                            <td class="p-4 text-gray-600">{{ $k->tanggal_kegiatan?->format('d M Y') ?? '-' }}</td>
                             <td class="p-4">
-                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold 
-                                    {{ $k->jenis_kegiatan === 'online' ? 'bg-sky-100 text-sky-700' : '' }}
-                                    {{ $k->jenis_kegiatan === 'offline' ? 'bg-amber-100 text-amber-700' : '' }}
-                                    {{ $k->jenis_kegiatan === 'hybrid' ? 'bg-purple-100 text-purple-700' : '' }}">
-                                    {{ ucfirst($k->jenis_kegiatan) }}
+                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold
+                                    {{ $k->status === 'akan_datang' ? 'bg-sky-100 text-sky-700' : '' }}
+                                    {{ $k->status === 'berlangsung' ? 'bg-amber-100 text-amber-700' : '' }}
+                                    {{ $k->status === 'selesai' ? 'bg-emerald-100 text-emerald-700' : '' }}
+                                    {{ $k->status === 'dibatalkan' ? 'bg-rose-100 text-rose-700' : '' }}
+                                    {{ !in_array($k->status, ['akan_datang', 'berlangsung', 'selesai', 'dibatalkan']) ? 'bg-gray-100 text-gray-600' : '' }}">
+                                    {{ ucfirst(str_replace('_', ' ', $k->status ?? '-')) }}
                                 </span>
                             </td>
                             <td class="p-4 text-gray-600">{{ $k->lokasi ?? '-' }}</td>
@@ -86,4 +89,3 @@
     </div>
 </div>
 @endsection
-"

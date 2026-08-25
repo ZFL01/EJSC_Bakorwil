@@ -284,7 +284,7 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">150+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['mentors'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Mentor</div>
                         </div>
 
@@ -321,7 +321,7 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">500+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['talents'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Talenta</div>
                         </div>
 
@@ -366,14 +366,14 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">80+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['clients'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Client</div>
                         </div>
 
                     </div>
 
 
-                    <!-- KEPUASAN -->
+                    <!-- KEGIATAN MENDATANG -->
 
                     <div class="ejsc-stat-box">
 
@@ -404,8 +404,8 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">98%</div>
-                            <div class="ejsc-stat-label">Kepuasan</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['kegiatans'], 0, ',', '.') }}</div>
+                            <div class="ejsc-stat-label">Kegiatan Mendatang</div>
                         </div>
 
                     </div>
@@ -7522,32 +7522,63 @@
                      PRIMARY BUTTON
                 ================================================== --}}
 
-                <a
-                    href="{{ route('kelola.mentor') }}"
-                    class="cta-primary"
-                >
-
-                    <span>
-                        Kelola Data
-                    </span>
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
+                @if(auth()->check() && auth()->user()->isAdmin())
+                    {{-- PRIMARY BUTTON: hanya untuk admin (CRUD penuh hanya di panel admin) --}}
+                    <a
+                        href="{{ route('admin.dashboard') }}"
+                        class="cta-primary"
                     >
 
-                        <path d="M5 12h14"/>
+                        <span>
+                            Kelola Data
+                        </span>
 
-                        <path d="m13 6 6 6-6 6"/>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
 
-                    </svg>
+                            <path d="M5 12h14"/>
 
-                    <div class="button-shine"></div>
+                            <path d="m13 6 6 6-6 6"/>
 
-                </a>
+                        </svg>
+
+                        <div class="button-shine"></div>
+
+                    </a>
+                @else
+                    {{-- Pengunjung umum diarahkan untuk mendaftar --}}
+                    <a
+                        href="{{ route('registrasi') }}"
+                        class="cta-primary"
+                    >
+
+                        <span>
+                            Daftar Sekarang
+                        </span>
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M5 12h14"/>
+
+                            <path d="m13 6 6 6-6 6"/>
+
+                        </svg>
+
+                        <div class="button-shine"></div>
+
+                    </a>
+                @endif
 
 
                 {{-- =================================================

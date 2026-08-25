@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Detail Talent')
 @section('header', 'Detail Talent')
@@ -77,8 +77,8 @@
                 <div>
                     <dt class="text-xs text-rose-500 mb-1">Foto KTP</dt>
                     <dd>
-                        @if($talent->url_foto_ktp)
-                            <a href="{{ asset('storage/' . $talent->url_foto_ktp) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Dokumen KTP</a>
+                        @if($talent->url_ktp)
+                            <a href="{{ asset('storage/' . $talent->url_ktp) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Dokumen KTP</a>
                         @else
                             <span class="text-xs text-gray-400 italic">Tidak ada file</span>
                         @endif
@@ -108,4 +108,4 @@
         </div>
     </div>
 </div>
-@endsection"
+@endsection

@@ -9,8 +9,8 @@
 </head>
 <body class="bg-gray-100 font-sans antialiased" x-data="{ sidebarOpen: false }">
     <div class="min-h-screen flex flex-col md:flex-row">
-        <!-- Mobile Top Nav -->
-        <div class="md:hidden bg-slate-800 text-white p-4 flex justify-between items-center">
+        <!-- Mobile Top Nav (fixed saat scroll) -->
+        <div class="md:hidden sticky top-0 z-40 bg-slate-800 text-white p-4 flex justify-between items-center">
             <span class="font-bold text-lg">Admin Bakorwil</span>
             <button @click="sidebarOpen = !sidebarOpen" class="focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -20,10 +20,20 @@
         </div>
 
         <!-- Sidebar -->
-        <aside :class="sidebarOpen ? 'block' : 'hidden'" class="md:block w-full md:w-64 bg-slate-800 text-slate-100 flex-shrink-0">
-            <div class="p-6 border-b border-slate-700 hidden md:block">
-                <h1 class="text-xl font-bold text-white">Bakorwil Admin</h1>
-                <p class="text-xs text-slate-400 mt-1">Management System</p>
+        <!-- Sidebar (fixed di desktop, ikut scroll internal jika menu lebih panjang dari layar) -->
+        <aside :class="sidebarOpen ? 'block' : 'hidden'" class="md:block md:sticky md:top-0 md:h-screen md:self-start md:overflow-y-auto w-full md:w-64 bg-slate-800 text-slate-100 flex-shrink-0">
+            <div class="p-5 border-b border-slate-700 hidden md:block">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#56b8c2] to-[#2e8791] flex items-center justify-center shadow-lg shadow-[#56b8c2]/30 flex-shrink-0">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m7 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div class="min-w-0">
+                        <h1 class="text-base font-bold text-white leading-tight truncate">Bakorwil Admin</h1>
+                        <p class="text-xs text-slate-400">Management System</p>
+                    </div>
+                </div>
             </div>
 
             <nav class="p-4 space-y-1">
@@ -92,11 +102,19 @@
 
         <!-- Main Content Area -->
         <div class="flex-1 flex flex-col min-w-0">
-            <!-- Top Bar -->
-            <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+            <!-- Top Bar (fixed saat scroll di desktop) -->
+            <header class="md:sticky md:top-0 md:z-30 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
                 <h2 class="text-xl font-bold text-gray-800">@yield('header', 'Dashboard')</h2>
-                <div class="flex items-center gap-4">
-                    <span class="text-sm text-gray-600 font-medium">{{ auth()->user()->name ?? 'Admin' }}</span>
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#56b8c2] to-[#2e8791] text-white flex items-center justify-center font-bold text-sm uppercase flex-shrink-0">
+                            {{ mb_substr(auth()->user()->name ?? 'A', 0, 1) }}
+                        </div>
+                        <div class="leading-tight">
+                            <p class="text-sm font-semibold text-gray-800 max-w-[160px] truncate">{{ auth()->user()->name ?? 'Admin' }}</p>
+                            <p class="text-[11px] text-gray-400 capitalize">{{ auth()->user()->role ?? 'admin' }}</p>
+                        </div>
+                    </div>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="text-xs bg-gray-100 hover:bg-red-50 text-red-600 px-3 py-1.5 rounded-md font-medium border border-gray-200 hover:border-red-200 transition">

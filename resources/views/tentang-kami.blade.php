@@ -94,20 +94,20 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
                 <div class="stat-mini">
-                    <div class="value">{{ $statistik['mentor'] }}+</div>
+                    <div class="value">{{ $statistik['mentor'] }}</div>
                     <div class="label">Mentor Aktif</div>
                 </div>
                 <div class="stat-mini">
-                    <div class="value">{{ $statistik['talenta'] }}+</div>
+                    <div class="value">{{ $statistik['talenta'] }}</div>
                     <div class="label">Talenta Terdaftar</div>
                 </div>
                 <div class="stat-mini">
-                    <div class="value">{{ $statistik['client'] }}+</div>
+                    <div class="value">{{ $statistik['client'] }}</div>
                     <div class="label">Client Bergabung</div>
                 </div>
                 <div class="stat-mini">
-                    <div class="value">{{ $statistik['kepuasan'] }}%</div>
-                    <div class="label">Tingkat Kepuasan</div>
+                    <div class="value">{{ $statistik['kegiatan'] }}</div>
+                    <div class="label">Kegiatan Mendatang</div>
                 </div>
             </div>
         </div>

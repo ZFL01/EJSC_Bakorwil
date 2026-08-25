@@ -585,55 +585,6 @@
                     </div>
 
 
-                    <div class="relative menu-group">
-
-                        <button data-menu="kelola"
-                                class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#35BFD1] rounded-md hover:bg-[#f0fbfd] transition flex items-center gap-1">
-
-                            Kelola
-
-                            <svg class="w-4 h-4 menu-arrow transition-transform"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M19 9l-7 7-7-7"/>
-
-                            </svg>
-
-                        </button>
-
-
-                        <div id="menu-kelola"
-                             class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
-
-                            <a href="{{ route('kelola.mentor') }}"
-                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                                Kelola Mentor
-
-                            </a>
-
-                            <a href="{{ route('kelola.talenta') }}"
-                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                                Kelola Talenta
-
-                            </a>
-
-                            <a href="{{ route('kelola.client') }}"
-                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                                Kelola Client
-
-                            </a>
-
-                        </div>
-
-                    </div>
 
                 </div>
 
@@ -753,36 +704,6 @@
                 </div>
 
 
-                <div class="pt-2">
-
-                    <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-
-                        Kelola
-
-                    </p>
-
-                    <a href="{{ route('kelola.mentor') }}"
-                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                        Kelola Mentor
-
-                    </a>
-
-                    <a href="{{ route('kelola.talenta') }}"
-                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                        Kelola Talenta
-
-                    </a>
-
-                    <a href="{{ route('kelola.client') }}"
-                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
-
-                        Kelola Client
-
-                    </a>
-
-                </div>
 
             </div>
 

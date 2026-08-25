@@ -1,4 +1,4 @@
-"@extends('layouts.admin')
+@extends('layouts.admin')
 
 @section('title', 'Edit Client')
 @section('header', 'Edit Client (UMKM)')
@@ -16,12 +16,12 @@
                 <input type="text" name="nama_ukm" value="{{ old('nama_ukm', $client->nama_ukm) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Jenis Produk</label>
-                <input type="text" name="jenis_produk" value="{{ old('jenis_produk', $client->jenis_produk) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Produk</label>
+                <input type="text" name="nama_produk" value="{{ old('nama_produk', $client->nama_produk) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">No WhatsApp</label>
-                <input type="text" name="no_wa" value="{{ old('no_wa', $client->no_wa) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <input type="text" name="no_hp" value="{{ old('no_hp', $client->no_hp) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Status Profil</label>
@@ -42,22 +42,14 @@
             <textarea name="deskripsi_usaha" rows="3" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('deskripsi_usaha', $client->deskripsi_usaha) }}</textarea>
         </div>
 
-        <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Berkas & Foto</h3>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Foto KTP (Sensitif)</label>
-                @if($client->url_foto_ktp)
-                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $client->url_foto_ktp) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
-                @endif
-                <input type="file" name="url_foto_ktp" class="text-xs text-gray-500 w-full">
-            </div>
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Foto Usaha/Produk</label>
-                @if($client->url_foto_usaha)
-                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $client->url_foto_usaha) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
-                @endif
-                <input type="file" name="url_foto_usaha" class="text-xs text-gray-500 w-full">
-            </div>
+        <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Foto</h3>
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Foto Logo/Produk UMKM</label>
+            @if($client->foto_logo)
+                <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $client->foto_logo) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+            @endif
+            <input type="file" name="foto_logo" class="text-xs text-gray-500 w-full">
+            <p class="text-xs text-gray-400 mt-1">Max 2MB. Format: JPG, PNG. Kosongkan jika tidak diganti.</p>
         </div>
 
         <div class="flex justify-end gap-2 pt-4 border-t">

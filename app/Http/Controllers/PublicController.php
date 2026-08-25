@@ -34,6 +34,91 @@ class PublicController extends Controller
     }
 
     /**
+     * Display the "Tentang Kami" page with real platform statistics.
+     */
+    public function tentangKami()
+    {
+        $statistik = [
+            'mentor'   => Mentor::active()->count(),
+            'talenta'  => Talent::active()->count(),
+            'client'   => Client::active()->count(),
+            'kegiatan' => Kegiatan::public()->upcoming()->count(),
+        ];
+
+        // Pertumbuhan platform: jumlah kumulatif data per bulan (8 bulan terakhir)
+        $namaBulan = [1 => 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+        $bulan = collect(range(7, 0))->map(fn ($i) => [
+            'key'   => now()->copy()->subMonths($i)->format('Y-m'),
+            'label' => $namaBulan[(int) now()->copy()->subMonths($i)->format('n')],
+        ]);
+
+        $pertumbuhan = [
+            'labels'  => $bulan->pluck('label')->all(),
+            'mentor'  => $this->kumulatifPerBulan('mentor', $bulan->pluck('key')->all()),
+            'talenta' => $this->kumulatifPerBulan('talenta', $bulan->pluck('key')->all()),
+            'client'  => $this->kumulatifPerBulan('client', $bulan->pluck('key')->all()),
+        ];
+
+        // Distribusi berdasarkan kategori keahlian (diambil dari field keahlian)
+        $distribusiTalenta = $this->topKeahlian(Talent::query());
+        $distribusiMentor  = $this->topKeahlian(Mentor::query());
+
+        return view('tentang-kami', compact(
+            'statistik',
+            'pertumbuhan',
+            'distribusiTalenta',
+            'distribusiMentor'
+        ));
+    }
+
+    /**
+     * Jumlah kumulatif record per bulan berdasarkan created_at.
+     *
+     * @param  array<int, string>  $bulanKeys
+     * @return array<int, int>
+     */
+    private function kumulatifPerBulan(string $table, array $bulanKeys): array
+    {
+        $perBulan = DB::table($table)
+            ->whereNotNull('created_at')
+            ->selectRaw("to_char(created_at, 'YYYY-MM') as bulan, count(*) as total")
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
+
+        $jumlah = 0;
+
+        return collect($bulanKeys)->map(function ($key) use ($perBulan, &$jumlah) {
+            $jumlah += (int) ($perBulan[$key] ?? 0);
+
+            return $jumlah;
+        })->all();
+    }
+
+    /**
+     * Top kategori keahlian dari field keahlian (dipisahkan koma/titik koma).
+     *
+     * @return array{labels: array<int, string>, data: array<int, int>}
+     */
+    private function topKeahlian($query, int $limit = 5): array
+    {
+        $jumlah = $query->toBase()
+            ->whereNotNull('keahlian')
+            ->where('keahlian', '!=', '')
+            ->pluck('keahlian')
+            ->flatMap(fn ($v) => preg_split('/[,;]+/u', $v))
+            ->map(fn ($v) => trim($v))
+            ->filter(fn ($v) => $v !== '')
+            ->countBy()
+            ->sortDesc()
+            ->take($limit);
+
+        return [
+            'labels' => $jumlah->keys()->all(),
+            'data'   => $jumlah->values()->all(),
+        ];
+    }
+
+    /**
      * Display a listing of clients (public view).
      */
     public function clients(Request $request)
