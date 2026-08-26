@@ -551,6 +551,31 @@
 
 
     /* =========================================================
+       MODAL PROFIL (animasi masuk + polish)
+    ========================================================= */
+
+    .mentor-modal-card {
+        animation: mentorModalIn .32s cubic-bezier(.2, .9, .3, 1) both;
+    }
+
+    @keyframes mentorModalIn {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .mentor-modal-avatar {
+        background: linear-gradient(135deg, #16bac4 0%, #0f96a0 100%);
+        box-shadow: 0 10px 22px rgba(22, 184, 196, 0.35);
+    }
+
+
+    /* =========================================================
        BUTTON
     ========================================================= */
 
@@ -774,24 +799,14 @@
                         >
 
                             <option value="semua">
-                                Semua Bidang
+                                Semua Bidang ({{ count($mentors) }})
                             </option>
 
-                            <option value="teknologi">
-                                Teknologi
-                            </option>
-
-                            <option value="bisnis">
-                                Bisnis
-                            </option>
-
-                            <option value="desain">
-                                Desain
-                            </option>
-
-                            <option value="pendidikan">
-                                Pendidikan
-                            </option>
+                            @foreach ($kategoriMentor as $kat)
+                                <option value="{{ $kat['key'] }}">
+                                    {{ $kat['label'] }} ({{ $kat['count'] }})
+                                </option>
+                            @endforeach
 
                         </select>
 
@@ -856,6 +871,68 @@
 </div>
 
 
+<!-- =========================================================
+     MODAL PROFIL MENTOR
+========================================================== -->
+<div
+    id="mentor-modal"
+    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
+    style="background: rgba(15, 52, 77, .55); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+>
+    <div class="mentor-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+
+        <!-- CLOSE -->
+        <button
+            type="button"
+            id="mentor-modal-close"
+            class="mentor-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#6b8ba0] hover:bg-[#f0f9fa] hover:rotate-90 active:scale-90 transition duration-200"
+            aria-label="Tutup"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- HEADER -->
+        <div class="flex flex-col items-center text-center mb-6 pt-2">
+            <div id="mentor-modal-avatar" class="mentor-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#e3f7f9] flex items-center justify-center text-white text-3xl font-bold mb-3"></div>
+            <span id="mentor-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
+            <h3 id="mentor-modal-nama" class="text-2xl font-bold text-[#12344d] leading-tight mb-1.5"></h3>
+            <p id="mentor-modal-keahlian" class="text-sm font-medium text-[#45687e] leading-relaxed max-w-xs"></p>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="rounded-2xl bg-[#f2fbfc] border border-[#ddf1f3] divide-y divide-[#eaf5f6]">
+            <div class="px-5 py-2 text-sm divide-y divide-[#eaf5f6]">
+                <div class="flex items-start gap-3 py-2.5">
+                    <svg class="w-5 h-5 mt-0.5 text-[#16b8c4] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <div>
+                        <div class="text-[11px] font-semibold text-[#7fa9b3] uppercase tracking-wider">Domisili</div>
+                        <div id="mentor-modal-domisili" class="text-[15px] text-[#233d54] font-medium mt-0.5"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 py-2.5">
+                    <svg class="w-5 h-5 mt-0.5 text-[#16b8c4] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <div>
+                        <div class="text-[11px] font-semibold text-[#8fa9b3] uppercase tracking-wider">Pengalaman</div>
+                        <div id="mentor-modal-pengalaman" class="text-[15px] text-[#233d54] font-medium mt-0.5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 @endsection
 
 
@@ -867,110 +944,24 @@
        DATA MENTOR
     ========================================================= */
 
-    const mentors = [
+    const mentors = @json($mentors);
 
-        {
-            nama: 'Dr. Andi Wijaya',
-            bidang: 'teknologi',
-            keahlian: 'AI & Machine Learning',
-            pengalaman: '15 tahun',
-            avatar: 'AW'
-        },
-
-        {
-            nama: 'Rina Kusuma, MBA',
-            bidang: 'bisnis',
-            keahlian: 'Strategi Bisnis',
-            pengalaman: '12 tahun',
-            avatar: 'RK'
-        },
-
-        {
-            nama: 'Budi Santoso',
-            bidang: 'teknologi',
-            keahlian: 'Software Engineering',
-            pengalaman: '10 tahun',
-            avatar: 'BS'
-        },
-
-        {
-            nama: 'Siti Rahayu',
-            bidang: 'desain',
-            keahlian: 'UI/UX Design',
-            pengalaman: '8 tahun',
-            avatar: 'SR'
-        },
-
-        {
-            nama: 'Prof. Joko Susilo',
-            bidang: 'pendidikan',
-            keahlian: 'Metodologi Pengajaran',
-            pengalaman: '20 tahun',
-            avatar: 'JS'
-        },
-
-        {
-            nama: 'Maya Anggraini',
-            bidang: 'bisnis',
-            keahlian: 'Marketing & Branding',
-            pengalaman: '9 tahun',
-            avatar: 'MA'
-        },
-
-        {
-            nama: 'David Pratama',
-            bidang: 'teknologi',
-            keahlian: 'Cloud & DevOps',
-            pengalaman: '11 tahun',
-            avatar: 'DP'
-        },
-
-        {
-            nama: 'Lestari Dewi',
-            bidang: 'desain',
-            keahlian: 'Motion & Animation',
-            pengalaman: '7 tahun',
-            avatar: 'LD'
-        },
-
-        {
-            nama: 'Hendra Gunawan',
-            bidang: 'pendidikan',
-            keahlian: 'Kurikulum & Training',
-            pengalaman: '13 tahun',
-            avatar: 'HG'
-        }
-
-    ];
+    /* Data terakhir yang dirender (dipakai oleh modal "Lihat Profil") */
+    let currentMentors = [];
 
 
     /* =========================================================
-       LABEL BIDANG
+       LABEL BIDANG (dibangkitkan dari data nyata di backend)
     ========================================================= */
 
-    const bidangLabel = {
-
-        teknologi: {
-            label: 'Teknologi',
-            color: 'badge-teknologi'
-        },
-
-        bisnis: {
-            label: 'Bisnis',
-            color: 'badge-bisnis'
-        },
-
-        desain: {
-            label: 'Desain',
-            color: 'badge-desain'
-        },
-
-        pendidikan: {
-            label: 'Pendidikan',
-            color: 'badge-pendidikan'
-        }
-
-    };
+    const bidangLabel = {};
+    @json($kategoriMentor)
+        .forEach(function (kt) {
+            bidangLabel[kt.key] = {
+                label: kt.label,
+                color: kt.color
+            };
+        });
 
 
     /* =========================================================
@@ -1013,14 +1004,14 @@
 
                     ||
 
-                    m.keahlian
+                    (m.keahlianRaw || '')
                         .toLowerCase()
                         .includes(keyword);
 
 
                 const matchBidang =
                     bidang === 'semua' ||
-                    m.bidang === bidang;
+                    m.keahlian === bidang;
 
 
                 return matchKeyword && matchBidang;
@@ -1036,6 +1027,11 @@
         );
 
 
+        /* Simpan data yang sedang dirender agar bisa dibaca oleh modal */
+
+        currentMentors = filtered;
+
+
         /* =====================================================
            RENDER CARD
         ====================================================== */
@@ -1043,8 +1039,10 @@
         mentorList.innerHTML = filtered
             .map((m, index) => {
 
-                const b =
-                    bidangLabel[m.bidang];
+                const b = {
+                    label: m.bidangLabel || 'Umum',
+                    color: m.bidangColor || 'badge-teknologi'
+                };
 
 
                 return `
@@ -1130,7 +1128,7 @@
                             "
                         >
 
-                            ${m.keahlian}
+                            ${m.keahlianRaw || '—'}
 
                         </p>
 
@@ -1163,7 +1161,7 @@
 
                             </svg>
 
-                            Pengalaman ${m.pengalaman}
+                            Pengalaman ${m.pengalaman || '—'}
 
                         </div>
 
@@ -1171,6 +1169,8 @@
                         <!-- BUTTON -->
 
                         <button
+                            type="button"
+                            data-idx="${index}"
                             class="
                                 mentor-button
                                 w-full
@@ -1222,6 +1222,77 @@
     ========================================================= */
 
     renderMentors();
+
+
+    /* =========================================================
+       MODAL PROFIL MENTOR
+    ========================================================= */
+
+    const mentorModal =
+        document.getElementById('mentor-modal');
+
+    function openMentorModal(item) {
+
+        if (!item) { return; }
+
+        const b = {
+            label: item.bidangLabel || 'Umum',
+            color: item.bidangColor || 'badge-teknologi'
+        };
+
+        document.getElementById('mentor-modal-avatar').textContent =
+            item.avatar || '?';
+
+        const badge =
+            document.getElementById('mentor-modal-badge');
+        badge.textContent = b.label;
+        badge.className =
+            'px-3 py-1 rounded-full text-xs font-semibold ' + b.color;
+
+        document.getElementById('mentor-modal-nama').textContent =
+            item.nama;
+
+        document.getElementById('mentor-modal-keahlian').textContent =
+            item.keahlianRaw || '—';
+
+        document.getElementById('mentor-modal-domisili').textContent =
+            item.domisili || '—';
+
+        document.getElementById('mentor-modal-pengalaman').textContent =
+            item.pengalaman || '—';
+
+        mentorModal.classList.remove('hidden');
+        mentorModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+
+    }
+
+    function closeMentorModal() {
+        mentorModal.classList.add('hidden');
+        mentorModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    /* Delegasi klik tombol "Lihat Profil" pada daftar mentor */
+
+    mentorList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-idx]');
+        if (!btn) { return; }
+        openMentorModal(currentMentors[parseInt(btn.getAttribute('data-idx'), 10)]);
+    });
+
+    document.getElementById('mentor-modal-close')
+        .addEventListener('click', closeMentorModal);
+
+    mentorModal.addEventListener('click', (e) => {
+        if (e.target === mentorModal) { closeMentorModal(); }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !mentorModal.classList.contains('hidden')) {
+            closeMentorModal();
+        }
+    });
 
 </script>
 

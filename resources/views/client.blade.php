@@ -651,6 +651,31 @@
 
 
     /* =========================================================
+       MODAL PROFIL (animasi masuk + polish)
+    ========================================================= */
+
+    .client-modal-card {
+        animation: clientModalIn .32s cubic-bezier(.2, .9, .3, 1) both;
+    }
+
+    @keyframes clientModalIn {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .client-modal-avatar {
+        background: linear-gradient(135deg, #e5cd35 0%, #bfa51f 100%);
+        box-shadow: 0 10px 22px rgba(229, 205, 53, 0.35);
+    }
+
+
+    /* =========================================================
        TRUSTED TEXT
     ========================================================= */
 
@@ -972,24 +997,14 @@
                         >
 
                             <option value="semua">
-                                Semua Kategori
+                                Semua Kategori ({{ count($clients) }})
                             </option>
 
-                            <option value="korporasi">
-                                Korporasi
-                            </option>
-
-                            <option value="startup">
-                                Startup
-                            </option>
-
-                            <option value="umkm">
-                                UMKM
-                            </option>
-
-                            <option value="pemerintahan">
-                                Pemerintahan
-                            </option>
+                            @foreach ($kategoriClient as $kat)
+                                <option value="{{ $kat['key'] }}">
+                                    {{ $kat['label'] }} ({{ $kat['count'] }})
+                                </option>
+                            @endforeach
 
                         </select>
 
@@ -1083,6 +1098,46 @@
 </div>
 
 
+<!-- =========================================================
+     MODAL PROFIL CLIENT
+========================================================== -->
+<div
+    id="client-modal"
+    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
+    style="background: rgba(60, 58, 30, .6); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+>
+    <div class="client-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+
+        <!-- CLOSE -->
+        <button
+            type="button"
+            class="client-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#9e9a6e] hover:bg-[#faf8e8] hover:rotate-90 active:scale-90 transition duration-200"
+            aria-label="Tutup"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- HEADER -->
+        <div class="flex flex-col items-center text-center mb-6 pt-2">
+            <div id="client-modal-avatar" class="client-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#faf3cd] flex items-center justify-center text-white text-3xl font-bold mb-3"></div>
+            <span id="client-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
+            <h3 id="client-modal-nama" class="text-2xl font-bold text-[#30352f] leading-tight mb-1.5"></h3>
+            <p id="client-modal-industri" class="text-sm font-medium text-[#737a63] leading-relaxed max-w-xs"></p>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="rounded-2xl bg-[#fbf9ec] border border-[#efe8c2]">
+            <div id="client-modal-detail" class="px-5 py-2 divide-y divide-[#f4efdb]"></div>
+        </div>
+
+    </div>
+</div>
+
+
 @endsection
 
 
@@ -1094,110 +1149,24 @@
        DATA CLIENT
     ========================================================= */
 
-    const clients = [
+    const clients = @json($clients);
 
-        {
-            nama: 'PT Maju Bersama',
-            kategori: 'korporasi',
-            industri: 'Manufaktur',
-            proyek: 25,
-            avatar: 'MB'
-        },
-
-        {
-            nama: 'Startup Inovasi',
-            kategori: 'startup',
-            industri: 'Teknologi',
-            proyek: 12,
-            avatar: 'SI'
-        },
-
-        {
-            nama: 'CV Karya Mandiri',
-            kategori: 'umkm',
-            industri: 'Kuliner',
-            proyek: 8,
-            avatar: 'KM'
-        },
-
-        {
-            nama: 'Dinas Pendidikan',
-            kategori: 'pemerintahan',
-            industri: 'Pendidikan',
-            proyek: 15,
-            avatar: 'DP'
-        },
-
-        {
-            nama: 'PT Solusi Digital',
-            kategori: 'korporasi',
-            industri: 'IT Services',
-            proyek: 30,
-            avatar: 'SD'
-        },
-
-        {
-            nama: 'Startup Fintech',
-            kategori: 'startup',
-            industri: 'Keuangan',
-            proyek: 10,
-            avatar: 'SF'
-        },
-
-        {
-            nama: 'Toko Berkah',
-            kategori: 'umkm',
-            industri: 'Retail',
-            proyek: 5,
-            avatar: 'TB'
-        },
-
-        {
-            nama: 'Bank Daerah',
-            kategori: 'pemerintahan',
-            industri: 'Perbankan',
-            proyek: 18,
-            avatar: 'BD'
-        },
-
-        {
-            nama: 'PT Global Media',
-            kategori: 'korporasi',
-            industri: 'Media',
-            proyek: 22,
-            avatar: 'GM'
-        }
-
-    ];
+    /* Data terakhir yang dirender (dipakai oleh modal profil client) */
+    let currentClients = [];
 
 
     /* =========================================================
-       KATEGORI LABEL
+       KATEGORI LABEL (dibangkitkan dari data nyata di backend)
     ========================================================= */
 
-    const kategoriLabel = {
-
-        korporasi: {
-            label: 'Korporasi',
-            color: 'badge-korporasi'
-        },
-
-        startup: {
-            label: 'Startup',
-            color: 'badge-startup'
-        },
-
-        umkm: {
-            label: 'UMKM',
-            color: 'badge-umkm'
-        },
-
-        pemerintahan: {
-            label: 'Pemerintahan',
-            color: 'badge-pemerintahan'
-        }
-
-    };
+    const kategoriLabel = {};
+    @json($kategoriClient)
+        .forEach(function (kc) {
+            kategoriLabel[kc.key] = {
+                label: kc.label,
+                color: kc.color
+            };
+        });
 
 
     /* =========================================================
@@ -1251,7 +1220,7 @@
 
                     ||
 
-                    c.industri
+                    (c.industri || '')
                         .toLowerCase()
                         .includes(keyword);
 
@@ -1281,6 +1250,11 @@
             'hidden',
             filtered.length > 0
         );
+
+
+        /* Simpan data yang sedang dirender agar bisa dibaca oleh modal */
+
+        currentClients = filtered;
 
 
         /* =====================================================
@@ -1389,7 +1363,7 @@
                                 "
                             >
 
-                                ${c.industri}
+                                ${c.industri || '—'}
 
                             </p>
 
@@ -1496,6 +1470,8 @@
                             <!-- BUTTON -->
 
                             <button
+                                type="button"
+                                data-idx="${index}"
                                 class="
                                     client-button
                                     w-full
@@ -1553,6 +1529,96 @@
     ========================================================= */
 
     renderClients();
+
+
+    /* =========================================================
+       MODAL PROFIL CLIENT
+    ========================================================= */
+
+    const clientModal =
+        document.getElementById('client-modal');
+
+    function openClientModal(item) {
+
+        if (!item) { return; }
+
+        const k = {
+            label: item.katLabel || 'UMKM',
+            color: item.katColor || 'badge-umkm'
+        };
+
+        document.getElementById('client-modal-avatar').textContent =
+            item.avatar || '?';
+
+        const badge =
+            document.getElementById('client-modal-badge');
+        badge.textContent = k.label;
+        badge.className =
+            'px-3 py-1 rounded-full text-xs font-semibold ' + k.color;
+
+        document.getElementById('client-modal-nama').textContent =
+            item.nama;
+
+        document.getElementById('client-modal-industri').textContent =
+            item.namaProduk || item.industri || '—';
+
+        /* Hanya baris yang datanya TERISI yang ditampilkan.
+           Baris kosong disembunyikan (bukan teks "belum diisi"). */
+        document.getElementById('client-modal-detail').innerHTML =
+            clientRow('Jumlah Proyek',
+                item.proyek != null ? item.proyek + ' proyek' : '') +
+            clientRow('Domisili', item.domisili) +
+            clientRow('Website', item.website) +
+            clientRow('Deskripsi Usaha', item.deskripsi);
+
+        clientModal.classList.remove('hidden');
+        clientModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    /* Sembunyikan baris saat nilainya kosong (biar popup rapi). */
+    function clientRow(label, value) {
+        const v =
+            (value == null ? '' : String(value)).trim();
+        if (!v) { return ''; }
+        return `
+            <div class="flex items-start gap-3 py-3">
+                <svg class="w-5 h-5 mt-0.5 text-[#d8bf2e] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                    <div class="text-[11px] font-semibold text-[#a09e7e] uppercase tracking-wider">${label}</div>
+                    <div class="text-[15px] text-[#30352f] font-medium mt-0.5">${value}</div>
+                </div>
+            </div>`;
+    }
+
+    function closeClientModal() {
+        clientModal.classList.add('hidden');
+        clientModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    /* Delegasi klik tombol pada daftar client */
+
+    clientList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-idx]');
+        if (!btn) { return; }
+        openClientModal(currentClients[parseInt(btn.getAttribute('data-idx'), 10)]);
+    });
+
+    clientModal.querySelector('.client-modal-close')
+        .addEventListener('click', closeClientModal);
+
+    clientModal.addEventListener('click', (e) => {
+        if (e.target === clientModal) { closeClientModal(); }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !clientModal.classList.contains('hidden')) {
+            closeClientModal();
+        }
+    });
 
 </script>
 

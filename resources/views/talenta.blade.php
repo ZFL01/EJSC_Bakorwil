@@ -698,6 +698,37 @@
             #607533;
     }
 
+    .level-umum {
+        background: #eef2f4;
+        color: #5b6b7a;
+    }
+
+
+    /* =========================================================
+       MODAL PROFIL (animasi masuk + polish)
+    ========================================================= */
+
+    .talenta-modal-card {
+        animation: talentModalIn .32s cubic-bezier(.2, .9, .3, 1) both;
+    }
+
+    @keyframes talentModalIn {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .talenta-modal-avatar {
+        background: linear-gradient(135deg, #c7ea46 0%, #8fc92a 100%);
+        color: #2b3d0f;
+        box-shadow: 0 10px 22px rgba(199, 234, 70, 0.35);
+    }
+
 
     /* =========================================================
        BUTTON
@@ -1004,24 +1035,14 @@
                         >
 
                             <option value="semua">
-                                Semua Keahlian
+                                Semua Keahlian ({{ number_format(count($talentas)) }})
                             </option>
 
-                            <option value="programming">
-                                Programming
-                            </option>
-
-                            <option value="design">
-                                Design
-                            </option>
-
-                            <option value="marketing">
-                                Marketing
-                            </option>
-
-                            <option value="data">
-                                Data Analysis
-                            </option>
+                            @foreach ($kategoriTalenta as $kat)
+                                <option value="{{ $kat['key'] }}">
+                                    {{ $kat['label'] }} ({{ $kat['count'] }})
+                                </option>
+                            @endforeach
 
                         </select>
 
@@ -1116,6 +1137,46 @@
 </div>
 
 
+<!-- =========================================================
+     MODAL PROFIL TALENTA
+========================================================== -->
+<div
+    id="talenta-modal"
+    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
+    style="background: rgba(23, 50, 77, .55); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+>
+    <div class="talenta-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+
+        <!-- CLOSE -->
+        <button
+            type="button"
+            class="talenta-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#7a8a6f] hover:bg-[#f4f8ec] hover:rotate-90 active:scale-90 transition duration-200"
+            aria-label="Tutup"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- HEADER -->
+        <div class="flex flex-col items-center text-center mb-6 pt-2">
+            <div id="talenta-modal-avatar" class="talenta-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#eef7cf] flex items-center justify-center text-3xl font-bold mb-3"></div>
+            <span id="talenta-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
+            <h3 id="talenta-modal-nama" class="text-2xl font-bold text-[#17324d] leading-tight mb-1.5"></h3>
+            <p id="talenta-modal-skill" class="text-sm font-medium text-[#5c768f] leading-relaxed max-w-xs"></p>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="rounded-2xl bg-[#f6faf0] border border-[#e7f0d5]">
+            <div id="talenta-modal-detail" class="px-5 py-2 divide-y divide-[#eef3e3]"></div>
+        </div>
+
+    </div>
+</div>
+
+
 @endsection
 
 
@@ -1127,110 +1188,26 @@
        DATA TALENTA
     ========================================================= */
 
-    const talentas = [
+    const talentas = @json($talentas);
 
-        {
-            nama: 'Ahmad Fauzi',
-            keahlian: 'programming',
-            skill: 'Full Stack Developer',
-            level: 'Senior',
-            avatar: 'AF'
-        },
-
-        {
-            nama: 'Putri Maharani',
-            keahlian: 'design',
-            skill: 'UI Designer',
-            level: 'Senior',
-            avatar: 'PM'
-        },
-
-        {
-            nama: 'Rizky Ramadhan',
-            keahlian: 'programming',
-            skill: 'Backend Engineer',
-            level: 'Mid',
-            avatar: 'RR'
-        },
-
-        {
-            nama: 'Dewi Lestari',
-            keahlian: 'marketing',
-            skill: 'Digital Marketing',
-            level: 'Senior',
-            avatar: 'DL'
-        },
-
-        {
-            nama: 'Fajar Nugroho',
-            keahlian: 'data',
-            skill: 'Data Scientist',
-            level: 'Senior',
-            avatar: 'FN'
-        },
-
-        {
-            nama: 'Intan Permata',
-            keahlian: 'design',
-            skill: 'UX Researcher',
-            level: 'Mid',
-            avatar: 'IP'
-        },
-
-        {
-            nama: 'Bagas Prakoso',
-            keahlian: 'programming',
-            skill: 'Mobile Developer',
-            level: 'Mid',
-            avatar: 'BP'
-        },
-
-        {
-            nama: 'Salsa Rahmadani',
-            keahlian: 'marketing',
-            skill: 'Content Creator',
-            level: 'Junior',
-            avatar: 'SR'
-        },
-
-        {
-            nama: 'Yoga Saputra',
-            keahlian: 'data',
-            skill: 'Data Analyst',
-            level: 'Mid',
-            avatar: 'YS'
-        }
-
-    ];
+    /* Data terakhir yang dirender (dipakai oleh modal "Lihat Profil") */
+    let currentTalentas = [];
 
 
     /* =========================================================
-       KEAHLIAN LABEL
+       KEAHLIAN LABEL (dibangkitkan dari data nyata di backend)
     ========================================================= */
 
-    const keahlianLabel = {
-
-        programming: {
-            label: 'Programming',
-            color: 'badge-programming'
-        },
-
-        design: {
-            label: 'Design',
-            color: 'badge-design'
-        },
-
-        marketing: {
-            label: 'Marketing',
-            color: 'badge-marketing'
-        },
-
-        data: {
-            label: 'Data Analysis',
-            color: 'badge-data'
-        }
-
-    };
+    /* Berisi { key: { label, color } } untuk semua kategori yang
+       benar-benar muncul di data (dari $kategoriTalenta). */
+    const keahlianLabel = {};
+    @json($kategoriTalenta)
+        .forEach(function (kt) {
+            keahlianLabel[kt.key] = {
+                label: kt.label,
+                color: kt.color
+            };
+        });
 
 
     /* =========================================================
@@ -1243,7 +1220,9 @@
 
         Mid: 'level-mid',
 
-        Junior: 'level-junior'
+        Junior: 'level-junior',
+
+        Umum: 'level-umum'
 
     };
 
@@ -1310,6 +1289,11 @@
             'hidden',
             filtered.length > 0
         );
+
+
+        /* Simpan data yang sedang dirender agar bisa dibaca oleh modal */
+
+        currentTalentas = filtered;
 
 
         /* =====================================================
@@ -1443,6 +1427,8 @@
                             <!-- BUTTON -->
 
                             <button
+                                type="button"
+                                data-idx="${index}"
                                 class="
                                     talenta-button
                                     w-full
@@ -1496,6 +1482,92 @@
     ========================================================= */
 
     renderTalentas();
+
+
+    /* =========================================================
+       MODAL PROFIL TALENTA
+    ========================================================= */
+
+    const talentaModal =
+        document.getElementById('talenta-modal');
+
+    function openTalentaModal(item) {
+
+        if (!item) { return; }
+
+        const k =
+            keahlianLabel[item.keahlian] ||
+            { label: 'Umum', color: 'badge-data' };
+
+        document.getElementById('talenta-modal-avatar').textContent =
+            item.avatar || '?';
+
+        const badge =
+            document.getElementById('talenta-modal-badge');
+        badge.textContent = k.label;
+        badge.className = 'px-3 py-1 rounded-full text-xs font-semibold ' + k.color;
+
+        document.getElementById('talenta-modal-nama').textContent =
+            item.nama;
+
+        document.getElementById('talenta-modal-skill').textContent =
+            item.skill || '—';
+
+        /* Hanya baris yang datanya TERISI yang ditampilkan. Jika kosong,
+           baris disembunyikan sama sekali (bukan teks "belum diisi"). */
+        document.getElementById('talenta-modal-detail').innerHTML =
+            rowDetail('Level', item.level) +
+            rowDetail('Bidang Pekerjaan', item.bidang) +
+            rowDetail('Domisili', item.domisili);
+
+        talentaModal.classList.remove('hidden');
+        talentaModal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+    }
+
+    /* Sembunyikan baris saat nilainya kosong (biar popup rapi). */
+    function rowDetail(label, value) {
+        const v =
+            (value == null ? '' : String(value)).trim();
+        if (!v) { return ''; }
+        return `
+            <div class="flex items-start gap-3 py-3">
+                <svg class="w-5 h-5 mt-0.5 text-[#b7d83c] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                    <div class="text-[11px] font-semibold text-[#8aa06b] uppercase tracking-wider">${label}</div>
+                    <div class="text-[15px] text-[#233d54] font-medium mt-0.5">${value}</div>
+                </div>
+            </div>`;
+    }
+
+    function closeTalentaModal() {
+        talentaModal.classList.add('hidden');
+        talentaModal.classList.remove('flex');
+        document.body.style.overflow = '';
+    }
+
+    /* Delegasi klik tombol "Lihat Profil" pada daftar talenta */
+
+    talentaList.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-idx]');
+        if (!btn) { return; }
+        openTalentaModal(currentTalentas[parseInt(btn.getAttribute('data-idx'), 10)]);
+    });
+
+    talentaModal.querySelector('.talenta-modal-close')
+        .addEventListener('click', closeTalentaModal);
+
+    talentaModal.addEventListener('click', (e) => {
+        if (e.target === talentaModal) { closeTalentaModal(); }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !talentaModal.classList.contains('hidden')) {
+            closeTalentaModal();
+        }
+    });
 
 </script>
 

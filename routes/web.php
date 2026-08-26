@@ -46,17 +46,11 @@ Route::post('/forgot-password', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/mentor', function () {
-    return view('mentor');
-})->name('mentor');
+Route::get('/mentor', [PublicController::class, 'mentor'])->name('mentor');
 
-Route::get('/talenta', function () {
-    return view('talenta');
-})->name('talenta');
+Route::get('/talenta', [PublicController::class, 'talenta'])->name('talenta');
 
-Route::get('/client', function () {
-    return view('client');
-})->name('client');
+Route::get('/client', [PublicController::class, 'client'])->name('client');
 
 /*
 |--------------------------------------------------------------------------
