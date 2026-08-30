@@ -802,21 +802,309 @@
             </div>
 
 
-            <!-- =================================================
-                 MENTOR LIST
-            ================================================== -->
+           <!-- =========================================================
+                MENTOR LIST
+            ========================================================= -->
 
             <div
                 id="mentor-list"
                 class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
-                <!-- Mentor cards dirender oleh JavaScript -->
+
+                @forelse($mentors as $mentor)
+
+                    @php
+                        $nama = $mentor->nama ?? 'Mentor';
+
+                        $keahlian = $mentor->keahlian ?? '-';
+
+                        $avatar = collect(
+                            preg_split('/\s+/', trim($nama))
+                        )
+                        ->filter()
+                        ->take(2)
+                        ->map(fn($word) => strtoupper(substr($word, 0, 1)))
+                        ->implode('');
+
+                        /*
+                        * Tentukan bidang dari keahlian.
+                        * Jika database Anda memiliki field bidang,
+                        * field tersebut akan diprioritaskan.
+                        */
+                        $bidang = strtolower(
+                            $mentor->bidang
+                            ?? ''
+                        );
+
+                        if ($bidang === '') {
+
+                            $keahlianLower =
+                                strtolower($keahlian);
+
+                            if (
+                                str_contains($keahlianLower, 'program')
+                                || str_contains($keahlianLower, 'software')
+                                || str_contains($keahlianLower, 'teknologi')
+                                || str_contains($keahlianLower, 'ai')
+                                || str_contains($keahlianLower, 'data')
+                                || str_contains($keahlianLower, 'cloud')
+                            ) {
+                                $bidang = 'teknologi';
+
+                            } elseif (
+                                str_contains($keahlianLower, 'bisnis')
+                                || str_contains($keahlianLower, 'marketing')
+                                || str_contains($keahlianLower, 'usaha')
+                            ) {
+                                $bidang = 'bisnis';
+
+                            } elseif (
+                                str_contains($keahlianLower, 'desain')
+                                || str_contains($keahlianLower, 'design')
+                                || str_contains($keahlianLower, 'ui')
+                                || str_contains($keahlianLower, 'ux')
+                            ) {
+                                $bidang = 'desain';
+
+                            } else {
+                                $bidang = 'pendidikan';
+                            }
+                        }
+
+
+                        $bidangLabel = match($bidang) {
+
+                            'teknologi' => [
+                                'label' => 'Teknologi',
+                                'class' => 'badge-teknologi'
+                            ],
+
+                            'bisnis' => [
+                                'label' => 'Bisnis',
+                                'class' => 'badge-bisnis'
+                            ],
+
+                            'desain' => [
+                                'label' => 'Desain',
+                                'class' => 'badge-desain'
+                            ],
+
+                            default => [
+                                'label' => 'Pendidikan',
+                                'class' => 'badge-pendidikan'
+                            ],
+                        };
+                    @endphp
+
+
+                    <div
+                        class="mentor-card"
+                        data-nama="{{ strtolower($nama) }}"
+                        data-keahlian="{{ strtolower($keahlian) }}"
+                        data-bidang="{{ $bidang }}"
+                    >
+
+                        <!-- TOP -->
+
+                        <div class="flex items-start justify-between mb-4">
+
+                            <!-- AVATAR -->
+
+                            <div
+                                class="
+                                    mentor-avatar
+                                    w-16
+                                    h-16
+                                    rounded-2xl
+                                    flex
+                                    items-center
+                                    justify-center
+                                    text-white
+                                    text-xl
+                                    font-bold
+                                "
+                            >
+                                {{ $avatar ?: 'ME' }}
+                            </div>
+
+
+                            <!-- BADGE -->
+
+                            <span
+                                class="
+                                    px-3
+                                    py-1
+                                    rounded-full
+                                    text-xs
+                                    font-medium
+                                    {{ $bidangLabel['class'] }}
+                                "
+                            >
+                                {{ $bidangLabel['label'] }}
+                            </span>
+
+                        </div>
+
+
+                        <!-- NAME -->
+
+                        <h3
+                            class="
+                                mentor-name
+                                text-lg
+                                font-semibold
+                                mb-1
+                            "
+                        >
+                            {{ $nama }}
+                        </h3>
+
+
+                        <!-- SKILL -->
+
+                        <p
+                            class="
+                                mentor-skill
+                                text-sm
+                                font-medium
+                                mb-3
+                            "
+                        >
+                            {{ $keahlian }}
+                        </p>
+
+
+                        <!-- EXPERIENCE -->
+
+                        <div
+                            class="
+                                mentor-experience
+                                flex
+                                items-center
+                                text-sm
+                                mb-4
+                            "
+                        >
+
+                            <svg
+                                class="w-4 h-4 mr-1"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="
+                                        M12 8v4l3 3
+                                        m6-3a9 9 0 11-18 0
+                                        9 9 0 0118 0z
+                                    "
+                                />
+
+                            </svg>
+
+                            @if(!empty($mentor->pengalaman))
+                                Pengalaman {{ $mentor->pengalaman }}
+                            @elseif(!empty($mentor->lama_pengalaman))
+                                Pengalaman {{ $mentor->lama_pengalaman }}
+                            @else
+                                Mentor Profesional
+                            @endif
+
+                        </div>
+
+
+                        <!-- BUTTON -->
+
+                        <a
+                            href="{{ route('mentor.show', $mentor->id_mentor) }}"
+                            class="
+                                mentor-button
+                                w-full
+                                py-2.5
+                                text-white
+                                rounded-xl
+                                font-medium
+                                block
+                                text-center
+                            "
+                        >
+
+                            <span class="relative z-10">
+                                Lihat Profil
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                @empty
+
+                    <div class="col-span-full text-center py-16">
+
+                        <svg
+                            class="w-16 h-16 mx-auto text-[#9edce1] mb-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="
+                                    M21 21l-6-6
+                                    m2-5a7 7 0
+                                    11-14 0
+                                    7 7 0
+                                    0114 0z
+                                "
+                            />
+
+                        </svg>
+
+                        <h3
+                            class="
+                                text-xl
+                                font-semibold
+                                text-[#31566a]
+                                mb-2
+                            "
+                        >
+                            Belum ada mentor
+                        </h3>
+
+                        <p class="text-[#78909c]">
+                            Data mentor belum tersedia.
+                        </p>
+
+                    </div>
+
+                @endforelse
+
             </div>
 
 
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
+            <!-- =========================================================
+                PAGINATION
+            ========================================================= -->
+
+            @if($mentors->hasPages())
+
+                <div class="mt-10">
+                    {{ $mentors->links() }}
+                </div>
+
+            @endif
+
+
+            <!-- =========================================================
+                EMPTY SEARCH STATE
+            ========================================================= -->
 
             <div
                 id="empty-state"
@@ -834,29 +1122,157 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        d="
+                            M21 21l-6-6
+                            m2-5a7 7 0
+                            11-14 0
+                            7 7 0
+                            0114 0z
+                        "
                     />
 
                 </svg>
 
-                <h3 class="text-xl font-semibold text-[#31566a] mb-2">
+                <h3
+                    class="
+                        text-xl
+                        font-semibold
+                        text-[#31566a]
+                        mb-2
+                    "
+                >
                     Mentor tidak ditemukan
                 </h3>
 
                 <p class="text-[#78909c]">
-                    Coba ubah kata kunci pencarian atau filter bidang
+                    Coba ubah kata kunci pencarian atau filter bidang.
                 </p>
 
             </div>
 
-        </div>
 
-    </section>
-
-</div>
+            @endsection
 
 
-@endsection
+            @section('scripts')
+
+            <script>
+
+            document.addEventListener('DOMContentLoaded', function () {
+
+                const searchInput =
+                    document.getElementById('search-input');
+
+                const filterSelect =
+                    document.getElementById('filter-select');
+
+                const mentorList =
+                    document.getElementById('mentor-list');
+
+                const emptyState =
+                    document.getElementById('empty-state');
+
+
+                function filterMentors() {
+
+                    const keyword =
+                        searchInput.value
+                            .toLowerCase()
+                            .trim();
+
+                    const bidang =
+                        filterSelect.value;
+
+
+                    const cards =
+                        mentorList.querySelectorAll(
+                            '.mentor-card'
+                        );
+
+
+                    let visible = 0;
+
+
+                    cards.forEach(function(card) {
+
+                        const nama =
+                            card.dataset.nama || '';
+
+                        const keahlian =
+                            card.dataset.keahlian || '';
+
+                        const cardBidang =
+                            card.dataset.bidang || '';
+
+
+                        const cocokKeyword =
+                            nama.includes(keyword)
+                            ||
+                            keahlian.includes(keyword);
+
+
+                        const cocokBidang =
+                            bidang === 'semua'
+                            ||
+                            cardBidang === bidang;
+
+
+                        if (
+                            cocokKeyword &&
+                            cocokBidang
+                        ) {
+
+                            card.style.display = '';
+
+                            visible++;
+
+                        } else {
+
+                            card.style.display = 'none';
+                        }
+
+                    });
+
+
+                    if (visible === 0) {
+
+                        emptyState.classList.remove(
+                            'hidden'
+                        );
+
+                    } else {
+
+                        emptyState.classList.add(
+                            'hidden'
+                        );
+                    }
+                }
+
+
+                if (searchInput) {
+
+                    searchInput.addEventListener(
+                        'input',
+                        filterMentors
+                    );
+
+                }
+
+
+                if (filterSelect) {
+
+                    filterSelect.addEventListener(
+                        'change',
+                        filterMentors
+                    );
+
+                }
+
+            });
+
+            </script>
+
+            @endsection
 
 
 @section('scripts')

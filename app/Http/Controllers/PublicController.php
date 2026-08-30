@@ -13,14 +13,16 @@ use Illuminate\Support\Facades\DB;
 class PublicController extends Controller
 {
     /**
-     * Display the public home page.
+     * =========================================================
+     * HOME / DASHBOARD PUBLIC
+     * =========================================================
      */
     public function index()
     {
         $stats = [
-            'clients' => Client::active()->count(),
-            'mentors' => Mentor::active()->count(),
-            'talents' => Talent::active()->count(),
+            'clients'   => Client::active()->count(),
+            'mentors'   => Mentor::active()->count(),
+            'talents'   => Talent::active()->count(),
             'kegiatans' => Kegiatan::public()->upcoming()->count(),
         ];
 
@@ -30,11 +32,17 @@ class PublicController extends Controller
             ->limit(3)
             ->get();
 
-        return view('home', compact('stats', 'upcomingKegiatans'));
+        return view('home', compact(
+            'stats',
+            'upcomingKegiatans'
+        ));
     }
 
+
     /**
-     * Display the "Tentang Kami" page with real platform statistics.
+     * =========================================================
+     * TENTANG KAMI
+     * =========================================================
      */
     public function tentangKami()
     {
@@ -45,23 +53,59 @@ class PublicController extends Controller
             'kegiatan' => Kegiatan::public()->upcoming()->count(),
         ];
 
-        // Pertumbuhan platform: jumlah kumulatif data per bulan (8 bulan terakhir)
-        $namaBulan = [1 => 'Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-        $bulan = collect(range(7, 0))->map(fn ($i) => [
-            'key'   => now()->copy()->subMonths($i)->format('Y-m'),
-            'label' => $namaBulan[(int) now()->copy()->subMonths($i)->format('n')],
-        ]);
+        /*
+        |--------------------------------------------------------------------------
+        | Pertumbuhan platform
+        |--------------------------------------------------------------------------
+        | 8 bulan terakhir
+        */
+
+        $namaBulan = [
+            1  => 'Jan',
+            2  => 'Feb',
+            3  => 'Mar',
+            4  => 'Apr',
+            5  => 'Mei',
+            6  => 'Jun',
+            7  => 'Jul',
+            8  => 'Agu',
+            9  => 'Sep',
+            10 => 'Okt',
+            11 => 'Nov',
+            12 => 'Des',
+        ];
+
+        $bulan = collect(range(7, 0))->map(function ($i) use ($namaBulan) {
+            $tanggal = now()->copy()->subMonths($i);
+
+            return [
+                'key'   => $tanggal->format('Y-m'),
+                'label' => $namaBulan[(int) $tanggal->format('n')],
+            ];
+        });
+
+        $bulanKeys = $bulan->pluck('key')->all();
 
         $pertumbuhan = [
             'labels'  => $bulan->pluck('label')->all(),
-            'mentor'  => $this->kumulatifPerBulan('mentor', $bulan->pluck('key')->all()),
-            'talenta' => $this->kumulatifPerBulan('talenta', $bulan->pluck('key')->all()),
-            'client'  => $this->kumulatifPerBulan('client', $bulan->pluck('key')->all()),
+            'mentor'  => $this->kumulatifPerBulan('mentor', $bulanKeys),
+            'talenta' => $this->kumulatifPerBulan('talenta', $bulanKeys),
+            'client'  => $this->kumulatifPerBulan('client', $bulanKeys),
         ];
 
-        // Distribusi berdasarkan kategori keahlian (diambil dari field keahlian)
-        $distribusiTalenta = $this->topKeahlian(Talent::query());
-        $distribusiMentor  = $this->topKeahlian(Mentor::query());
+        /*
+        |--------------------------------------------------------------------------
+        | Distribusi keahlian
+        |--------------------------------------------------------------------------
+        */
+
+        $distribusiTalenta = $this->topKeahlian(
+            Talent::query()
+        );
+
+        $distribusiMentor = $this->topKeahlian(
+            Mentor::query()
+        );
 
         return view('tentang-kami', compact(
             'statistik',
@@ -71,43 +115,62 @@ class PublicController extends Controller
         ));
     }
 
+
     /**
-     * Jumlah kumulatif record per bulan berdasarkan created_at.
-     *
-     * @param  array<int, string>  $bulanKeys
-     * @return array<int, int>
+     * =========================================================
+     * KUMULATIF DATA PER BULAN
+     * =========================================================
      */
-    private function kumulatifPerBulan(string $table, array $bulanKeys): array
-    {
+    private function kumulatifPerBulan(
+        string $table,
+        array $bulanKeys
+    ): array {
         $perBulan = DB::table($table)
             ->whereNotNull('created_at')
-            ->selectRaw("to_char(created_at, 'YYYY-MM') as bulan, count(*) as total")
+            ->selectRaw(
+                "to_char(created_at, 'YYYY-MM') as bulan, count(*) as total"
+            )
             ->groupBy('bulan')
             ->pluck('total', 'bulan');
 
         $jumlah = 0;
 
-        return collect($bulanKeys)->map(function ($key) use ($perBulan, &$jumlah) {
-            $jumlah += (int) ($perBulan[$key] ?? 0);
+        return collect($bulanKeys)
+            ->map(function ($key) use ($perBulan, &$jumlah) {
+                $jumlah += (int) ($perBulan[$key] ?? 0);
 
-            return $jumlah;
-        })->all();
+                return $jumlah;
+            })
+            ->all();
     }
 
+
     /**
-     * Top kategori keahlian dari field keahlian (dipisahkan koma/titik koma).
-     *
-     * @return array{labels: array<int, string>, data: array<int, int>}
+     * =========================================================
+     * TOP KEAHLIAN
+     * =========================================================
      */
-    private function topKeahlian($query, int $limit = 5): array
-    {
-        $jumlah = $query->toBase()
+    private function topKeahlian(
+        $query,
+        int $limit = 5
+    ): array {
+        $jumlah = $query
+            ->toBase()
             ->whereNotNull('keahlian')
             ->where('keahlian', '!=', '')
             ->pluck('keahlian')
-            ->flatMap(fn ($v) => preg_split('/[,;]+/u', $v))
-            ->map(fn ($v) => trim($v))
-            ->filter(fn ($v) => $v !== '')
+            ->flatMap(function ($value) {
+                return preg_split(
+                    '/[,;]+/u',
+                    $value
+                );
+            })
+            ->map(function ($value) {
+                return trim($value);
+            })
+            ->filter(function ($value) {
+                return $value !== '';
+            })
             ->countBy()
             ->sortDesc()
             ->take($limit);
@@ -118,249 +181,643 @@ class PublicController extends Controller
         ];
     }
 
+
     /**
-     * Display a listing of clients (public view).
+     * =========================================================
+     * DAFTAR CLIENT
+     * =========================================================
      */
     public function clients(Request $request)
     {
-        $query = Client::publicData()->active();
+        $query = Client::publicData()
+            ->active();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nama_ukm', 'ILIKE', "%{$search}%")
-                  ->orWhere('nama_produk', 'ILIKE', "%{$search}%");
+
+            $query->where(function ($q) use ($search) {
+                $q->where(
+                    'nama_ukm',
+                    'ILIKE',
+                    "%{$search}%"
+                )->orWhere(
+                    'nama_produk',
+                    'ILIKE',
+                    "%{$search}%"
+                );
             });
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Filter produk
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('nama_produk')) {
-            $query->where('nama_produk', 'ILIKE', "%{$request->nama_produk}%");
+            $query->where(
+                'nama_produk',
+                'ILIKE',
+                "%{$request->nama_produk}%"
+            );
         }
 
-        $clients = $query->latest()->paginate(12);
+        $clients = $query
+            ->latest()
+            ->paginate(12);
 
-        return view('public.clients', compact('clients'));
+        /*
+        |--------------------------------------------------------------------------
+        | DAFTAR CLIENT ADA DI:
+        | resources/views/client.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'client',
+            compact('clients')
+        );
     }
 
+
     /**
-     * Display a single client (public view).
+     * =========================================================
+     * DETAIL CLIENT
+     * =========================================================
      */
     public function clientShow(Client $client)
     {
-        // Only show active clients
+        /*
+        |--------------------------------------------------------------------------
+        | Hanya client aktif
+        |--------------------------------------------------------------------------
+        */
+
         if ($client->status !== 'aktif') {
             abort(404);
         }
 
-        // Use public scope to hide sensitive data
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil data publik
+        |--------------------------------------------------------------------------
+        */
+
         $client = Client::publicData()
-            ->where('id_client', $client->id_client)
+            ->where(
+                'id_client',
+                $client->id_client
+            )
             ->firstOrFail();
 
-        return view('public.client-show', compact('client'));
+        /*
+        |--------------------------------------------------------------------------
+        | DETAIL CLIENT ADA DI:
+        | resources/views/public/client-show.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'public.client-show',
+            compact('client')
+        );
     }
 
+
     /**
-     * Display a listing of mentors (public view).
+     * =========================================================
+     * DAFTAR MENTOR
+     * =========================================================
      */
     public function mentors(Request $request)
     {
-        $query = Mentor::publicData()->active();
+        $query = Mentor::publicData()
+            ->active();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search mentor
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nama', 'ILIKE', "%{$search}%")
-                  ->orWhere('keahlian', 'ILIKE', "%{$search}%");
+
+            $query->where(function ($q) use ($search) {
+                $q->where(
+                    'nama',
+                    'ILIKE',
+                    "%{$search}%"
+                )->orWhere(
+                    'keahlian',
+                    'ILIKE',
+                    "%{$search}%"
+                );
             });
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Filter keahlian
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('keahlian')) {
-            $query->where('keahlian', 'ILIKE', "%{$request->keahlian}%");
+            $query->where(
+                'keahlian',
+                'ILIKE',
+                "%{$request->keahlian}%"
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Filter availability
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('is_available')) {
-            $query->where('is_available', $request->is_available === '1');
+            $query->where(
+                'is_available',
+                $request->is_available === '1'
+            );
         }
 
-        $mentors = $query->latest()->paginate(12);
+        /*
+        |--------------------------------------------------------------------------
+        | Pagination
+        |--------------------------------------------------------------------------
+        */
 
-        return view('public.mentors', compact('mentors'));
+        $mentors = $query
+            ->latest()
+            ->paginate(12);
+
+        /*
+        |--------------------------------------------------------------------------
+        | DAFTAR MENTOR ADA DI:
+        | resources/views/mentor.blade.php
+        |
+        | BUKAN:
+        | resources/views/public/mentors.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'mentor',
+            compact('mentors')
+        );
     }
 
+
     /**
-     * Display a single mentor (public view).
+     * =========================================================
+     * DETAIL MENTOR
+     * =========================================================
      */
     public function mentorShow(Mentor $mentor)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Hanya mentor aktif
+        |--------------------------------------------------------------------------
+        */
+
         if ($mentor->status !== 'aktif') {
             abort(404);
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil data publik
+        |--------------------------------------------------------------------------
+        */
+
         $mentor = Mentor::publicData()
-            ->where('id_mentor', $mentor->id_mentor)
+            ->where(
+                'id_mentor',
+                $mentor->id_mentor
+            )
             ->firstOrFail();
 
-        return view('public.mentor-show', compact('mentor'));
+        /*
+        |--------------------------------------------------------------------------
+        | DETAIL MENTOR ADA DI:
+        | resources/views/public/mentor-show.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'public.mentor-show',
+            compact('mentor')
+        );
     }
 
+
     /**
-     * Display a listing of talents (public view).
+     * =========================================================
+     * DAFTAR TALENTA
+     * =========================================================
      */
     public function talents(Request $request)
     {
-        $query = Talent::publicData()->active();
+        $query = Talent::publicData()
+            ->active();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search talent
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('nama', 'ILIKE', "%{$search}%")
-                  ->orWhere('keahlian', 'ILIKE', "%{$search}%");
+
+            $query->where(function ($q) use ($search) {
+                $q->where(
+                    'nama',
+                    'ILIKE',
+                    "%{$search}%"
+                )->orWhere(
+                    'keahlian',
+                    'ILIKE',
+                    "%{$search}%"
+                );
             });
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Filter keahlian
+        |--------------------------------------------------------------------------
+        */
+
         if ($request->filled('keahlian')) {
-            $query->where('keahlian', 'ILIKE', "%{$request->keahlian}%");
+            $query->where(
+                'keahlian',
+                'ILIKE',
+                "%{$request->keahlian}%"
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Filter status pekerjaan
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('status_pekerjaan')) {
-            $query->where('status_pekerjaan', $request->status_pekerjaan);
+            $query->where(
+                'status_pekerjaan',
+                $request->status_pekerjaan
+            );
         }
 
-        $talents = $query->latest()->paginate(12);
+        /*
+        |--------------------------------------------------------------------------
+        | Pagination
+        |--------------------------------------------------------------------------
+        */
 
-        return view('public.talents', compact('talents'));
+        $talents = $query
+            ->latest()
+            ->paginate(12);
+
+        /*
+        |--------------------------------------------------------------------------
+        | DAFTAR TALENTA ADA DI:
+        | resources/views/talenta.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'talenta',
+            compact('talents')
+        );
     }
 
+
     /**
-     * Display a single talent (public view).
+     * =========================================================
+     * DETAIL TALENTA
+     * =========================================================
      */
     public function talentShow(Talent $talent)
     {
+        /*
+        |--------------------------------------------------------------------------
+        | Hanya talent aktif
+        |--------------------------------------------------------------------------
+        */
+
         if ($talent->status !== 'aktif') {
             abort(404);
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Ambil data publik + mentor
+        |--------------------------------------------------------------------------
+        */
+
         $talent = Talent::publicData()
-            ->where('id_talenta', $talent->id_talenta)
-            ->with('mentor:id_mentor,nama,keahlian')
+            ->where(
+                'id_talenta',
+                $talent->id_talenta
+            )
+            ->with(
+                'mentor:id_mentor,nama,keahlian'
+            )
             ->firstOrFail();
 
-        return view('public.talent-show', compact('talent'));
+        /*
+        |--------------------------------------------------------------------------
+        | DETAIL TALENTA ADA DI:
+        | resources/views/public/talent-show.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'public.talent-show',
+            compact('talent')
+        );
     }
 
+
     /**
-     * Display a listing of public kegiatans.
+     * =========================================================
+     * DAFTAR KEGIATAN
+     * =========================================================
      */
     public function kegiatans(Request $request)
     {
-        $this->authorize('viewAny', Kegiatan::class);
+        $this->authorize(
+            'viewAny',
+            Kegiatan::class
+        );
 
-        $query = Kegiatan::public()->with('organizer');
+        $query = Kegiatan::public()
+            ->with('organizer');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Search kegiatan
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where('judul_kegiatan', 'ILIKE', "%{$search}%");
+
+            $query->where(
+                'judul_kegiatan',
+                'ILIKE',
+                "%{$search}%"
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Filter status
+        |--------------------------------------------------------------------------
+        */
 
         if ($request->filled('status')) {
-            $query->where('status', $request->status);
+            $query->where(
+                'status',
+                $request->status
+            );
         }
 
-        // Default to upcoming kegiatans
+        /*
+        |--------------------------------------------------------------------------
+        | Default: kegiatan yang akan datang
+        |--------------------------------------------------------------------------
+        */
+
         if (!$request->filled('show_past')) {
             $query->upcoming();
         }
 
-        $kegiatans = $query->latest('tanggal_kegiatan')->paginate(12);
+        $kegiatans = $query
+            ->latest('tanggal_kegiatan')
+            ->paginate(12);
 
-        return view('public.kegiatans', compact('kegiatans'));
+        /*
+        |--------------------------------------------------------------------------
+        | DAFTAR KEGIATAN ADA DI:
+        | resources/views/kegiatan.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'kegiatan',
+            compact('kegiatans')
+        );
     }
 
+
     /**
-     * Display a single kegiatan.
+     * =========================================================
+     * DETAIL KEGIATAN
+     * =========================================================
      */
     public function kegiatanShow(Kegiatan $kegiatan)
     {
-        $this->authorize('view', $kegiatan);
+        $this->authorize(
+            'view',
+            $kegiatan
+        );
 
         $kegiatan->load('organizer');
 
         $isRegistered = false;
         $userParticipation = null;
 
+        /*
+        |--------------------------------------------------------------------------
+        | Cek status pendaftaran user
+        |--------------------------------------------------------------------------
+        */
+
         if (auth()->check()) {
-            $userParticipation = KegiatanParticipant::where('id_kegiatan', $kegiatan->id_kegiatan)
-                ->where('id_user', auth()->id())
+            $userParticipation = KegiatanParticipant::where(
+                'id_kegiatan',
+                $kegiatan->id_kegiatan
+            )
+                ->where(
+                    'id_user',
+                    auth()->id()
+                )
                 ->first();
-            
+
             $isRegistered = $userParticipation !== null;
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Slot kegiatan
+        |--------------------------------------------------------------------------
+        */
+
         $availableSlots = $kegiatan->hasAvailableSlots();
+
         $participantCount = $kegiatan->participants()
-            ->wherePivot('status', '!=', 'cancelled')
+            ->wherePivot(
+                'status',
+                '!=',
+                'cancelled'
+            )
             ->count();
 
-        return view('public.kegiatan-show', compact(
-            'kegiatan', 
-            'isRegistered', 
-            'userParticipation',
-            'availableSlots',
-            'participantCount'
-        ));
+        /*
+        |--------------------------------------------------------------------------
+        | DETAIL KEGIATAN ADA DI:
+        | resources/views/public/kegiatan-show.blade.php
+        |--------------------------------------------------------------------------
+        */
+
+        return view(
+            'public.kegiatan-show',
+            compact(
+                'kegiatan',
+                'isRegistered',
+                'userParticipation',
+                'availableSlots',
+                'participantCount'
+            )
+        );
     }
 
+
     /**
-     * Register for a kegiatan.
+     * =========================================================
+     * DAFTAR KEGIATAN / REGISTER
+     * =========================================================
      */
-    public function kegiatanRegister(Request $request, Kegiatan $kegiatan)
-    {
-        $this->authorize('register', $kegiatan);
+    public function kegiatanRegister(
+        Request $request,
+        Kegiatan $kegiatan
+    ) {
+        $this->authorize(
+            'register',
+            $kegiatan
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Cek slot
+        |--------------------------------------------------------------------------
+        */
 
         if (!$kegiatan->hasAvailableSlots()) {
-            return back()->with('error', 'Maaf, kegiatan ini sudah penuh.');
+            return back()->with(
+                'error',
+                'Maaf, kegiatan ini sudah penuh.'
+            );
         }
 
-        // Check if already registered
-        $existing = KegiatanParticipant::where('id_kegiatan', $kegiatan->id_kegiatan)
-            ->where('id_user', auth()->id())
+        /*
+        |--------------------------------------------------------------------------
+        | Cek pendaftaran sebelumnya
+        |--------------------------------------------------------------------------
+        */
+
+        $existing = KegiatanParticipant::where(
+            'id_kegiatan',
+            $kegiatan->id_kegiatan
+        )
+            ->where(
+                'id_user',
+                auth()->id()
+            )
             ->first();
 
         if ($existing) {
-            return back()->with('error', 'Anda sudah terdaftar untuk kegiatan ini.');
+            return back()->with(
+                'error',
+                'Anda sudah terdaftar untuk kegiatan ini.'
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Validasi
+        |--------------------------------------------------------------------------
+        */
 
         $validated = $request->validate([
             'notes' => 'nullable|string|max:500',
         ]);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Simpan peserta
+        |--------------------------------------------------------------------------
+        */
+
         KegiatanParticipant::create([
-            'id_kegiatan' => $kegiatan->id_kegiatan,
-            'id_user' => auth()->id(),
-            'status' => 'registered',
+            'id_kegiatan'   => $kegiatan->id_kegiatan,
+            'id_user'       => auth()->id(),
+            'status'        => 'registered',
             'registered_at' => now(),
-            'notes' => $validated['notes'] ?? null,
+            'notes'         => $validated['notes'] ?? null,
         ]);
 
-        return back()->with('success', 'Pendaftaran berhasil! Silakan tunggu konfirmasi dari admin.');
+        return back()->with(
+            'success',
+            'Pendaftaran berhasil! Silakan tunggu konfirmasi dari admin.'
+        );
     }
 
+
     /**
-     * Cancel kegiatan registration.
+     * =========================================================
+     * BATAL PENDAFTARAN KEGIATAN
+     * =========================================================
      */
-    public function kegiatanCancel(Kegiatan $kegiatan)
-    {
-        $participation = KegiatanParticipant::where('id_kegiatan', $kegiatan->id_kegiatan)
-            ->where('id_user', auth()->id())
+    public function kegiatanCancel(
+        Kegiatan $kegiatan
+    ) {
+        $participation = KegiatanParticipant::where(
+            'id_kegiatan',
+            $kegiatan->id_kegiatan
+        )
+            ->where(
+                'id_user',
+                auth()->id()
+            )
             ->firstOrFail();
 
+        /*
+        |--------------------------------------------------------------------------
+        | Tidak bisa membatalkan jika sudah hadir
+        |--------------------------------------------------------------------------
+        */
+
         if ($participation->status === 'attended') {
-            return back()->with('error', 'Tidak dapat membatalkan pendaftaran yang sudah hadir.');
+            return back()->with(
+                'error',
+                'Tidak dapat membatalkan pendaftaran yang sudah hadir.'
+            );
         }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Batalkan
+        |--------------------------------------------------------------------------
+        */
 
         $participation->cancel();
 
-        return back()->with('success', 'Pendaftaran berhasil dibatalkan.');
+        return back()->with(
+            'success',
+            'Pendaftaran berhasil dibatalkan.'
+        );
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
+
 use App\Http\Controllers\GisMapController;
 use App\Http\Controllers\PublicController;
 
@@ -16,6 +17,7 @@ Route::get('/registrasi', function () {
     return view('auth.registrasi');
 })->name('registrasi');
 
+
 /*
 |--------------------------------------------------------------------------
 | Forgot Password
@@ -27,6 +29,7 @@ Route::get('/forgot-password', function () {
 })->name('forgot-password');
 
 Route::post('/forgot-password', function (Request $request) {
+
     $request->validate([
         'email' => ['required', 'email'],
     ]);
@@ -38,7 +41,23 @@ Route::post('/forgot-password', function (Request $request) {
     return $status === Password::RESET_LINK_SENT
         ? back()->with(['status' => __($status)])
         : back()->withErrors(['email' => __($status)]);
+
 })->name('password.email');
+
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC HOME
+|--------------------------------------------------------------------------
+|
+| Home menggunakan home.blade.php
+| Route name: public.index
+|
+*/
+
+Route::get('/', [PublicController::class, 'index'])
+    ->name('public.index');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,49 +65,86 @@ Route::post('/forgot-password', function (Request $request) {
 |--------------------------------------------------------------------------
 */
 
-Route::get('/mentor', function () {
-    return view('mentor');
-})->name('mentor');
+Route::get('/mentor', [PublicController::class, 'mentors'])
+    ->name('mentor');
 
-Route::get('/talenta', function () {
-    return view('talenta');
-})->name('talenta');
+Route::get('/talenta', [PublicController::class, 'talents'])
+    ->name('talenta');
 
-Route::get('/client', function () {
-    return view('client');
-})->name('client');
+Route::get('/client', [PublicController::class, 'clients'])
+    ->name('client');
+
 
 /*
 |--------------------------------------------------------------------------
-| GIS API (dipakai oleh peta interaktif di home)
+| Detail Mentor / Talenta / Client
 |--------------------------------------------------------------------------
 */
 
-Route::get('/api/gis/tahun', [GisMapController::class, 'years']);
-Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
+Route::get('/mentor/{mentor}', [PublicController::class, 'mentorShow'])
+    ->name('mentor.show');
+
+Route::get('/talenta/{talent}', [PublicController::class, 'talentShow'])
+    ->name('talenta.show');
+
+Route::get('/client/{client}', [PublicController::class, 'clientShow'])
+    ->name('client.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Tentang Kami
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/tentang-kami', [PublicController::class, 'tentangKami'])
+    ->name('tentang-kami');
+
+
+/*
+|--------------------------------------------------------------------------
+| Fasilitas
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/fasilitas', function () {
     return view('fasilitas');
 })->name('fasilitas');
 
-Route::get('/tentang-kami', [PublicController::class, 'tentangKami'])->name('tentang-kami');
+
+/*
+|--------------------------------------------------------------------------
+| Kegiatan
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/kegiatan', function () {
     return view('kegiatan');
 })->name('kegiatan');
 
+
 /*
 |--------------------------------------------------------------------------
-| Kelola (Admin Only)
+| GIS API
 |--------------------------------------------------------------------------
-|
-| Fitur kelola data Mentor, Talenta, dan Client hanya dapat diakses
-| oleh Admin melalui panel admin (/admin/...), karena hanya admin
-| yang memiliki hak CRUD penuh. URL lama dialihkan agar tetap kompatibel;
-| middleware auth+admin akan mengarahkan non-admin ke halaman login.
-|
 */
 
-Route::redirect('/kelola/mentor', '/admin/mentors')->name('kelola.mentor');
-Route::redirect('/kelola/talenta', '/admin/talents')->name('kelola.talenta');
-Route::redirect('/kelola/client', '/admin/clients')->name('kelola.client');
+Route::get('/api/gis/tahun', [GisMapController::class, 'years']);
+
+Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
+
+
+/*
+|--------------------------------------------------------------------------
+| Kelola
+|--------------------------------------------------------------------------
+*/
+
+Route::redirect('/kelola/mentor', '/admin/mentors')
+    ->name('kelola.mentor');
+
+Route::redirect('/kelola/talenta', '/admin/talents')
+    ->name('kelola.talenta');
+
+Route::redirect('/kelola/client', '/admin/clients')
+    ->name('kelola.client');
