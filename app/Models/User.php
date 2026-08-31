@@ -2,31 +2,142 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    protected $table = 'users';
+    protected $primaryKey = 'id_user';
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password_hash',
+        'role',
+        'profile_photo',
+        'email_verified_at',
+        'status',
+        'last_login',
+    ];
+
+    protected $hidden = [
+        'password_hash',
+        'remember_token',
+    ];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password_hash' => 'hashed',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
         ];
+    }
+
+    public function getAuthPassword()
+    {
+        return $this->password_hash;
+    }
+
+    /**
+     * Nama kolom password pada tabel users.
+     *
+     * WAJIB di-override karena skema database memakai "password_hash"
+     * (bukan "password" bawaan Laravel). Tanpa ini, fitur rehash
+     * otomatis Laravel saat login akan error:
+     * SQLSTATE[42703]: column "password" of relation "users" does not exist
+     */
+    public function getAuthPasswordName()
+    {
+        return 'password_hash';
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isMentor(): bool
+    {
+        return $this->role === 'mentor';
+    }
+
+    public function isTalent(): bool
+    {
+        return $this->role === 'talenta';
+    }
+
+    public function isClient(): bool
+    {
+        return $this->role === 'client';
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'id_user');
+    }
+
+    public function mentor()
+    {
+        return $this->hasOne(Mentor::class, 'id_user');
+    }
+
+    public function talent()
+    {
+        return $this->hasOne(Talent::class, 'id_user');
+    }
+
+    public function organizedKegiatans()
+    {
+        return $this->hasMany(Kegiatan::class, 'organizer_id');
+    }
+
+    public function participatedKegiatans()
+    {
+        return $this->belongsToMany(Kegiatan::class, 'kegiatan_participants', 'id_user', 'id_kegiatan')
+                    ->withPivot('status', 'registered_at', 'attended_at', 'notes')
+                    ->withTimestamps();
+    }
+
+    public function adminLogs()
+    {
+        return $this->hasMany(AdminLog::class, 'id_user');
+    }
+
+    public function createdClients()
+    {
+        return $this->hasMany(Client::class, 'created_by');
+    }
+
+    public function updatedClients()
+    {
+        return $this->hasMany(Client::class, 'updated_by');
+    }
+
+    public function createdMentors()
+    {
+        return $this->hasMany(Mentor::class, 'created_by');
+    }
+
+    public function updatedMentors()
+    {
+        return $this->hasMany(Mentor::class, 'updated_by');
+    }
+
+    public function createdTalents()
+    {
+        return $this->hasMany(Talent::class, 'created_by');
+    }
+
+    public function updatedTalents()
+    {
+        return $this->hasMany(Talent::class, 'updated_by');
     }
 }

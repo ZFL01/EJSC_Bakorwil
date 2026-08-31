@@ -31,6 +31,15 @@
             background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);
         }
 
+        /* Hapus garis kotak fokus (outline) yang muncul di Chrome
+           saat wilayah diklik. Firefox tidak menampilkan outline ini. */
+        #qgis-map svg path,
+        #qgis-map .leaflet-interactive,
+        #qgis-map .leaflet-interactive:focus {
+            outline: none !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         #gis-placeholder,
         #qgis-info {
             z-index: 20;
@@ -284,7 +293,7 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">150+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['mentors'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Mentor</div>
                         </div>
 
@@ -321,7 +330,7 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">500+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['talents'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Talenta</div>
                         </div>
 
@@ -366,14 +375,14 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">80+</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['clients'], 0, ',', '.') }}</div>
                             <div class="ejsc-stat-label">Client</div>
                         </div>
 
                     </div>
 
 
-                    <!-- KEPUASAN -->
+                    <!-- KEGIATAN MENDATANG -->
 
                     <div class="ejsc-stat-box">
 
@@ -404,8 +413,8 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">98%</div>
-                            <div class="ejsc-stat-label">Kepuasan</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['kegiatans'], 0, ',', '.') }}</div>
+                            <div class="ejsc-stat-label">Kegiatan Mendatang</div>
                         </div>
 
                     </div>
@@ -7522,32 +7531,63 @@
                      PRIMARY BUTTON
                 ================================================== --}}
 
-                <a
-                    href="{{ route('kelola.mentor') }}"
-                    class="cta-primary"
-                >
-
-                    <span>
-                        Kelola Data
-                    </span>
-
-                    <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
+                @if(auth()->check() && auth()->user()->isAdmin())
+                    {{-- PRIMARY BUTTON: hanya untuk admin (CRUD penuh hanya di panel admin) --}}
+                    <a
+                        href="{{ route('admin.dashboard') }}"
+                        class="cta-primary"
                     >
 
-                        <path d="M5 12h14"/>
+                        <span>
+                            Kelola Data
+                        </span>
 
-                        <path d="m13 6 6 6-6 6"/>
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
 
-                    </svg>
+                            <path d="M5 12h14"/>
 
-                    <div class="button-shine"></div>
+                            <path d="m13 6 6 6-6 6"/>
 
-                </a>
+                        </svg>
+
+                        <div class="button-shine"></div>
+
+                    </a>
+                @else
+                    {{-- Pengunjung umum diarahkan untuk mendaftar --}}
+                    <a
+                        href="{{ route('registrasi') }}"
+                        class="cta-primary"
+                    >
+
+                        <span>
+                            Daftar Sekarang
+                        </span>
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
+                        >
+
+                            <path d="M5 12h14"/>
+
+                            <path d="m13 6 6 6-6 6"/>
+
+                        </svg>
+
+                        <div class="button-shine"></div>
+
+                    </a>
+                @endif
 
 
                 {{-- =================================================
@@ -8929,8 +8969,25 @@
 
     function initMap() {
         if (qgisMap || !mapElement) return;
-        qgisMap = L.map(mapElement, { center: [-8.1, 113.7], zoom: 8, scrollWheelZoom: true });
+        // Batas zoom peta: tidak boleh zoom out terlalu jauh
+        // (minZoom) dan tidak boleh terlalu dekat (maxZoom).
+        const mapBounds = L.latLngBounds(
+            [-10.2, 112.6], // batas barat-daya (SW)
+            [-5.5, 115.2]   // batas timur-laut (NE)
+        );
+
+        qgisMap = L.map(mapElement, {
+            center: [-8.1, 113.7],
+            zoom: 8,
+            minZoom: 6,            // batas paling jauh saat zoom out
+            maxZoom: 18,           // batas paling dekat saat zoom in
+            maxBounds: mapBounds,  // wilayah tampilan peta dibatasi
+            maxBoundsViscosity: 1.0, // tidak bisa geser keluar dari batas
+            scrollWheelZoom: true
+        });
+
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            minZoom: 6,
             maxZoom: 19,
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(qgisMap);
@@ -8944,8 +9001,8 @@
         return null;
     }
 
-    // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan.
-    // Bondowoso memakai hijau dengan outline kuning emas.
+    // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan
+    // (semua memiliki ciri khas / warna yang unik).
     const regionStyles = {
         'Jember': { fill: '#f3a6c8', border: '#be185d' },
         'Kota Probolinggo': { fill: '#9bdcf5', border: '#0284c7' },
@@ -8953,7 +9010,7 @@
         'Lumajang': { fill: '#2f7d32', border: '#14532d' },
         'Bondowoso': { fill: '#69b86b', border: '#d4a017' },
         'Banyuwangi': { fill: '#3B82F6', border: '#166534' },
-        'Situbondo': { fill: '#e8bd45', border: '#a16207' }
+        'Situbondo': { fill: '#fb923c', border: '#c2410c' }
     };
 
     function getRegionStyle(feature) {

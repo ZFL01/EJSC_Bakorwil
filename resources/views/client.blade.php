@@ -651,6 +651,31 @@
 
 
     /* =========================================================
+       MODAL PROFIL (animasi masuk + polish)
+    ========================================================= */
+
+    .client-modal-card {
+        animation: clientModalIn .32s cubic-bezier(.2, .9, .3, 1) both;
+    }
+
+    @keyframes clientModalIn {
+        from {
+            opacity: 0;
+            transform: translateY(18px) scale(.96);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .client-modal-avatar {
+        background: linear-gradient(135deg, #e5cd35 0%, #bfa51f 100%);
+        box-shadow: 0 10px 22px rgba(229, 205, 53, 0.35);
+    }
+
+
+    /* =========================================================
        TRUSTED TEXT
     ========================================================= */
 
@@ -972,24 +997,14 @@
                         >
 
                             <option value="semua">
-                                Semua Kategori
+                                Semua Kategori ({{ count($clients) }})
                             </option>
 
-                            <option value="korporasi">
-                                Korporasi
-                            </option>
-
-                            <option value="startup">
-                                Startup
-                            </option>
-
-                            <option value="umkm">
-                                UMKM
-                            </option>
-
-                            <option value="pemerintahan">
-                                Pemerintahan
-                            </option>
+                            @foreach ($kategoriClient as $kat)
+                                <option value="{{ $kat['key'] }}">
+                                    {{ $kat['label'] }} ({{ $kat['count'] }})
+                                </option>
+                            @endforeach
 
                         </select>
 
@@ -1000,85 +1015,394 @@
             </div>
 
 
-            <!-- =================================================
-                 CLIENT LIST
-            ================================================== -->
+          <!-- =========================================================
+     CLIENT LIST
+========================================================= -->
+
+<div
+    id="client-list"
+    class="
+        grid
+        md:grid-cols-2
+        lg:grid-cols-3
+        gap-6
+    "
+>
+
+    @forelse($clients as $client)
+
+        @php
+
+            $nama =
+                $client->nama_ukm
+                ?? 'Client';
+
+            $produk =
+                $client->nama_produk
+                ?? '-';
+
+
+            $avatar =
+                collect(
+                    preg_split(
+                        '/\s+/',
+                        trim($nama)
+                    )
+                )
+                ->filter()
+                ->take(2)
+                ->map(
+                    fn($word) =>
+                    strtoupper(
+                        substr($word, 0, 1)
+                    )
+                )
+                ->implode('');
+
+
+            /*
+             * Kategori ditentukan lewat helper terpusat agar
+             * konsisten dengan filter/dropdown dari controller.
+             */
+
+            $kategoriKey =
+                \App\Models\Client::kategoriKey($client);
+
+
+            $kategoriLabel =
+                match($kategoriKey) {
+
+                    'korporasi' =>
+                        [
+                            'label' => 'Korporasi',
+                            'class' => 'badge-korporasi'
+                        ],
+
+                    'startup' =>
+                        [
+                            'label' => 'Startup',
+                            'class' => 'badge-startup'
+                        ],
+
+                    'pemerintahan' =>
+                        [
+                            'label' => 'Pemerintahan',
+                            'class' => 'badge-pemerintahan'
+                        ],
+
+                    default =>
+                        [
+                            'label' => 'UMKM',
+                            'class' => 'badge-umkm'
+                        ],
+                };
+
+        @endphp
+
+
+        <div
+            class="client-card"
+            data-nama="{{ strtolower($nama) }}"
+            data-produk="{{ strtolower($produk) }}"
+            data-kategori="{{ $kategoriKey }}"
+        >
+
+            <!-- TOP -->
 
             <div
-                id="client-list"
                 class="
-                    grid
-                    md:grid-cols-2
-                    lg:grid-cols-3
-                    gap-6
-                "
-            >
-                <!-- Client cards dirender oleh JavaScript -->
-            </div>
-
-
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                id="empty-state"
-                class="
-                    hidden
-                    text-center
-                    py-16
+                    flex
+                    items-start
+                    justify-between
+                    mb-4
                 "
             >
 
-                <svg
+                <div
                     class="
+                        client-avatar
                         w-16
                         h-16
-                        mx-auto
-                        text-[#d9c83a]
-                        mb-4
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="
-                            M21 21l-6-6
-                            m2-5a7 7 0
-                            11-14 0
-                            7 7 0
-                            0114 0z
-                        "
-                    />
-
-                </svg>
-
-                <h3
-                    class="
+                        rounded-2xl
+                        flex
+                        items-center
+                        justify-center
+                        text-white
                         text-xl
-                        font-semibold
-                        text-[#55583f]
-                        mb-2
+                        font-bold
                     "
                 >
-                    Client tidak ditemukan
-                </h3>
+                    {{ $avatar ?: 'CL' }}
+                </div>
 
-                <p class="text-[#85856f]">
-                    Coba ubah kata kunci pencarian
-                    atau filter kategori
-                </p>
+
+                <span
+                    class="
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-medium
+                        {{ $kategoriLabel['class'] }}
+                    "
+                >
+                    {{ $kategoriLabel['label'] }}
+                </span>
 
             </div>
+
+
+            <!-- NAME -->
+
+            <h3
+                class="
+                    client-name
+                    text-lg
+                    font-semibold
+                    mb-1
+                "
+            >
+                {{ $nama }}
+            </h3>
+
+
+            <!-- PRODUCT -->
+
+            <p
+                class="
+                    client-industry
+                    text-sm
+                    font-medium
+                    mb-3
+                "
+            >
+                {{ $produk }}
+            </p>
+
+
+            <!-- INFO -->
+
+            <div
+                class="
+                    client-info
+                    flex
+                    items-center
+                    justify-between
+                    text-sm
+                    mb-4
+                "
+            >
+
+                <span
+                    class="
+                        inline-flex
+                        items-center
+                    "
+                >
+
+                    <svg
+                        class="
+                            w-4
+                            h-4
+                            mr-1
+                        "
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="
+                                M9 12l2 2
+                                4-4m6 2
+                                a9 9 0
+                                11-18 0
+                                9 9 0
+                                0118 0z
+                            "
+                        />
+
+                    </svg>
+
+                    Client Aktif
+
+                </span>
+
+
+                <span
+                    class="
+                        trusted-client
+                        inline-flex
+                        items-center
+                    "
+                >
+
+                    <svg
+                        class="
+                            w-4
+                            h-4
+                            mr-1
+                        "
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+
+                        <path
+                            d="
+                                M12 2
+                                l3.09 6.26
+                                L22 9.27
+                                l-5 4.87
+                                1.18 6.88
+                                L12 17.77
+                                l-6.18 3.25
+                                L7 14.14
+                                2 9.27
+                                l6.91-1.01
+                                L12 2z
+                            "
+                        />
+
+                    </svg>
+
+                    Terpercaya
+
+                </span>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <a
+                href="{{ route(
+                    'client.show',
+                    $client->id_client
+                ) }}"
+                class="
+                    client-button
+                    w-full
+                    py-2.5
+                    text-white
+                    rounded-xl
+                    font-medium
+                    block
+                    text-center
+                "
+            >
+
+                <span
+                    class="
+                        relative
+                        z-10
+                    "
+                >
+                    Lihat Profil
+                </span>
+
+            </a>
 
         </div>
 
-    </section>
+
+    @empty
+
+        <div
+            class="
+                col-span-full
+                text-center
+                py-16
+            "
+        >
+
+            <h3
+                class="
+                    text-xl
+                    font-semibold
+                    text-[#55583f]
+                    mb-2
+                "
+            >
+                Belum ada client
+            </h3>
+
+            <p class="text-[#85856f]">
+                Data client belum tersedia.
+            </p>
+
+        </div>
+
+    @endforelse
+
+</div>
+
+
+@if($clients->hasPages())
+
+    <div class="mt-10">
+        {{ $clients->links() }}
+    </div>
+
+@endif
+
+
+<div
+    id="empty-state"
+    class="
+        hidden
+        text-center
+        py-16
+    "
+>
+
+    <svg
+        class="
+            w-16
+            h-16
+            mx-auto
+            text-[#d9c83a]
+            mb-4
+        "
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="
+                M21 21l-6-6
+                m2-5a7 7
+                0 11-14 0
+                7 7
+                0 0114 0z
+            "
+        />
+
+    </svg>
+
+
+    <h3
+        class="
+            text-xl
+            font-semibold
+            text-[#55583f]
+            mb-2
+        "
+    >
+        Client tidak ditemukan
+    </h3>
+
+
+    <p class="text-[#85856f]">
+        Coba ubah kata kunci pencarian
+        atau filter kategori.
+    </p>
 
 </div>
 
@@ -1090,469 +1414,121 @@
 
 <script>
 
-    /* =========================================================
-       DATA CLIENT
-    ========================================================= */
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
 
-    const clients = [
+        const searchInput =
+            document.getElementById(
+                'search-input'
+            );
 
-        {
-            nama: 'PT Maju Bersama',
-            kategori: 'korporasi',
-            industri: 'Manufaktur',
-            proyek: 25,
-            avatar: 'MB'
-        },
+        const filterSelect =
+            document.getElementById(
+                'filter-select'
+            );
 
-        {
-            nama: 'Startup Inovasi',
-            kategori: 'startup',
-            industri: 'Teknologi',
-            proyek: 12,
-            avatar: 'SI'
-        },
+        const clientList =
+            document.getElementById(
+                'client-list'
+            );
 
-        {
-            nama: 'CV Karya Mandiri',
-            kategori: 'umkm',
-            industri: 'Kuliner',
-            proyek: 8,
-            avatar: 'KM'
-        },
-
-        {
-            nama: 'Dinas Pendidikan',
-            kategori: 'pemerintahan',
-            industri: 'Pendidikan',
-            proyek: 15,
-            avatar: 'DP'
-        },
-
-        {
-            nama: 'PT Solusi Digital',
-            kategori: 'korporasi',
-            industri: 'IT Services',
-            proyek: 30,
-            avatar: 'SD'
-        },
-
-        {
-            nama: 'Startup Fintech',
-            kategori: 'startup',
-            industri: 'Keuangan',
-            proyek: 10,
-            avatar: 'SF'
-        },
-
-        {
-            nama: 'Toko Berkah',
-            kategori: 'umkm',
-            industri: 'Retail',
-            proyek: 5,
-            avatar: 'TB'
-        },
-
-        {
-            nama: 'Bank Daerah',
-            kategori: 'pemerintahan',
-            industri: 'Perbankan',
-            proyek: 18,
-            avatar: 'BD'
-        },
-
-        {
-            nama: 'PT Global Media',
-            kategori: 'korporasi',
-            industri: 'Media',
-            proyek: 22,
-            avatar: 'GM'
-        }
-
-    ];
+        const emptyState =
+            document.getElementById(
+                'empty-state'
+            );
 
 
-    /* =========================================================
-       KATEGORI LABEL
-    ========================================================= */
+        function filterClients() {
 
-    const kategoriLabel = {
+            const keyword =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
 
-        korporasi: {
-            label: 'Korporasi',
-            color: 'badge-korporasi'
-        },
-
-        startup: {
-            label: 'Startup',
-            color: 'badge-startup'
-        },
-
-        umkm: {
-            label: 'UMKM',
-            color: 'badge-umkm'
-        },
-
-        pemerintahan: {
-            label: 'Pemerintahan',
-            color: 'badge-pemerintahan'
-        }
-
-    };
+            const kategori =
+                filterSelect.value;
 
 
-    /* =========================================================
-       ELEMENT
-    ========================================================= */
-
-    const searchInput =
-        document.getElementById(
-            'search-input'
-        );
-
-    const filterSelect =
-        document.getElementById(
-            'filter-select'
-        );
-
-    const clientList =
-        document.getElementById(
-            'client-list'
-        );
-
-    const emptyState =
-        document.getElementById(
-            'empty-state'
-        );
-
-
-    /* =========================================================
-       RENDER CLIENT
-    ========================================================= */
-
-    function renderClients() {
-
-        const keyword =
-            searchInput.value
-                .toLowerCase()
-                .trim();
-
-        const kategori =
-            filterSelect.value;
-
-
-        const filtered =
-            clients.filter(c => {
-
-                const matchKeyword =
-
-                    c.nama
-                        .toLowerCase()
-                        .includes(keyword)
-
-                    ||
-
-                    c.industri
-                        .toLowerCase()
-                        .includes(keyword);
-
-
-                const matchKategori =
-
-                    kategori === 'semua'
-
-                    ||
-
-                    c.kategori === kategori;
-
-
-                return (
-                    matchKeyword &&
-                    matchKategori
+            const cards =
+                clientList.querySelectorAll(
+                    '.client-card'
                 );
 
-            });
+
+            let visible = 0;
 
 
-        /* =====================================================
-           EMPTY STATE
-        ====================================================== */
+            cards.forEach(
+                function (card) {
 
-        emptyState.classList.toggle(
-            'hidden',
-            filtered.length > 0
+                    const nama =
+                        card.dataset.nama
+                        || '';
+
+                    const produk =
+                        card.dataset.produk
+                        || '';
+
+                    const cardKategori =
+                        card.dataset.kategori
+                        || '';
+
+
+                    const cocokKeyword =
+                        nama.includes(keyword)
+                        ||
+                        produk.includes(
+                            keyword
+                        );
+
+
+                    const cocokKategori =
+                        kategori === 'semua'
+                        ||
+                        cardKategori === kategori;
+
+
+                    if (
+                        cocokKeyword
+                        &&
+                        cocokKategori
+                    ) {
+
+                        card.style.display =
+                            '';
+
+                        visible++;
+
+                    } else {
+
+                        card.style.display =
+                            'none';
+                    }
+                }
+            );
+
+
+            emptyState.classList.toggle(
+                'hidden',
+                visible > 0
+            );
+        }
+
+
+        searchInput?.addEventListener(
+            'input',
+            filterClients
         );
 
 
-        /* =====================================================
-           RENDER CARD
-        ====================================================== */
-
-        clientList.innerHTML =
-
-            filtered
-
-                .map((c, index) => {
-
-                    const k =
-                        kategoriLabel[
-                            c.kategori
-                        ];
-
-
-                    return `
-
-                        <div
-                            class="client-card"
-                            style="
-                                animation-delay:
-                                ${index * 0.07}s
-                            "
-                        >
-
-                            <!-- TOP -->
-
-                            <div
-                                class="
-                                    flex
-                                    items-start
-                                    justify-between
-                                    mb-4
-                                "
-                            >
-
-                                <!-- AVATAR -->
-
-                                <div
-                                    class="
-                                        client-avatar
-                                        w-16
-                                        h-16
-                                        rounded-2xl
-                                        flex
-                                        items-center
-                                        justify-center
-                                        text-white
-                                        text-xl
-                                        font-bold
-                                    "
-                                >
-
-                                    ${c.avatar}
-
-                                </div>
-
-
-                                <!-- CATEGORY -->
-
-                                <span
-                                    class="
-                                        px-3
-                                        py-1
-                                        rounded-full
-                                        text-xs
-                                        font-medium
-                                        ${k.color}
-                                    "
-                                >
-
-                                    ${k.label}
-
-                                </span>
-
-                            </div>
-
-
-                            <!-- NAME -->
-
-                            <h3
-                                class="
-                                    client-name
-                                    text-lg
-                                    font-semibold
-                                    mb-1
-                                "
-                            >
-
-                                ${c.nama}
-
-                            </h3>
-
-
-                            <!-- INDUSTRY -->
-
-                            <p
-                                class="
-                                    client-industry
-                                    text-sm
-                                    font-medium
-                                    mb-3
-                                "
-                            >
-
-                                ${c.industri}
-
-                            </p>
-
-
-                            <!-- INFO -->
-
-                            <div
-                                class="
-                                    client-info
-                                    flex
-                                    items-center
-                                    justify-between
-                                    text-sm
-                                    mb-4
-                                "
-                            >
-
-                                <!-- PROJECT -->
-
-                                <span
-                                    class="
-                                        inline-flex
-                                        items-center
-                                    "
-                                >
-
-                                    <svg
-                                        class="
-                                            w-4
-                                            h-4
-                                            mr-1
-                                        "
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="
-                                                M9 12l2 2
-                                                4-4m6 2
-                                                a9 9 0
-                                                11-18 0
-                                                9 9 0
-                                                0118 0z
-                                            "
-                                        />
-
-                                    </svg>
-
-                                    ${c.proyek} Proyek
-
-                                </span>
-
-
-                                <!-- TRUSTED -->
-
-                                <span
-                                    class="
-                                        trusted-client
-                                        inline-flex
-                                        items-center
-                                    "
-                                >
-
-                                    <svg
-                                        class="
-                                            w-4
-                                            h-4
-                                            mr-1
-                                        "
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            d="
-                                                M12 2
-                                                l3.09 6.26
-                                                L22 9.27
-                                                l-5 4.87
-                                                1.18 6.88
-                                                L12 17.77
-                                                l-6.18 3.25
-                                                L7 14.14
-                                                2 9.27
-                                                l6.91-1.01
-                                                L12 2z
-                                            "
-                                        />
-
-                                    </svg>
-
-                                    Terpercaya
-
-                                </span>
-
-                            </div>
-
-
-                            <!-- BUTTON -->
-
-                            <button
-                                class="
-                                    client-button
-                                    w-full
-                                    py-2.5
-                                    text-white
-                                    rounded-xl
-                                    font-medium
-                                "
-                            >
-
-                                <span
-                                    class="
-                                        relative
-                                        z-10
-                                    "
-                                >
-                                    Hubungi Client
-                                </span>
-
-                            </button>
-
-                        </div>
-
-                    `;
-
-                })
-
-                .join('');
+        filterSelect?.addEventListener(
+            'change',
+            filterClients
+        );
 
     }
-
-
-    /* =========================================================
-       SEARCH EVENT
-    ========================================================= */
-
-    searchInput.addEventListener(
-        'input',
-        renderClients
-    );
-
-
-    /* =========================================================
-       FILTER EVENT
-    ========================================================= */
-
-    filterSelect.addEventListener(
-        'change',
-        renderClients
-    );
-
-
-    /* =========================================================
-       INITIAL RENDER
-    ========================================================= */
-
-    renderClients();
+);
 
 </script>
 

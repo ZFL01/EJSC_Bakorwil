@@ -470,7 +470,7 @@
                 <!-- Logo -->
                 <div class="flex items-center">
 
-                    <a href="{{ route('home') }}"
+                    <a href="{{ route('public.index') }}"
                        class="flex items-center close-all-dropdowns">
 
                         <img src="{{ Vite::asset('resources/images/logo.png') }}"
@@ -485,7 +485,7 @@
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-1">
 
-                    <a href="{{ route('home') }}"
+                    <a href="{{ route('public.index') }}"
                        class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#35BFD1] rounded-md hover:bg-[#f0fbfd] transition">
 
                         Home
@@ -546,60 +546,45 @@
 
                             </a>
 
-                        </div>
-
-                    </div>
 
 
-                    <div class="relative menu-group">
-
-                        <button data-menu="kelola"
-                                class="menu-btn px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#35BFD1] rounded-md hover:bg-[#f0fbfd] transition flex items-center gap-1">
-
-                            Kelola
-
-                            <svg class="w-4 h-4 menu-arrow transition-transform"
-                                 fill="none"
-                                 stroke="currentColor"
-                                 viewBox="0 0 24 24">
-
-                                <path stroke-linecap="round"
-                                      stroke-linejoin="round"
-                                      stroke-width="2"
-                                      d="M19 9l-7 7-7-7"/>
-
-                            </svg>
-
-                        </button>
-
-
-                        <div id="menu-kelola"
+                        <div id="menu-menu"
                              class="menu-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg ring-1 ring-black/5 py-1 hidden">
 
-                            <a href="{{ route('kelola.mentor') }}"
+                            <a href="{{ route('mentor') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                                Kelola Mentor
+                                Mentor
 
                             </a>
 
-                            <a href="{{ route('kelola.talenta') }}"
+                            <a href="{{ route('talenta') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                                Kelola Talenta
+                                Talenta
 
                             </a>
 
-                            <a href="{{ route('kelola.client') }}"
+                            <a href="{{ route('client') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                                Kelola Client
+                                Client
+
+                            </a>
+
+                            <a href="{{ route('gis') }}"
+                               class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
+
+                                GIS Map
 
                             </a>
 
                         </div>
 
+
                     </div>
+
+
 
                 </div>
 
@@ -637,7 +622,7 @@
 
             <div class="px-4 pt-2 pb-3 space-y-1">
 
-                <a href="{{ route('home') }}"
+                <a href="{{ route('public.index') }}"
                    class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
                     Home
@@ -681,39 +666,44 @@
 
                     </a>
 
-                </div>
-
-
-                <div class="pt-2">
 
                     <p class="px-3 py-1 text-xs font-semibold text-gray-500 uppercase tracking-wider">
 
-                        Kelola
+                        Menu
 
                     </p>
 
-                    <a href="{{ route('kelola.mentor') }}"
+                    <a href="{{ route('mentor') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                        Kelola Mentor
+                        Mentor
 
                     </a>
 
-                    <a href="{{ route('kelola.talenta') }}"
+                    <a href="{{ route('talenta') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                        Kelola Talenta
+                        Talenta
 
                     </a>
 
-                    <a href="{{ route('kelola.client') }}"
+                    <a href="{{ route('client') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                        Kelola Client
+                        Client
+
+                    </a>
+
+                    <a href="{{ route('gis') }}"
+                       class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
+
+                        GIS Map
 
                     </a>
 
                 </div>
+
+
 
             </div>
 
