@@ -53,6 +53,33 @@ class PublicController extends Controller
             'kegiatan' => Kegiatan::public()->upcoming()->count(),
         ];
 
+        $kegiatanList = Kegiatan::public()
+            ->latest('tanggal_kegiatan')
+            ->limit(6)
+            ->get()
+            ->map(function ($item) {
+                $statusLabel = match ($item->status) {
+                    'berlangsung' => 'Berlangsung',
+                    'selesai' => 'Selesai',
+                    default => 'Akan Datang',
+                };
+
+                $statusClass = match ($item->status) {
+                    'berlangsung' => 'status-berlangsung',
+                    'selesai' => 'status-selesai',
+                    default => 'status-akan-datang',
+                };
+
+                return [
+                    'nama' => $item->judul_kegiatan,
+                    'tanggal' => $item->tanggal_kegiatan?->translatedFormat('d F Y') ?? '-',
+                    'lokasi' => $item->lokasi ?? 'EJSC Bakorwil',
+                    'status' => $statusLabel,
+                    'status_class' => $statusClass,
+                    'deskripsi' => $item->deskripsi ?: 'Informasi kegiatan akan segera tersedia.',
+                ];
+            });
+
         /*
         |--------------------------------------------------------------------------
         | Pertumbuhan platform
@@ -111,7 +138,8 @@ class PublicController extends Controller
             'statistik',
             'pertumbuhan',
             'distribusiTalenta',
-            'distribusiMentor'
+            'distribusiMentor',
+            'kegiatanList'
         ));
     }
 

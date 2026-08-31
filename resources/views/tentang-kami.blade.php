@@ -267,28 +267,18 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @php
-                    $kegiatanList = [
-                        ['nama' => 'Workshop AI untuk Pemula', 'tanggal' => '25 Agustus 2026', 'lokasi' => 'Ruang Pelatihan', 'status' => 'Akan Datang'],
-                        ['nama' => 'Sesi Mentoring Karier', 'tanggal' => '30 Agustus 2026', 'lokasi' => 'Ruang Mentoring', 'status' => 'Akan Datang'],
-                        ['nama' => 'Bootcamp UI/UX Design', 'tanggal' => '14 - 16 Agustus 2026', 'lokasi' => 'Coworking Space', 'status' => 'Berlangsung'],
-                        ['nama' => 'Seminar Kewirausahaan Digital', 'tanggal' => '5 Agustus 2026', 'lokasi' => 'Aula Serbaguna', 'status' => 'Selesai'],
-                        ['nama' => 'Talkshow Networking Mentor & Talenta', 'tanggal' => '28 Juli 2026', 'lokasi' => 'Aula Serbaguna', 'status' => 'Selesai'],
-                        ['nama' => 'Pelatihan Public Speaking', 'tanggal' => '10 September 2026', 'lokasi' => 'Ruang Pelatihan', 'status' => 'Akan Datang'],
-                    ];
-                @endphp
-
-                @foreach ($kegiatanList as $item)
+                @forelse ($kegiatanList as $item)
                     <div class="kegiatan-card">
                         <div class="kegiatan-cover">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                             </svg>
-                            <span class="kegiatan-status @if($item['status'] === 'Akan Datang') status-akan-datang @elseif($item['status'] === 'Berlangsung') status-berlangsung @else status-selesai @endif">{{ $item['status'] }}</span>
+                            <span class="kegiatan-status {{ $item['status_class'] }}">{{ $item['status'] }}</span>
                         </div>
                         <div class="kegiatan-body">
                             <div class="kegiatan-tanggal">{{ $item['tanggal'] }}</div>
                             <h3>{{ $item['nama'] }}</h3>
+                            <p>{{ Str::limit($item['deskripsi'], 120) }}</p>
                             <div class="kegiatan-meta">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
@@ -298,7 +288,11 @@
                             </div>
                         </div>
                     </div>
-                @endforeach
+                @empty
+                    <div class="md:col-span-2 lg:col-span-3 text-center py-12 text-gray-500">
+                        Belum ada kegiatan publik yang ditampilkan saat ini.
+                    </div>
+                @endforelse
             </div>
         </div>
     </section>
