@@ -1015,126 +1015,424 @@
             </div>
 
 
-            <!-- =================================================
-                 CLIENT LIST
-            ================================================== -->
+          <!-- =========================================================
+     CLIENT LIST
+========================================================= -->
+
+<div
+    id="client-list"
+    class="
+        grid
+        md:grid-cols-2
+        lg:grid-cols-3
+        gap-6
+    "
+>
+
+    @forelse($clients as $client)
+
+        @php
+
+            $nama =
+                $client->nama_ukm
+                ?? 'Client';
+
+            $produk =
+                $client->nama_produk
+                ?? '-';
+
+
+            $avatar =
+                collect(
+                    preg_split(
+                        '/\s+/',
+                        trim($nama)
+                    )
+                )
+                ->filter()
+                ->take(2)
+                ->map(
+                    fn($word) =>
+                    strtoupper(
+                        substr($word, 0, 1)
+                    )
+                )
+                ->implode('');
+
+
+            /*
+             * Gunakan kategori bila field tersedia.
+             */
+
+            $kategori =
+                strtolower(
+                    $client->kategori
+                    ?? $client->jenis_usaha
+                    ?? 'umkm'
+                );
+
+
+            $kategoriKey =
+                str_contains(
+                    $kategori,
+                    'korporasi'
+                )
+                ? 'korporasi'
+
+                : (
+                    str_contains(
+                        $kategori,
+                        'startup'
+                    )
+                    ? 'startup'
+
+                    : (
+                        str_contains(
+                            $kategori,
+                            'pemerintah'
+                        )
+                        ? 'pemerintahan'
+
+                        : 'umkm'
+                    )
+                );
+
+
+            $kategoriLabel =
+                match($kategoriKey) {
+
+                    'korporasi' =>
+                        [
+                            'label' => 'Korporasi',
+                            'class' => 'badge-korporasi'
+                        ],
+
+                    'startup' =>
+                        [
+                            'label' => 'Startup',
+                            'class' => 'badge-startup'
+                        ],
+
+                    'pemerintahan' =>
+                        [
+                            'label' => 'Pemerintahan',
+                            'class' => 'badge-pemerintahan'
+                        ],
+
+                    default =>
+                        [
+                            'label' => 'UMKM',
+                            'class' => 'badge-umkm'
+                        ],
+                };
+
+        @endphp
+
+
+        <div
+            class="client-card"
+            data-nama="{{ strtolower($nama) }}"
+            data-produk="{{ strtolower($produk) }}"
+            data-kategori="{{ $kategoriKey }}"
+        >
+
+            <!-- TOP -->
 
             <div
-                id="client-list"
                 class="
-                    grid
-                    md:grid-cols-2
-                    lg:grid-cols-3
-                    gap-6
-                "
-            >
-                <!-- Client cards dirender oleh JavaScript -->
-            </div>
-
-
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                id="empty-state"
-                class="
-                    hidden
-                    text-center
-                    py-16
+                    flex
+                    items-start
+                    justify-between
+                    mb-4
                 "
             >
 
-                <svg
+                <div
                     class="
+                        client-avatar
                         w-16
                         h-16
-                        mx-auto
-                        text-[#d9c83a]
-                        mb-4
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="
-                            M21 21l-6-6
-                            m2-5a7 7 0
-                            11-14 0
-                            7 7 0
-                            0114 0z
-                        "
-                    />
-
-                </svg>
-
-                <h3
-                    class="
+                        rounded-2xl
+                        flex
+                        items-center
+                        justify-center
+                        text-white
                         text-xl
-                        font-semibold
-                        text-[#55583f]
-                        mb-2
+                        font-bold
                     "
                 >
-                    Client tidak ditemukan
-                </h3>
+                    {{ $avatar ?: 'CL' }}
+                </div>
 
-                <p class="text-[#85856f]">
-                    Coba ubah kata kunci pencarian
-                    atau filter kategori
-                </p>
+
+                <span
+                    class="
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-medium
+                        {{ $kategoriLabel['class'] }}
+                    "
+                >
+                    {{ $kategoriLabel['label'] }}
+                </span>
 
             </div>
+
+
+            <!-- NAME -->
+
+            <h3
+                class="
+                    client-name
+                    text-lg
+                    font-semibold
+                    mb-1
+                "
+            >
+                {{ $nama }}
+            </h3>
+
+
+            <!-- PRODUCT -->
+
+            <p
+                class="
+                    client-industry
+                    text-sm
+                    font-medium
+                    mb-3
+                "
+            >
+                {{ $produk }}
+            </p>
+
+
+            <!-- INFO -->
+
+            <div
+                class="
+                    client-info
+                    flex
+                    items-center
+                    justify-between
+                    text-sm
+                    mb-4
+                "
+            >
+
+                <span
+                    class="
+                        inline-flex
+                        items-center
+                    "
+                >
+
+                    <svg
+                        class="
+                            w-4
+                            h-4
+                            mr-1
+                        "
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="
+                                M9 12l2 2
+                                4-4m6 2
+                                a9 9 0
+                                11-18 0
+                                9 9 0
+                                0118 0z
+                            "
+                        />
+
+                    </svg>
+
+                    Client Aktif
+
+                </span>
+
+
+                <span
+                    class="
+                        trusted-client
+                        inline-flex
+                        items-center
+                    "
+                >
+
+                    <svg
+                        class="
+                            w-4
+                            h-4
+                            mr-1
+                        "
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+
+                        <path
+                            d="
+                                M12 2
+                                l3.09 6.26
+                                L22 9.27
+                                l-5 4.87
+                                1.18 6.88
+                                L12 17.77
+                                l-6.18 3.25
+                                L7 14.14
+                                2 9.27
+                                l6.91-1.01
+                                L12 2z
+                            "
+                        />
+
+                    </svg>
+
+                    Terpercaya
+
+                </span>
+
+            </div>
+
+
+            <!-- BUTTON -->
+
+            <a
+                href="{{ route(
+                    'client.show',
+                    $client->id_client
+                ) }}"
+                class="
+                    client-button
+                    w-full
+                    py-2.5
+                    text-white
+                    rounded-xl
+                    font-medium
+                    block
+                    text-center
+                "
+            >
+
+                <span
+                    class="
+                        relative
+                        z-10
+                    "
+                >
+                    Lihat Profil
+                </span>
+
+            </a>
 
         </div>
 
-    </section>
+
+    @empty
+
+        <div
+            class="
+                col-span-full
+                text-center
+                py-16
+            "
+        >
+
+            <h3
+                class="
+                    text-xl
+                    font-semibold
+                    text-[#55583f]
+                    mb-2
+                "
+            >
+                Belum ada client
+            </h3>
+
+            <p class="text-[#85856f]">
+                Data client belum tersedia.
+            </p>
+
+        </div>
+
+    @endforelse
 
 </div>
 
 
-<!-- =========================================================
-     MODAL PROFIL CLIENT
-========================================================== -->
-<div
-    id="client-modal"
-    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
-    style="background: rgba(60, 58, 30, .6); backdrop-filter: blur(4px);"
-    role="dialog"
-    aria-modal="true"
->
-    <div class="client-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
+@if($clients->hasPages())
 
-        <!-- CLOSE -->
-        <button
-            type="button"
-            class="client-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#9e9a6e] hover:bg-[#faf8e8] hover:rotate-90 active:scale-90 transition duration-200"
-            aria-label="Tutup"
-        >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-
-        <!-- HEADER -->
-        <div class="flex flex-col items-center text-center mb-6 pt-2">
-            <div id="client-modal-avatar" class="client-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#faf3cd] flex items-center justify-center text-white text-3xl font-bold mb-3"></div>
-            <span id="client-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
-            <h3 id="client-modal-nama" class="text-2xl font-bold text-[#30352f] leading-tight mb-1.5"></h3>
-            <p id="client-modal-industri" class="text-sm font-medium text-[#737a63] leading-relaxed max-w-xs"></p>
-        </div>
-
-        <!-- DETAIL -->
-        <div class="rounded-2xl bg-[#fbf9ec] border border-[#efe8c2]">
-            <div id="client-modal-detail" class="px-5 py-2 divide-y divide-[#f4efdb]"></div>
-        </div>
-
+    <div class="mt-10">
+        {{ $clients->links() }}
     </div>
+
+@endif
+
+
+<div
+    id="empty-state"
+    class="
+        hidden
+        text-center
+        py-16
+    "
+>
+
+    <svg
+        class="
+            w-16
+            h-16
+            mx-auto
+            text-[#d9c83a]
+            mb-4
+        "
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="
+                M21 21l-6-6
+                m2-5a7 7
+                0 11-14 0
+                7 7
+                0 0114 0z
+            "
+        />
+
+    </svg>
+
+
+    <h3
+        class="
+            text-xl
+            font-semibold
+            text-[#55583f]
+            mb-2
+        "
+    >
+        Client tidak ditemukan
+    </h3>
+
+
+    <p class="text-[#85856f]">
+        Coba ubah kata kunci pencarian
+        atau filter kategori.
+    </p>
+
 </div>
 
 
@@ -1145,480 +1443,121 @@
 
 <script>
 
-    /* =========================================================
-       DATA CLIENT
-    ========================================================= */
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
 
-    const clients = @json($clients);
+        const searchInput =
+            document.getElementById(
+                'search-input'
+            );
 
-    /* Data terakhir yang dirender (dipakai oleh modal profil client) */
-    let currentClients = [];
+        const filterSelect =
+            document.getElementById(
+                'filter-select'
+            );
 
+        const clientList =
+            document.getElementById(
+                'client-list'
+            );
 
-    /* =========================================================
-       KATEGORI LABEL (dibangkitkan dari data nyata di backend)
-    ========================================================= */
-
-    const kategoriLabel = {};
-    @json($kategoriClient)
-        .forEach(function (kc) {
-            kategoriLabel[kc.key] = {
-                label: kc.label,
-                color: kc.color
-            };
-        });
-
-
-    /* =========================================================
-       ELEMENT
-    ========================================================= */
-
-    const searchInput =
-        document.getElementById(
-            'search-input'
-        );
-
-    const filterSelect =
-        document.getElementById(
-            'filter-select'
-        );
-
-    const clientList =
-        document.getElementById(
-            'client-list'
-        );
-
-    const emptyState =
-        document.getElementById(
-            'empty-state'
-        );
+        const emptyState =
+            document.getElementById(
+                'empty-state'
+            );
 
 
-    /* =========================================================
-       RENDER CLIENT
-    ========================================================= */
+        function filterClients() {
 
-    function renderClients() {
+            const keyword =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
 
-        const keyword =
-            searchInput.value
-                .toLowerCase()
-                .trim();
-
-        const kategori =
-            filterSelect.value;
+            const kategori =
+                filterSelect.value;
 
 
-        const filtered =
-            clients.filter(c => {
-
-                const matchKeyword =
-
-                    c.nama
-                        .toLowerCase()
-                        .includes(keyword)
-
-                    ||
-
-                    (c.industri || '')
-                        .toLowerCase()
-                        .includes(keyword);
-
-
-                const matchKategori =
-
-                    kategori === 'semua'
-
-                    ||
-
-                    c.kategori === kategori;
-
-
-                return (
-                    matchKeyword &&
-                    matchKategori
+            const cards =
+                clientList.querySelectorAll(
+                    '.client-card'
                 );
 
-            });
+
+            let visible = 0;
 
 
-        /* =====================================================
-           EMPTY STATE
-        ====================================================== */
+            cards.forEach(
+                function (card) {
 
-        emptyState.classList.toggle(
-            'hidden',
-            filtered.length > 0
+                    const nama =
+                        card.dataset.nama
+                        || '';
+
+                    const produk =
+                        card.dataset.produk
+                        || '';
+
+                    const cardKategori =
+                        card.dataset.kategori
+                        || '';
+
+
+                    const cocokKeyword =
+                        nama.includes(keyword)
+                        ||
+                        produk.includes(
+                            keyword
+                        );
+
+
+                    const cocokKategori =
+                        kategori === 'semua'
+                        ||
+                        cardKategori === kategori;
+
+
+                    if (
+                        cocokKeyword
+                        &&
+                        cocokKategori
+                    ) {
+
+                        card.style.display =
+                            '';
+
+                        visible++;
+
+                    } else {
+
+                        card.style.display =
+                            'none';
+                    }
+                }
+            );
+
+
+            emptyState.classList.toggle(
+                'hidden',
+                visible > 0
+            );
+        }
+
+
+        searchInput?.addEventListener(
+            'input',
+            filterClients
         );
 
 
-        /* Simpan data yang sedang dirender agar bisa dibaca oleh modal */
-
-        currentClients = filtered;
-
-
-        /* =====================================================
-           RENDER CARD
-        ====================================================== */
-
-        clientList.innerHTML =
-
-            filtered
-
-                .map((c, index) => {
-
-                    const k =
-                        kategoriLabel[
-                            c.kategori
-                        ];
-
-
-                    return `
-
-                        <div
-                            class="client-card"
-                            style="
-                                animation-delay:
-                                ${index * 0.07}s
-                            "
-                        >
-
-                            <!-- TOP -->
-
-                            <div
-                                class="
-                                    flex
-                                    items-start
-                                    justify-between
-                                    mb-4
-                                "
-                            >
-
-                                <!-- AVATAR -->
-
-                                <div
-                                    class="
-                                        client-avatar
-                                        w-16
-                                        h-16
-                                        rounded-2xl
-                                        flex
-                                        items-center
-                                        justify-center
-                                        text-white
-                                        text-xl
-                                        font-bold
-                                    "
-                                >
-
-                                    ${c.avatar}
-
-                                </div>
-
-
-                                <!-- CATEGORY -->
-
-                                <span
-                                    class="
-                                        px-3
-                                        py-1
-                                        rounded-full
-                                        text-xs
-                                        font-medium
-                                        ${k.color}
-                                    "
-                                >
-
-                                    ${k.label}
-
-                                </span>
-
-                            </div>
-
-
-                            <!-- NAME -->
-
-                            <h3
-                                class="
-                                    client-name
-                                    text-lg
-                                    font-semibold
-                                    mb-1
-                                "
-                            >
-
-                                ${c.nama}
-
-                            </h3>
-
-
-                            <!-- INDUSTRY -->
-
-                            <p
-                                class="
-                                    client-industry
-                                    text-sm
-                                    font-medium
-                                    mb-3
-                                "
-                            >
-
-                                ${c.industri || '—'}
-
-                            </p>
-
-
-                            <!-- INFO -->
-
-                            <div
-                                class="
-                                    client-info
-                                    flex
-                                    items-center
-                                    justify-between
-                                    text-sm
-                                    mb-4
-                                "
-                            >
-
-                                <!-- PROJECT -->
-
-                                <span
-                                    class="
-                                        inline-flex
-                                        items-center
-                                    "
-                                >
-
-                                    <svg
-                                        class="
-                                            w-4
-                                            h-4
-                                            mr-1
-                                        "
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="
-                                                M9 12l2 2
-                                                4-4m6 2
-                                                a9 9 0
-                                                11-18 0
-                                                9 9 0
-                                                0118 0z
-                                            "
-                                        />
-
-                                    </svg>
-
-                                    ${c.proyek} Proyek
-
-                                </span>
-
-
-                                <!-- TRUSTED -->
-
-                                <span
-                                    class="
-                                        trusted-client
-                                        inline-flex
-                                        items-center
-                                    "
-                                >
-
-                                    <svg
-                                        class="
-                                            w-4
-                                            h-4
-                                            mr-1
-                                        "
-                                        fill="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-
-                                        <path
-                                            d="
-                                                M12 2
-                                                l3.09 6.26
-                                                L22 9.27
-                                                l-5 4.87
-                                                1.18 6.88
-                                                L12 17.77
-                                                l-6.18 3.25
-                                                L7 14.14
-                                                2 9.27
-                                                l6.91-1.01
-                                                L12 2z
-                                            "
-                                        />
-
-                                    </svg>
-
-                                    Terpercaya
-
-                                </span>
-
-                            </div>
-
-
-                            <!-- BUTTON -->
-
-                            <button
-                                type="button"
-                                data-idx="${index}"
-                                class="
-                                    client-button
-                                    w-full
-                                    py-2.5
-                                    text-white
-                                    rounded-xl
-                                    font-medium
-                                "
-                            >
-
-                                <span
-                                    class="
-                                        relative
-                                        z-10
-                                    "
-                                >
-                                    Hubungi Client
-                                </span>
-
-                            </button>
-
-                        </div>
-
-                    `;
-
-                })
-
-                .join('');
+        filterSelect?.addEventListener(
+            'change',
+            filterClients
+        );
 
     }
-
-
-    /* =========================================================
-       SEARCH EVENT
-    ========================================================= */
-
-    searchInput.addEventListener(
-        'input',
-        renderClients
-    );
-
-
-    /* =========================================================
-       FILTER EVENT
-    ========================================================= */
-
-    filterSelect.addEventListener(
-        'change',
-        renderClients
-    );
-
-
-    /* =========================================================
-       INITIAL RENDER
-    ========================================================= */
-
-    renderClients();
-
-
-    /* =========================================================
-       MODAL PROFIL CLIENT
-    ========================================================= */
-
-    const clientModal =
-        document.getElementById('client-modal');
-
-    function openClientModal(item) {
-
-        if (!item) { return; }
-
-        const k = {
-            label: item.katLabel || 'UMKM',
-            color: item.katColor || 'badge-umkm'
-        };
-
-        document.getElementById('client-modal-avatar').textContent =
-            item.avatar || '?';
-
-        const badge =
-            document.getElementById('client-modal-badge');
-        badge.textContent = k.label;
-        badge.className =
-            'px-3 py-1 rounded-full text-xs font-semibold ' + k.color;
-
-        document.getElementById('client-modal-nama').textContent =
-            item.nama;
-
-        document.getElementById('client-modal-industri').textContent =
-            item.namaProduk || item.industri || '—';
-
-        /* Hanya baris yang datanya TERISI yang ditampilkan.
-           Baris kosong disembunyikan (bukan teks "belum diisi"). */
-        document.getElementById('client-modal-detail').innerHTML =
-            clientRow('Jumlah Proyek',
-                item.proyek != null ? item.proyek + ' proyek' : '') +
-            clientRow('Domisili', item.domisili) +
-            clientRow('Website', item.website) +
-            clientRow('Deskripsi Usaha', item.deskripsi);
-
-        clientModal.classList.remove('hidden');
-        clientModal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-    }
-
-    /* Sembunyikan baris saat nilainya kosong (biar popup rapi). */
-    function clientRow(label, value) {
-        const v =
-            (value == null ? '' : String(value)).trim();
-        if (!v) { return ''; }
-        return `
-            <div class="flex items-start gap-3 py-3">
-                <svg class="w-5 h-5 mt-0.5 text-[#d8bf2e] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div>
-                    <div class="text-[11px] font-semibold text-[#a09e7e] uppercase tracking-wider">${label}</div>
-                    <div class="text-[15px] text-[#30352f] font-medium mt-0.5">${value}</div>
-                </div>
-            </div>`;
-    }
-
-    function closeClientModal() {
-        clientModal.classList.add('hidden');
-        clientModal.classList.remove('flex');
-        document.body.style.overflow = '';
-    }
-
-    /* Delegasi klik tombol pada daftar client */
-
-    clientList.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-idx]');
-        if (!btn) { return; }
-        openClientModal(currentClients[parseInt(btn.getAttribute('data-idx'), 10)]);
-    });
-
-    clientModal.querySelector('.client-modal-close')
-        .addEventListener('click', closeClientModal);
-
-    clientModal.addEventListener('click', (e) => {
-        if (e.target === clientModal) { closeClientModal(); }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !clientModal.classList.contains('hidden')) {
-            closeClientModal();
-        }
-    });
+);
 
 </script>
 

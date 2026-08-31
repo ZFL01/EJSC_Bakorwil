@@ -1184,390 +1184,553 @@
 
 <script>
 
-    /* =========================================================
-       DATA TALENTA
-    ========================================================= */
+    <!-- =========================================================
+     TALENTA LIST
+========================================================= -->
 
-    const talentas = @json($talentas);
+<div
+    id="talenta-list"
+    class="
+        grid
+        md:grid-cols-2
+        lg:grid-cols-3
+        gap-6
+    "
+>
 
-    /* Data terakhir yang dirender (dipakai oleh modal "Lihat Profil") */
-    let currentTalentas = [];
+    @forelse($talents as $talent)
+
+        @php
+
+            $nama =
+                $talent->nama
+                ?? 'Talenta';
+
+            $keahlian =
+                $talent->keahlian
+                ?? '-';
+
+            $status =
+                $talent->status_pekerjaan
+                ?? 'Talenta';
 
 
-    /* =========================================================
-       KEAHLIAN LABEL (dibangkitkan dari data nyata di backend)
-    ========================================================= */
+            $avatar =
+                collect(
+                    preg_split(
+                        '/\s+/',
+                        trim($nama)
+                    )
+                )
+                ->filter()
+                ->take(2)
+                ->map(
+                    fn($word) =>
+                    strtoupper(
+                        substr($word, 0, 1)
+                    )
+                )
+                ->implode('');
 
-    /* Berisi { key: { label, color } } untuk semua kategori yang
-       benar-benar muncul di data (dari $kategoriTalenta). */
-    const keahlianLabel = {};
-    @json($kategoriTalenta)
-        .forEach(function (kt) {
-            keahlianLabel[kt.key] = {
-                label: kt.label,
-                color: kt.color
+
+            /*
+             * Mapping keahlian
+             */
+
+            $keahlianLower =
+                strtolower($keahlian);
+
+
+            if (
+                str_contains(
+                    $keahlianLower,
+                    'program'
+                )
+                ||
+                str_contains(
+                    $keahlianLower,
+                    'developer'
+                )
+                ||
+                str_contains(
+                    $keahlianLower,
+                    'software'
+                )
+            ) {
+
+                $skillKey =
+                    'programming';
+
+            } elseif (
+                str_contains(
+                    $keahlianLower,
+                    'design'
+                )
+                ||
+                str_contains(
+                    $keahlianLower,
+                    'desain'
+                )
+                ||
+                str_contains(
+                    $keahlianLower,
+                    'ui'
+                )
+                ||
+                str_contains(
+                    $keahlianLower,
+                    'ux'
+                )
+            ) {
+
+                $skillKey =
+                    'design';
+
+            } elseif (
+                str_contains(
+                    $keahlianLower,
+                    'marketing'
+                )
+            ) {
+
+                $skillKey =
+                    'marketing';
+
+            } else {
+
+                $skillKey =
+                    'data';
+            }
+
+
+            $skillLabel = match($skillKey) {
+
+                'programming' =>
+                    [
+                        'label' => 'Programming',
+                        'class' => 'badge-programming'
+                    ],
+
+                'design' =>
+                    [
+                        'label' => 'Design',
+                        'class' => 'badge-design'
+                    ],
+
+                'marketing' =>
+                    [
+                        'label' => 'Marketing',
+                        'class' => 'badge-marketing'
+                    ],
+
+                default =>
+                    [
+                        'label' => 'Data Analysis',
+                        'class' => 'badge-data'
+                    ],
             };
-        });
 
 
-    /* =========================================================
-       LEVEL COLOR
-    ========================================================= */
+            /*
+             * Level.
+             *
+             * Jika database memiliki field level,
+             * digunakan.
+             */
 
-    const levelColor = {
-
-        Senior: 'level-senior',
-
-        Mid: 'level-mid',
-
-        Junior: 'level-junior',
-
-        Umum: 'level-umum'
-
-    };
+            $level =
+                $talent->level
+                ?? $talent->tingkat
+                ?? 'Talent';
 
 
-    /* =========================================================
-       ELEMENT
-    ========================================================= */
+            $levelClass = match(
+                strtolower($level)
+            ) {
 
-    const searchInput =
-        document.getElementById('search-input');
+                'senior' =>
+                    'level-senior',
 
-    const filterSelect =
-        document.getElementById('filter-select');
+                'mid',
+                'middle',
+                'menengah' =>
+                    'level-mid',
 
-    const talentaList =
-        document.getElementById('talenta-list');
+                'junior' =>
+                    'level-junior',
 
-    const emptyState =
-        document.getElementById('empty-state');
+                default =>
+                    'level-mid',
+            };
 
-
-    /* =========================================================
-       RENDER TALENTA
-    ========================================================= */
-
-    function renderTalentas() {
-
-        const keyword =
-            searchInput.value.toLowerCase();
-
-        const keahlian =
-            filterSelect.value;
+        @endphp
 
 
-        const filtered =
-            talentas.filter(t => {
+        <div
+            class="talenta-card"
+            data-nama="{{ strtolower($nama) }}"
+            data-keahlian="{{ strtolower($keahlian) }}"
+            data-kategori="{{ $skillKey }}"
+        >
 
-                const matchKeyword =
-                    t.nama
-                        .toLowerCase()
-                        .includes(keyword)
+            <!-- TOP -->
 
-                    ||
+            <div
+                class="
+                    flex
+                    items-start
+                    justify-between
+                    mb-4
+                "
+            >
 
-                    t.skill
-                        .toLowerCase()
-                        .includes(keyword);
+                <div
+                    class="
+                        talenta-avatar
+                        w-16
+                        h-16
+                        rounded-2xl
+                        flex
+                        items-center
+                        justify-center
+                        text-xl
+                        font-bold
+                    "
+                >
+                    {{ $avatar ?: 'TA' }}
+                </div>
 
 
-                const matchKeahlian =
-                    keahlian === 'semua' ||
-                    t.keahlian === keahlian;
+                <span
+                    class="
+                        px-3
+                        py-1
+                        rounded-full
+                        text-xs
+                        font-medium
+                        {{ $levelClass }}
+                    "
+                >
+                    {{ $level }}
+                </span>
+
+            </div>
 
 
-                return matchKeyword &&
-                       matchKeahlian;
+            <!-- NAME -->
 
-            });
+            <h3
+                class="
+                    talenta-name
+                    text-lg
+                    font-semibold
+                    mb-1
+                "
+            >
+                {{ $nama }}
+            </h3>
 
 
-        /* EMPTY STATE */
+            <!-- SKILL -->
 
-        emptyState.classList.toggle(
-            'hidden',
-            filtered.length > 0
+            <p
+                class="
+                    talenta-skill
+                    text-sm
+                    font-medium
+                    mb-3
+                "
+            >
+                {{ $keahlian }}
+            </p>
+
+
+            <!-- KEAHLIAN -->
+
+            <span
+                class="
+                    inline-block
+                    px-3
+                    py-1
+                    rounded-full
+                    text-xs
+                    font-medium
+                    {{ $skillLabel['class'] }}
+                    mb-4
+                "
+            >
+                {{ $skillLabel['label'] }}
+            </span>
+
+
+            <!-- STATUS PEKERJAAN -->
+
+            @if(!empty($talent->status_pekerjaan))
+
+                <div
+                    class="
+                        text-sm
+                        text-[#64748b]
+                        mb-4
+                    "
+                >
+
+                    Status:
+                    <span class="font-medium">
+                        {{ $talent->status_pekerjaan }}
+                    </span>
+
+                </div>
+
+            @endif
+
+
+            <!-- BUTTON -->
+
+            <a
+                href="{{ route(
+                    'talenta.show',
+                    $talent->id_talenta
+                ) }}"
+                class="
+                    talenta-button
+                    w-full
+                    mt-2
+                    py-2.5
+                    rounded-xl
+                    font-medium
+                    block
+                    text-center
+                "
+            >
+
+                <span class="relative z-10">
+                    Lihat Profil
+                </span>
+
+            </a>
+
+        </div>
+
+    @empty
+
+        <div
+            class="
+                col-span-full
+                text-center
+                py-16
+            "
+        >
+
+            <h3
+                class="
+                    text-xl
+                    font-semibold
+                    text-[#17324d]
+                    mb-2
+                "
+            >
+                Belum ada talenta
+            </h3>
+
+            <p class="text-[#64748b]">
+                Data talenta belum tersedia.
+            </p>
+
+        </div>
+
+    @endforelse
+
+</div>
+
+
+@if($talents->hasPages())
+
+    <div class="mt-10">
+        {{ $talents->links() }}
+    </div>
+
+@endif
+
+
+<div
+    id="empty-state"
+    class="
+        hidden
+        text-center
+        py-16
+    "
+>
+
+    <svg
+        class="
+            w-16
+            h-16
+            mx-auto
+            text-[#c7ea46]
+            mb-4
+        "
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="
+                M21 21l-6-6
+                m2-5a7 7
+                0 11-14 0
+                7 7
+                0 0114 0z
+            "
+        />
+
+    </svg>
+
+    <h3
+        class="
+            text-xl
+            font-semibold
+            text-[#17324d]
+            mb-2
+        "
+    >
+        Talenta tidak ditemukan
+    </h3>
+
+    <p class="text-[#64748b]">
+        Coba ubah kata kunci pencarian
+        atau filter keahlian.
+    </p>
+
+</div>
+
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+
+document.addEventListener(
+    'DOMContentLoaded',
+    function () {
+
+        const searchInput =
+            document.getElementById(
+                'search-input'
+            );
+
+        const filterSelect =
+            document.getElementById(
+                'filter-select'
+            );
+
+        const talentaList =
+            document.getElementById(
+                'talenta-list'
+            );
+
+        const emptyState =
+            document.getElementById(
+                'empty-state'
+            );
+
+
+        function filterTalenta() {
+
+            const keyword =
+                searchInput.value
+                    .toLowerCase()
+                    .trim();
+
+            const kategori =
+                filterSelect.value;
+
+
+            const cards =
+                talentaList.querySelectorAll(
+                    '.talenta-card'
+                );
+
+
+            let visible = 0;
+
+
+            cards.forEach(
+                function (card) {
+
+                    const nama =
+                        card.dataset.nama
+                        || '';
+
+                    const keahlian =
+                        card.dataset.keahlian
+                        || '';
+
+                    const cardKategori =
+                        card.dataset.kategori
+                        || '';
+
+
+                    const cocokKeyword =
+                        nama.includes(keyword)
+                        ||
+                        keahlian.includes(
+                            keyword
+                        );
+
+
+                    const cocokKategori =
+                        kategori === 'semua'
+                        ||
+                        cardKategori === kategori;
+
+
+                    if (
+                        cocokKeyword
+                        &&
+                        cocokKategori
+                    ) {
+
+                        card.style.display =
+                            '';
+
+                        visible++;
+
+                    } else {
+
+                        card.style.display =
+                            'none';
+                    }
+                }
+            );
+
+
+            emptyState.classList.toggle(
+                'hidden',
+                visible > 0
+            );
+        }
+
+
+        searchInput?.addEventListener(
+            'input',
+            filterTalenta
         );
 
 
-        /* Simpan data yang sedang dirender agar bisa dibaca oleh modal */
-
-        currentTalentas = filtered;
-
-
-        /* =====================================================
-           RENDER CARD
-        ====================================================== */
-
-        talentaList.innerHTML =
-            filtered
-                .map((t, index) => {
-
-                    const k =
-                        keahlianLabel[t.keahlian];
-
-
-                    return `
-
-                        <div
-                            class="talenta-card"
-                            style="
-                                animation-delay:
-                                ${index * 0.07}s
-                            "
-                        >
-
-
-                            <!-- TOP -->
-
-                            <div
-                                class="
-                                    flex
-                                    items-start
-                                    justify-between
-                                    mb-4
-                                "
-                            >
-
-
-                                <!-- AVATAR -->
-
-                                <div
-                                    class="
-                                        talenta-avatar
-                                        w-16
-                                        h-16
-                                        rounded-2xl
-                                        flex
-                                        items-center
-                                        justify-center
-                                        text-xl
-                                        font-bold
-                                    "
-                                >
-
-                                    ${t.avatar}
-
-                                </div>
-
-
-                                <!-- LEVEL -->
-
-                                <span
-                                    class="
-                                        px-3
-                                        py-1
-                                        rounded-full
-                                        text-xs
-                                        font-medium
-                                        ${levelColor[t.level]}
-                                    "
-                                >
-
-                                    ${t.level}
-
-                                </span>
-
-                            </div>
-
-
-                            <!-- NAME -->
-
-                            <h3
-                                class="
-                                    talenta-name
-                                    text-lg
-                                    font-semibold
-                                    mb-1
-                                "
-                            >
-
-                                ${t.nama}
-
-                            </h3>
-
-
-                            <!-- SKILL -->
-
-                            <p
-                                class="
-                                    talenta-skill
-                                    text-sm
-                                    font-medium
-                                    mb-3
-                                "
-                            >
-
-                                ${t.skill}
-
-                            </p>
-
-
-                            <!-- KEAHLIAN -->
-
-                            <span
-                                class="
-                                    inline-block
-                                    px-3
-                                    py-1
-                                    rounded-full
-                                    text-xs
-                                    font-medium
-                                    ${k.color}
-                                    mb-4
-                                "
-                            >
-
-                                ${k.label}
-
-                            </span>
-
-
-                            <!-- BUTTON -->
-
-                            <button
-                                type="button"
-                                data-idx="${index}"
-                                class="
-                                    talenta-button
-                                    w-full
-                                    mt-2
-                                    py-2.5
-                                    rounded-xl
-                                    font-medium
-                                "
-                            >
-
-                                <span class="relative z-10">
-
-                                    Lihat Profil
-
-                                </span>
-
-                            </button>
-
-                        </div>
-
-                    `;
-
-                })
-                .join('');
+        filterSelect?.addEventListener(
+            'change',
+            filterTalenta
+        );
 
     }
-
-
-    /* =========================================================
-       SEARCH EVENT
-    ========================================================= */
-
-    searchInput.addEventListener(
-        'input',
-        renderTalentas
-    );
-
-
-    /* =========================================================
-       FILTER EVENT
-    ========================================================= */
-
-    filterSelect.addEventListener(
-        'change',
-        renderTalentas
-    );
-
-
-    /* =========================================================
-       INITIAL RENDER
-    ========================================================= */
-
-    renderTalentas();
-
-
-    /* =========================================================
-       MODAL PROFIL TALENTA
-    ========================================================= */
-
-    const talentaModal =
-        document.getElementById('talenta-modal');
-
-    function openTalentaModal(item) {
-
-        if (!item) { return; }
-
-        const k =
-            keahlianLabel[item.keahlian] ||
-            { label: 'Umum', color: 'badge-data' };
-
-        document.getElementById('talenta-modal-avatar').textContent =
-            item.avatar || '?';
-
-        const badge =
-            document.getElementById('talenta-modal-badge');
-        badge.textContent = k.label;
-        badge.className = 'px-3 py-1 rounded-full text-xs font-semibold ' + k.color;
-
-        document.getElementById('talenta-modal-nama').textContent =
-            item.nama;
-
-        document.getElementById('talenta-modal-skill').textContent =
-            item.skill || '—';
-
-        /* Hanya baris yang datanya TERISI yang ditampilkan. Jika kosong,
-           baris disembunyikan sama sekali (bukan teks "belum diisi"). */
-        document.getElementById('talenta-modal-detail').innerHTML =
-            rowDetail('Level', item.level) +
-            rowDetail('Bidang Pekerjaan', item.bidang) +
-            rowDetail('Domisili', item.domisili);
-
-        talentaModal.classList.remove('hidden');
-        talentaModal.classList.add('flex');
-        document.body.style.overflow = 'hidden';
-    }
-
-    /* Sembunyikan baris saat nilainya kosong (biar popup rapi). */
-    function rowDetail(label, value) {
-        const v =
-            (value == null ? '' : String(value)).trim();
-        if (!v) { return ''; }
-        return `
-            <div class="flex items-start gap-3 py-3">
-                <svg class="w-5 h-5 mt-0.5 text-[#b7d83c] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                <div>
-                    <div class="text-[11px] font-semibold text-[#8aa06b] uppercase tracking-wider">${label}</div>
-                    <div class="text-[15px] text-[#233d54] font-medium mt-0.5">${value}</div>
-                </div>
-            </div>`;
-    }
-
-    function closeTalentaModal() {
-        talentaModal.classList.add('hidden');
-        talentaModal.classList.remove('flex');
-        document.body.style.overflow = '';
-    }
-
-    /* Delegasi klik tombol "Lihat Profil" pada daftar talenta */
-
-    talentaList.addEventListener('click', (e) => {
-        const btn = e.target.closest('[data-idx]');
-        if (!btn) { return; }
-        openTalentaModal(currentTalentas[parseInt(btn.getAttribute('data-idx'), 10)]);
-    });
-
-    talentaModal.querySelector('.talenta-modal-close')
-        .addEventListener('click', closeTalentaModal);
-
-    talentaModal.addEventListener('click', (e) => {
-        if (e.target === talentaModal) { closeTalentaModal(); }
-    });
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !talentaModal.classList.contains('hidden')) {
-            closeTalentaModal();
-        }
-    });
+);
 
 </script>
 
