@@ -1035,7 +1035,7 @@
                         >
 
                             <option value="semua">
-                                Semua Keahlian ({{ number_format(count($talentas)) }})
+                                Semua Keahlian ({{ number_format(count($talents)) }})
                             </option>
 
                             @foreach ($kategoriTalenta as $kat)
@@ -1056,137 +1056,6 @@
             <!-- =================================================
                  TALENTA LIST
             ================================================== -->
-
-            <div
-                id="talenta-list"
-                class="
-                    grid
-                    md:grid-cols-2
-                    lg:grid-cols-3
-                    gap-6
-                "
-            >
-
-                <!-- Talenta cards dirender oleh JavaScript -->
-
-            </div>
-
-
-            <!-- =================================================
-                 EMPTY STATE
-            ================================================== -->
-
-            <div
-                id="empty-state"
-                class="
-                    hidden
-                    text-center
-                    py-16
-                "
-            >
-
-                <svg
-                    class="
-                        w-16
-                        h-16
-                        mx-auto
-                        text-[#c7ea46]
-                        mb-4
-                    "
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                >
-
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-
-                </svg>
-
-                <h3
-                    class="
-                        text-xl
-                        font-semibold
-                        text-[#17324d]
-                        mb-2
-                    "
-                >
-
-                    Talenta tidak ditemukan
-
-                </h3>
-
-                <p
-                    class="text-[#64748b]"
-                >
-
-                    Coba ubah kata kunci pencarian atau filter keahlian
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
-
-
-<!-- =========================================================
-     MODAL PROFIL TALENTA
-========================================================== -->
-<div
-    id="talenta-modal"
-    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
-    style="background: rgba(23, 50, 77, .55); backdrop-filter: blur(4px);"
-    role="dialog"
-    aria-modal="true"
->
-    <div class="talenta-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
-
-        <!-- CLOSE -->
-        <button
-            type="button"
-            class="talenta-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#7a8a6f] hover:bg-[#f4f8ec] hover:rotate-90 active:scale-90 transition duration-200"
-            aria-label="Tutup"
-        >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-            </svg>
-        </button>
-
-        <!-- HEADER -->
-        <div class="flex flex-col items-center text-center mb-6 pt-2">
-            <div id="talenta-modal-avatar" class="talenta-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#eef7cf] flex items-center justify-center text-3xl font-bold mb-3"></div>
-            <span id="talenta-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
-            <h3 id="talenta-modal-nama" class="text-2xl font-bold text-[#17324d] leading-tight mb-1.5"></h3>
-            <p id="talenta-modal-skill" class="text-sm font-medium text-[#5c768f] leading-relaxed max-w-xs"></p>
-        </div>
-
-        <!-- DETAIL -->
-        <div class="rounded-2xl bg-[#f6faf0] border border-[#e7f0d5]">
-            <div id="talenta-modal-detail" class="px-5 py-2 divide-y divide-[#eef3e3]"></div>
-        </div>
-
-    </div>
-</div>
-
-
-@endsection
-
-
-@section('scripts')
-
-<script>
-
-    <!-- =========================================================
-     TALENTA LIST
-========================================================= -->
 
 <div
     id="talenta-list"
@@ -1234,73 +1103,12 @@
 
 
             /*
-             * Mapping keahlian
+             * Mapping keahlian (helper terpusat agar konsisten
+             * dengan filter/dropdown dari controller).
              */
 
-            $keahlianLower =
-                strtolower($keahlian);
-
-
-            if (
-                str_contains(
-                    $keahlianLower,
-                    'program'
-                )
-                ||
-                str_contains(
-                    $keahlianLower,
-                    'developer'
-                )
-                ||
-                str_contains(
-                    $keahlianLower,
-                    'software'
-                )
-            ) {
-
-                $skillKey =
-                    'programming';
-
-            } elseif (
-                str_contains(
-                    $keahlianLower,
-                    'design'
-                )
-                ||
-                str_contains(
-                    $keahlianLower,
-                    'desain'
-                )
-                ||
-                str_contains(
-                    $keahlianLower,
-                    'ui'
-                )
-                ||
-                str_contains(
-                    $keahlianLower,
-                    'ux'
-                )
-            ) {
-
-                $skillKey =
-                    'design';
-
-            } elseif (
-                str_contains(
-                    $keahlianLower,
-                    'marketing'
-                )
-            ) {
-
-                $skillKey =
-                    'marketing';
-
-            } else {
-
-                $skillKey =
-                    'data';
-            }
+            $skillKey =
+                \App\Models\Talent::skillKey($talent);
 
 
             $skillLabel = match($skillKey) {
@@ -1543,7 +1351,6 @@
 
 </div>
 
-
 @if($talents->hasPages())
 
     <div class="mt-10">
@@ -1553,64 +1360,113 @@
 @endif
 
 
-<div
-    id="empty-state"
-    class="
-        hidden
-        text-center
-        py-16
-    "
->
 
-    <svg
-        class="
-            w-16
-            h-16
-            mx-auto
-            text-[#c7ea46]
-            mb-4
-        "
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-    >
+            <!-- =================================================
+                 EMPTY STATE
+            ================================================== -->
 
-        <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="
-                M21 21l-6-6
-                m2-5a7 7
-                0 11-14 0
-                7 7
-                0 0114 0z
-            "
-        />
+            <div
+                id="empty-state"
+                class="
+                    hidden
+                    text-center
+                    py-16
+                "
+            >
 
-    </svg>
+                <svg
+                    class="
+                        w-16
+                        h-16
+                        mx-auto
+                        text-[#c7ea46]
+                        mb-4
+                    "
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
 
-    <h3
-        class="
-            text-xl
-            font-semibold
-            text-[#17324d]
-            mb-2
-        "
-    >
-        Talenta tidak ditemukan
-    </h3>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
 
-    <p class="text-[#64748b]">
-        Coba ubah kata kunci pencarian
-        atau filter keahlian.
-    </p>
+                </svg>
+
+                <h3
+                    class="
+                        text-xl
+                        font-semibold
+                        text-[#17324d]
+                        mb-2
+                    "
+                >
+
+                    Talenta tidak ditemukan
+
+                </h3>
+
+                <p
+                    class="text-[#64748b]"
+                >
+
+                    Coba ubah kata kunci pencarian atau filter keahlian
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
 
 </div>
 
 
-@endsection
+<!-- =========================================================
+     MODAL PROFIL TALENTA
+========================================================== -->
+<div
+    id="talenta-modal"
+    class="fixed inset-0 z-[100000] hidden items-center justify-center p-4"
+    style="background: rgba(23, 50, 77, .55); backdrop-filter: blur(4px);"
+    role="dialog"
+    aria-modal="true"
+>
+    <div class="talenta-modal-card relative w-full max-w-md rounded-3xl bg-white p-7 shadow-2xl">
 
+        <!-- CLOSE -->
+        <button
+            type="button"
+            class="talenta-modal-close absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center text-[#7a8a6f] hover:bg-[#f4f8ec] hover:rotate-90 active:scale-90 transition duration-200"
+            aria-label="Tutup"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+        </button>
+
+        <!-- HEADER -->
+        <div class="flex flex-col items-center text-center mb-6 pt-2">
+            <div id="talenta-modal-avatar" class="talenta-modal-avatar w-20 h-20 rounded-full ring-4 ring-[#eef7cf] flex items-center justify-center text-3xl font-bold mb-3"></div>
+            <span id="talenta-modal-badge" class="px-3 py-1 rounded-full text-xs font-semibold mb-2"></span>
+            <h3 id="talenta-modal-nama" class="text-2xl font-bold text-[#17324d] leading-tight mb-1.5"></h3>
+            <p id="talenta-modal-skill" class="text-sm font-medium text-[#5c768f] leading-relaxed max-w-xs"></p>
+        </div>
+
+        <!-- DETAIL -->
+        <div class="rounded-2xl bg-[#f6faf0] border border-[#e7f0d5]">
+            <div id="talenta-modal-detail" class="px-5 py-2 divide-y divide-[#eef3e3]"></div>
+        </div>
+
+    </div>
+</div>
+
+
+@endsection
 
 @section('scripts')
 

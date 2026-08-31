@@ -1061,41 +1061,12 @@
 
 
             /*
-             * Gunakan kategori bila field tersedia.
+             * Kategori ditentukan lewat helper terpusat agar
+             * konsisten dengan filter/dropdown dari controller.
              */
 
-            $kategori =
-                strtolower(
-                    $client->kategori
-                    ?? $client->jenis_usaha
-                    ?? 'umkm'
-                );
-
-
             $kategoriKey =
-                str_contains(
-                    $kategori,
-                    'korporasi'
-                )
-                ? 'korporasi'
-
-                : (
-                    str_contains(
-                        $kategori,
-                        'startup'
-                    )
-                    ? 'startup'
-
-                    : (
-                        str_contains(
-                            $kategori,
-                            'pemerintah'
-                        )
-                        ? 'pemerintahan'
-
-                        : 'umkm'
-                    )
-                );
+                \App\Models\Client::kategoriKey($client);
 
 
             $kategoriLabel =

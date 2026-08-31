@@ -43,4 +43,35 @@ class Talent extends Model
     public function scopePublicData($q) {
         return $q->select('id_talenta','nama','keahlian','pengalaman','foto','domisili','status','is_public','skill_tags','status_pekerjaan');
     }
+
+    /**
+     * Tentukan kategori skill dari data talenta.
+     * Dipakai oleh halaman publik (filter & badge) dan controller.
+     */
+    public static function skillKey($talent): string
+    {
+        $keahlian = strtolower((string) ($talent->keahlian ?? ''));
+
+        if (
+            str_contains($keahlian, 'program')
+            || str_contains($keahlian, 'developer')
+            || str_contains($keahlian, 'software')
+        ) {
+            return 'programming';
+        }
+
+        if (
+            str_contains($keahlian, 'design')
+            || str_contains($keahlian, 'desain')
+            || preg_match('/\b(ui|ux)\b/', $keahlian)
+        ) {
+            return 'design';
+        }
+
+        if (str_contains($keahlian, 'marketing')) {
+            return 'marketing';
+        }
+
+        return 'data';
+    }
 }

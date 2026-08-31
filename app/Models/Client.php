@@ -41,4 +41,47 @@ class Client extends Model
     public function scopePublicData($q) {
         return $q->select('id_client','nama_ukm','nama_produk','deskripsi_usaha','foto_logo','domisili','status','is_public');
     }
+
+    /**
+     * Tentukan kategori usaha client (umkm/korporasi/startup/pemerintahan).
+     * Dipakai oleh halaman publik (filter & badge) dan controller.
+     */
+    public static function kategoriKey($client): string
+    {
+        $text = strtolower(trim(implode(' ', array_filter([
+            $client->kategori ?? '',
+            $client->jenis_usaha ?? '',
+            $client->nama_ukm ?? '',
+            $client->nama_produk ?? '',
+            $client->deskripsi_usaha ?? '',
+            $client->website ?? '',
+        ]))));
+
+        if (
+            str_contains($text, 'korporasi')
+            || str_contains($text, 'perseroan')
+            || preg_match('/\b(pt|tbk|cv|perusahaan)\b/', $text)
+        ) {
+            return 'korporasi';
+        }
+
+        if (
+            str_contains($text, 'startup')
+            || str_contains($text, 'technopreneur')
+        ) {
+            return 'startup';
+        }
+
+        if (
+            str_contains($text, 'pemerintah')
+            || str_contains($text, 'pemda')
+            || str_contains($text, 'dinas')
+            || str_contains($text, 'bumdes')
+            || str_contains($text, 'instansi')
+        ) {
+            return 'pemerintahan';
+        }
+
+        return 'umkm';
+    }
 }

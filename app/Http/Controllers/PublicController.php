@@ -239,10 +239,54 @@ class PublicController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        $kategoriClient = $this->kategoriClient();
+
         return view(
             'client',
-            compact('clients')
+            compact(
+                'clients',
+                'kategoriClient'
+            )
         );
+    }
+
+
+    /**
+     * =========================================================
+     * KATEGORI CLIENT (untuk filter halaman publik)
+     * =========================================================
+     */
+    private function kategoriClient(): array
+    {
+        return Client::active()
+            ->get([
+                'nama_ukm',
+                'nama_produk',
+                'deskripsi_usaha',
+                'website',
+            ])
+            ->groupBy(fn ($client) => Client::kategoriKey($client))
+            ->map(function ($group, $key) {
+                return [
+                    'key'   => $key,
+                    'label' => $this->clientKategoriLabel($key),
+                    'count' => $group->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->values()
+            ->all();
+    }
+
+
+    private function clientKategoriLabel(string $key): string
+    {
+        return match ($key) {
+            'korporasi'    => 'Korporasi',
+            'startup'      => 'Startup',
+            'pemerintahan' => 'Pemerintahan',
+            default        => 'UMKM',
+        };
     }
 
 
@@ -369,10 +413,56 @@ class PublicController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        /*
+        |--------------------------------------------------------------------------
+        | Kategori bidang untuk dropdown filter halaman publik
+        |--------------------------------------------------------------------------
+        */
+
+        $kategoriMentor = $this->kategoriMentor();
+
         return view(
             'mentor',
-            compact('mentors')
+            compact(
+                'mentors',
+                'kategoriMentor'
+            )
         );
+    }
+
+
+    /**
+     * =========================================================
+     * KATEGORI MENTOR (untuk dropdown & label JS halaman publik)
+     * =========================================================
+     */
+    private function kategoriMentor(): array
+    {
+        return Mentor::active()
+            ->get(['keahlian'])
+            ->groupBy(fn ($mentor) => Mentor::bidangKey($mentor))
+            ->map(function ($group, $key) {
+                return [
+                    'key'   => $key,
+                    'label' => $this->mentorBidangLabel($key),
+                    'count' => $group->count(),
+                    'color' => 'badge-' . $key,
+                ];
+            })
+            ->sortByDesc('count')
+            ->values()
+            ->all();
+    }
+
+
+    private function mentorBidangLabel(string $key): string
+    {
+        return match ($key) {
+            'teknologi' => 'Teknologi',
+            'bisnis'    => 'Bisnis',
+            'desain'    => 'Desain',
+            default     => 'Pendidikan',
+        };
     }
 
 
@@ -496,10 +586,49 @@ class PublicController extends Controller
         |--------------------------------------------------------------------------
         */
 
+        $kategoriTalenta = $this->kategoriTalenta();
+
         return view(
             'talenta',
-            compact('talents')
+            compact(
+                'talents',
+                'kategoriTalenta'
+            )
         );
+    }
+
+
+    /**
+     * =========================================================
+     * KATEGORI TALENTA (untuk dropdown halaman publik)
+     * =========================================================
+     */
+    private function kategoriTalenta(): array
+    {
+        return Talent::active()
+            ->get(['keahlian'])
+            ->groupBy(fn ($talent) => Talent::skillKey($talent))
+            ->map(function ($group, $key) {
+                return [
+                    'key'   => $key,
+                    'label' => $this->talentaSkillLabel($key),
+                    'count' => $group->count(),
+                ];
+            })
+            ->sortByDesc('count')
+            ->values()
+            ->all();
+    }
+
+
+    private function talentaSkillLabel(string $key): string
+    {
+        return match ($key) {
+            'programming' => 'Programming',
+            'design'      => 'Design',
+            'marketing'   => 'Marketing',
+            default       => 'Data Analysis',
+        };
     }
 
 

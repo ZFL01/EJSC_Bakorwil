@@ -44,4 +44,48 @@ class Mentor extends Model
     public function scopePublicData($q) {
         return $q->select('id_mentor','nama','keahlian','pengalaman','foto','domisili','status','is_public','expertise_tags','is_available');
     }
+
+    /**
+     * Tentukan kategori bidang dari data mentor.
+     * Dipakai oleh halaman publik (filter & badge) dan controller.
+     */
+    public static function bidangKey($mentor): string
+    {
+        $bidang = strtolower((string) ($mentor->bidang ?? ''));
+
+        if ($bidang !== '') {
+            return $bidang;
+        }
+
+        $keahlian = strtolower((string) ($mentor->keahlian ?? ''));
+
+        if (
+            str_contains($keahlian, 'program')
+            || str_contains($keahlian, 'software')
+            || str_contains($keahlian, 'teknologi')
+            || str_contains($keahlian, 'cloud')
+            || str_contains($keahlian, 'data')
+            || preg_match('/\b(ai)\b/', $keahlian)
+        ) {
+            return 'teknologi';
+        }
+
+        if (
+            str_contains($keahlian, 'bisnis')
+            || str_contains($keahlian, 'marketing')
+            || str_contains($keahlian, 'usaha')
+        ) {
+            return 'bisnis';
+        }
+
+        if (
+            str_contains($keahlian, 'desain')
+            || str_contains($keahlian, 'design')
+            || preg_match('/\b(ui|ux)\b/', $keahlian)
+        ) {
+            return 'desain';
+        }
+
+        return 'pendidikan';
+    }
 }
