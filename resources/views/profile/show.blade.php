@@ -9,8 +9,8 @@
         <div class="bg-gradient-to-r from-[#56b8c2] to-[#3d9aa3] px-6 py-8">
             <div class="flex items-center gap-4">
                 <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-white/70 bg-white/20 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
-                    @if($user->profile_photo)
-                        <img src="{{ asset('storage/' . $user->profile_photo) }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                    @if($user->profile_photo_src)
+                        <img src="{{ $user->profile_photo_src }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
                     @else
                         <span>{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                     @endif

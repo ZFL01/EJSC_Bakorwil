@@ -153,4 +153,16 @@ class Mentor extends Model
     {
         return $this->safeFileUrl($this->url_cv);
     }
+
+    /** URL KTP yang sudah dinormalkan untuk href aman. */
+    public function getKtpSrcAttribute(): ?string
+    {
+        return $this->safeFileUrl($this->url_ktp);
+    }
+
+    /** URL Bukti Tabungan yang sudah dinormalkan untuk href aman. */
+    public function getButapSrcAttribute(): ?string
+    {
+        return $this->safeFileUrl($this->url_butap);
+    }
 }

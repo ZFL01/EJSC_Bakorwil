@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Client extends Model
 {
@@ -106,5 +107,27 @@ class Client extends Model
         }
 
         return 'https://' . $website;
+    }
+
+    /** URL foto logo yang aman (file storage publik bila tersedia). */
+    public function getFotoLogoSrcAttribute(): ?string
+    {
+        $value = trim((string) $this->foto_logo);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|data:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        $raw = preg_replace('#^storage/#', '', $value);
+
+        if (Storage::disk('public')->exists($raw)) {
+            return asset('storage/' . $raw);
+        }
+
+        return null;
     }
 }

@@ -45,8 +45,8 @@
         <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Foto</h3>
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Foto Logo/Produk UMKM</label>
-            @if($client->foto_logo)
-                <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $client->foto_logo) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+            @if($client->foto_logo_src)
+                <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ $client->foto_logo_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
             @endif
             <input type="file" name="foto_logo" class="text-xs text-gray-500 w-full">
             <p class="text-xs text-gray-400 mt-1">Max 2MB. Format: JPG, PNG. Kosongkan jika tidak diganti.</p>

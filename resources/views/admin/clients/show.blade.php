@@ -58,8 +58,8 @@
                 <div>
                     <dt class="text-xs text-rose-500 mb-1">Foto Logo/Produk</dt>
                     <dd>
-                        @if($client->foto_logo)
-                            <a href="{{ asset('storage/' . $client->foto_logo) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">
+                        @if($client->foto_logo_src)
+                            <a href="{{ $client->foto_logo_src }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">
                                 Lihat Foto
                             </a>
                         @else
@@ -71,10 +71,10 @@
         </div>
     </div>
 
-    @if($client->foto_logo)
+    @if($client->foto_logo_src)
         <div class="border-t pt-4">
             <h4 class="text-sm font-bold text-gray-700 mb-2">Foto Logo / Produk</h4>
-            <img src="{{ asset('storage/' . $client->foto_logo) }}" alt="Foto Logo" class="max-h-60 rounded-lg border object-cover">
+            <img src="{{ $client->foto_logo_src }}" alt="Foto Logo" class="max-h-60 rounded-lg border object-cover">
         </div>
     @endif
 </div>

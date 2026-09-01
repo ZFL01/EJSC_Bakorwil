@@ -52,8 +52,8 @@
                             <svg class="h-4 w-4 text-[#56b8c2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4-4m0 0L8 12m4-4v12"/></svg>
                             Foto Profil
                         </label>
-                        @if($user->profile_photo)
-                            <p class="text-[11px] text-slate-500 mb-2">Foto saat ini: <a href="{{ asset('storage/' . $user->profile_photo) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                        @if($user->profile_photo_src)
+                            <p class="text-[11px] text-slate-500 mb-2">Foto saat ini: <a href="{{ $user->profile_photo_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
                         @endif
                         <label class="group flex items-center justify-center w-full h-12 border-2 border-dashed border-[#bfe9ed] rounded-xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
                             <div class="flex items-center gap-2.5 px-3">

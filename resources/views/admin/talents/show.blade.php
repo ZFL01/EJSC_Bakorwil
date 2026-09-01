@@ -77,8 +77,8 @@
                 <div>
                     <dt class="text-xs text-rose-500 mb-1">Foto KTP</dt>
                     <dd>
-                        @if($talent->url_ktp)
-                            <a href="{{ asset('storage/' . $talent->url_ktp) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Dokumen KTP</a>
+                        @if($talent->ktp_src)
+                            <a href="{{ $talent->ktp_src }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Dokumen KTP</a>
                         @else
                             <span class="text-xs text-gray-400 italic">Tidak ada file</span>
                         @endif
@@ -97,8 +97,8 @@
                 <div>
                     <dt class="text-xs text-rose-500 mb-1">Foto Buku Tabungan</dt>
                     <dd>
-                        @if($talent->url_butap)
-                            <a href="{{ asset('storage/' . $talent->url_butap) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Bukti Tabungan</a>
+                        @if($talent->butap_src)
+                            <a href="{{ $talent->butap_src }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat Bukti Tabungan</a>
                         @else
                             <span class="text-xs text-gray-400 italic">Tidak ada file</span>
                         @endif

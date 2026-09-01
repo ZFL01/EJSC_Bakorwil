@@ -56,8 +56,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Foto KTP</label>
-                @if($mentor->url_ktp)
-                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $mentor->url_ktp) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                @if($mentor->ktp_src)
+                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ $mentor->ktp_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
                 @endif
                 <input type="file" name="url_foto_ktp" class="text-xs text-gray-500 w-full">
             </div>

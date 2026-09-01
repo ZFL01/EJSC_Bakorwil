@@ -280,8 +280,8 @@
             @forelse($recentClients as $client)
                 <a href="{{ route('admin.clients.show', $client->id_client) }}" class="flex items-center gap-3 p-3 rounded-lg border border-gray-100 hover:border-[#56b8c2]/50 hover:bg-[#f0f9fa]/60 transition">
                     <div class="w-10 h-10 flex-shrink-0 rounded-full bg-sky-50 text-sky-600 flex items-center justify-center font-bold text-sm overflow-hidden">
-                        @if($client->foto_logo)
-                            <img src="{{ asset('storage/' . $client->foto_logo) }}" alt="{{ $client->nama_ukm }}" class="w-full h-full object-cover">
+                        @if($client->foto_logo_src)
+                            <img src="{{ $client->foto_logo_src }}" alt="{{ $client->nama_ukm }}" class="w-full h-full object-cover">
                         @else
                             {{ strtoupper(mb_substr($client->nama_ukm ?? 'C', 0, 1)) }}
                         @endif

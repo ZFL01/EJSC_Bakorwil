@@ -6,6 +6,7 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable
 {
@@ -139,5 +140,30 @@ class User extends Authenticatable
     public function updatedTalents()
     {
         return $this->hasMany(Talent::class, 'updated_by');
+    }
+
+    /**
+     * URL foto profil yang aman: URL absolut dibiarkan, path/nama file
+     * di-resolve ke file storage publik bila tersedia, selain itu null.
+     */
+    public function getProfilePhotoSrcAttribute(): ?string
+    {
+        $value = trim((string) $this->profile_photo);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|data:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        $raw = preg_replace('#^storage/#', '', $value);
+
+        if (Storage::disk('public')->exists($raw)) {
+            return asset('storage/' . $raw);
+        }
+
+        return null;
     }
 }
