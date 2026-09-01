@@ -10,6 +10,13 @@ class AdminLog extends Model
     use HasFactory;
 
     /**
+     * Tabel admin_logs hanya memiliki kolom created_at (bukan timestamps()).
+     * Non-aktifkan timestamps agar Eloquent tidak mencoba INSERT/UPDATE
+     * kolom updated_at yang tidak ada → mencegah SQLSTATE[42703].
+     */
+    public $timestamps = false;
+
+    /**
      * The table associated with the model.
      *
      * @var string
@@ -37,6 +44,7 @@ class AdminLog extends Model
         'new_values',
         'ip_address',
         'user_agent',
+        'created_at',
     ];
 
     /**
@@ -46,11 +54,10 @@ class AdminLog extends Model
      */
     protected function casts(): array
     {
-        return [
+                return [
             'old_values' => 'array',
             'new_values' => 'array',
             'created_at' => 'datetime',
-            'updated_at' => 'datetime',
         ];
     }
 
@@ -107,6 +114,7 @@ class AdminLog extends Model
             'new_values' => $newValues,
             'ip_address' => request()->ip(),
             'user_agent' => request()->userAgent(),
+            'created_at' => now(),
         ]);
     }
 }
