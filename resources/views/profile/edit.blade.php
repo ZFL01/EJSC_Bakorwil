@@ -152,8 +152,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">CV Mentor</label>
-                                @if($profile->url_cv)
-                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ asset('storage/' . $profile->url_cv) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                                @if($profile->cv_src)
+                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ $profile->cv_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
                                 @endif
                                 <label class="group flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-[#bfe9ed] rounded-2xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
                                     <div class="flex items-center gap-3 text-center">
@@ -221,8 +221,8 @@
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">CV Talent</label>
-                                @if($profile->url_cv)
-                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ asset('storage/' . $profile->url_cv) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                                @if($profile->cv_src)
+                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ $profile->cv_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
                                 @endif
                                 <label class="group flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-[#bfe9ed] rounded-2xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
                                     <div class="flex items-center gap-3 text-center">

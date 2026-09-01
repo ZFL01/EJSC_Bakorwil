@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Talent extends Model
 {
@@ -82,10 +83,15 @@ class Talent extends Model
 
     /**
      * Ubah nilai file/URL dari database menjadi URL absolut yang aman.
-     * Database berisi campuran: URL absolut (http/data:), path storage
-     * (storage/...), atau nama file mentah ("PORTOFOLIO RIZAL .pdf", dll).
-     * Nilai path/nama file dibungkus url() agar tidak dianggap URL relatif
-     * yang bisa membangkitkan error routing / SQL saat diklik.
+     * Database berisi campuran: URL absolut (http/data:), path storage,
+     * atau nama file mentah ("PORTOFOLIO RIZAL .pdf", dll).
+     *
+     * - URL absolut dibiarkan apa adanya.
+     * - Nilai storage dengan nama file berupa Google Drive File ID
+     *   (mis. storage/talenta/cv/dayu/1-Lj2T7F-Dwr29V-RQVgae3a1TnsKWnyN.jpg)
+     *   diubah kembali menjadi link Google Drive, karena file fisik
+     *   tersebut tidak disimpan di server.
+     * - Path lain dibungkus url() agar tidak dianggap URL relatif.
      */
     protected function safeFileUrl(?string $value): ?string
     {
@@ -97,6 +103,19 @@ class Talent extends Model
 
         if (preg_match('#^(https?:|data:|//)#i', $value) === 1) {
             return $value;
+        }
+
+        // Pola: storage/<modul>/<sub>/<slug>/<DriveID>.<ext>
+        if (preg_match('#^storage/.+/([0-9A-Za-z_-]{20,})\.[A-Za-z0-9]{1,10}$#', $value, $m) === 1) {
+            $relative = preg_replace('#^storage/#', '', $value);
+
+            // Kalau file-nya benar-benar ada di storage lokal, pakai file asli.
+            if (Storage::disk('public')->exists($relative)) {
+                return asset($value);
+            }
+
+            // Kalau tidak ada, konversi nama file (Drive ID) ke link Google Drive.
+            return 'https://drive.google.com/file/d/' . $m[1] . '/view';
         }
 
         return url($value);

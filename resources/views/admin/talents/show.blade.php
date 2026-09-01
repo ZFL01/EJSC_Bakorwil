@@ -87,8 +87,8 @@
                 <div>
                     <dt class="text-xs text-rose-500 mb-1">CV Lengkap</dt>
                     <dd>
-                        @if($talent->url_cv)
-                            <a href="{{ asset('storage/' . $talent->url_cv) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat CV</a>
+                        @if($talent->cv_src)
+                            <a href="{{ $talent->cv_src }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Lihat CV</a>
                         @else
                             <span class="text-xs text-gray-400 italic">Tidak ada file</span>
                         @endif

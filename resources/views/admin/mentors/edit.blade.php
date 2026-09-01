@@ -63,8 +63,8 @@
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">CV (PDF/DOC)</label>
-                @if($mentor->url_cv)
-                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ asset('storage/' . $mentor->url_cv) }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                @if($mentor->cv_src)
+                    <p class="text-xs text-gray-500 mb-1">File saat ini: <a href="{{ $mentor->cv_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
                 @endif
                 <input type="file" name="url_cv" class="text-xs text-gray-500 w-full">
             </div>
