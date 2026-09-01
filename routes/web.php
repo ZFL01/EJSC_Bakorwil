@@ -82,13 +82,16 @@ Route::get('/client', [PublicController::class, 'clients'])
 */
 
 Route::get('/mentor/{mentor}', [PublicController::class, 'mentorShow'])
-    ->name('mentor.show');
+    ->name('mentor.show')
+    ->where('mentor', '[0-9]+');
 
 Route::get('/talenta/{talent}', [PublicController::class, 'talentShow'])
-    ->name('talenta.show');
+    ->name('talenta.show')
+    ->where('talent', '[0-9]+');
 
 Route::get('/client/{client}', [PublicController::class, 'clientShow'])
-    ->name('client.show');
+    ->name('client.show')
+    ->where('client', '[0-9]+');
 
 
 /*
