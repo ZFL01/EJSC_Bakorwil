@@ -133,15 +133,15 @@ class ProfileController extends Controller
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
-            'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
         ]);
 
-        if ($request->hasFile('url_foto_ktp')) {
-            if ($mentor->url_foto_ktp) {
-                Storage::disk('public')->delete($mentor->url_foto_ktp);
+        if ($request->hasFile('foto')) {
+            if ($mentor->foto) {
+                Storage::disk('public')->delete($mentor->foto);
             }
-            $validated['url_foto_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+            $validated['foto'] = $request->file('foto')->store('mentor/foto', 'public');
         }
 
         if ($request->hasFile('url_cv')) {
@@ -174,16 +174,16 @@ class ProfileController extends Controller
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
             'status_pekerjaan' => 'nullable|in:bekerja,belum bekerja,magang',
-            'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        if ($request->hasFile('url_foto_ktp')) {
-            if ($talent->url_foto_ktp) {
-                Storage::disk('public')->delete($talent->url_foto_ktp);
+        if ($request->hasFile('foto')) {
+            if ($talent->foto) {
+                Storage::disk('public')->delete($talent->foto);
             }
-            $validated['url_foto_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+            $validated['foto'] = $request->file('foto')->store('talent/foto', 'public');
         }
 
         if ($request->hasFile('url_cv')) {
