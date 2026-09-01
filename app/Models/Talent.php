@@ -41,7 +41,12 @@ class Talent extends Model
     public function updater() { return $this->belongsTo(User::class, 'updated_by'); }
     public function scopeActive($q) { return $q->where('status', 'aktif'); }
     public function scopePublicData($q) {
-        return $q->select('id_talenta','nama','keahlian','pengalaman','foto','domisili','status','is_public','skill_tags','status_pekerjaan');
+        return $q->select(
+            'id_talenta','id_user','id_wilayah','nama','jenis_kelamin','foto',
+            'domisili','alamat_lengkap','no_wa','email','bidang_pekerjaan',
+            'keahlian','bio','pengalaman','portofolio_url','status','is_public',
+            'url_cv','skill_tags','mentor_id','status_pekerjaan'
+        );
     }
 
     /**

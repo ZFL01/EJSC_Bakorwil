@@ -262,6 +262,66 @@
                                 text-[#78909c]
                             "
                         >
+                            Jenis Kelamin
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->jenis_kelamin ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Domisili
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->domisili ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
                             Keahlian
                         </p>
 
@@ -304,9 +364,99 @@
                         >
                             {{
                                 $mentor->pengalaman
-                                ?? $mentor->lama_pengalaman
                                 ?? '-'
                             }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Email
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                                break-all
+                            "
+                        >
+                            {{ $mentor->email ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            No. WhatsApp
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->no_wa ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Alamat Lengkap
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->alamat_lengkap ?? '-' }}
                         </p>
 
                     </div>
@@ -341,36 +491,238 @@
 
                     </div>
 
-                </div>
 
-
-                @if(!empty($mentor->deskripsi))
-
-                    <div class="mt-8">
-
-                        <h2
-                            class="
-                                text-xl
-                                font-bold
-                                text-[#12344d]
-                                mb-3
-                            "
-                        >
-                            Tentang Mentor
-                        </h2>
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
 
                         <p
                             class="
-                                text-[#64748b]
-                                leading-relaxed
+                                text-sm
+                                text-[#78909c]
                             "
                         >
-                            {{ $mentor->deskripsi }}
+                            Portofolio
+                        </p>
+
+                        @if(!empty($mentor->portofolio_url))
+
+                            <a
+                                href="{{ $mentor->portofolio_url }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#16b8c4]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                {{ $mentor->portofolio_url }}
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#12344d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            CV / Resume
+                        </p>
+
+                        @if(!empty($mentor->url_cv))
+
+                            <a
+                                href="{{ asset($mentor->url_cv) }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#16b8c4]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                Lihat CV
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#12344d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Tag Keahlian
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            @if(!empty($mentor->expertise_tags))
+                                {{ implode(', ', $mentor->expertise_tags) }}
+                            @else
+                                -
+                            @endif
                         </p>
 
                     </div>
 
-                @endif
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Ketersediaan
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                {{
+                                    $mentor->is_available === null
+                                        ? 'text-[#78909c]'
+                                        : ($mentor->is_available ? 'text-green-600' : 'text-[#78909c]')
+                                }}
+                            "
+                        >
+                            {{
+                                $mentor->is_available === null
+                                    ? '-'
+                                    : ($mentor->is_available ? 'Tersedia' : 'Tidak Tersedia')
+                            }}
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Jumlah Mentee
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->jumlah_mentee ?? '0' }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-8">
+
+                    <h2
+                        class="
+                            text-xl
+                            font-bold
+                            text-[#12344d]
+                            mb-3
+                        "
+                    >
+                        Tentang Mentor
+                    </h2>
+
+                    <p
+                        class="
+                            text-[#64748b]
+                            leading-relaxed
+                        "
+                    >
+                        {{ $mentor->bio ?? 'Belum ada deskripsi tentang mentor ini.' }}
+                    </p>
+
+                </div>
 
             </div>
 

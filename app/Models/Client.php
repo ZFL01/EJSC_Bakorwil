@@ -39,7 +39,11 @@ class Client extends Model
     public function updater() { return $this->belongsTo(User::class, 'updated_by'); }
     public function scopeActive($q) { return $q->where('status', 'aktif'); }
     public function scopePublicData($q) {
-        return $q->select('id_client','nama_ukm','nama_produk','deskripsi_usaha','foto_logo','domisili','status','is_public');
+        return $q->select(
+            'id_client','id_user','id_wilayah','nama_ukm','foto_logo',
+            'alamat_lengkap','domisili','nama_produk','deskripsi_usaha',
+            'nama_pemilik','no_hp','email','website','status','is_public'
+        );
     }
 
     /**

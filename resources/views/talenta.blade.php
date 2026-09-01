@@ -1140,7 +1140,7 @@
 
 
             /*
-             * Level.
+             * Level / Bidang pekerjaan.
              *
              * Jika database memiliki field level,
              * digunakan.
@@ -1149,8 +1149,14 @@
             $level =
                 $talent->level
                 ?? $talent->tingkat
+                ?? $talent->status_pekerjaan
+                ?? $talent->bidang_pekerjaan
                 ?? 'Talent';
 
+            $levelLabel =
+                $talent->status_pekerjaan
+                ?? $talent->bidang_pekerjaan
+                ?? 'Talent';
 
             $levelClass = match(
                 strtolower($level)
@@ -1219,7 +1225,7 @@
                         {{ $levelClass }}
                     "
                 >
-                    {{ $level }}
+                    {{ $levelLabel }}
                 </span>
 
             </div>

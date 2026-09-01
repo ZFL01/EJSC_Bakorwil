@@ -248,81 +248,168 @@
                     </div>
 
 
-                    @if(!empty($client->alamat))
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
 
-                        <div class="bg-[#fffef5] rounded-2xl p-5">
-
-                            <p class="text-sm text-[#a6a48c]">
-                                Alamat
-                            </p>
-
-                            <p
-                                class="
-                                    mt-1
-                                    font-semibold
-                                    text-[#30352f]
-                                "
-                            >
-                                {{ $client->alamat }}
-                            </p>
-
-                        </div>
-
-                    @endif
-
-
-                    @if(!empty($client->no_hp))
-
-                        <div class="bg-[#fffef5] rounded-2xl p-5">
-
-                            <p class="text-sm text-[#a6a48c]">
-                                Kontak
-                            </p>
-
-                            <p
-                                class="
-                                    mt-1
-                                    font-semibold
-                                    text-[#30352f]
-                                "
-                            >
-                                {{ $client->no_hp }}
-                            </p>
-
-                        </div>
-
-                    @endif
-
-                </div>
-
-
-                @if(!empty($client->deskripsi))
-
-                    <div class="mt-8">
-
-                        <h2
-                            class="
-                                text-xl
-                                font-bold
-                                text-[#30352f]
-                                mb-3
-                            "
-                        >
-                            Tentang Client
-                        </h2>
+                        <p class="text-sm text-[#a6a48c]">
+                            Nama Pemilik
+                        </p>
 
                         <p
                             class="
-                                text-[#6d6a50]
-                                leading-relaxed
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
                             "
                         >
-                            {{ $client->deskripsi }}
+                            {{ $client->nama_pemilik ?? '-' }}
                         </p>
 
                     </div>
 
-                @endif
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Domisili
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                            "
+                        >
+                            {{ $client->domisili ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Alamat Lengkap
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                            "
+                        >
+                            {{ $client->alamat_lengkap ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Kontak
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                            "
+                        >
+                            {{ $client->no_hp ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Email
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                                break-all
+                            "
+                        >
+                            {{ $client->email ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Website
+                        </p>
+
+                        @if(!empty($client->website))
+
+                            <a
+                                href="{{ $client->website }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#a28d20]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                {{ $client->website }}
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#30352f]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-8">
+
+                    <h2
+                        class="
+                            text-xl
+                            font-bold
+                            text-[#30352f]
+                            mb-3
+                        "
+                    >
+                        Tentang Client
+                    </h2>
+
+                    <p
+                        class="
+                            text-[#6d6a50]
+                            leading-relaxed
+                        "
+                    >
+                        {{ $client->deskripsi_usaha ?? 'Belum ada deskripsi tentang client ini.' }}
+                    </p>
+
+                </div>
 
             </div>
 

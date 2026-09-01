@@ -226,6 +226,44 @@
                     <div class="bg-[#fafcf7] rounded-2xl p-5">
 
                         <p class="text-sm text-[#94a3b8]">
+                            Jenis Kelamin
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->jenis_kelamin ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Domisili
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->domisili ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
                             Keahlian
                         </p>
 
@@ -264,6 +302,143 @@
                     <div class="bg-[#fafcf7] rounded-2xl p-5">
 
                         <p class="text-sm text-[#94a3b8]">
+                            Bidang Pekerjaan
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->bidang_pekerjaan ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Pengalaman
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->pengalaman ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Email
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                                break-all
+                            "
+                        >
+                            {{ $talent->email ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            No. WhatsApp
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->no_wa ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Alamat Lengkap
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->alamat_lengkap ?? '-' }}
+                        </p>
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Portofolio
+                        </p>
+
+                        @if(!empty($talent->portofolio_url))
+
+                            <a
+                                href="{{ $talent->portofolio_url }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#8aaa28]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                {{ $talent->portofolio_url }}
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#17324d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
                             Status Akun
                         </p>
 
@@ -278,6 +453,95 @@
                         </p>
 
                     </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            CV / Resume
+                        </p>
+
+                        @if(!empty($talent->url_cv))
+
+                            <a
+                                href="{{ asset($talent->url_cv) }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#8aaa28]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                Lihat CV
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#17324d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Tag Keahlian
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            @if(!empty($talent->skill_tags))
+                                {{ implode(', ', $talent->skill_tags) }}
+                            @else
+                                -
+                            @endif
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mt-8">
+
+                    <h2
+                        class="
+                            text-xl
+                            font-bold
+                            text-[#17324d]
+                            mb-3
+                        "
+                    >
+                        Tentang Talenta
+                    </h2>
+
+                    <p
+                        class="
+                            text-[#64748b]
+                            leading-relaxed
+                        "
+                    >
+                        {{ $talent->bio ?? 'Belum ada deskripsi tentang talenta ini.' }}
+                    </p>
 
                 </div>
 

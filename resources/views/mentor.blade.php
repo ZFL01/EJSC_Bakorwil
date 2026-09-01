@@ -985,8 +985,6 @@
 
                             @if(!empty($mentor->pengalaman))
                                 Pengalaman {{ $mentor->pengalaman }}
-                            @elseif(!empty($mentor->lama_pengalaman))
-                                Pengalaman {{ $mentor->lama_pengalaman }}
                             @else
                                 Mentor Profesional
                             @endif

@@ -42,7 +42,12 @@ class Mentor extends Model
     public function talents() { return $this->hasMany(Talent::class, 'mentor_id'); }
     public function scopeActive($q) { return $q->where('status', 'aktif'); }
     public function scopePublicData($q) {
-        return $q->select('id_mentor','nama','keahlian','pengalaman','foto','domisili','status','is_public','expertise_tags','is_available');
+        return $q->select(
+            'id_mentor','id_user','id_wilayah','nama','jenis_kelamin','foto',
+            'domisili','alamat_lengkap','no_wa','email','bio','keahlian',
+            'pengalaman','portofolio_url','status','is_public','url_cv',
+            'expertise_tags','is_available','jumlah_mentee'
+        );
     }
 
     /**
