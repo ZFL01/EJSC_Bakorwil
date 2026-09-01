@@ -93,4 +93,38 @@ class Mentor extends Model
 
         return 'pendidikan';
     }
+
+    /**
+     * Ubah nilai file/URL dari database menjadi URL absolut yang aman.
+     * Database berisi campuran: URL absolut (http/data:), path storage
+     * (storage/...), atau nama file mentah ("PORTOFOLIO RIZAL .pdf", dll).
+     * Nilai path/nama file dibungkus url() agar tidak dianggap URL relatif
+     * yang bisa membangkitkan error routing / SQL saat diklik.
+     */
+    protected function safeFileUrl(?string $value): ?string
+    {
+        if ($value === null || trim($value) === '') {
+            return null;
+        }
+
+        $value = trim($value);
+
+        if (preg_match('#^(https?:|data:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        return url($value);
+    }
+
+    /** URL portofolio yang sudah dinormalkan untuk href aman. */
+    public function getPortofolioSrcAttribute(): ?string
+    {
+        return $this->safeFileUrl($this->portofolio_url);
+    }
+
+    /** URL CV yang sudah dinormalkan untuk href aman. */
+    public function getCvSrcAttribute(): ?string
+    {
+        return $this->safeFileUrl($this->url_cv);
+    }
 }

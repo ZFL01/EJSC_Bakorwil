@@ -404,7 +404,7 @@
                         @if(!empty($talent->portofolio_url))
 
                             <a
-                                href="{{ $talent->portofolio_url }}"
+                                href="{{ $talent->portofolio_src }}"
                                 target="_blank"
                                 rel="noopener"
                                 class="
@@ -464,7 +464,7 @@
                         @if(!empty($talent->url_cv))
 
                             <a
-                                href="{{ asset($talent->url_cv) }}"
+                                href="{{ $talent->cv_src }}"
                                 target="_blank"
                                 rel="noopener"
                                 class="

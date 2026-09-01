@@ -353,7 +353,7 @@
                         @if(!empty($client->website))
 
                             <a
-                                href="{{ $client->website }}"
+                                href="{{ $client->website_src }}"
                                 target="_blank"
                                 rel="noopener"
                                 class="

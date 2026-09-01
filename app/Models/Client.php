@@ -88,4 +88,23 @@ class Client extends Model
 
         return 'umkm';
     }
+
+    /**
+     * URL website yang aman: tambahkan skema https:// bila belum ada,
+     * agar nilai seperti "www.example.com" tidak dianggap URL relatif.
+     */
+    public function getWebsiteSrcAttribute(): ?string
+    {
+        $website = trim((string) $this->website);
+
+        if ($website === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|//)#i', $website) === 1) {
+            return $website;
+        }
+
+        return 'https://' . $website;
+    }
 }

@@ -512,7 +512,7 @@
                         @if(!empty($mentor->portofolio_url))
 
                             <a
-                                href="{{ $mentor->portofolio_url }}"
+                                href="{{ $mentor->portofolio_src }}"
                                 target="_blank"
                                 rel="noopener"
                                 class="
@@ -564,7 +564,7 @@
                         @if(!empty($mentor->url_cv))
 
                             <a
-                                href="{{ asset($mentor->url_cv) }}"
+                                href="{{ $mentor->cv_src }}"
                                 target="_blank"
                                 rel="noopener"
                                 class="
