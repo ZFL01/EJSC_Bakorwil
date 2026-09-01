@@ -401,7 +401,7 @@
                             Portofolio
                         </p>
 
-                        @if(!empty($talent->portofolio_url))
+                        @if(!empty($talent->portofolio_src))
 
                             <a
                                 href="{{ $talent->portofolio_src }}"
@@ -416,7 +416,7 @@
                                     break-all
                                 "
                             >
-                                {{ $talent->portofolio_url }}
+                                Lihat Portofolio
                             </a>
 
                         @else
@@ -461,7 +461,7 @@
                             CV / Resume
                         </p>
 
-                        @if(!empty($talent->url_cv))
+                        @if(!empty($talent->cv_src))
 
                             <a
                                 href="{{ $talent->cv_src }}"

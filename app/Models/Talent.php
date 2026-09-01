@@ -105,8 +105,8 @@ class Talent extends Model
             return $value;
         }
 
-        // Pola: storage/<modul>/<sub>/<slug>/<DriveID>.<ext>
-        if (preg_match('#^storage/.+/([0-9A-Za-z_-]{20,})\.[A-Za-z0-9]{1,10}$#', $value, $m) === 1) {
+        // Pola: storage/<modul>/<sub>/<slug>/<file>.<ext>
+        if (preg_match('#^storage/#', $value) === 1) {
             $relative = preg_replace('#^storage/#', '', $value);
 
             // Kalau file-nya benar-benar ada di storage lokal, pakai file asli.
@@ -114,11 +114,18 @@ class Talent extends Model
                 return asset($value);
             }
 
-            // Kalau tidak ada, konversi nama file (Drive ID) ke link Google Drive.
-            return 'https://drive.google.com/file/d/' . $m[1] . '/view';
+            // Kalau nama file berupa Google Drive File ID, buka via Google Drive.
+            if (preg_match('#/([0-9A-Za-z_-]{20,})\.[A-Za-z0-9]{1,10}$#', $value, $m) === 1) {
+                return 'https://drive.google.com/file/d/' . $m[1] . '/view';
+            }
+
+            // Path storage tapi file tidak ada dan bukan Drive ID → tanpa link.
+            return null;
         }
 
-        return url($value);
+        // Nilai lain (mis. "CV - Nurfadilah.pdf") tanpa file nyata → tanpa link,
+        // agar tidak menghasilkan URL relatif yang berujung 404.
+        return null;
     }
 
     /** URL portofolio yang sudah dinormalkan untuk href aman. */

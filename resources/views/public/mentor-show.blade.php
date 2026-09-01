@@ -509,7 +509,7 @@
                             Portofolio
                         </p>
 
-                        @if(!empty($mentor->portofolio_url))
+                        @if(!empty($mentor->portofolio_src))
 
                             <a
                                 href="{{ $mentor->portofolio_src }}"
@@ -524,7 +524,7 @@
                                     break-all
                                 "
                             >
-                                {{ $mentor->portofolio_url }}
+                                Lihat Portofolio
                             </a>
 
                         @else
@@ -561,7 +561,7 @@
                             CV / Resume
                         </p>
 
-                        @if(!empty($mentor->url_cv))
+                        @if(!empty($mentor->cv_src))
 
                             <a
                                 href="{{ $mentor->cv_src }}"
