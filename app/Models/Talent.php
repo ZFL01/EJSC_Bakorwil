@@ -81,12 +81,15 @@ class Talent extends Model
         return 'data';
     }
 
-    /**
+        /**
      * Ubah nilai file/URL dari database menjadi URL absolut yang aman.
      * Database berisi campuran: URL absolut (http/data:), path storage,
      * atau nama file mentah ("PORTOFOLIO RIZAL .pdf", dll).
      *
-     * - URL absolut dibiarkan apa adanya.
+     * - URL absolut (termasuk Google Drive): cek dulu apakah file
+     *   tersedia di storage lokal berdasarkan Drive File ID. Jika ada,
+     *   pakai URL lokal (hindar 404 karena file Drive yang sudah tidak
+     *   publik). Jika tidak ada, kembalikan URL aslinya.
      * - Nilai storage dengan nama file berupa Google Drive File ID
      *   (mis. storage/talenta/cv/dayu/1-Lj2T7F-Dwr29V-RQVgae3a1TnsKWnyN.jpg)
      *   diubah kembali menjadi link Google Drive, karena file fisik
@@ -101,7 +104,15 @@ class Talent extends Model
 
         $value = trim($value);
 
+        // URL absolut — khususnya Google Drive, cek apakah file sudah ada
+        // di storage lokal berdasarkan Drive File ID di namanya.
         if (preg_match('#^(https?:|data:|//)#i', $value) === 1) {
+            if (preg_match('#drive\.google\.com#i', $value) === 1) {
+                $localUrl = $this->resolveDriveToLocal($value);
+                if ($localUrl !== null) {
+                    return $localUrl;
+                }
+            }
             return $value;
         }
 
@@ -126,6 +137,64 @@ class Talent extends Model
         // Nilai lain (mis. "CV - Nurfadilah.pdf") tanpa file nyata → tanpa link,
         // agar tidak menghasilkan URL relatif yang berujung 404.
         return null;
+    }
+
+    /**
+     * Dari URL Google Drive, ekstrak File ID lalu cari file fisik di
+     * storage/app/public berdasarkan ID tersebut.
+     *
+     * File-file hasil download Drive diberi nama = Google Drive File ID,
+     * mis. 19YZzU6uFpIUg16gOL9lQMJdDG-ohaTlB.pdf
+     *
+     * Jika ditemukan, kembalikan asset('storage/...') agar browser bisa
+     * mengakses langsung dari server lokal — ini mencegah 404 yang disebabkan
+     * Google Drive yang sudah tidak publik/di-share.
+     *
+     * @return string|null  URL lokal jika ditemukan, null jika tidak.
+     */
+    protected function resolveDriveToLocal(string $driveUrl): ?string
+    {
+        // Dukung format URL Google Drive yang umum
+        $driveId = null;
+
+        if (preg_match('#/file/d/([0-9A-Za-z_-]{20,})#i', $driveUrl, $m)) {
+            $driveId = $m[1];
+        } elseif (preg_match('#[?&]id=([0-9A-Za-z_-]{20,})#i', $driveUrl, $m)) {
+            $driveId = $m[1];
+        }
+
+        if ($driveId === null) {
+            return null;
+        }
+
+        // Cache statis: hindari pencarian filesystem yang sama berulang kali
+        // dalam satu request (mis. daftar 15 talenta di halaman yang sama).
+        static $cache = [];
+        if (array_key_exists($driveId, $cache)) {
+            return $cache[$driveId];
+        }
+
+        // Cari file di storage lokal dengan nama yang dimulai dari Drive ID.
+        // Struktur: storage/app/public/<entity>/<kind>/<slug>/<drive_id>.<ext>
+        $root = str_replace('\\', '/', storage_path('app/public'));
+
+        // Level 3: <entity>/<kind>/<slug>/<drive_id>.<ext>
+        $matches = glob($root . '/*/*/*/' . $driveId . '.*');
+
+        if (empty($matches)) {
+            // Level 2: <entity>/<drive_id>.<ext>
+            $matches = glob($root . '/*/' . $driveId . '.*');
+        }
+
+        if (!empty($matches)) {
+            $found = str_replace('\\', '/', $matches[0]);
+            $relative = substr($found, strlen($root) + 1);
+
+            return $cache[$driveId] = asset('storage/' . $relative);
+        }
+
+        // File tidak ada di lokal → fallback ke URL Drive asli
+        return $cache[$driveId] = null;
     }
 
     /** URL portofolio yang sudah dinormalkan untuk href aman. */
