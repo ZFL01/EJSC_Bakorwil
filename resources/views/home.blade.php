@@ -14,7 +14,7 @@
         #gis-section {
             position: relative;
             z-index: 1;
-            margin-top: 72px;
+            margin-top: calc(4rem + 1px); /* tinggi navbar h-16 + border-b */
             border-top: 0 !important;
             border-bottom: 0 !important;
         }
@@ -23,11 +23,52 @@
             scroll-margin-top: 90px;
         }
 
+        /* Petunjuk interaksi peta (dipojok kiri bawah, tidak menutupi tombol zoom & atribusi) */
+        #gis-map-hint {
+            position: absolute;
+            left: max(12px, env(safe-area-inset-left));
+            right: auto;
+            bottom: max(12px, env(safe-area-inset-bottom));
+            z-index: 55;
+            padding: 6px 12px;
+            border-radius: 9999px;
+            font-size: .72rem;
+            color: #0e4f81;
+            background: rgba(255,255,255,.88);
+            border: 1px solid rgba(255,255,255,.8);
+            box-shadow: 0 6px 16px rgba(15,73,99,.14);
+            backdrop-filter: blur(8px);
+            pointer-events: none;
+        }
+
+        /* Tombol zoom +/− besar di kanan-bawah: mudah dijangkau pengguna */
+        #qgis-map .leaflet-control-zoom {
+            margin: 12px;
+            border: 1px solid rgba(255,255,255,.7);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 16px rgba(15,73,99,.25);
+        }
+
+        #qgis-map .leaflet-control-zoom a {
+            width: 42px;
+            height: 42px;
+            line-height: 42px;
+            font-size: 24px;
+            color: #0e4f81 !important;
+        }
+
+        @media (max-width: 640px) {
+            #gis-map-hint { display: none; }
+        }
+
         #qgis-map {
             position: relative;
             z-index: 1;
-            height: clamp(500px, 78vh, 780px) !important;
-            min-height: 500px;
+            /* Layar penuh: tinggi viewport dikurangi navbar (h-16 = 4rem + 1px border) */
+            height: calc(100vh - (4rem + 1px)) !important;
+            height: calc(100svh - (4rem + 1px)) !important;
+            min-height: 420px;
             background: linear-gradient(180deg, #0d4f7a 0%, #4ba3e1 100%);
         }
 
@@ -69,8 +110,9 @@
 
         @media (max-width: 640px) {
             #qgis-map {
-                height: 68svh !important;
-                min-height: 460px;
+                height: calc(100vh - (4rem + 1px)) !important;
+                height: calc(100svh - (4rem + 1px)) !important;
+                min-height: 420px;
             }
 
             #gis-map-header {
@@ -127,6 +169,17 @@
     </div>
 
     <div id="qgis-map" class="w-full relative z-0"></div>
+    <!-- Tombol panah ke bawah: klik untuk langsung menuju halaman berikutnya (tanpa scroll manual) -->
+    <button id="gis-scroll-down" class="absolute left-1/2 -translate-x-1/2 z-[60] group" style="bottom:16px;"
+            onclick="document.getElementById('after-gis').scrollIntoView({behavior:'smooth', block:'start'});"
+            aria-label="Pindah ke halaman berikutnya">
+        <span class="flex flex-col items-center gap-1 bg-white/90 hover:bg-white text-[#0e4f81] px-4 py-2 rounded-full shadow-xl border border-white backdrop-blur transition">
+            <span class="text-xs font-semibold tracking-wide">Halaman Berikutnya</span>
+            <svg class="w-5 h-5 animate-bounce" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 13l-7 7-7-7m14-8l-7 7-7-7"/></svg>
+        </span>
+    </button>
+
+    <div id="gis-placeholder" class="absolute
 
     <div id="gis-placeholder" class="absolute inset-x-0 bottom-0 flex items-center justify-center text-center px-6 pointer-events-none" style="top:0; background:linear-gradient(135deg,rgba(173,216,230,.88),rgba(199,229,255,.88)); z-index:10;">
         <div class="pointer-events-auto bg-white/90 rounded-2xl shadow-xl border border-white p-6 max-w-lg">
@@ -138,7 +191,9 @@
         </div>
     </div>
 
-    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index:20;">
+    <div id="gis-map-hint">Zoom: tombol +/− kanan bawah · atau Ctrl + scroll</div>
+
+    <div id="qgis-info" class="absolute bottom-4 left-4 right-4 md:right-auto md:max-w-sm bg-white/95 backdrop-blur rounded-xl shadow-xl border border-teal-200 p-4 hidden" style="z-index:60;">
         <div class="flex items-start justify-between gap-3">
             <div class="min-w-0">
                 <h3 id="qgis-info-name" class="text-lg font-bold text-teal-900"></h3>
@@ -8983,8 +9038,25 @@
             maxZoom: 18,           // batas paling dekat saat zoom in
             maxBounds: mapBounds,  // wilayah tampilan peta dibatasi
             maxBoundsViscosity: 1.0, // tidak bisa geser keluar dari batas
-            scrollWheelZoom: true
+            scrollWheelZoom: false, // scroll halaman tidak dialihkan ke peta
+            zoomControl: false      // tombol +/− dipindah ke kanan-bawah (mudah dijangkau)
         });
+
+        // Tombol zoom +/− di kanan-bawah: posisi standar aplikasi peta, mudah dijangkau
+        L.control.zoom({ position: 'bottomright' }).addTo(qgisMap);
+
+        // Zoom dengan Ctrl/⌘ + scroll (opsional, tanpa mengganggu scroll halaman)
+        mapElement.addEventListener('wheel', (e) => {
+            if (!(e.ctrlKey || e.metaKey)) return;
+            e.preventDefault();
+            e.stopPropagation();
+            if (!qgisMap.scrollWheelZoom.enabled()) qgisMap.scrollWheelZoom.enable();
+            qgisMap.getContainer().dispatchEvent(new WheelEvent('wheel', {
+                deltaY: e.deltaY, clientX: e.clientX, clientY: e.clientY, bubbles: true
+            }));
+            clearTimeout(qgisMap._ctrlZoomTimer);
+            qgisMap._ctrlZoomTimer = setTimeout(() => qgisMap.scrollWheelZoom.disable(), 400);
+        }, { passive: false });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             minZoom: 6,
@@ -9053,19 +9125,36 @@
 
         const legend = L.control({ position: 'bottomright' });
         legend.onAdd = function() {
+            const isMobileView = window.matchMedia('(max-width: 640px)').matches;
             const div = L.DomUtil.create('div', 'leaflet-control region-legend');
-            div.innerHTML = '<div class=\"font-semibold text-slate-800 mb-2\">Legenda Wilayah</div>' +
-                Object.entries(regionStyles).map(([name, style]) => `
-                    <div style=\"display:flex;align-items:center;gap:7px;margin:4px 0;font-size:12px;line-height:1.2;\">
-                        <span style=\"display:inline-block;width:14px;height:14px;border-radius:3px;background:${style.fill};border:2px solid ${style.border};\"></span>
+            const rows = Object.entries(regionStyles).map(([name, style]) => `
+                    <div style="display:flex;align-items:center;gap:7px;margin:4px 0;font-size:12px;line-height:1.2;">
+                        <span style="display:inline-block;width:14px;height:14px;border-radius:3px;background:${style.fill};border:2px solid ${style.border};"></span>
                         <span>${name}</span>
                     </div>`).join('');
+            div.innerHTML = '<div class="region-legend-toggle" style="display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;user-select:none;">' +
+                    '<span class="font-semibold text-slate-800">Legenda Wilayah</span>' +
+                    '<span class="region-legend-caret" style="display:inline-block;transition:transform .2s;color:#64748b;font-size:11px;">▼</span>' +
+                '</div>' +
+                '<div class="region-legend-list' + (isMobileView ? ' hidden' : '') + '" style="margin-top:6px;">' + rows + '</div>';
 
             div.style.background = 'rgba(255,255,255,.94)';
             div.style.padding = '10px 12px';
             div.style.borderRadius = '12px';
             div.style.boxShadow = '0 8px 22px rgba(15,23,42,.12)';
             div.style.border = '1px solid rgba(148,163,184,.25)';
+            div.style.minWidth = isMobileView ? 'auto' : '170px';
+
+            const list = div.querySelector('.region-legend-list');
+            const caret = div.querySelector('.region-legend-caret');
+            const syncCaret = () => {
+                caret.style.transform = list.classList.contains('hidden') ? 'rotate(-90deg)' : 'rotate(0deg)';
+            };
+            syncCaret();
+            div.querySelector('.region-legend-toggle').addEventListener('click', () => {
+                list.classList.toggle('hidden');
+                syncCaret();
+            });
 
             L.DomEvent.disableClickPropagation(div);
             return div;

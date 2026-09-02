@@ -217,11 +217,10 @@
 
     <div
         class="
-            max-w-7xl
-            mx-auto
+            w-full
             px-4
-            sm:px-6
-            lg:px-8
+            sm:px-8
+            lg:px-12
         "
     >
 
@@ -271,7 +270,9 @@
                     hidden
                     md:flex
                     items-center
-                    space-x-1
+                    gap-1
+                    lg:gap-3
+                    xl:gap-5
                 "
             >
 

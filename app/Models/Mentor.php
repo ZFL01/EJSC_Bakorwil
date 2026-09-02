@@ -134,9 +134,10 @@ class Mentor extends Model
         if (preg_match('#^storage/#', $value) === 1) {
             $relative = preg_replace('#^storage/#', '', $value);
 
-            // Kalau file-nya benar-benar ada di storage lokal, pakai file asli.
-            if (Storage::disk('public')->exists($relative)) {
-                return asset($value);
+            // Kalau file-nya benar-benar ada di storage lokal (dan tidak
+            // kosong), pakai file asli.
+            if (Storage::disk('public')->exists($relative) && filesize(Storage::disk('public')->path($relative)) > 0) {
+                return $this->storageUrl($value);
             }
 
             // Kalau nama file berupa Google Drive File ID, buka via Google Drive.
@@ -148,9 +149,27 @@ class Mentor extends Model
             return null;
         }
 
+        // Path relatif tanpa awalan "storage/" (hasil store('ktp','public')
+        // dsb., mis. "ktp/abc.jpg") -> cek langsung di disk public.
+        $relative = preg_replace('#^storage/#', '', $value);
+        if (Storage::disk('public')->exists($relative) && filesize(Storage::disk('public')->path($relative)) > 0) {
+            return $this->storageUrl('storage/' . $relative);
+        }
+
         // Nilai lain (mis. "PORTOFOLIO RIZAL .pdf") tanpa file nyata → tanpa link,
         // agar tidak menghasilkan URL relatif yang berujung 404.
         return null;
+    }
+
+    /**
+     * URL storage yang relatif terhadap host/port request saat ini.
+     * asset() menghasilkan URL absolut dari APP_URL (mis. http://localhost),
+     * yang bisa 404 jika aplikasi diakses lewat host/port berbeda
+     * (mis. http://localhost:8000 via `php artisan serve`).
+     */
+    protected function storageUrl(string $path): string
+    {
+        return rtrim(url('/'), '/') . '/' . ltrim($path, '/');
     }
 
     /**
@@ -201,10 +220,15 @@ class Mentor extends Model
         }
 
         if (!empty($matches)) {
+            // pastikan file tidak kosong/rusak
+            $matches = array_values(array_filter($matches, fn ($f) => filesize($f) > 0));
+        }
+
+        if (!empty($matches)) {
             $found = str_replace('\\', '/', $matches[0]);
             $relative = substr($found, strlen($root) + 1);
 
-            return $cache[$driveId] = asset('storage/' . $relative);
+            return $cache[$driveId] = $this->storageUrl('storage/' . $relative);
         }
 
         // File tidak ada di lokal → fallback ke URL Drive asli
