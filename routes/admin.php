@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\TalentController;
 use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     
     // Activity Logs
     Route::get('/activity-logs', [DashboardController::class, 'activityLogs'])->name('activity-logs');
+
+    // User Approval (pendaftaran via Google, status pending)
+    Route::get('/users/pending', [UserController::class, 'pendingIndex'])->name('users.pending');
+    Route::post('/users/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
+    Route::post('/users/{user}/reject', [UserController::class, 'reject'])->name('users.reject');
+    Route::post('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
+    Route::post('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     
     // Clients Management
     Route::prefix('clients')->name('clients.')->group(function () {

@@ -13,19 +13,54 @@ use Illuminate\Validation\Rules\Password;
 class ProfileController extends Controller
 {
     /**
+     * Pastikan user punya baris profil sesuai rolenya.
+     * Akun hasil pendaftaran via Google dibuat TANPA baris profil
+     * (profil dilengkapi belakangan), jadi harus dibuat otomatis
+     * sebelum halaman profil / update profil dipakai.
+     */
+    protected function ensureProfile($user)
+    {
+        if ($user->isClient()) {
+            return $user->client ?: Client::create([
+                'id_user'      => $user->id_user,
+                'nama_ukm'     => $user->name,
+                'nama_pemilik' => $user->name,
+                'email'        => $user->email,
+                'status'       => 'aktif',
+            ]);
+        }
+
+        if ($user->isMentor()) {
+            return $user->mentor ?: Mentor::create([
+                'id_user' => $user->id_user,
+                'nama'    => $user->name,
+                'email'   => $user->email,
+                'status'  => 'aktif',
+            ]);
+        }
+
+        if ($user->isTalent()) {
+            return $user->talent ?: Talent::create([
+                'id_user' => $user->id_user,
+                'nama'    => $user->name,
+                'email'   => $user->email,
+                'status'  => 'aktif',
+            ]);
+        }
+
+        return null;
+    }
+
+    /**
      * Display the user's profile.
      */
     public function show()
     {
         $user = auth()->user();
-        
+
         // Load the appropriate profile based on role
-        $profile = null;
-        if ($user->isClient()) {
-            $profile = $user->client;
-        } elseif ($user->isMentor()) {
-            $profile = $user->mentor;
-        } elseif ($user->isTalent()) {
+        $profile = $this->ensureProfile($user);
+        if ($user->isTalent()) {
             $profile = $user->talent()->with('mentor')->first();
         }
 
@@ -38,16 +73,11 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = auth()->user();
-        
-        $profile = null;
+
+        $profile = $this->ensureProfile($user);
         $mentors = null;
-        
-        if ($user->isClient()) {
-            $profile = $user->client;
-        } elseif ($user->isMentor()) {
-            $profile = $user->mentor;
-        } elseif ($user->isTalent()) {
-            $profile = $user->talent;
+
+        if ($user->isTalent()) {
             $mentors = Mentor::active()->get();
         }
 
@@ -78,13 +108,13 @@ class ProfileController extends Controller
 
         $user->update($validated);
 
-        // Update role-specific profile
+        // Update role-specific profile (buat profil dulu bila belum ada)
         if ($user->isClient()) {
-            $this->updateClientProfile($request, $user->client);
+            $this->updateClientProfile($request, $this->ensureProfile($user));
         } elseif ($user->isMentor()) {
-            $this->updateMentorProfile($request, $user->mentor);
+            $this->updateMentorProfile($request, $this->ensureProfile($user));
         } elseif ($user->isTalent()) {
-            $this->updateTalentProfile($request, $user->talent);
+            $this->updateTalentProfile($request, $this->ensureProfile($user));
         }
 
         return redirect()->route('profile.show')

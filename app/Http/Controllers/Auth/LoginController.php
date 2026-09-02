@@ -71,9 +71,13 @@ class LoginController extends Controller
 
             Auth::logout();
 
+            $pesan = $user->status === 'pending'
+                ? 'Akun Anda masih MENUNGGU PERSETUJUAN ADMIN. Silakan coba login lagi nanti.'
+                : 'Akun belum aktif.';
+
             return back()
                 ->withErrors([
-                    'email' => 'Akun belum aktif.'
+                    'email' => $pesan
                 ])
                 ->onlyInput('email');
         }

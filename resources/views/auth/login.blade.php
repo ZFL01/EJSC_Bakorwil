@@ -767,6 +767,31 @@
                     @endif
 
 
+                    @if (session('success'))
+
+                        <div class="bg-emerald-50 border-l-4 border-emerald-500 p-2 rounded-lg">
+
+                            <div class="flex items-start gap-1.5">
+
+                                <span class="material-symbols-outlined text-emerald-500 text-base">
+
+                                    check_circle
+
+                                </span>
+
+                                <p class="text-xs text-emerald-700">
+
+                                    {{ session('success') }}
+
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    @endif
+
+
                     @if (session('error'))
 
                         <div class="bg-red-50 border-l-4 border-red-500 p-2 rounded-lg">
@@ -852,8 +877,8 @@
                     <!-- SSO Buttons -->
                     <div class="flex gap-2">
 
-                        <button class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
-                                type="button">
+                        <a class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
+                           href="{{ route('google.redirect') }}">
 
                             <svg class="w-4 h-4"
                                  viewBox="0 0 24 24">
@@ -874,7 +899,7 @@
 
                             Google
 
-                        </button>
+                        </a>
 
 
                         <button class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"

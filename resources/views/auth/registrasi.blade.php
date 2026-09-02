@@ -1234,8 +1234,8 @@
                     <div class="flex gap-3">
 
 
-                        <button class="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
-                                type="button">
+                        <a class="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
+                           href="{{ route('google.redirect') }}">
 
                             <svg class="w-4 h-4"
                                  viewBox="0 0 24 24">
@@ -1257,7 +1257,7 @@
 
                             Google
 
-                        </button>
+                        </a>
 
 
                         <button class="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
