@@ -88,12 +88,12 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Jenis Produk</label>
-                                <input type="text" name="jenis_produk" value="{{ old('jenis_produk', $profile->jenis_produk) }}" required
+                                <input type="text" name="nama_produk" value="{{ old('nama_produk', $profile->nama_produk) }}" required
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">No WhatsApp</label>
-                                <input type="text" name="no_wa" value="{{ old('no_wa', $profile->no_wa) }}" required
+                                <input type="text" name="no_hp" value="{{ old('no_hp', $profile->no_hp) }}" required
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                         </div>
@@ -106,6 +106,16 @@
                             <label class="block text-sm font-medium text-slate-700 mb-2">Deskripsi Usaha</label>
                             <textarea name="deskripsi_usaha" rows="3"
                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">{{ old('deskripsi_usaha', $profile->deskripsi_usaha) }}</textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Logo UKM</label>
+                            @if($profile->foto_logo)
+                                <p class="text-xs text-slate-500 mb-1">Logo saat ini:
+                                    <a href="{{ $profile->foto_logo_src ?: '#' }}" target="_blank" class="text-[#0f766e] underline">Lihat</a>
+                                </p>
+                            @endif
+                            <input type="file" name="foto_logo" accept="image/jpeg,image/png"
+                                   class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                         </div>
                     </section>
                 @elseif($user->isMentor())
