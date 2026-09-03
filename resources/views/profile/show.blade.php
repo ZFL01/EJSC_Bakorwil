@@ -10,7 +10,8 @@
             <div class="flex items-center gap-4">
                 <div class="w-20 h-20 rounded-full overflow-hidden border-4 border-white/70 bg-white/20 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                     @if($user->profile_photo_src)
-                        <img src="{{ $user->profile_photo_src }}" alt="{{ $user->name }}" class="w-full h-full object-cover">
+                        <img src="{{ $user->profile_photo_src }}" alt="" class="w-full h-full object-cover" onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
+                        <span class="hidden">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                     @else
                         <span>{{ strtoupper(substr($user->name, 0, 1)) }}</span>
                     @endif
