@@ -20,6 +20,21 @@ return [
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | GitHub OAuth
+    |--------------------------------------------------------------------------
+    |
+    | Konfigurasi untuk login menggunakan GitHub.
+    | Buat OAuth App di: https://github.com/settings/developers
+    |
+    */
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI'),
+    ],
+
     'postmark' => [
         'key' => env('POSTMARK_API_KEY'),
     ],
