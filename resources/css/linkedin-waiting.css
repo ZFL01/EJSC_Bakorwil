@@ -1,5 +1,5 @@
 /* ============================================
-   GitHub Waiting Page - EJSC Bakorwil Jember
+   LinkedIn Waiting Page - EJSC Bakorwil Jember
    ============================================ */
 
 * {
@@ -142,13 +142,13 @@ body::after {
     border-color: rgba(53, 191, 209, 0.3);
 }
 
-.icon-wrapper .github-icon {
+.icon-wrapper .linkedin-icon {
     width: 2.5rem;
     height: 2.5rem;
-    color: #239EAF;
+    color: #0A66C2;
 }
 
-.icon-wrapper .github-icon svg {
+.icon-wrapper .linkedin-icon svg {
     width: 100%;
     height: 100%;
     fill: currentColor;
@@ -372,7 +372,7 @@ body::after {
         width: 64px;
         height: 64px;
     }
-    .icon-wrapper .github-icon {
+    .icon-wrapper .linkedin-icon {
         width: 2rem;
         height: 2rem;
     }

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleAuthController;
-use App\Http\Controllers\Auth\GithubAuthController;
+use App\Http\Controllers\Auth\LinkedinAuthController;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -29,14 +29,14 @@ Route::middleware('guest')->group(function () {
     Route::get('/auth/google/waiting', [GoogleAuthController::class, 'showWaiting'])->name('google.waiting');
 
     /*
-    | GitHub OAuth
+    | LinkedIn OAuth
     */
-    Route::get('/auth/github/redirect', [GithubAuthController::class, 'redirect'])->name('github.redirect');
-    Route::get('/auth/github/callback', [GithubAuthController::class, 'callback'])->name('github.callback');
-    Route::get('/auth/github/role', [GithubAuthController::class, 'showRoleSelection'])->name('github.role');
-    Route::post('/auth/github/complete', [GithubAuthController::class, 'completeRegistration'])->name('github.complete');
-    Route::post('/auth/github/cancel', [GithubAuthController::class, 'cancelRegistration'])->name('github.cancel');
-    Route::get('/auth/github/waiting', [GithubAuthController::class, 'showWaiting'])->name('github.waiting');
+    Route::get('/auth/linkedin/redirect', [LinkedinAuthController::class, 'redirect'])->name('linkedin.redirect');
+    Route::get('/auth/linkedin/callback', [LinkedinAuthController::class, 'callback'])->name('linkedin.callback');
+    Route::get('/auth/linkedin/role', [LinkedinAuthController::class, 'showRoleSelection'])->name('linkedin.role');
+    Route::post('/auth/linkedin/complete', [LinkedinAuthController::class, 'completeRegistration'])->name('linkedin.complete');
+    Route::post('/auth/linkedin/cancel', [LinkedinAuthController::class, 'cancelRegistration'])->name('linkedin.cancel');
+    Route::get('/auth/linkedin/waiting', [LinkedinAuthController::class, 'showWaiting'])->name('linkedin.waiting');
 });
 
 Route::middleware('auth')->group(function () {
