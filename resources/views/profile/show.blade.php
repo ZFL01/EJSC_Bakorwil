@@ -53,7 +53,7 @@
                                 </div>
                                 <div>
                                     <dt class="text-sm text-gray-500">Jenis Produk</dt>
-                                    <dd class="text-sm font-medium text-gray-800">{{ $profile->jenis_produk }}</dd>
+                                    <dd class="text-sm font-medium text-gray-800">{{ $profile->nama_produk }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-sm text-gray-500">Status</dt>

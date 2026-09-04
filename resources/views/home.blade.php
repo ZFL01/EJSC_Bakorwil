@@ -179,9 +179,7 @@
         </span>
     </button>
 
-    <div id="gis-placeholder" class="absolute
-
-    <div id="gis-placeholder" class="absolute inset-x-0 bottom-0 flex items-center justify-center text-center px-6 pointer-events-none" style="top:0; background:linear-gradient(135deg,rgba(173,216,230,.88),rgba(199,229,255,.88)); z-index:10;">
+    <div id="gis-placeholder" class="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none" style="background:linear-gradient(135deg,rgba(173,216,230,.88),rgba(199,229,255,.88)); z-index:10;">
         <div class="pointer-events-auto bg-white/90 rounded-2xl shadow-xl border border-white p-6 max-w-lg">
             <div class="w-16 h-16 bg-teal-100 text-teal-700 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.6" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618A1 1 0 014.447 4.724L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>

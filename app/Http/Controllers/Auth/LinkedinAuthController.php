@@ -48,7 +48,7 @@ class LinkedinAuthController extends Controller
              * stateless() menghindari masalah verifikasi state
              * yang sering terjadi pada localhost.
              */
-            $linkedinUser = Socialite::driver('linkedin-openid')->user();
+            $linkedinUser = Socialite::driver('linkedin-openid')->stateless()->user();
 
         } catch (\Throwable $e) {
 

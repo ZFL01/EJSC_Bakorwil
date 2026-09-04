@@ -51,16 +51,16 @@
         <div class="card">
 
             {{-- LinkedIn Info --}}
-            @if (isset($linkedinAvatar) || isset($linkedinHeadline))
+            @if (!empty($linkedinAvatar) || !empty($linkedinHeadline))
             <div class="linkedin-info">
-                @if (isset($linkedinAvatar))
+                @if (!empty($linkedinAvatar))
                 <div class="avatar">
                     <img src="{{ $linkedinAvatar }}" alt="Avatar LinkedIn">
                 </div>
                 @endif
                 <div class="info">
                     <span class="name">{{ $linkedinName }}</span>
-                    @if (isset($linkedinHeadline))
+                    @if (!empty($linkedinHeadline))
                     <span class="headline">{{ $linkedinHeadline }}</span>
                     @endif
                 </div>
@@ -68,14 +68,10 @@
             @endif
 
             {{-- Error Messages --}}
-            @if (isset($errors) && $errors->any())
+            @if ($errors->any())
                 <div class="alert-error">
                     <span class="material-symbols-outlined">error</span>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
+                    <span>{{ $errors->first() }}</span>
                 </div>
             @endif
 

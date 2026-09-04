@@ -105,13 +105,17 @@ class LoginController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | SEMUA USER MASUK KE HOME
+        | Redirect berdasarkan role
         |--------------------------------------------------------------------------
         |
-        | Admin, Mentor, Talenta, dan Client
-        | semuanya masuk ke home.blade.php setelah login.
+        | Admin → /admin/dashboard
+        | User lain → /home
         |
         */
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
 
         return redirect()->route('public.index');
     }

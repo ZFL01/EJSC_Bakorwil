@@ -349,6 +349,55 @@ body::after {
     margin-bottom: 0.15rem;
 }
 
+/* ---------- Wilayah Selection ---------- */
+.wilayah-section {
+    margin-bottom: 1.5rem;
+}
+
+.wilayah-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.wilayah-label .material-symbols-outlined {
+    font-size: 1.1rem;
+    color: #0a66c2;
+}
+
+.wilayah-section select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.08);
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: #1f2937;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+}
+
+.wilayah-section select:focus {
+    outline: none;
+    border-color: #0a66c2;
+    box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.1);
+}
+
+.wilayah-section select:hover {
+    border-color: rgba(10, 102, 194, 0.3);
+}
+
 /* ---------- Role Cards ---------- */
 .role-list {
     display: flex;

@@ -22,6 +22,7 @@ class User extends Authenticatable
         'email',
         'password_hash',
         'role',
+        'id_wilayah',
         'profile_photo',
         'email_verified_at',
         'status',
@@ -108,6 +109,14 @@ class User extends Authenticatable
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
+    }
+
+    /**
+     * Relasi ke tabel wilayah.
+     */
+    public function wilayah()
+    {
+        return $this->belongsTo(Wilayah::class, 'id_wilayah', 'id_wilayah');
     }
 
     public function isMentor(): bool
