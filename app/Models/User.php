@@ -26,12 +26,19 @@ class User extends Authenticatable
         'email_verified_at',
         'status',
         'last_login',
+        // OAuth fields
         'google_id',
+        'linkedin_id',
+        'linkedin_token',
+        'linkedin_refresh_token',
     ];
 
     protected $hidden = [
         'password_hash',
         'remember_token',
+        // Sembunyikan token untuk keamanan
+        'linkedin_token',
+        'linkedin_refresh_token',
     ];
 
     protected function casts(): array
@@ -62,6 +69,42 @@ class User extends Authenticatable
         return 'password_hash';
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Status Check Methods
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Cek apakah user aktif
+     */
+    public function isActive(): bool
+    {
+        return $this->status === 'aktif';
+    }
+
+    /**
+     * Cek apakah user pending (menunggu approval)
+     */
+    public function isPending(): bool
+    {
+        return $this->status === 'pending';
+    }
+
+    /**
+     * Cek apakah user tidak aktif
+     */
+    public function isInactive(): bool
+    {
+        return $this->status === 'inactive';
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Role Check Methods
+    |--------------------------------------------------------------------------
+    */
+
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
@@ -81,6 +124,12 @@ class User extends Authenticatable
     {
         return $this->role === 'client';
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relations
+    |--------------------------------------------------------------------------
+    */
 
     public function client()
     {
@@ -144,6 +193,12 @@ class User extends Authenticatable
         return $this->hasMany(Talent::class, 'updated_by');
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Accessors & Mutators
+    |--------------------------------------------------------------------------
+    */
+
     /**
      * URL foto profil yang aman: URL absolut dibiarkan, path/nama file
      * di-resolve ke file storage publik bila tersedia, selain itu null.
@@ -164,6 +219,44 @@ class User extends Authenticatable
 
         if (Storage::disk('public')->exists($raw)) {
             return asset('storage/' . $raw);
+        }
+
+        return null;
+    }
+
+    /**
+     * Ambil avatar dari berbagai sumber (Google, LinkedIn, atau UI Avatars)
+     */
+    public function getAvatarAttribute(): ?string
+    {
+        // Jika profile_photo sudah ada
+        if ($this->profile_photo_src) {
+            return $this->profile_photo_src;
+        }
+
+        // Fallback ke UI Avatars dengan nama user
+        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=35BFD1&color=fff&size=128';
+    }
+
+    /**
+     * Cek apakah user terdaftar melalui OAuth
+     */
+    public function isOAuthUser(): bool
+    {
+        return !empty($this->google_id) || !empty($this->linkedin_id);
+    }
+
+    /**
+     * Dapatkan provider OAuth yang digunakan
+     */
+    public function getOAuthProviderAttribute(): ?string
+    {
+        if ($this->google_id) {
+            return 'Google';
+        }
+
+        if ($this->linkedin_id) {
+            return 'LinkedIn';
         }
 
         return null;

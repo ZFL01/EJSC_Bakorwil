@@ -902,19 +902,26 @@
                         </a>
 
 
-                        <button class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
-                                type="button">
+                        <a class="flex-1 flex items-center justify-center gap-1.5 py-1.5 px-2 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 text-sm"
+                            href="{{ route('linkedin.redirect') }}">
 
-                            <span class="material-symbols-outlined text-lg"
-                                  style="color: #0a66c2; font-variation-settings: 'FILL' 1;">
+                                <svg class="w-4 h-4"
+                                    viewBox="0 0 24 24"
+                                    fill="currentColor"
+                                    style="color: #0A66C2;">
 
-                                work
+                                    <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04
+                                            -1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.99h3.42v1.56h.05
+                                            c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.27 2.38 4.27 5.48v6.27z
+                                            M5.32 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14z
+                                            M7.1 20.45H3.55V8.99H7.1v11.46z
+                                            M22.22 0H1.78C.8 0 0 .78 0 1.74v20.52C0 23.22.8 24 1.78 24
+                                            h20.44c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z"/>
+                                </svg>
 
-                            </span>
+                                LinkedIn
 
-                            LinkedIn
-
-                        </button>
+                            </a>
 
                     </div>
 
