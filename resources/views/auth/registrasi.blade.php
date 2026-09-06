@@ -841,7 +841,7 @@
 
                                 <input type="radio"
                                        name="role"
-                                       value="talent"
+                                       value="talenta"
                                        checked
                                        class="sr-only">
 
@@ -1049,7 +1049,22 @@
                                    name="password"
                                    placeholder="••••••••"
                                    required
-                                   type="password">
+                                   type="password"
+                                   style="padding-right: 3rem;">
+
+                            <button aria-label="Tampilkan password"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                    type="button"
+                                    onclick="togglePassword('password', 'toggleIconPassword')">
+
+                                <span class="material-symbols-outlined text-lg"
+                                      id="toggleIconPassword">
+
+                                    visibility
+
+                                </span>
+
+                            </button>
 
                         </div>
 
@@ -1093,7 +1108,22 @@
                                    name="password_confirmation"
                                    placeholder="••••••••"
                                    required
-                                   type="password">
+                                   type="password"
+                                   style="padding-right: 3rem;">
+
+                            <button aria-label="Tampilkan konfirmasi password"
+                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                    type="button"
+                                    onclick="togglePassword('password_confirmation', 'toggleIconConfirm')">
+
+                                <span class="material-symbols-outlined text-lg"
+                                      id="toggleIconConfirm">
+
+                                    visibility
+
+                                </span>
+
+                            </button>
 
                         </div>
 
@@ -1294,6 +1324,26 @@
                            style="color: #35BFD1;">
 
                             Masuk sekarang
+
+                        </a>
+
+                    </p>
+
+
+                    <!-- Back to Home Link -->
+
+                    <p class="text-center text-sm text-gray-400 pt-2">
+
+                        <a class="inline-flex items-center gap-1 font-medium hover:underline hover:text-[#35BFD1] transition-colors"
+                           href="{{ route('public.index') }}">
+
+                            <span class="material-symbols-outlined text-[16px]">
+
+                                home
+
+                            </span>
+
+                            Kembali ke Beranda
 
                         </a>
 
@@ -1580,6 +1630,36 @@
             });
 
         });
+
+
+        // Toggle visibility password (icon mata)
+
+        function togglePassword(inputId, iconId) {
+
+            const input =
+                document.getElementById(inputId);
+
+            const icon =
+                document.getElementById(iconId);
+
+
+            if (input.type === 'password') {
+
+                input.type = 'text';
+
+                icon.textContent =
+                    'visibility_off';
+
+            } else {
+
+                input.type = 'password';
+
+                icon.textContent =
+                    'visibility';
+
+            }
+
+        }
 
     </script>
 

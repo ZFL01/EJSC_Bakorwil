@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
-
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GisMapController;
 use App\Http\Controllers\PublicController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,13 @@ use App\Http\Controllers\PublicController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/registrasi', function () {
-    return view('auth.registrasi');
-})->name('registrasi');
+Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])
+    ->name('registrasi');
 
+Route::post('/registrasi', [RegisterController::class, 'register']);
+
+Route::get('/registrasi/selesai', [RegisterController::class, 'showWaiting'])
+    ->name('registrasi.waiting');
 
 /*
 |--------------------------------------------------------------------------
@@ -44,6 +48,35 @@ Route::post('/forgot-password', function (Request $request) {
 
 })->name('password.email');
 
+Route::get('/reset-password/{token}', function (Request $request, string $token) {
+    return view('auth.reset-password', [
+        'token' => $token,
+        'email' => $request->query('email'),
+    ]);
+})->name('password.reset');
+
+Route::post('/reset-password', function (Request $request) {
+
+    $request->validate([
+        'token' => ['required'],
+        'email' => ['required', 'email'],
+        'password' => ['required', 'confirmed', 'min:8'],
+    ]);
+
+    $status = Password::reset(
+        $request->only('email', 'password', 'password_confirmation', 'token'),
+        function ($user, $password) {
+            $user->forceFill([
+                'password_hash' => Hash::make($password),
+            ])->save();
+        }
+    );
+
+    return $status === Password::PASSWORD_RESET
+        ? redirect()->route('login')->with('status', __($status))
+        : back()->withErrors(['email' => [__($status)]]);
+
+})->name('password.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +90,6 @@ Route::post('/forgot-password', function (Request $request) {
 
 Route::get('/', [PublicController::class, 'index'])
     ->name('public.index');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +105,6 @@ Route::get('/talenta', [PublicController::class, 'talents'])
 
 Route::get('/client', [PublicController::class, 'clients'])
     ->name('client');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -93,7 +124,6 @@ Route::get('/client/{client}', [PublicController::class, 'clientShow'])
     ->name('client.show')
     ->where('client', '[0-9]+');
 
-
 /*
 |--------------------------------------------------------------------------
 | Tentang Kami
@@ -102,7 +132,6 @@ Route::get('/client/{client}', [PublicController::class, 'clientShow'])
 
 Route::get('/tentang-kami', [PublicController::class, 'tentangKami'])
     ->name('tentang-kami');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -114,7 +143,6 @@ Route::get('/fasilitas', function () {
     return view('fasilitas');
 })->name('fasilitas');
 
-
 /*
 |--------------------------------------------------------------------------
 | Kegiatan
@@ -124,7 +152,6 @@ Route::get('/fasilitas', function () {
 Route::get('/kegiatan', function () {
     return view('kegiatan');
 })->name('kegiatan');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -136,7 +163,6 @@ Route::get('/api/gis/tahun', [GisMapController::class, 'years']);
 
 Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
 
-
 /*
 |--------------------------------------------------------------------------
 | GIS Page
@@ -146,7 +172,6 @@ Route::get('/api/gis/wilayah', [GisMapController::class, 'wilayah']);
 Route::get('/gis', function () {
     return redirect('/');
 })->name('gis');
-
 
 /*
 |--------------------------------------------------------------------------

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Mentor;
 use App\Models\Talent;
-use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -121,7 +122,19 @@ class UserController extends Controller
             }
         });
 
-        return back()->with('success', "Akun {$user->name} ({$user->role}) telah disetujui dan kini aktif.");
+        /*
+        |----------------------------------------------------------------------
+        | Auto-login: user yang disetujui langsung masuk ke sesi.
+        |----------------------------------------------------------------------
+        | Admin yang sedang membuka halaman akan digantikan oleh user yang
+        | baru disetujui (halaman persetujuan umumnya dibuka atas nama /
+        | pendamping user yang bersangkutan).
+        */
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+        return redirect()->route('public.index');
     }
 
     /**
