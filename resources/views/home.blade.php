@@ -809,163 +809,141 @@
     text-decoration: none;
 }
 
+
+/* =========================================================
+   HERO
+========================================================= */
+
 .ejsc-hero {
     position: relative;
     width: 100%;
-    min-height: 1530px;
+    min-height: 1180px;
+
+    margin-bottom: -100px;
+
     overflow: hidden;
+
     color: #102f4a;
 
     background:
         radial-gradient(
-            circle at 2% 8%,
-            rgba(0,221,229,.28),
+            circle at 0% 5%,
+            rgba(0,221,229,.25),
             transparent 20%
         ),
         radial-gradient(
-            circle at 96% 18%,
-            rgba(100,222,230,.25),
-            transparent 24%
+            circle at 100% 12%,
+            rgba(100,222,230,.22),
+            transparent 23%
         ),
         radial-gradient(
-            circle at 73% 61%,
-            rgba(47,211,220,.17),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 15% 78%,
-            rgba(107,226,232,.16),
+            circle at 75% 60%,
+            rgba(47,211,220,.13),
             transparent 25%
         ),
         linear-gradient(
             135deg,
             #ffffff 0%,
-            #f8fdfe 38%,
-            #f1fbfc 70%,
-            #e9fafd 100%
+            #f8fdfe 42%,
+            #eefbfc 100%
         );
 }
 
 
 /* =========================================================
-   BACKGROUND BLOBS
+   BACKGROUND SHAPES
 ========================================================= */
 
 .ejsc-bg-shape {
     position: absolute;
-    pointer-events: none;
     z-index: 0;
-    will-change: transform;
+    pointer-events: none;
 }
 
 .ejsc-bg-shape-1 {
     width: 390px;
     height: 300px;
+
     left: -170px;
     top: -120px;
-    border-radius: 45% 55% 60% 40%;
+
+    border-radius: 50%;
 
     background:
         radial-gradient(
             ellipse at center,
             #13d7dc 0%,
             #27cbd5 35%,
-            rgba(62,215,221,.55) 65%,
-            rgba(62,215,221,0) 100%
+            rgba(62,215,221,.45) 65%,
+            transparent 100%
         );
 
     filter: blur(2px);
-    opacity: .95;
+    opacity: .85;
 
-    animation:
-        ejscBlobOne 8s ease-in-out infinite;
+    animation: ejscBlobOne 8s ease-in-out infinite;
 }
 
 .ejsc-bg-shape-2 {
     width: 420px;
     height: 270px;
+
     right: -145px;
-    top: 45px;
-    border-radius: 60% 35% 60% 40%;
+    top: 20px;
 
-    background:
-        linear-gradient(
-            135deg,
-            rgba(183,243,247,.20),
-            rgba(54,211,220,.40)
-        );
-
-    filter: blur(1px);
-    opacity: .9;
-
-    animation:
-        ejscBlobTwo 9s ease-in-out infinite;
-}
-
-.ejsc-bg-shape-3 {
-    width: 600px;
-    height: 300px;
-    right: -220px;
-    bottom: 250px;
     border-radius: 50%;
 
     background:
         radial-gradient(
             ellipse at center,
-            rgba(28,216,222,.30),
-            rgba(80,222,228,.12) 55%,
+            rgba(54,211,220,.42),
+            rgba(183,243,247,.15) 55%,
+            transparent 75%
+        );
+
+    filter: blur(2px);
+    opacity: .8;
+
+    animation: ejscBlobTwo 9s ease-in-out infinite;
+}
+
+.ejsc-bg-shape-3 {
+    width: 550px;
+    height: 280px;
+
+    right: -220px;
+    bottom: 170px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse at center,
+            rgba(28,216,222,.25),
+            rgba(80,222,228,.08) 55%,
             transparent 72%
         );
 
     filter: blur(12px);
-
-    animation:
-        ejscBlobThree 8s ease-in-out infinite;
 }
 
 @keyframes ejscBlobOne {
     0%,100% {
-        transform:
-            translate3d(0,0,0)
-            rotate(-18deg)
-            scale(1);
+        transform: translate3d(0,0,0) rotate(-15deg);
     }
 
     50% {
-        transform:
-            translate3d(30px,25px,0)
-            rotate(-10deg)
-            scale(1.08);
+        transform: translate3d(25px,20px,0) rotate(-8deg);
     }
 }
 
 @keyframes ejscBlobTwo {
     0%,100% {
-        transform:
-            translate3d(0,0,0)
-            rotate(-25deg)
-            scale(1);
+        transform: translate3d(0,0,0);
     }
 
     50% {
-        transform:
-            translate3d(-30px,30px,0)
-            rotate(-18deg)
-            scale(1.07);
-    }
-}
-
-@keyframes ejscBlobThree {
-    0%,100% {
-        transform:
-            translate3d(0,0,0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate3d(-35px,-25px,0)
-            scale(1.12);
+        transform: translate3d(-25px,25px,0);
     }
 }
 
@@ -976,8 +954,9 @@
 
 .ejsc-floating-dot {
     position: absolute;
-    border-radius: 50%;
     z-index: 1;
+
+    border-radius: 50%;
 
     background:
         radial-gradient(
@@ -989,7 +968,7 @@
 
     box-shadow:
         0 0 0 4px rgba(14,201,210,.07),
-        0 5px 16px rgba(11,192,202,.22);
+        0 5px 16px rgba(11,192,202,.20);
 
     pointer-events: none;
 
@@ -1001,7 +980,7 @@
     width: 9px;
     height: 9px;
     left: 37%;
-    top: 4%;
+    top: 5%;
 }
 
 .ejsc-dot-2 {
@@ -1016,7 +995,7 @@
     width: 10px;
     height: 10px;
     right: 16%;
-    top: 7%;
+    top: 8%;
     animation-delay: 1.4s;
 }
 
@@ -1024,7 +1003,7 @@
     width: 13px;
     height: 13px;
     right: 8%;
-    bottom: 29%;
+    bottom: 25%;
     animation-delay: 2s;
 }
 
@@ -1032,22 +1011,18 @@
     width: 13px;
     height: 13px;
     left: 6%;
-    bottom: 34%;
+    bottom: 30%;
     animation-delay: 2.6s;
 }
 
 @keyframes ejscDotFloat {
     0%,100% {
-        transform:
-            translate3d(0,0,0)
-            scale(1);
-        opacity: .8;
+        transform: translate3d(0,0,0) scale(1);
+        opacity: .75;
     }
 
     50% {
-        transform:
-            translate3d(12px,-20px,0)
-            scale(1.22);
+        transform: translate3d(10px,-16px,0) scale(1.15);
         opacity: 1;
     }
 }
@@ -1061,23 +1036,20 @@
     position: relative;
     z-index: 5;
 
-    width:
-        min(940px, calc(100% - 90px));
-
-    min-height: 1080px;
+    width: min(1100px, calc(100% - 70px));
 
     margin: 0 auto;
 
-    padding-top: 280px;
-    padding-bottom: 360px;
+    padding-top: 105px;
+    padding-bottom: 40px;
 
     display: grid;
 
     grid-template-columns:
-        minmax(0,1.05fr)
-        minmax(0,.95fr);
+        minmax(0, 1fr)
+        minmax(0, 430px);
 
-    gap: 48px;
+    gap: 60px;
 
     align-items: start;
 }
@@ -1088,19 +1060,20 @@
 ========================================================= */
 
 .ejsc-hero-left {
-    padding-top: 27px;
+    padding-top: 18px;
 
     animation:
         ejscLeftFloat 6s ease-in-out infinite;
 }
 
 @keyframes ejscLeftFloat {
+
     0%,100% {
         transform: translateY(0);
     }
 
     50% {
-        transform: translateY(-6px);
+        transform: translateY(-4px);
     }
 }
 
@@ -1112,58 +1085,33 @@
 .ejsc-badge {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
 
-    min-height: 43px;
+    min-height: 40px;
 
-    padding: 0 17px;
+    padding: 0 15px;
 
-    margin-bottom: 42px;
+    margin-bottom: 25px;
 
     border: 1px solid #0fc9d3;
-    border-radius: 13px;
+    border-radius: 12px;
 
-    background: rgba(255,255,255,.72);
+    background: rgba(255,255,255,.80);
 
     color: #08aabb;
 
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
 
     box-shadow:
-        0 8px 25px rgba(15,198,208,.06);
-
-    animation:
-        ejscBadgePulse 4s ease-in-out infinite;
+        0 7px 20px rgba(15,198,208,.06);
 }
 
 .ejsc-badge-star {
     color: #0cc3ce;
-    font-size: 23px;
+
+    font-size: 20px;
     line-height: 1;
-
-    animation:
-        ejscStarSpin 5s ease-in-out infinite;
-}
-
-@keyframes ejscBadgePulse {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3px);
-    }
-}
-
-@keyframes ejscStarSpin {
-    0%,80%,100% {
-        transform: rotate(0deg) scale(1);
-    }
-
-    90% {
-        transform: rotate(15deg) scale(1.12);
-    }
 }
 
 
@@ -1172,9 +1120,9 @@
 ========================================================= */
 
 .ejsc-title {
-    margin: 0 0 29px;
+    max-width: 620px;
 
-    max-width: 500px;
+    margin: 0 0 23px;
 
     font-family:
         "Inter",
@@ -1182,17 +1130,15 @@
         Arial,
         sans-serif;
 
-    font-size:
-        clamp(48px,5.2vw,58px);
+    font-size: clamp(43px, 5vw, 61px);
 
-    line-height: 1.18;
-    letter-spacing: -2.6px;
+    line-height: 1.10;
+
+    letter-spacing: -2.8px;
+
     font-weight: 800;
 
     color: #102f4a;
-
-    animation:
-        ejscTitleFloat 5s ease-in-out infinite;
 }
 
 .ejsc-title span {
@@ -1204,9 +1150,8 @@
         linear-gradient(
             110deg,
             #08aeba 0%,
-            #13c7d0 35%,
-            #ffffff 48%,
-            #ffffff 52%,
+            #13c7d0 40%,
+            #ffffff 50%,
             #13c7d0 65%,
             #09afbb 100%
         );
@@ -1218,7 +1163,8 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    animation: ejscTextShimmer 4s ease-in-out infinite;
+    animation:
+        ejscTextShimmer 4s ease-in-out infinite;
 }
 
 @keyframes ejscTextShimmer {
@@ -1236,30 +1182,22 @@
     }
 }
 
-@keyframes ejscTitleFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-4px);
-    }
-}
-
 
 /* =========================================================
    DESCRIPTION
 ========================================================= */
 
 .ejsc-description {
-    max-width: 485px;
+    max-width: 560px;
 
-    margin: 0 0 44px;
+    margin: 0 0 30px;
 
     color: #4d6b87;
 
-    font-size: 15.5px;
-    line-height: 2;
+    font-size: 15px;
+
+    line-height: 1.85;
+
     font-weight: 400;
 }
 
@@ -1271,22 +1209,26 @@
 .ejsc-buttons {
     display: flex;
     align-items: center;
-    gap: 18px;
+
+    gap: 14px;
+
     flex-wrap: wrap;
 }
 
 .ejsc-btn-primary,
 .ejsc-btn-secondary {
-    height: 57px;
-    padding: 0 28px;
+    height: 54px;
 
-    border-radius: 12px;
+    padding: 0 25px;
+
+    border-radius: 11px;
 
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
 
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 700;
 
     transition:
@@ -1296,8 +1238,9 @@
 }
 
 .ejsc-btn-primary {
-    min-width: 188px;
-    gap: 16px;
+    min-width: 180px;
+
+    gap: 14px;
 
     color: #fff;
 
@@ -1309,55 +1252,39 @@
         );
 
     box-shadow:
-        0 13px 28px
-        rgba(7,187,199,.25);
-
-    animation:
-        ejscButtonFloat 4s ease-in-out infinite;
+        0 12px 25px
+        rgba(7,187,199,.23);
 }
 
 .ejsc-btn-primary:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
 
     box-shadow:
-        0 20px 38px
-        rgba(7,187,199,.34);
+        0 17px 32px
+        rgba(7,187,199,.30);
 }
 
 .ejsc-btn-primary svg {
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
 
     animation:
         ejscArrowButton 1.8s ease-in-out infinite;
 }
 
-@keyframes ejscButtonFloat {
-    0%,100% {
-        box-shadow:
-            0 13px 28px
-            rgba(7,187,199,.25);
-    }
-
-    50% {
-        box-shadow:
-            0 18px 34px
-            rgba(7,187,199,.34);
-    }
-}
-
 @keyframes ejscArrowButton {
+
     0%,100% {
         transform: translateX(0);
     }
 
     50% {
-        transform: translateX(5px);
+        transform: translateX(4px);
     }
 }
 
 .ejsc-btn-secondary {
-    min-width: 168px;
+    min-width: 160px;
 
     color: #087f91;
 
@@ -1367,67 +1294,72 @@
 }
 
 .ejsc-btn-secondary:hover {
-    transform: translateY(-6px);
+    transform: translateY(-4px);
 
     color: #fff;
+
     background: #10b9c5;
 
     box-shadow:
-        0 15px 30px
-        rgba(8,185,198,.20);
+        0 14px 28px
+        rgba(8,185,198,.18);
 }
 
 
 /* =========================================================
-   RIGHT
+   RIGHT COLUMN
 ========================================================= */
 
 .ejsc-hero-right {
     position: relative;
 
-    min-height: 680px;
+    min-height: 610px;
 
     display: flex;
-    justify-content: flex-end;
+
+    justify-content: center;
+
     align-items: flex-start;
 }
 
 
 /* =========================================================
-   STAT CARD — FLOAT + HOVER
+   STAT CARD
 ========================================================= */
 
 .ejsc-stat-card {
     position: relative;
+
     z-index: 10;
 
     width: 100%;
-    max-width: 420px;
+    max-width: 430px;
 
-    padding: 34px 31px 32px;
+    padding: 27px 25px 25px;
 
-    border: 1px solid rgba(220,238,241,.95);
-    border-radius: 26px;
+    border:
+        1px solid
+        rgba(220,238,241,.95);
 
-    background: rgba(255,255,255,.96);
+    border-radius: 23px;
+
+    background:
+        rgba(255,255,255,.97);
 
     box-shadow:
-        0 25px 65px rgba(44,93,117,.10),
-        0 5px 18px rgba(0,180,194,.05);
+        0 20px 50px
+        rgba(44,93,117,.10),
+
+        0 5px 18px
+        rgba(0,180,194,.05);
 
     animation:
         ejscCardFloat 5s ease-in-out infinite;
 
     transition:
         transform .35s ease,
-        box-shadow .35s ease,
-        filter .35s ease;
+        box-shadow .35s ease;
 }
-
-
-/* =========================================================
-   CARD FLOAT
-========================================================= */
 
 @keyframes ejscCardFloat {
 
@@ -1436,24 +1368,17 @@
     }
 
     50% {
-        transform: translateY(-8px);
+        transform: translateY(-6px);
     }
 }
 
-
-/* =========================================================
-   CARD HOVER
-========================================================= */
-
 .ejsc-stat-card:hover {
 
-    transform: translateY(-16px);
+    transform: translateY(-10px);
 
     box-shadow:
-        0 38px 80px rgba(44,93,117,.16),
-        0 12px 30px rgba(0,180,194,.12);
-
-    filter: brightness(1.015);
+        0 30px 65px
+        rgba(44,93,117,.15);
 
     animation-play-state: paused;
 }
@@ -1465,10 +1390,12 @@
 
 .ejsc-stat-header {
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    margin-bottom: 34px;
+    margin-bottom: 25px;
 }
 
 .ejsc-stat-header h3 {
@@ -1477,22 +1404,25 @@
     color: #102d49;
 
     font-size: 16px;
+
     font-weight: 800;
 }
 
 .ejsc-live {
     display: inline-flex;
+
     align-items: center;
-    gap: 8px;
+
+    gap: 7px;
 
     color: #365873;
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .ejsc-live span {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
 
     border-radius: 50%;
 
@@ -1507,13 +1437,14 @@
 }
 
 @keyframes ejscLivePulse {
+
     0%,100% {
         transform: scale(1);
         opacity: 1;
     }
 
     50% {
-        transform: scale(1.45);
+        transform: scale(1.35);
         opacity: .6;
     }
 }
@@ -1524,21 +1455,32 @@
 ========================================================= */
 
 .ejsc-stat-grid {
+
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 13px;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 11px;
 }
 
 .ejsc-stat-box {
-    min-height: 108px;
-    padding: 17px;
+
+    min-height: 100px;
+
+    padding: 15px;
 
     display: flex;
-    align-items: center;
-    gap: 16px;
 
-    border: 1px solid #dcecf0;
-    border-radius: 12px;
+    align-items: center;
+
+    gap: 13px;
+
+    border:
+        1px solid
+        #dcecf0;
+
+    border-radius: 11px;
 
     background:
         linear-gradient(
@@ -1551,40 +1493,16 @@
         transform .3s ease,
         box-shadow .3s ease,
         border-color .3s ease;
-
-    animation:
-        ejscStatBoxFloat 5s ease-in-out infinite;
-}
-
-.ejsc-stat-box:nth-child(2) {
-    animation-delay: .3s;
-}
-
-.ejsc-stat-box:nth-child(3) {
-    animation-delay: .6s;
-}
-
-.ejsc-stat-box:nth-child(4) {
-    animation-delay: .9s;
-}
-
-@keyframes ejscStatBoxFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3px);
-    }
 }
 
 .ejsc-stat-box:hover {
-    transform: translateY(-7px);
+
+    transform: translateY(-5px);
 
     border-color: #8bdfe5;
 
     box-shadow:
-        0 13px 28px
+        0 12px 25px
         rgba(22,177,188,.10);
 }
 
@@ -1594,12 +1512,14 @@
 ========================================================= */
 
 .ejsc-stat-icon {
-    flex: 0 0 48px;
 
-    width: 48px;
-    height: 48px;
+    flex: 0 0 43px;
+
+    width: 43px;
+    height: 43px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -1607,21 +1527,9 @@
 }
 
 .ejsc-stat-icon svg {
-    width: 42px;
-    height: 42px;
 
-    animation:
-        ejscIconFloat 4s ease-in-out infinite;
-}
-
-@keyframes ejscIconFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-3px);
-    }
+    width: 38px;
+    height: 38px;
 }
 
 
@@ -1630,18 +1538,23 @@
 ========================================================= */
 
 .ejsc-stat-number {
-    margin-bottom: 7px;
+
+    margin-bottom: 6px;
 
     color: #0bb2bf;
 
-    font-size: 26px;
+    font-size: 25px;
+
     line-height: 1;
+
     font-weight: 800;
 }
 
 .ejsc-stat-label {
+
     color: #385a75;
-    font-size: 13px;
+
+    font-size: 12px;
 }
 
 
@@ -1650,58 +1563,51 @@
 ========================================================= */
 
 .ejsc-illustration {
+
     position: absolute;
+
     z-index: 4;
 
-    width: 580px;
-    height: 390px;
+    width: 500px;
+    height: 335px;
 
-    right: -85px;
-    bottom: -55px;
+    right: -40px;
+
+    bottom: 0;
 
     pointer-events: none;
+
+    transform-origin:
+        bottom center;
 }
 
 
 /* =========================================================
-   GLOW
+   ILLUSTRATION GLOW
 ========================================================= */
 
 .ejsc-illustration-glow {
+
     position: absolute;
 
-    left: 25px;
+    left: 15px;
+
     bottom: 0;
 
-    width: 570px;
-    height: 195px;
+    width: 490px;
+    height: 160px;
 
     border-radius: 50%;
 
     background:
         radial-gradient(
             ellipse at center,
-            rgba(9,210,218,.48),
-            rgba(18,209,217,.23) 45%,
-            rgba(18,209,217,0) 75%
+            rgba(9,210,218,.42),
+            rgba(18,209,217,.18) 45%,
+            transparent 75%
         );
 
     filter: blur(12px);
-
-    animation:
-        ejscGlowMotion 4s ease-in-out infinite;
-}
-
-@keyframes ejscGlowMotion {
-    0%,100% {
-        transform: scale(1);
-        opacity: .72;
-    }
-
-    50% {
-        transform: scale(1.09);
-        opacity: 1;
-    }
 }
 
 
@@ -1710,38 +1616,37 @@
 ========================================================= */
 
 .ejsc-laptop {
+
     position: absolute;
 
-    right: 105px;
-    bottom: 42px;
+    right: 75px;
 
-    width: 330px;
-    height: 220px;
+    bottom: 35px;
 
-    transform: translateY(0);
+    width: 300px;
+    height: 200px;
 
     filter:
         drop-shadow(
-            0 18px 15px
-            rgba(18,96,115,.17)
+            0 16px 14px
+            rgba(18,96,115,.16)
         );
 
     animation:
         ejscLaptopFloat 4.8s ease-in-out infinite;
 
-    transform-origin: center bottom;
+    transform-origin:
+        center bottom;
 }
 
 @keyframes ejscLaptopFloat {
 
     0%,100% {
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-        transform:
-            translateY(-13px);
+        transform: translateY(-8px);
     }
 }
 
@@ -1751,22 +1656,28 @@
 ========================================================= */
 
 .ejsc-laptop-screen {
+
     position: absolute;
 
-    left: 32px;
+    left: 29px;
     top: 0;
 
-    width: 270px;
-    height: 170px;
+    width: 245px;
+    height: 155px;
 
-    padding: 9px;
+    padding: 8px;
 
-    border: 9px solid #12344d;
-    border-bottom: 5px solid #0e2d45;
+    border:
+        8px solid
+        #12344d;
+
+    border-bottom:
+        5px solid
+        #0e2d45;
 
     border-radius:
-        15px
-        15px
+        14px
+        14px
         6px
         6px;
 
@@ -1778,22 +1689,27 @@
         );
 
     box-shadow:
-        inset 0 0 0 1px rgba(255,255,255,.20),
-        0 10px 22px rgba(7,91,107,.24);
+        inset 0 0 0 1px
+        rgba(255,255,255,.20),
+
+        0 9px 20px
+        rgba(7,91,107,.22);
 
     overflow: hidden;
 }
 
 .ejsc-camera {
+
     position: absolute;
 
-    top: -6px;
+    top: -5px;
     left: 50%;
 
     width: 5px;
     height: 5px;
 
-    transform: translateX(-50%);
+    transform:
+        translateX(-50%);
 
     border-radius: 50%;
 
@@ -1801,6 +1717,7 @@
 }
 
 .ejsc-laptop-screen::after {
+
     content: "";
 
     position: absolute;
@@ -1817,7 +1734,7 @@
         linear-gradient(
             90deg,
             transparent,
-            rgba(255,255,255,.16),
+            rgba(255,255,255,.15),
             transparent
         );
 
@@ -1826,6 +1743,7 @@
 }
 
 @keyframes ejscScreenShine {
+
     0%,65% {
         left: -80%;
     }
@@ -1841,7 +1759,9 @@
 ========================================================= */
 
 .ejsc-screen-content {
+
     position: relative;
+
     z-index: 2;
 
     width: 100%;
@@ -1849,47 +1769,34 @@
 }
 
 .ejsc-screen-top {
+
     display: flex;
+
     align-items: center;
+
     justify-content: space-between;
 
-    margin: 8px 10px 8px;
+    margin:
+        7px 9px 7px;
 }
 
 .ejsc-screen-logo {
+
     color: #fff;
 
-    font-size: 23px;
+    font-size: 20px;
+
     font-weight: 800;
-    letter-spacing: -.5px;
 }
 
 .ejsc-screen-dot {
-    width: 7px;
-    height: 7px;
+
+    width: 6px;
+    height: 6px;
 
     border-radius: 50%;
 
     background: #bfffff;
-
-    box-shadow:
-        0 0 0 4px
-        rgba(255,255,255,.12);
-
-    animation:
-        ejscScreenDot 1.6s ease-in-out infinite;
-}
-
-@keyframes ejscScreenDot {
-    0%,100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-
-    50% {
-        opacity: .55;
-        transform: scale(.7);
-    }
 }
 
 
@@ -1898,18 +1805,23 @@
 ========================================================= */
 
 .ejsc-screen-line {
-    width: 105px;
-    height: 7px;
 
-    margin: 6px 10px;
+    width: 95px;
+    height: 6px;
+
+    margin:
+        5px 9px;
 
     border-radius: 99px;
 
-    background: rgba(255,255,255,.78);
+    background:
+        rgba(255,255,255,.78);
 }
 
 .ejsc-screen-line.small {
-    width: 78px;
+
+    width: 70px;
+
     opacity: .58;
 }
 
@@ -1919,17 +1831,19 @@
 ========================================================= */
 
 .ejsc-mini-cards {
+
     display: flex;
 
     gap: 5px;
 
     margin:
-        12px 10px 0;
+        10px 9px 0;
 }
 
 .ejsc-mini-cards div {
-    width: 29px;
-    height: 18px;
+
+    width: 26px;
+    height: 17px;
 
     border-radius: 4px;
 
@@ -1939,29 +1853,6 @@
     border:
         1px solid
         rgba(255,255,255,.15);
-
-    animation:
-        ejscMiniCardPulse 2.5s ease-in-out infinite;
-}
-
-.ejsc-mini-cards div:nth-child(2) {
-    animation-delay: .3s;
-}
-
-.ejsc-mini-cards div:nth-child(3) {
-    animation-delay: .6s;
-}
-
-@keyframes ejscMiniCardPulse {
-    0%,100% {
-        opacity: .55;
-        transform: translateY(0);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translateY(-2px);
-    }
 }
 
 
@@ -1970,64 +1861,70 @@
 ========================================================= */
 
 .ejsc-chart {
+
     position: absolute;
 
-    right: 15px;
-    bottom: 13px;
+    right: 12px;
+    bottom: 11px;
 
-    width: 82px;
-    height: 62px;
+    width: 75px;
+    height: 57px;
 
     display: flex;
+
     align-items: flex-end;
+
     justify-content: flex-end;
 
-    gap: 5px;
+    gap: 4px;
 }
 
 .ejsc-chart span {
+
     display: block;
 
-    width: 11px;
+    width: 10px;
 
     border-radius:
         3px 3px 0 0;
 
     background: #fff;
 
-    transform-origin: bottom;
+    transform-origin:
+        bottom;
 
     animation:
         ejscChartMotion 1.8s ease-in-out infinite;
 }
 
 .ejsc-chart span:nth-child(1) {
-    height: 20px;
+    height: 18px;
 }
 
 .ejsc-chart span:nth-child(2) {
-    height: 31px;
+    height: 29px;
     animation-delay: .15s;
 }
 
 .ejsc-chart span:nth-child(3) {
-    height: 44px;
+    height: 40px;
     animation-delay: .3s;
 }
 
 .ejsc-chart span:nth-child(4) {
-    height: 53px;
+    height: 48px;
     animation-delay: .45s;
 }
 
 .ejsc-chart span:nth-child(5) {
-    height: 38px;
+    height: 34px;
     animation-delay: .6s;
 }
 
 @keyframes ejscChartMotion {
+
     0%,100% {
-        transform: scaleY(.75);
+        transform: scaleY(.78);
         opacity: .75;
     }
 
@@ -2043,19 +1940,20 @@
 ========================================================= */
 
 .ejsc-laptop-base {
+
     position: absolute;
 
     left: 0;
     bottom: 0;
 
-    width: 330px;
-    height: 38px;
+    width: 300px;
+    height: 34px;
 
     border-radius:
         4px
         4px
-        28px
-        28px;
+        25px
+        25px;
 
     background:
         linear-gradient(
@@ -2065,413 +1963,45 @@
         );
 
     box-shadow:
-        0 13px 20px
-        rgba(31,111,127,.18);
+        0 11px 18px
+        rgba(31,111,127,.16);
 }
 
 .ejsc-trackpad {
+
     position: absolute;
 
-    left: 132px;
-    bottom: 10px;
+    left: 120px;
+    bottom: 9px;
 
-    width: 68px;
-    height: 11px;
+    width: 61px;
+    height: 10px;
 
-    border: 1px solid #c0dfe3;
+    border:
+        1px solid
+        #c0dfe3;
+
     border-radius: 5px;
 
     background: #e6f4f5;
 }
 
 .ejsc-laptop-bottom-glow {
+
     position: absolute;
 
-    left: 70px;
+    left: 62px;
     bottom: -5px;
 
-    width: 190px;
-    height: 12px;
+    width: 175px;
+    height: 10px;
 
     border-radius: 50%;
 
     background:
-        rgba(9,190,201,.22);
+        rgba(9,190,201,.20);
 
-    filter: blur(8px);
-
-    animation:
-        ejscLaptopGlow 4.8s ease-in-out infinite;
-}
-
-@keyframes ejscLaptopGlow {
-    0%,100% {
-        transform: scaleX(1);
-        opacity: .5;
-    }
-
-    50% {
-        transform: scaleX(.8);
-        opacity: .25;
-    }
-}
-
-
-/* =========================================================
-   PLANT
-========================================================= */
-
-.ejsc-plant {
-    position: absolute;
-
-    left: 20px;
-    bottom: 35px;
-
-    width: 170px;
-    height: 235px;
-
-    transform-origin: bottom center;
-
-    animation:
-        ejscPlantSway 5s ease-in-out infinite;
-}
-
-@keyframes ejscPlantSway {
-    0%,100% {
-        transform: rotate(0deg);
-    }
-
-    50% {
-        transform: rotate(1.8deg);
-    }
-}
-
-
-/* =========================================================
-   POT
-========================================================= */
-
-.ejsc-pot {
-    position: absolute;
-
-    left: 52px;
-    bottom: 0;
-
-    width: 76px;
-    height: 73px;
-
-    border-radius:
-        9px
-        9px
-        23px
-        23px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #d5edef
-        );
-
-    box-shadow:
-        0 15px 20px
-        rgba(28,111,126,.16);
-
-    animation:
-        ejscPotFloat 5s ease-in-out infinite;
-}
-
-.ejsc-pot-rim {
-    position: absolute;
-
-    top: -8px;
-    left: 2px;
-
-    width: 72px;
-    height: 18px;
-
-    border-radius: 50%;
-
-    background:
-        linear-gradient(
-            180deg,
-            #eaf8f9,
-            #cce6e8
-        );
-
-    box-shadow:
-        inset 0 -3px 4px
-        rgba(45,130,137,.10);
-}
-
-.ejsc-pot-shadow {
-    position: absolute;
-
-    left: 13px;
-    bottom: 11px;
-
-    width: 50px;
-    height: 9px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(52,129,137,.09);
-
-    filter: blur(4px);
-}
-
-@keyframes ejscPotFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-2px);
-    }
-}
-
-
-/* =========================================================
-   PLANT STEMS
-========================================================= */
-
-.ejsc-plant-stem {
-    position: absolute;
-
-    width: 5px;
-
-    border-radius: 99px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #238f91,
-            #20c3b3
-        );
-
-    transform-origin: bottom center;
-}
-
-.stem-main {
-    left: 87px;
-    bottom: 61px;
-    height: 143px;
-    transform: rotate(1deg);
-}
-
-.stem-left {
-    left: 72px;
-    bottom: 64px;
-    height: 103px;
-    transform: rotate(-22deg);
-}
-
-.stem-right {
-    left: 94px;
-    bottom: 63px;
-    height: 116px;
-    transform: rotate(24deg);
-}
-
-
-/* =========================================================
-   MONSTERA LEAVES
-========================================================= */
-
-.ejsc-leaf {
-    position: absolute;
-
-    width: 72px;
-    height: 48px;
-
-    border-radius:
-        85%
-        15%
-        85%
-        15%;
-
-    background:
-        linear-gradient(
-            135deg,
-            #31d0b9 0%,
-            #12b09f 55%,
-            #078e8c 100%
-        );
-
-    box-shadow:
-        inset -6px -6px 12px
-        rgba(0,90,93,.13),
-
-        0 5px 10px
-        rgba(17,130,130,.10);
-
-    transform-origin: bottom right;
-
-    overflow: hidden;
-}
-
-.ejsc-leaf::before {
-    content: "";
-
-    position: absolute;
-
-    left: 8px;
-    bottom: 10px;
-
-    width: 58px;
-    height: 2px;
-
-    border-radius: 99px;
-
-    background:
-        rgba(220,255,248,.35);
-
-    transform: rotate(-22deg);
-}
-
-.ejsc-leaf span {
-    position: absolute;
-
-    width: 8px;
-    height: 22px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(232,255,249,.20);
-
-    transform: rotate(25deg);
-}
-
-.leaf-1 {
-    left: 76px;
-    bottom: 157px;
-
-    transform:
-        rotate(-35deg)
-        scale(1.05);
-
-    animation:
-        ejscLeafOne 4s ease-in-out infinite;
-}
-
-.leaf-2 {
-    left: 10px;
-    bottom: 128px;
-
-    transform:
-        rotate(27deg)
-        scale(.96);
-
-    animation:
-        ejscLeafTwo 4.4s ease-in-out infinite;
-}
-
-.leaf-3 {
-    left: 78px;
-    bottom: 103px;
-
-    transform:
-        rotate(-59deg)
-        scale(.86);
-
-    animation:
-        ejscLeafThree 3.8s ease-in-out infinite;
-}
-
-.leaf-4 {
-    left: 18px;
-    bottom: 171px;
-
-    transform:
-        rotate(9deg)
-        scale(.76);
-
-    animation:
-        ejscLeafFour 4.2s ease-in-out infinite;
-}
-
-.leaf-5 {
-    left: 98px;
-    bottom: 132px;
-
-    transform:
-        rotate(42deg)
-        scale(.70);
-
-    animation:
-        ejscLeafFive 4.6s ease-in-out infinite;
-}
-
-@keyframes ejscLeafOne {
-    0%,100% {
-        transform:
-            rotate(-35deg)
-            scale(1.05);
-    }
-
-    50% {
-        transform:
-            rotate(-41deg)
-            scale(1.08);
-    }
-}
-
-@keyframes ejscLeafTwo {
-    0%,100% {
-        transform:
-            rotate(27deg)
-            scale(.96);
-    }
-
-    50% {
-        transform:
-            rotate(20deg)
-            scale(1);
-    }
-}
-
-@keyframes ejscLeafThree {
-    0%,100% {
-        transform:
-            rotate(-59deg)
-            scale(.86);
-    }
-
-    50% {
-        transform:
-            rotate(-52deg)
-            scale(.91);
-    }
-}
-
-@keyframes ejscLeafFour {
-    0%,100% {
-        transform:
-            rotate(9deg)
-            scale(.76);
-    }
-
-    50% {
-        transform:
-            rotate(17deg)
-            scale(.80);
-    }
-}
-
-@keyframes ejscLeafFive {
-    0%,100% {
-        transform:
-            rotate(42deg)
-            scale(.70);
-    }
-
-    50% {
-        transform:
-            rotate(35deg)
-            scale(.75);
-    }
+    filter: blur(7px);
 }
 
 
@@ -2480,47 +2010,50 @@
 ========================================================= */
 
 .ejsc-books {
+
     position: absolute;
 
-    right: -15px;
-    bottom: 40px;
+    right: -5px;
+    bottom: 32px;
 
-    width: 150px;
-    height: 115px;
+    width: 135px;
+    height: 105px;
 
     animation:
         ejscBooksMotion 5s ease-in-out infinite;
 }
 
 @keyframes ejscBooksMotion {
+
     0%,100% {
-        transform:
-            translateY(0);
+        transform: translateY(0);
     }
 
     50% {
-        transform:
-            translateY(-8px);
+        transform: translateY(-6px);
     }
 }
 
 .ejsc-book {
+
     position: absolute;
 
     right: 0;
 
-    height: 27px;
+    height: 25px;
 
     border-radius: 4px;
 
     box-shadow:
-        0 7px 10px
-        rgba(24,111,125,.13);
+        0 6px 9px
+        rgba(24,111,125,.12);
 }
 
 .book-1 {
+
     bottom: 0;
-    width: 140px;
+
+    width: 125px;
 
     background:
         linear-gradient(
@@ -2531,9 +2064,12 @@
 }
 
 .book-2 {
-    bottom: 27px;
-    width: 126px;
-    right: 7px;
+
+    bottom: 25px;
+
+    width: 113px;
+
+    right: 6px;
 
     background: #fff;
 
@@ -2543,8 +2079,11 @@
 }
 
 .book-3 {
-    bottom: 54px;
-    width: 138px;
+
+    bottom: 50px;
+
+    width: 123px;
+
     right: 2px;
 
     background:
@@ -2556,14 +2095,15 @@
 }
 
 .book-3::after {
+
     content: "";
 
     position: absolute;
 
-    left: 15px;
-    top: 8px;
+    left: 13px;
+    top: 7px;
 
-    width: 70px;
+    width: 62px;
     height: 3px;
 
     border-radius: 99px;
@@ -2574,76 +2114,21 @@
 
 
 /* =========================================================
-   CURVED ARROW
-========================================================= */
-
-.ejsc-curved-arrow {
-    position: absolute;
-
-    z-index: 8;
-
-    right: -20px;
-    top: 100px;
-
-    width: 300px;
-    height: 190px;
-
-    overflow: visible;
-
-    animation:
-        ejscArrowFloat 4s ease-in-out infinite;
-}
-
-.ejsc-arrow-path {
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
-
-    animation:
-        ejscArrowDraw 4s ease-in-out infinite;
-}
-
-@keyframes ejscArrowFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-8px);
-    }
-}
-
-@keyframes ejscArrowDraw {
-    0% {
-        stroke-dashoffset: 420;
-        opacity: .35;
-    }
-
-    45% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-    }
-
-    75%,100% {
-        stroke-dashoffset: 0;
-        opacity: 1;
-    }
-}
-
-
-/* =========================================================
    FEATURE WRAPPER
 ========================================================= */
 
 .ejsc-feature-wrapper {
+
     position: absolute;
 
     z-index: 20;
 
     left: 50%;
-    bottom: 78px;
+
+    bottom: 150px;
 
     width:
-        min(940px, calc(100% - 90px));
+        min(1100px, calc(100% - 70px));
 
     transform:
         translateX(-50%);
@@ -2655,12 +2140,12 @@
 ========================================================= */
 
 .ejsc-feature-bar {
-    position: relative;
 
     width: 100%;
-    min-height: 315px;
 
-    padding: 50px 42px;
+    min-height: 260px;
+
+    padding: 35px 25px;
 
     display: grid;
 
@@ -2673,33 +2158,20 @@
         1px solid
         rgba(213,236,239,.98);
 
-    border-radius: 28px;
+    border-radius: 25px;
 
     background:
         rgba(255,255,255,.96);
 
     box-shadow:
-        0 25px 60px
-        rgba(44,92,112,.10),
+        0 22px 55px
+        rgba(44,92,112,.09),
 
-        0 8px 20px
+        0 7px 18px
         rgba(24,184,194,.04);
 
     backdrop-filter:
-        blur(20px);
-
-    animation:
-        ejscFeatureBarFloat 6s ease-in-out infinite;
-}
-
-@keyframes ejscFeatureBarFloat {
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(-5px);
-    }
+        blur(18px);
 }
 
 
@@ -2708,17 +2180,21 @@
 ========================================================= */
 
 .ejsc-feature {
+
     position: relative;
 
     min-width: 0;
-    min-height: 205px;
 
-    padding: 0 28px;
+    min-height: 185px;
+
+    padding: 0 25px;
 
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
+
     justify-content: center;
 
     text-align: center;
@@ -2726,21 +2202,25 @@
 
 
 /* =========================================================
-   DIVIDERS
+   DIVIDER
 ========================================================= */
 
 .ejsc-feature:not(:last-child)::after {
+
     content: "";
 
     position: absolute;
 
     right: 0;
-    top: 8px;
+    top: 10px;
 
     width: 1px;
-    height: calc(100% - 16px);
 
-    background: #dcebed;
+    height:
+        calc(100% - 20px);
+
+    background:
+        #dcebed;
 }
 
 
@@ -2749,12 +2229,14 @@
 ========================================================= */
 
 .ejsc-feature-icon {
-    width: 88px;
-    height: 88px;
 
-    margin-bottom: 24px;
+    width: 72px;
+    height: 72px;
+
+    margin-bottom: 18px;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
@@ -2774,58 +2256,14 @@
         );
 
     box-shadow:
-        0 9px 24px
-        rgba(16,190,201,.08),
-
-        inset 0 0 0 5px
-        rgba(16,198,208,.025);
-
-    animation:
-        ejscFeatureIconFloat 4s ease-in-out infinite;
-}
-
-.ejsc-feature:nth-child(2) .ejsc-feature-icon {
-    animation-delay: .4s;
-}
-
-.ejsc-feature:nth-child(3) .ejsc-feature-icon {
-    animation-delay: .8s;
-}
-
-.ejsc-feature:nth-child(4) .ejsc-feature-icon {
-    animation-delay: 1.2s;
-}
-
-@keyframes ejscFeatureIconFloat {
-    0%,100% {
-        transform:
-            translateY(0)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translateY(-7px)
-            scale(1.04);
-    }
+        0 8px 20px
+        rgba(16,190,201,.08);
 }
 
 .ejsc-feature-icon svg {
-    width: 42px;
-    height: 42px;
 
-    animation:
-        ejscFeatureSvg 4s ease-in-out infinite;
-}
-
-@keyframes ejscFeatureSvg {
-    0%,100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.07);
-    }
+    width: 36px;
+    height: 36px;
 }
 
 
@@ -2834,11 +2272,13 @@
 ========================================================= */
 
 .ejsc-feature h4 {
-    margin: 0 0 12px;
+
+    margin: 0 0 9px;
 
     color: #0bb2be;
 
-    font-size: 17px;
+    font-size: 16px;
+
     font-weight: 800;
 }
 
@@ -2848,282 +2288,397 @@
 ========================================================= */
 
 .ejsc-feature p {
+
     max-width: 190px;
 
     margin: 0;
 
     color: #526f89;
 
-    font-size: 13px;
-    line-height: 1.8;
+    font-size: 12px;
+
+    line-height: 1.7;
 }
 
 
 /* =========================================================
-   RESPONSIVE 1100
+   HIDE PLANT + ARROW
+========================================================= */
+
+.ejsc-plant,
+.ejsc-curved-arrow {
+    display: none !important;
+}
+
+
+/* =========================================================
+   TABLET 1100
 ========================================================= */
 
 @media (max-width:1100px) {
 
     .ejsc-hero {
-        min-height: 1450px;
+        min-height: 1250px;
     }
 
     .ejsc-hero-container {
-        width: calc(100% - 60px);
+
+        width:
+            calc(100% - 50px);
 
         grid-template-columns:
-            1fr 1fr;
+            minmax(0,1fr)
+            minmax(0,390px);
 
-        gap: 30px;
+        gap: 40px;
 
-        padding-top: 230px;
+        padding-top: 90px;
     }
 
     .ejsc-title {
-        font-size: 48px;
-    }
-
-    .ejsc-stat-card {
-        max-width: 390px;
+        font-size: 50px;
     }
 
     .ejsc-illustration {
-        transform: scale(.88);
-        transform-origin: bottom right;
 
-        right: -80px;
+        right: -50px;
+
+        transform:
+            scale(.88);
+
+        transform-origin:
+            bottom right;
     }
 
     .ejsc-feature-wrapper {
-        width: calc(100% - 60px);
+
+        width:
+            calc(100% - 50px);
     }
 
     .ejsc-feature-bar {
-        padding: 40px 25px;
+
+        padding:
+            30px 15px;
     }
 
     .ejsc-feature {
-        padding: 0 17px;
+
+        padding:
+            0 15px;
     }
 }
 
 
 /* =========================================================
-   RESPONSIVE 900
+   TABLET 900
 ========================================================= */
 
 @media (max-width:900px) {
 
     .ejsc-hero {
+
         min-height: auto;
-        padding-bottom: 50px;
+
+        padding-bottom: 10px;
     }
 
     .ejsc-hero-container {
-        min-height: auto;
 
-        width: calc(100% - 50px);
+        width:
+            calc(100% - 40px);
 
-        padding-top: 170px;
-        padding-bottom: 60px;
+        padding-top: 70px;
+        padding-bottom: 20px;
 
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
 
-        gap: 70px;
+        gap: 45px;
     }
 
     .ejsc-hero-left {
+
         padding-top: 0;
     }
 
     .ejsc-title {
+
         max-width: 650px;
-        font-size: 56px;
+
+        font-size: 52px;
     }
 
     .ejsc-description {
-        max-width: 600px;
+
+        max-width: 650px;
     }
 
     .ejsc-hero-right {
-        min-height: 680px;
-        justify-content: center;
+
+        min-height: 600px;
+
+        justify-content:
+            center;
     }
 
     .ejsc-stat-card {
-        max-width: 620px;
+
+        max-width: 650px;
     }
 
     .ejsc-illustration {
+
         right: 50%;
-        bottom: -30px;
+
+        bottom: -15px;
 
         transform:
             translateX(50%)
-            scale(.9);
+            scale(.82);
 
         transform-origin:
             bottom center;
     }
 
     .ejsc-feature-wrapper {
+
         position: relative;
 
         left: auto;
         bottom: auto;
 
-        width: calc(100% - 50px);
+        width:
+            calc(100% - 40px);
 
-        margin: 0 auto;
+        margin:
+            0 auto;
 
         transform: none;
     }
 
     .ejsc-feature-bar {
-        grid-template-columns: 1fr 1fr;
-        min-height: 400px;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        min-height: 360px;
+
+        padding:
+            25px 15px;
     }
 
     .ejsc-feature {
-        min-height: 175px;
-    }
 
-    .ejsc-feature:nth-child(2)::after,
-    .ejsc-feature:nth-child(3)::after {
-        display: none;
+        min-height: 160px;
     }
 
     .ejsc-feature:nth-child(1),
     .ejsc-feature:nth-child(2) {
+
         border-bottom:
-            1px solid #dcebed;
+            1px solid
+            #dcebed;
+    }
+
+    .ejsc-feature:nth-child(2)::after,
+    .ejsc-feature:nth-child(4)::after {
+
+        display: none;
     }
 }
 
 
 /* =========================================================
-   RESPONSIVE 640
+   MOBILE 640
 ========================================================= */
 
 @media (max-width:640px) {
 
-    .ejsc-bg-shape-1 {
-        width: 280px;
-        height: 230px;
+    .ejsc-hero {
 
-        left: -145px;
-        top: -80px;
+        min-height: auto;
+    }
+
+    .ejsc-bg-shape-1 {
+
+        width: 280px;
+        height: 220px;
+
+        left: -150px;
+        top: -70px;
     }
 
     .ejsc-bg-shape-2 {
-        width: 300px;
-        height: 210px;
 
-        right: -160px;
+        width: 280px;
+        height: 190px;
+
+        right: -150px;
+        top: 20px;
     }
 
     .ejsc-hero-container {
-        width: calc(100% - 30px);
 
-        padding-top: 110px;
-        padding-bottom: 30px;
+        width:
+            calc(100% - 28px);
 
-        gap: 55px;
+        padding-top: 50px;
+        padding-bottom: 10px;
+
+        gap: 35px;
     }
 
     .ejsc-badge {
-        margin-bottom: 30px;
 
-        font-size: 11px;
-        padding: 0 13px;
+        min-height: 37px;
+
+        margin-bottom: 22px;
+
+        padding:
+            0 12px;
+
+        font-size: 10px;
+    }
+
+    .ejsc-badge-star {
+
+        font-size: 18px;
     }
 
     .ejsc-title {
-        font-size: 41px;
 
-        line-height: 1.12;
-        letter-spacing: -1.8px;
+        font-size: 39px;
 
-        margin-bottom: 23px;
+        line-height: 1.10;
+
+        letter-spacing:
+            -1.8px;
+
+        margin-bottom:
+            18px;
     }
 
     .ejsc-description {
-        font-size: 14px;
-        line-height: 1.85;
 
-        margin-bottom: 30px;
+        font-size: 13.5px;
+
+        line-height: 1.8;
+
+        margin-bottom:
+            25px;
     }
 
     .ejsc-buttons {
+
         width: 100%;
-        gap: 10px;
+
+        gap: 9px;
     }
 
     .ejsc-btn-primary,
     .ejsc-btn-secondary {
+
         flex: 1;
 
         min-width: 0;
-        height: 53px;
 
-        padding: 0 14px;
+        height: 51px;
 
-        font-size: 13px;
-    }
+        padding:
+            0 12px;
 
-    .ejsc-stat-card {
-        padding: 23px 18px;
-        border-radius: 22px;
-    }
-
-    .ejsc-stat-header {
-        margin-bottom: 23px;
-    }
-
-    .ejsc-stat-header h3 {
-        font-size: 15px;
-    }
-
-    .ejsc-live {
-        font-size: 10px;
-    }
-
-    .ejsc-stat-grid {
-        grid-template-columns: 1fr;
-        gap: 10px;
-    }
-
-    .ejsc-stat-box {
-        min-height: 85px;
-        padding: 14px;
-    }
-
-    .ejsc-stat-number {
-        font-size: 23px;
-    }
-
-    .ejsc-stat-icon {
-        flex-basis: 45px;
-        width: 45px;
-        height: 45px;
-    }
-
-    .ejsc-stat-icon svg {
-        width: 36px;
-        height: 36px;
+        font-size: 12px;
     }
 
     .ejsc-hero-right {
-        min-height: 600px;
+
+        min-height:
+            550px;
+    }
+
+    .ejsc-stat-card {
+
+        padding:
+            21px 16px;
+
+        border-radius:
+            20px;
+    }
+
+    .ejsc-stat-header {
+
+        margin-bottom:
+            19px;
+    }
+
+    .ejsc-stat-header h3 {
+
+        font-size:
+            14px;
+    }
+
+    .ejsc-stat-grid {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .ejsc-stat-box {
+
+        min-height:
+            78px;
+
+        padding:
+            12px;
+    }
+
+    .ejsc-stat-number {
+
+        font-size:
+            22px;
+    }
+
+    .ejsc-stat-label {
+
+        font-size:
+            11px;
+    }
+
+    .ejsc-stat-icon {
+
+        flex-basis:
+            40px;
+
+        width:
+            40px;
+
+        height:
+            40px;
+    }
+
+    .ejsc-stat-icon svg {
+
+        width:
+            34px;
+
+        height:
+            34px;
     }
 
     .ejsc-illustration {
-        width: 580px;
-        height: 360px;
 
-        right: 50%;
-        bottom: -10px;
+        width:
+            500px;
+
+        height:
+            320px;
+
+        right:
+            50%;
+
+        bottom:
+            -5px;
 
         transform:
             translateX(50%)
@@ -3131,105 +2686,147 @@
     }
 
     .ejsc-feature-wrapper {
-        width: calc(100% - 30px);
+
+        width:
+            calc(100% - 28px);
     }
 
     .ejsc-feature-bar {
-        grid-template-columns: 1fr;
 
-        min-height: auto;
+        grid-template-columns:
+            1fr;
 
-        padding: 25px 20px;
+        min-height:
+            auto;
 
-        gap: 0;
+        padding:
+            10px 15px;
 
-        border-radius: 23px;
+        border-radius:
+            21px;
     }
 
     .ejsc-feature {
-        min-height: 190px;
-        padding: 25px 15px;
+
+        min-height:
+            170px;
+
+        padding:
+            20px 10px;
 
         border-bottom:
-            1px solid #dcebed;
+            1px solid
+            #dcebed;
     }
 
     .ejsc-feature:last-child {
-        border-bottom: none;
+
+        border-bottom:
+            none;
     }
 
     .ejsc-feature:not(:last-child)::after {
-        display: none;
+
+        display:
+            none;
     }
 
     .ejsc-feature-icon {
-        width: 72px;
-        height: 72px;
 
-        margin-bottom: 17px;
+        width:
+            66px;
+
+        height:
+            66px;
+
+        margin-bottom:
+            14px;
     }
 
     .ejsc-feature-icon svg {
-        width: 35px;
-        height: 35px;
+
+        width:
+            32px;
+
+        height:
+            32px;
     }
 
     .ejsc-feature h4 {
-        font-size: 16px;
+
+        font-size:
+            15px;
     }
 
     .ejsc-feature p {
-        max-width: 260px;
-        font-size: 12px;
+
+        max-width:
+            270px;
+
+        font-size:
+            12px;
     }
 
     .ejsc-dot-1,
     .ejsc-dot-2 {
-        display: none;
+
+        display:
+            none;
     }
 }
 
 
 /* =========================================================
-   RESPONSIVE 430
+   MOBILE 430
 ========================================================= */
 
 @media (max-width:430px) {
 
-    .ejsc-title {
-        font-size: 37px;
+    .ejsc-hero-container {
+
+        padding-top:
+            40px;
+
+        gap:
+            30px;
     }
 
-    .ejsc-badge {
-        max-width: 100%;
-        white-space: nowrap;
+    .ejsc-title {
+
+        font-size:
+            35px;
     }
 
     .ejsc-buttons {
-        flex-direction: column;
-        align-items: stretch;
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
     }
 
     .ejsc-btn-primary,
     .ejsc-btn-secondary {
-        width: 100%;
-        flex: none;
+
+        width:
+            100%;
+
+        flex:
+            none;
     }
 
     .ejsc-hero-right {
-        min-height: 540px;
+
+        min-height:
+            500px;
     }
 
     .ejsc-illustration {
+
         transform:
             translateX(50%)
-            scale(.47);
-
-        bottom: -5px;
-    }
-
-    .ejsc-stat-card {
-        width: 100%;
+            scale(.48);
     }
 }
 
@@ -3254,40 +2851,9 @@
             0.01ms !important;
     }
 }
-@media (prefers-reduced-motion: reduce) {
-
-    .ejsc-hero *,
-    .ejsc-hero *::before,
-    .ejsc-hero *::after {
-
-        animation-duration:
-            0.01ms !important;
-
-        animation-iteration-count:
-            1 !important;
-
-        transition-duration:
-            0.01ms !important;
-    }
-}
-
-
-/* =========================================================
-   HIDE PLANT & ARROW
-========================================================= */
-
-.ejsc-plant,
-.ejsc-curved-arrow {
-    display: none !important;
-}
-
-.ejsc-stat-label {
-    position: relative;
-    animation: none !important;
-}
-
 
 </style>
+
 
 <!-- =========================================================
      SECTION : LAYANAN KAMI
