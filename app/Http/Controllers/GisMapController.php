@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\DB;
 
 class GisMapController extends Controller
 {
+    public function index()
+{
+    return view('gis');
+}
     /**
      * Daftar tahun yang tersedia pada view PostGIS.
      */

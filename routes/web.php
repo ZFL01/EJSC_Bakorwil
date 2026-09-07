@@ -55,8 +55,8 @@ Route::post('/forgot-password', function (Request $request) {
 |
 */
 
-Route::get('/', [PublicController::class, 'index'])
-    ->name('public.index');
+Route::get('/gis', [GisMapController::class, 'index'])
+    ->name('gis');
 
 
 /*
