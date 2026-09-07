@@ -142,6 +142,8 @@ class ClientController extends Controller
     {
         $this->authorize('update', $client);
 
+        $client->load('user');
+
         return view('admin.clients.edit', compact('client'));
     }
 
@@ -152,7 +154,12 @@ class ClientController extends Controller
     {
         $this->authorize('update', $client);
 
+        $currentUserId = $client->id_user ?? 'NULL';
+
         $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $currentUserId . ',id_user',
+            'password' => 'nullable|string|min:8|confirmed',
             'nama_ukm' => 'required|string|max:255',
             'nama_produk' => 'required|string|max:255',
             'deskripsi_usaha' => 'nullable|string',
@@ -174,6 +181,28 @@ class ClientController extends Controller
                 }
                 $validated['foto_logo'] = $request->file('foto_logo')->store('client/logo', 'public');
             }
+
+            // Perbarui akun user terkait (nama, email, password bila diisi)
+            if ($client->id_user) {
+                $accountData = [
+                    'name'  => $validated['name'],
+                    'email' => $validated['email'],
+                ];
+
+                if (!empty($validated['password'])) {
+                    $accountData['password_hash'] = Hash::make($validated['password']);
+                }
+
+                User::where('id_user', $client->id_user)->update($accountData);
+            }
+
+            // Jangan simpan field akun ke tabel client
+            unset(
+                $validated['name'],
+                $validated['email'],
+                $validated['password'],
+                $validated['password_confirmation']
+            );
 
             $validated['updated_by'] = auth()->id();
             $client->update($validated);

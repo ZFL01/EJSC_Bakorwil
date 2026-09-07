@@ -180,6 +180,7 @@ class ProfileController extends Controller
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
         ]);
 
@@ -197,6 +198,13 @@ class ProfileController extends Controller
             $validated['url_cv'] = $request->file('url_cv')->store('cv', 'public');
         }
 
+        if ($request->hasFile('url_foto_ktp')) {
+            if ($mentor->url_ktp) {
+                Storage::disk('public')->delete($mentor->url_ktp);
+            }
+            $validated['url_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+        }
+
         if (isset($validated['expertise_tags'])) {
             $validated['expertise_tags'] = array_map('trim', explode(',', $validated['expertise_tags']));
         }
@@ -212,6 +220,8 @@ class ProfileController extends Controller
     {
         $this->authorize('update', $talent);
 
+        $oldMentorId = $talent->mentor_id;
+
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
@@ -221,8 +231,10 @@ class ProfileController extends Controller
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
+            'mentor_id' => 'nullable|exists:mentor,id_mentor',
             'status_pekerjaan' => 'nullable|in:bekerja,belum bekerja,magang',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
@@ -241,6 +253,13 @@ class ProfileController extends Controller
             $validated['url_cv'] = $request->file('url_cv')->store('cv', 'public');
         }
 
+        if ($request->hasFile('url_foto_ktp')) {
+            if ($talent->url_ktp) {
+                Storage::disk('public')->delete($talent->url_ktp);
+            }
+            $validated['url_ktp'] = $request->file('url_foto_ktp')->store('ktp', 'public');
+        }
+
         if ($request->hasFile('url_butap')) {
             if ($talent->url_butap) {
                 Storage::disk('public')->delete($talent->url_butap);
@@ -250,6 +269,19 @@ class ProfileController extends Controller
 
         if (isset($validated['skill_tags'])) {
             $validated['skill_tags'] = array_map('trim', explode(',', $validated['skill_tags']));
+        }
+
+        // Perbarui jumlah mentee bila mentor berubah
+        if (isset($validated['mentor_id'])) {
+            $newMentorId = $validated['mentor_id'] ?: null;
+            if (($oldMentorId ?: null) !== $newMentorId) {
+                if ($oldMentorId) {
+                    Mentor::where('id_mentor', $oldMentorId)->decrement('jumlah_mentee');
+                }
+                if ($newMentorId) {
+                    Mentor::where('id_mentor', $newMentorId)->increment('jumlah_mentee');
+                }
+            }
         }
 
         $validated['updated_by'] = auth()->id();

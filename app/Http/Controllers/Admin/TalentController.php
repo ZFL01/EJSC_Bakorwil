@@ -184,6 +184,8 @@ class TalentController extends Controller
         $mentors = Mentor::active()->get();
         $wilayah = Wilayah::orderBy('nama_wilayah')->get();
 
+        $talent->load('user');
+
         return view('admin.talents.edit', compact('talent', 'mentors', 'wilayah'));
     }
 
@@ -194,7 +196,12 @@ class TalentController extends Controller
     {
         $this->authorize('update', $talent);
 
+        $currentUserId = $talent->id_user ?? 'NULL';
+
         $validated = $request->validate([
+            'user_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $currentUserId . ',id_user',
+            'password' => 'nullable|string|min:8|confirmed',
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
@@ -238,6 +245,28 @@ class TalentController extends Controller
             if (isset($validated['skill_tags'])) {
                 $validated['skill_tags'] = array_map('trim', explode(',', $validated['skill_tags']));
             }
+
+            // Perbarui akun user terkait (nama, email, password bila diisi)
+            if ($talent->id_user) {
+                $accountData = [
+                    'name'  => $validated['user_name'],
+                    'email' => $validated['email'],
+                ];
+
+                if (!empty($validated['password'])) {
+                    $accountData['password_hash'] = Hash::make($validated['password']);
+                }
+
+                User::where('id_user', $talent->id_user)->update($accountData);
+            }
+
+            // Jangan simpan field akun ke tabel talenta
+            unset(
+                $validated['user_name'],
+                $validated['email'],
+                $validated['password'],
+                $validated['password_confirmation']
+            );
 
             $validated['updated_by'] = auth()->id();
             $talent->update($validated);

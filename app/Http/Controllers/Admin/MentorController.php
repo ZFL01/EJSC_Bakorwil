@@ -163,6 +163,8 @@ class MentorController extends Controller
 
         $wilayah = Wilayah::orderBy('nama_wilayah')->get();
 
+        $mentor->load('user');
+
         return view('admin.mentors.edit', compact('mentor', 'wilayah'));
     }
 
@@ -173,7 +175,12 @@ class MentorController extends Controller
     {
         $this->authorize('update', $mentor);
 
+        $currentUserId = $mentor->id_user ?? 'NULL';
+
         $validated = $request->validate([
+            'user_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $currentUserId . ',id_user',
+            'password' => 'nullable|string|min:8|confirmed',
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
@@ -209,6 +216,28 @@ class MentorController extends Controller
             if (isset($validated['expertise_tags'])) {
                 $validated['expertise_tags'] = array_map('trim', explode(',', $validated['expertise_tags']));
             }
+
+            // Perbarui akun user terkait (nama, email, password bila diisi)
+            if ($mentor->id_user) {
+                $accountData = [
+                    'name'  => $validated['user_name'],
+                    'email' => $validated['email'],
+                ];
+
+                if (!empty($validated['password'])) {
+                    $accountData['password_hash'] = Hash::make($validated['password']);
+                }
+
+                User::where('id_user', $mentor->id_user)->update($accountData);
+            }
+
+            // Jangan simpan field akun ke tabel mentor
+            unset(
+                $validated['user_name'],
+                $validated['email'],
+                $validated['password'],
+                $validated['password_confirmation']
+            );
 
             $validated['updated_by'] = auth()->id();
             $mentor->update($validated);

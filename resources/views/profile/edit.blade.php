@@ -189,11 +189,9 @@
                                 </div>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Status Ketersediaan</label>
-                                <select name="is_available" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
-                                    <option value="1" {{ old('is_available', $profile->is_available ? '1' : '0') == '1' ? 'selected' : '' }}>Available</option>
-                                    <option value="0" {{ old('is_available', $profile->is_available ? '1' : '0') == '0' ? 'selected' : '' }}>Unavailable</option>
-                                </select>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Pengalaman</label>
+                                <input type="text" name="pengalaman" value="{{ old('pengalaman', $profile->pengalaman) }}" placeholder="10+ tahun"
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Wilayah/Domisili</label>
@@ -214,7 +212,25 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Foto KTP</label>
+                                @if($profile->ktp_src)
+                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ $profile->ktp_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                                @endif
+                                <label class="group flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-[#bfe9ed] rounded-2xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
+                                    <div class="flex items-center gap-3 text-center">
+                                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#56b8c2] text-white shadow-sm">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828L18 9.828A4 4 0 1011.172 3l-6.586 6.586a6 6 0 108.485 8.485L20 15"/></svg>
+                                        </span>
+                                        <div class="text-left">
+                                            <div class="text-sm font-medium text-[#1f7a81]">Upload KTP</div>
+                                            <div class="text-[10px] text-slate-500">JPG, PNG</div>
+                                        </div>
+                                    </div>
+                                    <input type="file" name="url_foto_ktp" accept="image/jpeg,image/png" class="hidden">
+                                </label>
+                            </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">CV Mentor</label>
                                 @if($profile->cv_src)
@@ -287,6 +303,20 @@
                                 </select>
                             </div>
                             <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Pengalaman</label>
+                                <input type="text" name="pengalaman" value="{{ old('pengalaman', $profile->pengalaman) }}" placeholder="Fresh Graduate"
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Mentor (Opsional)</label>
+                                <select name="mentor_id" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                                    <option value="">-- Tidak Ada Mentor --</option>
+                                    @foreach($mentors ?? [] as $mentor)
+                                        <option value="{{ $mentor->id_mentor }}" {{ old('mentor_id', $profile->mentor_id) == $mentor->id_mentor ? 'selected' : '' }}>{{ $mentor->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Wilayah/Domisili</label>
                                 <select name="id_wilayah" id="id_wilayah_talent" required
                                         class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
@@ -305,7 +335,43 @@
                             </div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Foto KTP</label>
+                                @if($profile->ktp_src)
+                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ $profile->ktp_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                                @endif
+                                <label class="group flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-[#bfe9ed] rounded-2xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
+                                    <div class="flex items-center gap-3 text-center">
+                                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#56b8c2] text-white shadow-sm">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828L18 9.828A4 4 0 1011.172 3l-6.586 6.586a6 6 0 108.485 8.485L20 15"/></svg>
+                                        </span>
+                                        <div class="text-left">
+                                            <div class="text-sm font-medium text-[#1f7a81]">Upload KTP</div>
+                                            <div class="text-[10px] text-slate-500">JPG, PNG</div>
+                                        </div>
+                                    </div>
+                                    <input type="file" name="url_foto_ktp" accept="image/jpeg,image/png" class="hidden">
+                                </label>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Foto Buku Tabungan</label>
+                                @if($profile->butap_src)
+                                    <p class="text-[11px] text-slate-500 mb-2">File saat ini: <a href="{{ $profile->butap_src }}" target="_blank" class="text-[#56b8c2] underline">Lihat</a></p>
+                                @endif
+                                <label class="group flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-[#bfe9ed] rounded-2xl bg-[#f8fdfd] cursor-pointer transition-all duration-200 hover:border-[#56b8c2] hover:bg-[#effbfc] hover:shadow-sm">
+                                    <div class="flex items-center gap-3 text-center">
+                                        <span class="flex h-9 w-9 items-center justify-center rounded-full bg-[#56b8c2] text-white shadow-sm">
+                                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828L18 9.828A4 4 0 1011.172 3l-6.586 6.586a6 6 0 108.485 8.485L20 15"/></svg>
+                                        </span>
+                                        <div class="text-left">
+                                            <div class="text-sm font-medium text-[#1f7a81]">Upload Buku Tabungan</div>
+                                            <div class="text-[10px] text-slate-500">JPG, PNG</div>
+                                        </div>
+                                    </div>
+                                    <input type="file" name="url_butap" accept="image/jpeg,image/png" class="hidden">
+                                </label>
+                            </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">CV Talent</label>
                                 @if($profile->cv_src)

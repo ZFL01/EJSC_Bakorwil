@@ -9,7 +9,27 @@
         @csrf
         @method('PUT')
         
-        <h3 class="text-md font-bold text-gray-700 border-b pb-2">Data Profil UMKM</h3>
+        <h3 class="text-md font-bold text-gray-700 border-b pb-2">Informasi Akun User</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Pengguna</label>
+                <input type="text" name="name" value="{{ old('name', $client->user->name ?? '') }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Email User</label>
+                <input type="email" name="email" value="{{ old('email', $client->user->email ?? '') }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Password <span class="text-gray-400 font-normal">(kosongkan jika tidak diganti)</span></label>
+                <input type="password" name="password" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Konfirmasi Password</label>
+                <input type="password" name="password_confirmation" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
+        </div>
+
+        <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Data Profil UMKM</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Nama UKM</label>
