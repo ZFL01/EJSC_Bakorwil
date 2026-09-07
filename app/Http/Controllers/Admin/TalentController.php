@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Talent;
 use App\Models\Mentor;
 use App\Models\User;
+use App\Models\Wilayah;
 use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -57,8 +58,9 @@ class TalentController extends Controller
         $this->authorize('create', Talent::class);
         
         $mentors = Mentor::active()->get();
+        $wilayah = Wilayah::orderBy('nama_wilayah')->get();
         
-        return view('admin.talents.create', compact('mentors'));
+        return view('admin.talents.create', compact('mentors', 'wilayah'));
     }
 
     /**
@@ -75,6 +77,8 @@ class TalentController extends Controller
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
+            'id_wilayah' => 'required|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
@@ -116,6 +120,8 @@ class TalentController extends Controller
                 'nama' => $validated['nama'],
                 'no_wa' => $validated['no_wa'],
                 'alamat_lengkap' => $validated['alamat_lengkap'],
+                'id_wilayah' => $validated['id_wilayah'],
+                'domisili' => $validated['domisili'],
                 'keahlian' => $validated['keahlian'],
                 'pengalaman' => $validated['pengalaman'],
                 'skill_tags' => $skillTags,
@@ -176,8 +182,9 @@ class TalentController extends Controller
         $this->authorize('update', $talent);
 
         $mentors = Mentor::active()->get();
+        $wilayah = Wilayah::orderBy('nama_wilayah')->get();
 
-        return view('admin.talents.edit', compact('talent', 'mentors'));
+        return view('admin.talents.edit', compact('talent', 'mentors', 'wilayah'));
     }
 
     /**

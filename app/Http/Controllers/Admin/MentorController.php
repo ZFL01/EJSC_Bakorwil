@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Mentor;
 use App\Models\User;
+use App\Models\Wilayah;
 use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -50,7 +51,9 @@ class MentorController extends Controller
     {
         $this->authorize('create', Mentor::class);
         
-        return view('admin.mentors.create');
+        $wilayah = Wilayah::orderBy('nama_wilayah')->get();
+
+        return view('admin.mentors.create', compact('wilayah'));
     }
 
     /**
@@ -67,6 +70,8 @@ class MentorController extends Controller
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
+            'id_wilayah' => 'required|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',
@@ -102,6 +107,8 @@ class MentorController extends Controller
                 'nama' => $validated['nama'],
                 'no_wa' => $validated['no_wa'],
                 'alamat_lengkap' => $validated['alamat_lengkap'],
+                'id_wilayah' => $validated['id_wilayah'],
+                'domisili' => $validated['domisili'],
                 'keahlian' => $validated['keahlian'],
                 'pengalaman' => $validated['pengalaman'],
                 'expertise_tags' => $expertiseTags,
@@ -154,7 +161,9 @@ class MentorController extends Controller
     {
         $this->authorize('update', $mentor);
 
-        return view('admin.mentors.edit', compact('mentor'));
+        $wilayah = Wilayah::orderBy('nama_wilayah')->get();
+
+        return view('admin.mentors.edit', compact('mentor', 'wilayah'));
     }
 
     /**
@@ -168,6 +177,8 @@ class MentorController extends Controller
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
+            'id_wilayah' => 'required|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',

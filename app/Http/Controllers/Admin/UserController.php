@@ -3,8 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Mentor;
+use App\Models\Talent;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -76,6 +81,8 @@ class UserController extends Controller
 
     /**
      * Setujui user pending → status aktif.
+     * Otomatis buat record di tabel mentor/talenta/client sesuai role.
+     * Wilayah akan diisi nanti saat user mengisi profil.
      */
     public function approve(Request $request, User $user)
     {
@@ -83,11 +90,51 @@ class UserController extends Controller
             return back()->with('error', 'User ini tidak sedang menunggu persetujuan.');
         }
 
-        $user->update([
-            'status' => 'aktif',
-        ]);
+        DB::transaction(function () use ($user) {
+            // Update status user jadi aktif
+            $user->update([
+                'status' => 'aktif',
+            ]);
 
-        return back()->with('success', "Akun {$user->name} ({$user->role}) telah disetujui dan kini aktif.");
+            // Buat record di tabel yang sesuai berdasarkan role
+            // id_wilayah akan null sampai user mengisi profil
+            $data = [
+                'id_user' => $user->id_user,
+                'id_wilayah' => null, // Akan diisi saat user mengisi profil
+                'nama' => $user->name,
+                'email' => $user->email,
+                'status' => 'aktif',
+                'is_public' => false,
+            ];
+
+            switch ($user->role) {
+                case 'mentor':
+                    Mentor::create($data);
+                    break;
+                case 'talenta':
+                    Talent::create($data);
+                    break;
+                case 'client':
+                    // Client menggunakan nama_ukm, bukan nama
+                    $data['nama_ukm'] = $user->name;
+                    Client::create($data);
+                    break;
+            }
+        });
+
+        /*
+        |----------------------------------------------------------------------
+        | Auto-login: user yang disetujui langsung masuk ke sesi.
+        |----------------------------------------------------------------------
+        | Admin yang sedang membuka halaman akan digantikan oleh user yang
+        | baru disetujui (halaman persetujuan umumnya dibuka atas nama /
+        | pendamping user yang bersangkutan).
+        */
+        Auth::login($user);
+
+        $request->session()->regenerate();
+
+        return redirect()->route('public.index');
     }
 
     /**

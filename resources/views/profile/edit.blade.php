@@ -18,6 +18,22 @@
             </div>
         </div>
 
+        @if($errors->any())
+            <div class="px-6 pt-6 sm:px-8">
+                <div class="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 shadow-sm">
+                    <p class="font-semibold mb-1 flex items-center gap-2">
+                        <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg>
+                        Terjadi masalah saat menyimpan:
+                    </p>
+                    <ul class="ml-6 list-disc space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
         <form action="{{ route('profile.update') }}" method="POST" enctype="multipart/form-data" class="p-6 sm:p-8 space-y-8">
             @csrf
             @method('PUT')
@@ -96,6 +112,23 @@
                                 <input type="text" name="no_hp" value="{{ old('no_hp', $profile->no_hp) }}" required
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Wilayah/Domisili</label>
+                                <select name="id_wilayah" id="id_wilayah" required
+                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                                    @foreach(App\Models\Wilayah::orderBy('nama_wilayah')->get() as $wilayah)
+                                        <option value="{{ $wilayah->id_wilayah }}" {{ old('id_wilayah', $profile->id_wilayah) == $wilayah->id_wilayah ? 'selected' : '' }}>
+                                            {{ $wilayah->nama_wilayah }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Domisili (Kecamatan/Desa)</label>
+                                <input type="text" name="domisili" value="{{ old('domisili', $profile->domisili) }}" required
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition" placeholder="Contoh: Kec. Kaliwates, Jember">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Alamat</label>
@@ -128,6 +161,11 @@
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label>
+                                <input type="text" name="nama" value="{{ old('nama', $profile->nama) }}" required
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Keahlian</label>
                                 <input type="text" name="keahlian" value="{{ old('keahlian', $profile->keahlian) }}" required
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
@@ -156,6 +194,23 @@
                                     <option value="1" {{ old('is_available', $profile->is_available ? '1' : '0') == '1' ? 'selected' : '' }}>Available</option>
                                     <option value="0" {{ old('is_available', $profile->is_available ? '1' : '0') == '0' ? 'selected' : '' }}>Unavailable</option>
                                 </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Wilayah/Domisili</label>
+                                <select name="id_wilayah" id="id_wilayah_mentor" required
+                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                                    @foreach(App\Models\Wilayah::orderBy('nama_wilayah')->get() as $wilayah)
+                                        <option value="{{ $wilayah->id_wilayah }}" {{ old('id_wilayah', $profile->id_wilayah) == $wilayah->id_wilayah ? 'selected' : '' }}>
+                                            {{ $wilayah->nama_wilayah }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Domisili (Kecamatan/Desa)</label>
+                                <input type="text" name="domisili" value="{{ old('domisili', $profile->domisili) }}" required
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition" placeholder="Contoh: Kec. Kaliwates, Jember">
                             </div>
                         </div>
 
@@ -219,12 +274,34 @@
                                 </div>
                             </div>
                             <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Nama Lengkap</label>
+                                <input type="text" name="nama" value="{{ old('nama', $profile->nama) }}" required
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            </div>
+                            <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Status Pekerjaan</label>
                                 <select name="status_pekerjaan" class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                                     <option value="belum bekerja" {{ old('status_pekerjaan', $profile->status_pekerjaan) === 'belum bekerja' ? 'selected' : '' }}>Belum Bekerja</option>
                                     <option value="bekerja" {{ old('status_pekerjaan', $profile->status_pekerjaan) === 'bekerja' ? 'selected' : '' }}>Bekerja</option>
                                     <option value="magang" {{ old('status_pekerjaan', $profile->status_pekerjaan) === 'magang' ? 'selected' : '' }}>Magang</option>
                                 </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Wilayah/Domisili</label>
+                                <select name="id_wilayah" id="id_wilayah_talent" required
+                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                                    <option value="">-- Pilih Kabupaten/Kota --</option>
+                                    @foreach(App\Models\Wilayah::orderBy('nama_wilayah')->get() as $wilayah)
+                                        <option value="{{ $wilayah->id_wilayah }}" {{ old('id_wilayah', $profile->id_wilayah) == $wilayah->id_wilayah ? 'selected' : '' }}>
+                                            {{ $wilayah->nama_wilayah }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Domisili (Kecamatan/Desa)</label>
+                                <input type="text" name="domisili" value="{{ old('domisili', $profile->domisili) }}" required
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition" placeholder="Contoh: Kec. Kaliwates, Jember">
                             </div>
                         </div>
 

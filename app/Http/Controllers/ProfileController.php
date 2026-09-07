@@ -23,6 +23,7 @@ class ProfileController extends Controller
         if ($user->isClient()) {
             return $user->client ?: Client::create([
                 'id_user'      => $user->id_user,
+                'id_wilayah'   => $user->id_wilayah,
                 'nama_ukm'     => $user->name,
                 'nama_pemilik' => $user->name,
                 'email'        => $user->email,
@@ -33,6 +34,7 @@ class ProfileController extends Controller
         if ($user->isMentor()) {
             return $user->mentor ?: Mentor::create([
                 'id_user' => $user->id_user,
+                'id_wilayah' => $user->id_wilayah,
                 'nama'    => $user->name,
                 'email'   => $user->email,
                 'status'  => 'aktif',
@@ -42,6 +44,7 @@ class ProfileController extends Controller
         if ($user->isTalent()) {
             return $user->talent ?: Talent::create([
                 'id_user' => $user->id_user,
+                'id_wilayah' => $user->id_wilayah,
                 'nama'    => $user->name,
                 'email'   => $user->email,
                 'status'  => 'aktif',
@@ -117,6 +120,13 @@ class ProfileController extends Controller
             $this->updateTalentProfile($request, $this->ensureProfile($user));
         }
 
+        // Sync id_wilayah ke tabel users agar peta GIS bisa menghitung
+        if ($request->filled('id_wilayah')) {
+            $user->update([
+                'id_wilayah' => $request->integer('id_wilayah'),
+            ]);
+        }
+
         return redirect()->route('profile.show')
             ->with('success', 'Profil berhasil diupdate.');
     }
@@ -133,7 +143,11 @@ class ProfileController extends Controller
             'nama_produk' => 'required|string|max:255',
             'deskripsi_usaha' => 'nullable|string',
             'no_hp' => 'required|string|max:20',
+            'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
+            'nama_pemilik' => 'required|string|max:255',
+            'website' => 'nullable|url|max:255',
             'foto_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -158,6 +172,8 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
+            'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',
@@ -199,6 +215,8 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
+            'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
+            'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
             'keahlian' => 'required|string|max:255',
             'pengalaman' => 'nullable|string',

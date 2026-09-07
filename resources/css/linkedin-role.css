@@ -1,5 +1,5 @@
 /* ============================================
-   Google Role Selection - EJSC Bakorwil Jember
+   LinkedIn Role Selection - EJSC Bakorwil Jember
    ============================================ */
 
 /* ---------- Reset & Base ---------- */
@@ -18,7 +18,6 @@ body {
     padding: 1.5rem;
     position: relative;
     overflow-x: hidden;
-    /* Soft gradient background - hidup tapi tetap putih/cerah */
     background: linear-gradient(160deg, #f8fbfd 0%, #eef6f9 30%, #e4f0f5 60%, #f0f7fa 100%);
 }
 
@@ -51,14 +50,13 @@ body::after {
     animation: floatOrb2 26s ease-in-out infinite alternate;
 }
 
-/* ---------- Additional Decorative Elements ---------- */
+/* ---------- Background Decorations ---------- */
 .background-decor {
     position: fixed;
     pointer-events: none;
     z-index: 0;
 }
 
-/* Subtle dot pattern */
 .background-decor .dot-grid {
     position: fixed;
     top: 0;
@@ -72,7 +70,6 @@ body::after {
     z-index: 0;
 }
 
-/* Decorative wave blobs */
 .background-decor .wave-1 {
     position: fixed;
     bottom: -60px;
@@ -95,7 +92,6 @@ body::after {
     animation: morphWave2 20s ease-in-out infinite alternate;
 }
 
-/* Decorative floating shapes */
 .background-decor .shape-1 {
     position: fixed;
     top: 15%;
@@ -118,103 +114,41 @@ body::after {
     animation: floatShape2 18s ease-in-out infinite alternate;
 }
 
-.background-decor .shape-3 {
-    position: fixed;
-    top: 45%;
-    right: 3%;
-    width: 20px;
-    height: 20px;
-    border-radius: 50% 50% 50% 50%;
-    background: rgba(53, 191, 209, 0.04);
-    animation: floatShape3 12s ease-in-out infinite alternate;
-}
-
 /* ---------- Animations ---------- */
 @keyframes floatOrb {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    33% {
-        transform: translate(-40px, 25px) scale(1.06);
-    }
-    66% {
-        transform: translate(25px, -35px) scale(0.94);
-    }
-    100% {
-        transform: translate(-15px, 15px) scale(1.03);
-    }
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(-40px, 25px) scale(1.06); }
+    66% { transform: translate(25px, -35px) scale(0.94); }
+    100% { transform: translate(-15px, 15px) scale(1.03); }
 }
 
 @keyframes floatOrb2 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    33% {
-        transform: translate(30px, -25px) scale(1.08);
-    }
-    66% {
-        transform: translate(-25px, 30px) scale(0.92);
-    }
-    100% {
-        transform: translate(20px, -20px) scale(1.05);
-    }
+    0% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -25px) scale(1.08); }
+    66% { transform: translate(-25px, 30px) scale(0.92); }
+    100% { transform: translate(20px, -20px) scale(1.05); }
 }
 
 @keyframes morphWave {
-    0% {
-        border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
-        transform: rotate(0deg) scale(1);
-    }
-    50% {
-        border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%;
-        transform: rotate(8deg) scale(1.12);
-    }
-    100% {
-        border-radius: 60% 40% 40% 60% / 40% 60% 50% 50%;
-        transform: rotate(-8deg) scale(0.93);
-    }
+    0% { border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%; transform: rotate(0deg) scale(1); }
+    50% { border-radius: 40% 60% 60% 40% / 50% 40% 60% 50%; transform: rotate(8deg) scale(1.12); }
+    100% { border-radius: 60% 40% 40% 60% / 40% 60% 50% 50%; transform: rotate(-8deg) scale(0.93); }
 }
 
 @keyframes morphWave2 {
-    0% {
-        border-radius: 40% 60% 50% 50% / 40% 50% 50% 60%;
-        transform: rotate(0deg) scale(1);
-    }
-    50% {
-        border-radius: 50% 40% 60% 50% / 60% 40% 50% 50%;
-        transform: rotate(-10deg) scale(1.15);
-    }
-    100% {
-        border-radius: 60% 50% 40% 60% / 50% 60% 40% 50%;
-        transform: rotate(10deg) scale(0.88);
-    }
+    0% { border-radius: 40% 60% 50% 50% / 40% 50% 50% 60%; transform: rotate(0deg) scale(1); }
+    50% { border-radius: 50% 40% 60% 50% / 60% 40% 50% 50%; transform: rotate(-10deg) scale(1.15); }
+    100% { border-radius: 60% 50% 40% 60% / 50% 60% 40% 50%; transform: rotate(10deg) scale(0.88); }
 }
 
 @keyframes floatShape {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    100% {
-        transform: translate(-20px, -30px) rotate(45deg);
-    }
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(-20px, -30px) rotate(45deg); }
 }
 
 @keyframes floatShape2 {
-    0% {
-        transform: translate(0, 0) rotate(0deg);
-    }
-    100% {
-        transform: translate(25px, 20px) rotate(-30deg);
-    }
-}
-
-@keyframes floatShape3 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-    100% {
-        transform: translate(-15px, -15px) scale(1.5);
-    }
+    0% { transform: translate(0, 0) rotate(0deg); }
+    100% { transform: translate(25px, 20px) rotate(-30deg); }
 }
 
 /* ---------- Container ---------- */
@@ -251,9 +185,16 @@ body::after {
     border-color: rgba(53, 191, 209, 0.3);
 }
 
-.header .icon-wrapper .material-symbols-outlined {
-    font-size: 2.25rem;
-    color: #239EAF;
+.header .icon-wrapper .linkedin-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    color: #0A66C2;
+}
+
+.header .icon-wrapper .linkedin-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
 }
 
 .header h1 {
@@ -299,20 +240,58 @@ body::after {
     -webkit-backdrop-filter: blur(24px) saturate(1.6);
     border-radius: 1.5rem;
     padding: 2rem 1.75rem;
-    box-shadow:
-        0 8px 48px rgba(0, 0, 0, 0.04),
-        0 2px 12px rgba(0, 0, 0, 0.02),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.04), 0 2px 12px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.7);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .card:hover {
-    box-shadow:
-        0 12px 64px rgba(0, 0, 0, 0.06),
-        0 4px 24px rgba(0, 0, 0, 0.03),
-        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    box-shadow: 0 12px 64px rgba(0, 0, 0, 0.06), 0 4px 24px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9);
     transform: translateY(-3px);
+}
+
+/* ---------- LinkedIn Info Box ---------- */
+.linkedin-info {
+    background: linear-gradient(135deg, rgba(10, 102, 194, 0.04), rgba(10, 102, 194, 0.01));
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(10, 102, 194, 0.08);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.linkedin-info .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid rgba(10, 102, 194, 0.15);
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.linkedin-info .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.linkedin-info .info {
+    flex: 1;
+}
+
+.linkedin-info .info .name {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #0a1a1e;
+}
+
+.linkedin-info .info .headline {
+    display: block;
+    font-size: 0.75rem;
+    color: #6a7a7e;
 }
 
 /* ---------- Error Alert ---------- */
@@ -644,8 +623,9 @@ body::after {
         height: 60px;
     }
 
-    .header .icon-wrapper .material-symbols-outlined {
-        font-size: 1.75rem;
+    .header .icon-wrapper .linkedin-icon {
+        width: 1.75rem;
+        height: 1.75rem;
     }
 
     .header .subtitle .note {
@@ -679,6 +659,19 @@ body::after {
         padding: 0.7rem 1.25rem;
     }
 
+    .linkedin-info .avatar {
+        width: 32px;
+        height: 32px;
+    }
+
+    .linkedin-info .info .name {
+        font-size: 0.8rem;
+    }
+
+    .linkedin-info .info .headline {
+        font-size: 0.7rem;
+    }
+
     body {
         padding: 1rem;
     }
@@ -686,8 +679,7 @@ body::after {
     .background-decor .wave-1,
     .background-decor .wave-2,
     .background-decor .shape-1,
-    .background-decor .shape-2,
-    .background-decor .shape-3 {
+    .background-decor .shape-2 {
         display: none;
     }
 }

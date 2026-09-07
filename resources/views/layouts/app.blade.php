@@ -1644,6 +1644,31 @@
     "
 >
 
+    {{-- Flash Messages --}}
+    @if(session('success'))
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <div class="flex items-center justify-between gap-3 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 shadow-sm">
+                <span class="flex items-center gap-2 font-medium">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                    {{ session('success') }}
+                </span>
+                <button type="button" onclick="this.parentElement.style.display='none'" class="text-emerald-600 hover:text-emerald-800">&times;</button>
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+            <div class="flex items-center justify-between gap-3 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 shadow-sm">
+                <span class="flex items-center gap-2 font-medium">
+                    <svg class="h-5 w-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M12 3a9 9 0 100 18 9 9 0 000-18z"/></svg>
+                    {{ session('error') }}
+                </span>
+                <button type="button" onclick="this.parentElement.style.display='none'" class="text-rose-600 hover:text-rose-800">&times;</button>
+            </div>
+        </div>
+    @endif
+
     @yield('content')
 
 </main>
