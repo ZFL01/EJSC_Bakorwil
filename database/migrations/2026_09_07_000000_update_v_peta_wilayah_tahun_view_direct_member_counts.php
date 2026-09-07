@@ -6,14 +6,16 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
-     * Rebuild v_peta_wilayah_tahunan so that jumlah_mentor / jumlah_talenta /
-     * jumlah_client are counted DIRECTLY from their own tables by id_wilayah
-     * (filtered status = 'aktif'), instead of via project link tables.
+     * Rebuild v_peta_wilayah_tahunan: members counted from TWO sources (UNION):
+     *   1) members linked to projects of that year (historical data 2023-2025)
+     *   2) members with id_user IS NOT NULL (properly registered through user flow)
+     *      counted by created_at year — bulk-imported members (no id_user) are EXCLUDED.
      *
-     * Versi sebelumnya menghitung mentor/talenta/client melalui JOIN ke
-     * project (project_mentor / project_talenta / project_client), sehingga
-     * member baru yang belum terhubung ke project tidak pernah muncul di
-     * GIS map. Jumlah project tetap dihitung per-tahun seperti semula.
+     * This ensures:
+     *   - 2023-2025: shows real historical data from project links
+     *   - 2026+: shows only properly registered members (1-2 per wilayah),
+     *     NOT the combined total of all bulk-imported members
+     * Projects counted per-year as before.
      */
     public function up(): void
     {
@@ -43,30 +45,96 @@ return new class extends Migration
             FROM tahun tw
             CROSS JOIN public.wilayah w
         ),
-        -- Statistik member: dihitung LANGSUNG dari tabel mereka
-        -- (member aktif, dikelompokkan per wilayah — kumulatif, bukan per-tahun)
-        client_stat AS (
-            SELECT c.id_wilayah, count(*) AS jumlah_client
-            FROM public.client c
-            WHERE c.id_wilayah IS NOT NULL
-              AND c.status = 'aktif'
-            GROUP BY c.id_wilayah
+        -- Member 2023-2025: dari link project (data historis real)
+        mentor_by_project AS (
+            SELECT p.tahun, m.id_wilayah, m.id_mentor
+            FROM public.project p
+            JOIN public.project_mentor pm ON pm.id_project = p.id_project
+            JOIN public.mentor m ON m.id_mentor = pm.id_mentor
+            WHERE m.id_wilayah IS NOT NULL
+              AND p.tahun IS NOT NULL
+              AND m.status = 'aktif'
+            GROUP BY p.tahun, m.id_wilayah, m.id_mentor
         ),
-        mentor_stat AS (
-            SELECT m.id_wilayah, count(*) AS jumlah_mentor
+        talenta_by_project AS (
+            SELECT p.tahun, t.id_wilayah, t.id_talenta
+            FROM public.project p
+            JOIN public.project_talenta pt ON pt.id_project = p.id_project
+            JOIN public.talenta t ON t.id_talenta = pt.id_talenta
+            WHERE t.id_wilayah IS NOT NULL
+              AND p.tahun IS NOT NULL
+              AND t.status = 'aktif'
+            GROUP BY p.tahun, t.id_wilayah, t.id_talenta
+        ),
+        client_by_project AS (
+            SELECT p.tahun, c.id_wilayah, c.id_client
+            FROM public.project p
+            JOIN public.project_client pc ON pc.id_project = p.id_project
+            JOIN public.client c ON c.id_client = pc.id_client
+            WHERE c.id_wilayah IS NOT NULL
+              AND p.tahun IS NOT NULL
+              AND c.status = 'aktif'
+            GROUP BY p.tahun, c.id_wilayah, c.id_client
+        ),
+
+        -- Member 2026+: hanya yang punya id_user (terdaftar melalui flow user)
+        mentor_proper AS (
+            SELECT EXTRACT(YEAR FROM m.created_at)::integer AS tahun,
+                   m.id_wilayah, m.id_mentor
             FROM public.mentor m
             WHERE m.id_wilayah IS NOT NULL
+              AND m.id_user IS NOT NULL
               AND m.status = 'aktif'
-            GROUP BY m.id_wilayah
+              AND m.created_at IS NOT NULL
         ),
-        talenta_stat AS (
-            SELECT t.id_wilayah, count(*) AS jumlah_talenta
+        talenta_proper AS (
+            SELECT EXTRACT(YEAR FROM t.created_at)::integer AS tahun,
+                   t.id_wilayah, t.id_talenta
             FROM public.talenta t
             WHERE t.id_wilayah IS NOT NULL
+              AND t.id_user IS NOT NULL
               AND t.status = 'aktif'
-            GROUP BY t.id_wilayah
+              AND t.created_at IS NOT NULL
         ),
-        -- Statistik project tetap dihitung per-tahun (REAL data)
+        client_proper AS (
+            SELECT EXTRACT(YEAR FROM c.created_at)::integer AS tahun,
+                   c.id_wilayah, c.id_client
+            FROM public.client c
+            WHERE c.id_wilayah IS NOT NULL
+              AND c.id_user IS NOT NULL
+              AND c.status = 'aktif'
+              AND c.created_at IS NOT NULL
+        ),
+
+        -- Gabungan: project-based (2023-2025) + proper (2026+)
+        mentor_stat AS (
+            SELECT tahun, id_wilayah, count(*) AS jumlah_mentor
+            FROM (
+                SELECT tahun, id_wilayah, id_mentor FROM mentor_by_project
+                UNION
+                SELECT tahun, id_wilayah, id_mentor FROM mentor_proper
+            ) x
+            GROUP BY tahun, id_wilayah
+        ),
+        talenta_stat AS (
+            SELECT tahun, id_wilayah, count(*) AS jumlah_talenta
+            FROM (
+                SELECT tahun, id_wilayah, id_talenta FROM talenta_by_project
+                UNION
+                SELECT tahun, id_wilayah, id_talenta FROM talenta_proper
+            ) x
+            GROUP BY tahun, id_wilayah
+        ),
+        client_stat AS (
+            SELECT tahun, id_wilayah, count(*) AS jumlah_client
+            FROM (
+                SELECT tahun, id_wilayah, id_client FROM client_by_project
+                UNION
+                SELECT tahun, id_wilayah, id_client FROM client_proper
+            ) x
+            GROUP BY tahun, id_wilayah
+        ),
+        -- Project per tahun (REAL)
         project_stat AS (
             SELECT p.tahun, x.id_wilayah, count(DISTINCT p.id_project) AS jumlah_project
             FROM public.project p
@@ -103,9 +171,9 @@ return new class extends Migration
         FROM tahun_wilayah tw
         JOIN public.wilayah w ON w.id_wilayah = tw.id_wilayah
         LEFT JOIN project_stat ps ON ps.tahun = tw.tahun AND ps.id_wilayah = tw.id_wilayah
-        LEFT JOIN mentor_stat ms ON ms.id_wilayah = tw.id_wilayah
-        LEFT JOIN talenta_stat ts ON ts.id_wilayah = tw.id_wilayah
-        LEFT JOIN client_stat cs ON cs.id_wilayah = tw.id_wilayah;
+        LEFT JOIN mentor_stat ms ON ms.tahun = tw.tahun AND ms.id_wilayah = tw.id_wilayah
+        LEFT JOIN talenta_stat ts ON ts.tahun = tw.tahun AND ts.id_wilayah = tw.id_wilayah
+        LEFT JOIN client_stat cs ON cs.tahun = tw.tahun AND cs.id_wilayah = tw.id_wilayah;
         SQL);
     }
 
