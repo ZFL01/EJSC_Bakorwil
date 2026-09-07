@@ -12,7 +12,10 @@ export default defineConfig({
                 'resources/css/linkedin-role.css',
                 'resources/css/linkedin-waiting.css',
                 'resources/js/app.js',
-                'resources/images/logo.png'],
+                'resources/images/logo.png',
+                'resources/images/coference room.jpeg',
+                'resources/images/cowork.jpeg',
+                'resources/images/meeting room.jpeg'],
             refresh: true,
             fonts: [
                 bunny('Instrument Sans', {

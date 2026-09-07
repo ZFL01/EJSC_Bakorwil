@@ -57,14 +57,31 @@ class DashboardController extends Controller
             ->limit(5)
             ->get();
 
-        // Chart data: Clients by product type
-        $clientsByProduct = Client::select('nama_produk', DB::raw('count(*) as total'))
-            ->where('status', 'aktif')
-            ->whereNotNull('nama_produk')
-            ->groupBy('nama_produk')
-            ->orderByDesc('total')
-            ->limit(8)
-            ->get();
+        $mentorPerWilayah = Mentor::active()
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
+        $talentaPerWilayah = Talent::active()
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
+        $clientPerWilayah = Client::active()
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
+
+        $distribusiWilayah = DB::table('wilayah')
+            ->select('id_wilayah', 'nama_wilayah')
+            ->orderBy('nama_wilayah')
+            ->get()
+            ->map(fn ($wilayah) => [
+                'id' => $wilayah->id_wilayah,
+                'label' => $wilayah->nama_wilayah,
+                'mentor' => (int) ($mentorPerWilayah[$wilayah->id_wilayah] ?? 0),
+                'talenta' => (int) ($talentaPerWilayah[$wilayah->id_wilayah] ?? 0),
+                'client' => (int) ($clientPerWilayah[$wilayah->id_wilayah] ?? 0),
+            ])
+            ->values();
 
         // Chart data: Talents by employment status
         $talentsByStatus = Talent::select('status_pekerjaan', DB::raw('count(*) as total'))
@@ -86,7 +103,7 @@ class DashboardController extends Controller
             'recentActivities',
             'upcomingKegiatans',
             'recentClients',
-            'clientsByProduct',
+            'distribusiWilayah',
             'talentsByStatus',
             'mentorAvailability'
         ));

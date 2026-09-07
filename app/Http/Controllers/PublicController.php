@@ -44,7 +44,7 @@ class PublicController extends Controller
      * TENTANG KAMI
      * =========================================================
      */
-    public function tentangKami()
+    public function tentangKami(Request $request)
     {
         $statistik = [
             'mentor'   => Mentor::active()->count(),
@@ -102,12 +102,28 @@ class PublicController extends Controller
             12 => 'Des',
         ];
 
-        $bulan = collect(range(7, 0))->map(function ($i) use ($namaBulan) {
-            $tanggal = now()->copy()->subMonths($i);
+        $tahunSekarang = now()->year;
+        $tahunAwal = collect([
+            Talent::min('created_at'),
+            Mentor::min('created_at'),
+            Client::min('created_at'),
+        ])
+            ->filter()
+            ->map(fn ($tanggal) => (int) date('Y', strtotime($tanggal)))
+            ->min() ?? $tahunSekarang;
+        $tahunList = range($tahunSekarang, $tahunAwal);
+        $tahun = (int) $request->query('tahun', $tahunSekarang);
+
+        if (! in_array($tahun, $tahunList, true)) {
+            $tahun = $tahunSekarang;
+        }
+
+        $bulan = collect(range(1, 12))->map(function ($bulanKe) use ($namaBulan, $tahun) {
+            $tanggal = now()->copy()->setDate($tahun, $bulanKe, 1);
 
             return [
                 'key'   => $tanggal->format('Y-m'),
-                'label' => $namaBulan[(int) $tanggal->format('n')],
+                'label' => $namaBulan[(int) $tanggal->format('n')] . ' ' . $tanggal->format('Y'),
             ];
         });
 
@@ -126,20 +142,42 @@ class PublicController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        $distribusiTalenta = $this->topKeahlian(
-            Talent::query()
-        );
+        $mentorPerWilayah = DB::table('mentor')
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->where('status', 'aktif')
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
+        $talentaPerWilayah = DB::table('talenta')
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->where('status', 'aktif')
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
+        $clientPerWilayah = DB::table('client')
+            ->select('id_wilayah', DB::raw('count(*) as total'))
+            ->where('status', 'aktif')
+            ->groupBy('id_wilayah')
+            ->pluck('total', 'id_wilayah');
 
-        $distribusiMentor = $this->topKeahlian(
-            Mentor::query()
-        );
+        $distribusiWilayah = DB::table('wilayah')
+            ->select('id_wilayah', 'nama_wilayah')
+            ->orderBy('nama_wilayah')
+            ->get()
+            ->map(fn ($wilayah) => [
+                'id' => $wilayah->id_wilayah,
+                'label' => $wilayah->nama_wilayah,
+                'mentor' => (int) ($mentorPerWilayah[$wilayah->id_wilayah] ?? 0),
+                'talenta' => (int) ($talentaPerWilayah[$wilayah->id_wilayah] ?? 0),
+                'client' => (int) ($clientPerWilayah[$wilayah->id_wilayah] ?? 0),
+            ])
+            ->values();
 
         return view('tentang-kami', compact(
             'statistik',
             'pertumbuhan',
-            'distribusiTalenta',
-            'distribusiMentor',
-            'kegiatanList'
+            'distribusiWilayah',
+            'kegiatanList',
+            'tahunList',
+            'tahun'
         ));
     }
 

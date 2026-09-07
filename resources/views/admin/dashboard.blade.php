@@ -114,7 +114,7 @@
         </a>
     </div>
 
-    <!-- Baris Grafik: Pertumbuhan & Client per Produk -->
+    <!-- Baris Grafik: Pertumbuhan & Distribusi Per Wilayah -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-5">
             <div class="flex items-center justify-between mb-4">
@@ -129,16 +129,15 @@
 
         <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
             <div class="mb-4">
-                <h3 class="text-base font-bold text-gray-800">Client per Produk</h3>
-                <p class="text-xs text-gray-400">Distribusi client aktif berdasarkan nama produk</p>
+                <h3 class="text-base font-bold text-gray-800">Distribusi Per Wilayah</h3>
+                <p class="text-xs text-gray-400">Total mentor, talenta, dan client aktif per wilayah</p>
             </div>
-            @if($clientsByProduct->count())
+            @if($distribusiWilayah->sum(fn ($wilayah) => $wilayah['mentor'] + $wilayah['talenta'] + $wilayah['client']) > 0)
                 <div class="h-64"><canvas id="chart-produk"></canvas></div>
             @else
                 <div class="h-64 flex flex-col items-center justify-center text-center text-gray-400">
-                    <span class="text-3xl mb-2">&#127970;</span>
-                    <p class="text-sm">Belum ada data produk client.</p>
-                    <a href="{{ route('admin.clients.create') }}" class="mt-2 text-xs font-semibold text-[#56b8c2] hover:underline">+ Tambah client pertama</a>
+                    <span class="text-3xl mb-2">&#127760;</span>
+                    <p class="text-sm">Belum ada data wilayah.</p>
                 </div>
             @endif
         </div>
@@ -334,18 +333,43 @@
             });
         }
 
-        /* Doughnut: Client Aktif per Produk */
+        /* Doughnut: Distribusi Aktif per Wilayah, sama dengan Tentang Kami */
         var produkEl = document.getElementById('chart-produk');
-        if (produkEl && @json($clientsByProduct->count()) > 0) {
+        var distribusiWilayah = @json($distribusiWilayah);
+        if (produkEl && distribusiWilayah.some(function (wilayah) {
+            return wilayah.mentor + wilayah.talenta + wilayah.client > 0;
+        })) {
             new Chart(produkEl, {
                 type: 'doughnut',
                 data: {
-                    labels: @json($clientsByProduct->pluck('nama_produk')),
-                    datasets: [{ data: @json($clientsByProduct->pluck('total')), backgroundColor: PALETTE, borderWidth: 2, borderColor: '#ffffff' }]
+                    labels: distribusiWilayah.map(function (wilayah) { return wilayah.label; }),
+                    datasets: [{
+                        data: distribusiWilayah.map(function (wilayah) {
+                            return wilayah.mentor + wilayah.talenta + wilayah.client;
+                        }),
+                        backgroundColor: ['#14b8c4', '#67e8f9', '#0f9d58', '#f59e0b', '#7c3aed', '#ef4444', '#3b82f6'],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
                 },
                 options: {
-                    responsive: true, maintainAspectRatio: false, cutout: '62%',
-                    plugins: { legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, padding: 12 } }, tooltip: TOOLTIP }
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function (context) {
+                                    var wilayah = distribusiWilayah[context.dataIndex];
+                                    return [
+                                        'Total: ' + context.raw,
+                                        'Mentor: ' + wilayah.mentor,
+                                        'Talenta: ' + wilayah.talenta,
+                                        'UMKM: ' + wilayah.client
+                                    ];
+                                }
+                            }
+                        }
+                    }
                 }
             });
         }

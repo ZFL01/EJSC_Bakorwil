@@ -163,12 +163,22 @@
                 <div class="chart-card-head">
                     <div>
                         <h3>Pertumbuhan Platform</h3>
-                        <p class="desc">Jumlah mentor, talenta, dan client per bulan</p>
+                        <p class="desc">Jumlah mentor, talenta, dan client per bulan pada tahun terpilih</p>
                     </div>
-                    <div class="chart-badge">
+                    <div class="flex items-center gap-3">
+                        <form method="GET" action="{{ route('tentang-kami') }}" class="flex items-center gap-2">
+                            <label for="tahun-pertumbuhan" class="text-xs font-medium text-gray-500">Tahun</label>
+                            <select id="tahun-pertumbuhan" name="tahun" onchange="this.form.submit()" class="rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold text-gray-700 focus:border-[#14b8c4] focus:outline-none focus:ring-2 focus:ring-[#14b8c4]/20">
+                                @foreach ($tahunList as $tahunPilihan)
+                                    <option value="{{ $tahunPilihan }}" @selected($tahunPilihan === $tahun)>{{ $tahunPilihan }}</option>
+                                @endforeach
+                            </select>
+                        </form>
+                        <div class="chart-badge">
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                         </svg>
+                        </div>
                     </div>
                 </div>
                 <div class="chart-canvas-wrap">
@@ -177,42 +187,32 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <!-- Distribusi Talenta (doughnut chart) -->
+                <!-- Distribusi per wilayah (doughnut chart) -->
                 <div class="chart-card">
                     <div class="chart-card-head">
                         <div>
-                            <h3>Distribusi Talenta</h3>
-                            <p class="desc">Berdasarkan kategori keahlian</p>
-                        </div>
-                        <div class="chart-badge">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
-                            </svg>
+                            <h3>Distribusi Per Wilayah</h3>
+                            <p class="desc">Setiap warna mewakili total data pada satu wilayah</p>
                         </div>
                     </div>
                     <div class="chart-canvas-wrap">
-                        <canvas id="chartTalenta"></canvas>
+                        <canvas id="chartWilayah"></canvas>
                     </div>
                 </div>
 
-                <!-- Distribusi Mentor (bar chart) -->
+                <!-- Perbandingan kategori per wilayah (bar chart) -->
                 <div class="chart-card">
                     <div class="chart-card-head">
                         <div>
-                            <h3>Distribusi Mentor</h3>
-                            <p class="desc">Berdasarkan bidang keahlian</p>
-                        </div>
-                        <div class="chart-badge">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
+                            <h3>Data Per Wilayah</h3>
+                            <p class="desc">Perbandingan mentor, talenta, dan UMKM</p>
                         </div>
                     </div>
                     <div class="chart-canvas-wrap">
-                        <canvas id="chartMentor"></canvas>
+                        <canvas id="chartWilayahBar"></canvas>
                     </div>
                 </div>
+
             </div>
 
         </div>
@@ -231,30 +231,43 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @php
                     $fasilitasList = [
-                        ['nama' => 'Ruang Mentoring', 'deskripsi' => 'Ruang tatap muka nyaman untuk sesi bimbingan satu-ke-satu antara mentor dan talenta.', 'kategori' => 'Ruang'],
-                        ['nama' => 'Coworking Space', 'deskripsi' => 'Area kerja terbuka yang bisa digunakan talenta dan client untuk berkolaborasi setiap hari.', 'kategori' => 'Ruang'],
-                        ['nama' => 'Ruang Pelatihan', 'deskripsi' => 'Dilengkapi proyektor, sound system, dan kapasitas hingga 50 peserta untuk workshop dan training.', 'kategori' => 'Ruang'],
-                        ['nama' => 'Perpustakaan Digital', 'deskripsi' => 'Akses ke koleksi materi belajar, modul, dan referensi digital untuk menunjang pengembangan diri.', 'kategori' => 'Sumber Daya'],
-                        ['nama' => 'Aula Serbaguna', 'deskripsi' => 'Ruang besar untuk seminar, sesi networking, dan acara komunitas EJSC Bakorwil.', 'kategori' => 'Ruang'],
-                        ['nama' => 'Wi-Fi & Jaringan Cepat', 'deskripsi' => 'Koneksi internet berkecepatan tinggi tersedia di seluruh area gedung EJSC Bakorwil.', 'kategori' => 'Sumber Daya'],
+                        ['nama' => 'Conference Room', 'deskripsi' => 'Ruang konferensi yang nyaman untuk seminar, presentasi, dan kegiatan kolaborasi berskala besar.', 'kategori' => 'Ruang', 'image' => 'resources/images/coference room.jpeg'],
+                        ['nama' => 'Coworking Space', 'deskripsi' => 'Area kerja terbuka yang mendukung produktivitas, networking, dan kolaborasi talenta serta client.', 'kategori' => 'Ruang', 'image' => 'resources/images/cowork.jpeg'],
+                        ['nama' => 'Meeting Room', 'deskripsi' => 'Ruang meeting yang tenang untuk rapat, diskusi tim, dan pertemuan dengan mitra.', 'kategori' => 'Ruang', 'image' => 'resources/images/meeting room.jpeg'],
                     ];
                 @endphp
 
                 @foreach ($fasilitasList as $item)
-                    <div class="fasilitas-card">
-                        <div class="fasilitas-icon">
-                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s4.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                            </svg>
+                    <button type="button" class="fasilitas-card text-left" data-fasilitas-open data-fasilitas-name="{{ $item['nama'] }}" data-fasilitas-category="{{ $item['kategori'] }}" data-fasilitas-description="{{ $item['deskripsi'] }}" data-fasilitas-image="{{ Vite::asset($item['image']) }}">
+                        <div class="fasilitas-image-wrap">
+                            <img src="{{ Vite::asset($item['image']) }}" alt="{{ $item['nama'] }}" class="fasilitas-image">
+                            <span class="fasilitas-image-badge">{{ $item['kategori'] }}</span>
                         </div>
-                        <h3>{{ $item['nama'] }}</h3>
-                        <p>{{ $item['deskripsi'] }}</p>
-                        <span class="fasilitas-badge">{{ $item['kategori'] }}</span>
-                    </div>
+                        <div class="fasilitas-card-body">
+                            <h3>{{ $item['nama'] }}</h3>
+                            <p>{{ $item['deskripsi'] }}</p>
+                            <div class="fasilitas-card-footer">
+                                <span class="fasilitas-badge">{{ $item['kategori'] }}</span>
+                            </div>
+                        </div>
+                    </button>
                 @endforeach
             </div>
         </div>
     </section>
+
+    <div class="fasilitas-modal" data-fasilitas-modal aria-hidden="true">
+        <div class="fasilitas-modal-backdrop" data-fasilitas-close></div>
+        <div class="fasilitas-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="fasilitas-modal-title">
+            <button type="button" class="fasilitas-modal-close" data-fasilitas-close aria-label="Tutup detail fasilitas">&times;</button>
+            <img src="" alt="" class="fasilitas-modal-image" data-fasilitas-modal-image>
+            <div class="fasilitas-modal-content">
+                <span class="fasilitas-badge" data-fasilitas-modal-category></span>
+                <h2 id="fasilitas-modal-title" data-fasilitas-modal-name></h2>
+                <p data-fasilitas-modal-description></p>
+            </div>
+        </div>
+    </div>
 
     <!-- KEGIATAN -->
     <section id="kegiatan" class="py-12 pb-20 relative z-10 scroll-mt-24">
@@ -304,10 +317,42 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        const fasilitasModal = document.querySelector('[data-fasilitas-modal]');
+        if (fasilitasModal) {
+            const modalImage = fasilitasModal.querySelector('[data-fasilitas-modal-image]');
+            const modalName = fasilitasModal.querySelector('[data-fasilitas-modal-name]');
+            const modalCategory = fasilitasModal.querySelector('[data-fasilitas-modal-category]');
+            const modalDescription = fasilitasModal.querySelector('[data-fasilitas-modal-description]');
+
+            const closeFasilitasModal = function () {
+                fasilitasModal.classList.remove('is-open');
+                fasilitasModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('fasilitas-modal-open');
+            };
+
+            document.querySelectorAll('[data-fasilitas-open]').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    modalImage.src = card.dataset.fasilitasImage;
+                    modalImage.alt = card.dataset.fasilitasName;
+                    modalName.textContent = card.dataset.fasilitasName;
+                    modalCategory.textContent = card.dataset.fasilitasCategory;
+                    modalDescription.textContent = card.dataset.fasilitasDescription;
+                    fasilitasModal.classList.add('is-open');
+                    fasilitasModal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('fasilitas-modal-open');
+                });
+            });
+
+            fasilitasModal.querySelectorAll('[data-fasilitas-close]').forEach(function (element) {
+                element.addEventListener('click', closeFasilitasModal);
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') closeFasilitasModal();
+            });
+        }
+
         const pertumbuhan = @json($pertumbuhan);
-        const distribusiTalenta = @json($distribusiTalenta);
-        const distribusiMentor = @json($distribusiMentor);
-        const palette = ['#14b8c4', '#67e8f9', '#0f9d58', '#f59e0b', '#7c3aed'];
+        const distribusiWilayah = @json($distribusiWilayah);
 
         new window.Chart(document.getElementById('chartPertumbuhan'), {
             type: 'line',
@@ -327,30 +372,57 @@
             },
         });
 
-        new window.Chart(document.getElementById('chartTalenta'), {
+        new window.Chart(document.getElementById('chartWilayah'), {
             type: 'doughnut',
             data: {
-                labels: distribusiTalenta.labels,
-                datasets: [{ data: distribusiTalenta.data, backgroundColor: palette }],
+                labels: distribusiWilayah.map((wilayah) => wilayah.label),
+                datasets: [{
+                    data: distribusiWilayah.map((wilayah) => wilayah.mentor + wilayah.talenta + wilayah.client),
+                    backgroundColor: ['#14b8c4', '#67e8f9', '#0f9d58', '#f59e0b', '#7c3aed', '#ef4444', '#3b82f6'],
+                    borderColor: '#ffffff',
+                    borderWidth: 3,
+                }],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { position: 'bottom' } },
+                plugins: {
+                    legend: { position: 'bottom' },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const wilayah = distribusiWilayah[context.dataIndex];
+                                return [
+                                    'Total: ' + context.raw,
+                                    'Mentor: ' + wilayah.mentor,
+                                    'Talenta: ' + wilayah.talenta,
+                                    'UMKM: ' + wilayah.client,
+                                ];
+                            },
+                        },
+                    },
+                },
             },
         });
 
-        new window.Chart(document.getElementById('chartMentor'), {
+        new window.Chart(document.getElementById('chartWilayahBar'), {
             type: 'bar',
             data: {
-                labels: distribusiMentor.labels,
-                datasets: [{ label: 'Mentor', data: distribusiMentor.data, backgroundColor: '#14b8c4', borderRadius: 8 }],
+                labels: distribusiWilayah.map((wilayah) => wilayah.label),
+                datasets: [
+                    { label: 'Mentor', data: distribusiWilayah.map((wilayah) => wilayah.mentor), backgroundColor: '#14b8c4', borderRadius: 5 },
+                    { label: 'Talenta', data: distribusiWilayah.map((wilayah) => wilayah.talenta), backgroundColor: '#67e8f9', borderRadius: 5 },
+                    { label: 'UMKM', data: distribusiWilayah.map((wilayah) => wilayah.client), backgroundColor: '#0f9d58', borderRadius: 5 },
+                ],
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } },
+                scales: {
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
+                    x: { ticks: { maxRotation: 45, minRotation: 0 } },
+                },
+                plugins: { legend: { position: 'bottom' } },
             },
         });
     });
