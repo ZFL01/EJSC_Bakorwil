@@ -19,3 +19,4 @@ Route::middleware(['auth'])->prefix('profile')->name('profile.')->group(function
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
     Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
+

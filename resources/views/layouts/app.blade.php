@@ -183,6 +183,7 @@
 
 
 <body
+
     class="
         min-h-screen
         flex
