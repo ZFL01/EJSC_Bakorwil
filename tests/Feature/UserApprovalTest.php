@@ -25,7 +25,7 @@ class UserApprovalTest extends TestCase
         DB::purge('pgsql');
     }
 
-    public function test_approve_auto_login_sebagai_user_yang_disetujui(): void
+    public function test_approve_tetap_sebagai_admin_dan_tetap_di_panel(): void
     {
         $admin = User::create([
             'name' => 'Admin Uji',
@@ -47,17 +47,23 @@ class UserApprovalTest extends TestCase
 
         $response = $this->actingAs($admin)->post(route('admin.users.approve', $pending));
 
-        // Diarahkan ke home (bukan halaman admin) karena sekarang
-        // yang login adalah user yang baru disetujui.
-        $response->assertRedirect(route('public.index'));
+        // Tetap di panel admin (redirect balik + flash sukses),
+        // BUKAN diarahkan ke halaman publik.
+        $response->assertRedirect();
+        $response->assertSessionHas('success');
 
-        // Auto-login: user yang disetujui kini terautentikasi,
-        // bukan lagi admin.
-        $this->assertAuthenticatedAs($pending);
+        // Sesi admin TIDAK digantikan: yang tetap terautentikasi adalah admin,
+        // bukan user yang baru disetujui.
+        $this->assertAuthenticatedAs($admin);
 
         $this->assertDatabaseHas('users', [
             'id_user' => $pending->id_user,
             'status' => 'aktif',
+        ]);
+
+        // Profil sesuai role tetap dibuat otomatis saat approve.
+        $this->assertDatabaseHas('talenta', [
+            'id_user' => $pending->id_user,
         ]);
     }
 }

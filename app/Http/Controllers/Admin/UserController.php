@@ -8,7 +8,6 @@ use App\Models\Mentor;
 use App\Models\Talent;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -124,17 +123,15 @@ class UserController extends Controller
 
         /*
         |----------------------------------------------------------------------
-        | Auto-login: user yang disetujui langsung masuk ke sesi.
+        | TANPA auto-login: sesi admin TIDAK boleh digantikan oleh user
+        | yang baru disetujui. Tetap di panel admin, tampilkan flash
+        | sukses, dan daftar pending otomatis ter-update.
         |----------------------------------------------------------------------
-        | Admin yang sedang membuka halaman akan digantikan oleh user yang
-        | baru disetujui (halaman persetujuan umumnya dibuka atas nama /
-        | pendamping user yang bersangkutan).
         */
-        Auth::login($user);
-
-        $request->session()->regenerate();
-
-        return redirect()->route('public.index');
+        return back()->with(
+            'success',
+            "Pendaftaran {$user->name} ({$user->role}) telah disetujui dan akun diaktifkan."
+        );
     }
 
     /**
