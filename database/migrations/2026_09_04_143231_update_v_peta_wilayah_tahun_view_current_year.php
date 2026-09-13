@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() !== 'pgsql') {
+            return;
+        }
+
         DB::statement('DROP VIEW IF EXISTS v_peta_wilayah_tahunan');
 
         DB::statement(<<<'SQL'

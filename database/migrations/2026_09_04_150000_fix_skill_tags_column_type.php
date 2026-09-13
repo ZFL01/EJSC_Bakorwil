@@ -15,6 +15,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        if (DB::getDriverName() !== 'pgsql') {
+            return;
+        }
+
         // Ubah skill_tags dari text[] ke text
         DB::statement('ALTER TABLE talenta ALTER COLUMN skill_tags TYPE text USING skill_tags::text');
 
@@ -27,6 +31,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        if (DB::getDriverName() !== 'pgsql') {
+            return;
+        }
+
         DB::statement('ALTER TABLE talenta ALTER COLUMN skill_tags TYPE text[] USING skill_tags::text[]');
         DB::statement('ALTER TABLE mentor ALTER COLUMN expertise_tags TYPE text[] USING expertise_tags::text[]');
     }

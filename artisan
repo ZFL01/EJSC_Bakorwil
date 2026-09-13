@@ -13,6 +13,24 @@ require __DIR__.'/vendor/autoload.php';
 /** @var Application $app */
 $app = require_once __DIR__.'/bootstrap/app.php';
 
-$status = $app->handleCommand(new ArgvInput);
+// Auto-start Vite dev server when running 'serve' command
+$input = new ArgvInput;
+$command = $input->getFirstArgument();
+
+if ($command === 'serve') {
+    // Start Vite dev server in background (non-blocking)
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+        // Windows: use START command to run in background
+        pclose(popen("start /B npm run dev > nul 2>&1", "r"));
+    } else {
+        // Linux/Mac: use nohup and &
+        exec('npm run dev > /dev/null 2>&1 &');
+    }
+    
+    // Give Vite a moment to start
+    sleep(2);
+}
+
+$status = $app->handleCommand($input);
 
 exit($status);

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MentorController;
 use App\Http\Controllers\Admin\TalentController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ExcelExportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/stats', [DashboardController::class, 'getStats'])->name('dashboard.stats');
+
+    // Excel Export - Data Mentor, Talenta & UKM
+    Route::get('/excel-export', [ExcelExportController::class, 'index'])->name('excel-export.index');
+    Route::post('/excel-export/preview', [ExcelExportController::class, 'preview'])->name('excel-export.preview');
+    Route::post('/excel-export/export', [ExcelExportController::class, 'export'])->name('excel-export.export');
     
     // Activity Logs
     Route::get('/activity-logs', [DashboardController::class, 'activityLogs'])->name('activity-logs');
