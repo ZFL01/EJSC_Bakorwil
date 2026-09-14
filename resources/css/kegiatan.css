@@ -114,6 +114,7 @@
 .status-akan-datang { background: #fff7ed; color: #c2620a; }
 .status-berlangsung { background: #ecfdf5; color: #0f9d58; }
 .status-selesai { background: #f1f5f9; color: #64748b; }
+.status-dibatalkan { background: #fef2f2; color: #b91c1c; }
 
 .kegiatan-body { padding: 20px; }
 

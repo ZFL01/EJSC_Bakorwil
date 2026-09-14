@@ -14,6 +14,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = 'users';
+
     protected $primaryKey = 'id_user';
 
     protected $fillable = [
@@ -94,10 +95,11 @@ class User extends Authenticatable
 
     /**
      * Cek apakah user tidak aktif
+     * (nilai di DB memakai "nonaktif", diset via UserController@deactivate)
      */
     public function isInactive(): bool
     {
-        return $this->status === 'inactive';
+        return $this->status === 'nonaktif';
     }
 
     /*
@@ -163,8 +165,8 @@ class User extends Authenticatable
     public function participatedKegiatans()
     {
         return $this->belongsToMany(Kegiatan::class, 'kegiatan_participants', 'id_user', 'id_kegiatan')
-                    ->withPivot('status', 'registered_at', 'attended_at', 'notes')
-                    ->withTimestamps();
+            ->withPivot('status', 'registered_at', 'attended_at', 'notes')
+            ->withTimestamps();
     }
 
     public function adminLogs()
@@ -227,7 +229,7 @@ class User extends Authenticatable
         $raw = preg_replace('#^storage/#', '', $value);
 
         if (Storage::disk('public')->exists($raw)) {
-            return asset('storage/' . $raw);
+            return asset('storage/'.$raw);
         }
 
         return null;
@@ -244,7 +246,7 @@ class User extends Authenticatable
         }
 
         // Fallback ke UI Avatars dengan nama user
-        return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=35BFD1&color=fff&size=128';
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background=35BFD1&color=fff&size=128';
     }
 
     /**
@@ -252,7 +254,7 @@ class User extends Authenticatable
      */
     public function isOAuthUser(): bool
     {
-        return !empty($this->google_id) || !empty($this->linkedin_id);
+        return ! empty($this->google_id) || ! empty($this->linkedin_id);
     }
 
     /**

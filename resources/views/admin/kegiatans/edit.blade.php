@@ -34,6 +34,15 @@
                     <span class="text-sm font-medium text-gray-700">Tampilkan ke Publik?</span>
                 </label>
             </div>
+            <div class="md:col-span-2">
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Status Kegiatan</label>
+                <select name="status" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                    <option value="akan_datang" {{ old('status', $kegiatan->status) === 'akan_datang' ? 'selected' : '' }}>Akan Datang</option>
+                    <option value="berlangsung" {{ old('status', $kegiatan->status) === 'berlangsung' ? 'selected' : '' }}>Berlangsung</option>
+                    <option value="selesai" {{ old('status', $kegiatan->status) === 'selesai' ? 'selected' : '' }}>Selesai</option>
+                    <option value="dibatalkan" {{ old('status', $kegiatan->status) === 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                </select>
+            </div>
         </div>
 
         <div>

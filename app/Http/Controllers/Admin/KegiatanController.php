@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AdminLog;
 use App\Models\Kegiatan;
 use App\Models\KegiatanParticipant;
-use App\Models\AdminLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 class KegiatanController extends Controller
 {
@@ -24,9 +23,9 @@ class KegiatanController extends Controller
 
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('judul_kegiatan', 'ILIKE', "%{$search}%")
-                  ->orWhere('deskripsi', 'ILIKE', "%{$search}%");
+                    ->orWhere('deskripsi', 'ILIKE', "%{$search}%");
             });
         }
 
@@ -57,7 +56,7 @@ class KegiatanController extends Controller
     public function create()
     {
         $this->authorize('create', Kegiatan::class);
-        
+
         return view('admin.kegiatans.create');
     }
 
@@ -73,6 +72,7 @@ class KegiatanController extends Controller
             'tanggal_kegiatan' => 'required|date|after_or_equal:today',
             'deskripsi' => 'nullable|string',
             'lokasi' => 'required|string|max:255',
+            'status' => 'nullable|in:akan_datang,berlangsung,selesai,dibatalkan',
             'max_participants' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
             'gallery' => 'nullable|array',
@@ -101,6 +101,7 @@ class KegiatanController extends Controller
                 'tanggal_kegiatan' => $validated['tanggal_kegiatan'],
                 'deskripsi' => $validated['deskripsi'],
                 'lokasi' => $validated['lokasi'],
+                'status' => $validated['status'] ?? 'akan_datang',
                 'max_participants' => $validated['max_participants'],
                 'is_public' => $validated['is_public'] ?? true,
                 'gallery' => $galleryPaths,
@@ -123,9 +124,9 @@ class KegiatanController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
-                ->with('error', 'Gagal menambahkan kegiatan: ' . $e->getMessage());
+                ->with('error', 'Gagal menambahkan kegiatan: '.$e->getMessage());
         }
     }
 
@@ -170,6 +171,7 @@ class KegiatanController extends Controller
             'tanggal_kegiatan' => 'required|date',
             'deskripsi' => 'nullable|string',
             'lokasi' => 'required|string|max:255',
+            'status' => 'nullable|in:akan_datang,berlangsung,selesai,dibatalkan',
             'max_participants' => 'nullable|integer|min:1',
             'is_public' => 'boolean',
             'gallery' => 'nullable|array',
@@ -177,11 +179,14 @@ class KegiatanController extends Controller
             'remove_gallery' => 'nullable|array',
         ]);
 
+        // Pertahankan status lama bila field status tidak dikirim
+        $validated['status'] = $validated['status'] ?? $kegiatan->status;
+
         // Business rule: 1 kegiatan per day (except for current kegiatan)
         $existingKegiatan = Kegiatan::whereDate('tanggal_kegiatan', $validated['tanggal_kegiatan'])
             ->where('id_kegiatan', '!=', $kegiatan->id_kegiatan)
             ->exists();
-        
+
         if ($existingKegiatan) {
             return back()->withInput()
                 ->with('error', 'Sudah ada kegiatan lain pada tanggal tersebut. Hanya 1 kegiatan diperbolehkan per hari.');
@@ -226,9 +231,9 @@ class KegiatanController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
-                ->with('error', 'Gagal mengupdate kegiatan: ' . $e->getMessage());
+                ->with('error', 'Gagal mengupdate kegiatan: '.$e->getMessage());
         }
     }
 
@@ -269,8 +274,8 @@ class KegiatanController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
-            return back()->with('error', 'Gagal menghapus kegiatan: ' . $e->getMessage());
+
+            return back()->with('error', 'Gagal menghapus kegiatan: '.$e->getMessage());
         }
     }
 
@@ -296,6 +301,11 @@ class KegiatanController extends Controller
     {
         $this->authorize('manageParticipants', $kegiatan);
 
+        // Pastikan peserta benar-benar milik kegiatan ini
+        if ((int) $participant->id_kegiatan !== (int) $kegiatan->id_kegiatan) {
+            abort(404);
+        }
+
         $validated = $request->validate([
             'status' => 'required|in:registered,confirmed,attended,cancelled',
             'notes' => 'nullable|string',
@@ -304,7 +314,7 @@ class KegiatanController extends Controller
         $oldStatus = $participant->status;
         $participant->update($validated);
 
-        if ($validated['status'] === 'attended' && !$participant->attended_at) {
+        if ($validated['status'] === 'attended' && ! $participant->attended_at) {
             $participant->update(['attended_at' => now()]);
         }
 

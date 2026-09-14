@@ -17,6 +17,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Email Notifikasi Admin
+    |--------------------------------------------------------------------------
+    |
+    | Penerima email "pendaftar baru" (registrasi manual & OAuth).
+    | Diakses via config('app.admin_notify_email') agar tetap bekerja
+    | setelah "php artisan config:cache".
+    |
+    */
+
+    'admin_notify_email' => env('ADMIN_NOTIFY_EMAIL', 'admin@bakorwil.go.id'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Environment
     |--------------------------------------------------------------------------
     |

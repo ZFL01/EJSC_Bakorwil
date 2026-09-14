@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ClientController;
-use App\Http\Controllers\Admin\MentorController;
-use App\Http\Controllers\Admin\TalentController;
-use App\Http\Controllers\Admin\KegiatanController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ExcelExportController;
+use App\Http\Controllers\Admin\KegiatanController;
+use App\Http\Controllers\Admin\MentorController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TalentController;
+use App\Http\Controllers\Admin\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/excel-export', [ExcelExportController::class, 'index'])->name('excel-export.index');
     Route::post('/excel-export/preview', [ExcelExportController::class, 'preview'])->name('excel-export.preview');
     Route::post('/excel-export/export', [ExcelExportController::class, 'export'])->name('excel-export.export');
-    
+
     // Activity Logs
     Route::get('/activity-logs', [DashboardController::class, 'activityLogs'])->name('activity-logs');
 
@@ -40,7 +41,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
     Route::post('/users/{user}/deactivate', [UserController::class, 'deactivate'])->name('users.deactivate');
     Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    
+
     // Clients Management
     Route::prefix('clients')->name('clients.')->group(function () {
         Route::get('/', [ClientController::class, 'index'])->name('index');
@@ -51,7 +52,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{client}', [ClientController::class, 'update'])->name('update');
         Route::delete('/{client}', [ClientController::class, 'destroy'])->name('destroy');
     });
-    
+
     // Mentors Management
     Route::prefix('mentors')->name('mentors.')->group(function () {
         Route::get('/', [MentorController::class, 'index'])->name('index');
@@ -62,7 +63,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{mentor}', [MentorController::class, 'update'])->name('update');
         Route::delete('/{mentor}', [MentorController::class, 'destroy'])->name('destroy');
     });
-    
+
     // Talents Management
     Route::prefix('talents')->name('talents.')->group(function () {
         Route::get('/', [TalentController::class, 'index'])->name('index');
@@ -73,7 +74,20 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::put('/{talent}', [TalentController::class, 'update'])->name('update');
         Route::delete('/{talent}', [TalentController::class, 'destroy'])->name('destroy');
     });
-    
+
+    // Projects Management (pewadah kegiatan per OPD/bidang - dipakai Excel Export & GIS)
+    Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/', [ProjectController::class, 'index'])->name('index');
+        Route::get('/create', [ProjectController::class, 'create'])->name('create');
+        Route::post('/', [ProjectController::class, 'store'])->name('store');
+        Route::get('/{project}', [ProjectController::class, 'show'])->name('show');
+        Route::get('/{project}/edit', [ProjectController::class, 'edit'])->name('edit');
+        Route::put('/{project}', [ProjectController::class, 'update'])->name('update');
+        Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
+        Route::post('/{project}/attach', [ProjectController::class, 'attach'])->name('attach');
+        Route::post('/{project}/detach', [ProjectController::class, 'detach'])->name('detach');
+    });
+
     // Kegiatans Management
     Route::prefix('kegiatans')->name('kegiatans.')->group(function () {
         Route::get('/', [KegiatanController::class, 'index'])->name('index');
@@ -83,7 +97,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/{kegiatan}/edit', [KegiatanController::class, 'edit'])->name('edit');
         Route::put('/{kegiatan}', [KegiatanController::class, 'update'])->name('update');
         Route::delete('/{kegiatan}', [KegiatanController::class, 'destroy'])->name('destroy');
-        
+
         // Participants management
         Route::get('/{kegiatan}/participants', [KegiatanController::class, 'participants'])->name('participants');
         Route::put('/{kegiatan}/participants/{participant}', [KegiatanController::class, 'updateParticipantStatus'])->name('participants.update-status');

@@ -147,11 +147,14 @@ Route::get('/fasilitas', function () {
 |--------------------------------------------------------------------------
 | Kegiatan
 |--------------------------------------------------------------------------
+|
+| Alias dari halaman /kegiatans (public.kegiatans.index).
+| Keduanya DB-driven via PublicController@kegiatans.
+|
 */
 
-Route::get('/kegiatan', function () {
-    return view('kegiatan');
-})->name('kegiatan');
+Route::get('/kegiatan', [PublicController::class, 'kegiatans'])
+    ->name('kegiatan');
 
 /*
 |--------------------------------------------------------------------------

@@ -138,7 +138,7 @@ class RegisterController extends Controller
      */
     private function notifyAdmin(string $nama, string $email, string $role): void
     {
-        $penerima = env('ADMIN_NOTIFY_EMAIL', 'admin@bakorwil.go.id');
+        $penerima = config('app.admin_notify_email', 'admin@bakorwil.go.id');
 
         try {
             Mail::raw(

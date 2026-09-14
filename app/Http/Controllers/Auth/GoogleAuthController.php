@@ -68,7 +68,7 @@ class GoogleAuthController extends Controller
                 ->withErrors(['email' => $pesan]);
         }
 
-        if (!$googleUser->getEmail()) {
+        if (! $googleUser->getEmail()) {
             return redirect()
                 ->route('login')
                 ->withErrors(['email' => 'Akun Google Anda tidak memiliki email yang dapat digunakan.']);
@@ -88,12 +88,12 @@ class GoogleAuthController extends Controller
         | User baru → simpan data sementara → halaman pilih peran
         |----------------------------------------------------------------------
         */
-        if (!$user) {
+        if (! $user) {
             $request->session()->put(self::SESSION_KEY, [
                 'google_id' => $googleUser->getId(),
-                'name'      => $googleUser->getName() ?: $googleUser->getNickname() ?: 'Pengguna Google',
-                'email'     => $googleUser->getEmail(),
-                'avatar'    => $googleUser->getAvatar(),
+                'name' => $googleUser->getName() ?: $googleUser->getNickname() ?: 'Pengguna Google',
+                'email' => $googleUser->getEmail(),
+                'avatar' => $googleUser->getAvatar(),
             ]);
 
             return redirect()->route('google.role');
@@ -108,7 +108,7 @@ class GoogleAuthController extends Controller
             return redirect()
                 ->route('login')
                 ->withErrors([
-                    'email' => 'Akun Anda terdaftar via Google namun masih MENUNGGU PERSETUJUAN ADMIN. Silakan coba lagi nanti.'
+                    'email' => 'Akun Anda terdaftar via Google namun masih MENUNGGU PERSETUJUAN ADMIN. Silakan coba lagi nanti.',
                 ]);
         }
 
@@ -125,10 +125,10 @@ class GoogleAuthController extends Controller
         |----------------------------------------------------------------------
         */
         $user->update([
-            'google_id'         => $user->google_id ?: $googleUser->getId(),
-            'profile_photo'     => $user->profile_photo ?: $googleUser->getAvatar(),
+            'google_id' => $user->google_id ?: $googleUser->getId(),
+            'profile_photo' => $user->profile_photo ?: $googleUser->getAvatar(),
             'email_verified_at' => $user->email_verified_at ?: now(),
-            'last_login'        => now(),
+            'last_login' => now(),
         ]);
 
         Auth::login($user, true);
@@ -143,7 +143,7 @@ class GoogleAuthController extends Controller
      */
     public function showRoleSelection(Request $request)
     {
-        if (!$request->session()->has(self::SESSION_KEY)) {
+        if (! $request->session()->has(self::SESSION_KEY)) {
             return redirect()
                 ->route('login')
                 ->withErrors(['email' => 'Sesi pendaftaran Google telah berakhir. Silakan coba lagi.']);
@@ -152,7 +152,7 @@ class GoogleAuthController extends Controller
         $googleData = $request->session()->get(self::SESSION_KEY);
 
         return view('auth.google-role', [
-            'googleName'  => $googleData['name'],
+            'googleName' => $googleData['name'],
             'googleEmail' => $googleData['email'],
         ]);
     }
@@ -169,7 +169,7 @@ class GoogleAuthController extends Controller
         $username = $base;
         $i = 1;
         while (User::where('username', $username)->exists()) {
-            $username = $base . ($i++);
+            $username = $base.($i++);
         }
 
         return $username;
@@ -182,14 +182,14 @@ class GoogleAuthController extends Controller
     {
         $data = $request->session()->get(self::SESSION_KEY);
 
-        if (!$data) {
+        if (! $data) {
             return redirect()
                 ->route('login')
                 ->withErrors(['email' => 'Sesi pendaftaran Google telah berakhir. Silakan coba lagi.']);
         }
 
         $validated = $request->validate([
-            'role' => ['required', 'in:' . implode(',', self::ALLOWED_ROLES)],
+            'role' => ['required', 'in:'.implode(',', self::ALLOWED_ROLES)],
         ]);
 
         /*
@@ -209,14 +209,14 @@ class GoogleAuthController extends Controller
         }
 
         User::create([
-            'name'              => $data['name'],
-            'username'          => $this->makeUsername($data['email']),
-            'email'             => $data['email'],
-            'password_hash'     => Hash::make(Str::random(40)),
-            'google_id'         => $data['google_id'],
-            'profile_photo'     => $data['avatar'],
-            'role'              => $validated['role'],
-            'status'            => 'pending',
+            'name' => $data['name'],
+            'username' => $this->makeUsername($data['email']),
+            'email' => $data['email'],
+            'password_hash' => Hash::make(Str::random(40)),
+            'google_id' => $data['google_id'],
+            'profile_photo' => $data['avatar'],
+            'role' => $validated['role'],
+            'status' => 'pending',
             'email_verified_at' => now(),
         ]);
 
@@ -224,9 +224,9 @@ class GoogleAuthController extends Controller
 
         // Tandai sesi "baru selesai mendaftar" untuk halaman waiting
         $request->session()->put(self::SESSION_WAITING, [
-            'name'  => $data['name'],
+            'name' => $data['name'],
             'email' => $data['email'],
-            'role'  => $validated['role'],
+            'role' => $validated['role'],
         ]);
 
         // Kirim notifikasi email ke admin (tidak memblokir pendaftaran bila gagal)
@@ -242,14 +242,14 @@ class GoogleAuthController extends Controller
     {
         $data = $request->session()->get(self::SESSION_WAITING);
 
-        if (!$data) {
+        if (! $data) {
             return redirect()->route('login');
         }
 
         return view('auth.google-waiting', [
-            'nama'  => $data['name'],
+            'nama' => $data['name'],
             'email' => $data['email'],
-            'role'  => ucfirst($data['role']),
+            'role' => ucfirst($data['role']),
         ]);
     }
 
@@ -260,17 +260,17 @@ class GoogleAuthController extends Controller
      */
     private function notifyAdmin(string $nama, string $email, string $role): void
     {
-        $penerima = env('ADMIN_NOTIFY_EMAIL', 'admin@bakorwil.go.id');
+        $penerima = config('app.admin_notify_email', 'admin@bakorwil.go.id');
 
         try {
             Mail::raw(
                 "Ada pendaftar baru via Google:\n\n"
-                . "Nama   : {$nama}\n"
-                . "Email  : {$email}\n"
-                . "Peran  : " . ucfirst($role) . "\n\n"
-                . "Silakan tinjau dan setujui melalui panel admin:\n"
-                . url('/admin/users/pending') . "\n\n"
-                . "— Sistem EJSC Bakorwil Jember (otomatis)",
+                ."Nama   : {$nama}\n"
+                ."Email  : {$email}\n"
+                .'Peran  : '.ucfirst($role)."\n\n"
+                ."Silakan tinjau dan setujui melalui panel admin:\n"
+                .url('/admin/users/pending')."\n\n"
+                .'— Sistem EJSC Bakorwil Jember (otomatis)',
                 function ($message) use ($penerima, $nama) {
                     $message->to($penerima)
                         ->subject("Pendaftar Baru Menunggu Persetujuan: {$nama}");

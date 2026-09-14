@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Models\Mentor;
-use App\Models\Talent;
 use App\Models\Kegiatan;
 use App\Models\KegiatanParticipant;
+use App\Models\Mentor;
+use App\Models\Talent;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -20,9 +21,9 @@ class PublicController extends Controller
     public function index()
     {
         $stats = [
-            'clients'   => Client::active()->count(),
-            'mentors'   => Mentor::active()->count(),
-            'talents'   => Talent::active()->count(),
+            'clients' => Client::active()->count(),
+            'mentors' => Mentor::active()->count(),
+            'talents' => Talent::active()->count(),
             'kegiatans' => Kegiatan::public()->upcoming()->count(),
         ];
 
@@ -38,7 +39,6 @@ class PublicController extends Controller
         ));
     }
 
-
     /**
      * =========================================================
      * TENTANG KAMI
@@ -47,9 +47,9 @@ class PublicController extends Controller
     public function tentangKami(Request $request)
     {
         $statistik = [
-            'mentor'   => Mentor::active()->count(),
-            'talenta'  => Talent::active()->count(),
-            'client'   => Client::active()->count(),
+            'mentor' => Mentor::active()->count(),
+            'talenta' => Talent::active()->count(),
+            'client' => Client::active()->count(),
             'kegiatan' => Kegiatan::public()->upcoming()->count(),
         ];
 
@@ -88,15 +88,15 @@ class PublicController extends Controller
         */
 
         $namaBulan = [
-            1  => 'Jan',
-            2  => 'Feb',
-            3  => 'Mar',
-            4  => 'Apr',
-            5  => 'Mei',
-            6  => 'Jun',
-            7  => 'Jul',
-            8  => 'Agu',
-            9  => 'Sep',
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'Mei',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 => 'Agu',
+            9 => 'Sep',
             10 => 'Okt',
             11 => 'Nov',
             12 => 'Des',
@@ -122,18 +122,18 @@ class PublicController extends Controller
             $tanggal = now()->copy()->setDate($tahun, $bulanKe, 1);
 
             return [
-                'key'   => $tanggal->format('Y-m'),
-                'label' => $namaBulan[(int) $tanggal->format('n')] . ' ' . $tanggal->format('Y'),
+                'key' => $tanggal->format('Y-m'),
+                'label' => $namaBulan[(int) $tanggal->format('n')].' '.$tanggal->format('Y'),
             ];
         });
 
         $bulanKeys = $bulan->pluck('key')->all();
 
         $pertumbuhan = [
-            'labels'  => $bulan->pluck('label')->all(),
-            'mentor'  => $this->kumulatifPerBulan('mentor', $bulanKeys),
+            'labels' => $bulan->pluck('label')->all(),
+            'mentor' => $this->kumulatifPerBulan('mentor', $bulanKeys),
             'talenta' => $this->kumulatifPerBulan('talenta', $bulanKeys),
-            'client'  => $this->kumulatifPerBulan('client', $bulanKeys),
+            'client' => $this->kumulatifPerBulan('client', $bulanKeys),
         ];
 
         /*
@@ -181,7 +181,6 @@ class PublicController extends Controller
         ));
     }
 
-
     /**
      * =========================================================
      * KUMULATIF DATA PER BULAN
@@ -209,7 +208,6 @@ class PublicController extends Controller
             })
             ->all();
     }
-
 
     /**
      * =========================================================
@@ -243,10 +241,9 @@ class PublicController extends Controller
 
         return [
             'labels' => $jumlah->keys()->all(),
-            'data'   => $jumlah->values()->all(),
+            'data' => $jumlah->values()->all(),
         ];
     }
-
 
     /**
      * =========================================================
@@ -316,7 +313,6 @@ class PublicController extends Controller
         );
     }
 
-
     /**
      * =========================================================
      * KATEGORI CLIENT (untuk filter halaman publik)
@@ -334,7 +330,7 @@ class PublicController extends Controller
             ->groupBy(fn ($client) => Client::kategoriKey($client))
             ->map(function ($group, $key) {
                 return [
-                    'key'   => $key,
+                    'key' => $key,
                     'label' => $this->clientKategoriLabel($key),
                     'count' => $group->count(),
                 ];
@@ -344,17 +340,15 @@ class PublicController extends Controller
             ->all();
     }
 
-
     private function clientKategoriLabel(string $key): string
     {
         return match ($key) {
-            'korporasi'    => 'Korporasi',
-            'startup'      => 'Startup',
+            'korporasi' => 'Korporasi',
+            'startup' => 'Startup',
             'pemerintahan' => 'Pemerintahan',
-            default        => 'UMKM',
+            default => 'UMKM',
         };
     }
-
 
     /**
      * =========================================================
@@ -398,7 +392,6 @@ class PublicController extends Controller
             compact('client')
         );
     }
-
 
     /**
      * =========================================================
@@ -496,7 +489,6 @@ class PublicController extends Controller
         );
     }
 
-
     /**
      * =========================================================
      * KATEGORI MENTOR (untuk dropdown & label JS halaman publik)
@@ -509,10 +501,10 @@ class PublicController extends Controller
             ->groupBy(fn ($mentor) => Mentor::bidangKey($mentor))
             ->map(function ($group, $key) {
                 return [
-                    'key'   => $key,
+                    'key' => $key,
                     'label' => $this->mentorBidangLabel($key),
                     'count' => $group->count(),
-                    'color' => 'badge-' . $key,
+                    'color' => 'badge-'.$key,
                 ];
             })
             ->sortByDesc('count')
@@ -520,17 +512,15 @@ class PublicController extends Controller
             ->all();
     }
 
-
     private function mentorBidangLabel(string $key): string
     {
         return match ($key) {
             'teknologi' => 'Teknologi',
-            'bisnis'    => 'Bisnis',
-            'desain'    => 'Desain',
-            default     => 'Pendidikan',
+            'bisnis' => 'Bisnis',
+            'desain' => 'Desain',
+            default => 'Pendidikan',
         };
     }
-
 
     /**
      * =========================================================
@@ -574,7 +564,6 @@ class PublicController extends Controller
             compact('mentor')
         );
     }
-
 
     /**
      * =========================================================
@@ -663,7 +652,6 @@ class PublicController extends Controller
         );
     }
 
-
     /**
      * =========================================================
      * KATEGORI TALENTA (untuk dropdown halaman publik)
@@ -676,7 +664,7 @@ class PublicController extends Controller
             ->groupBy(fn ($talent) => Talent::skillKey($talent))
             ->map(function ($group, $key) {
                 return [
-                    'key'   => $key,
+                    'key' => $key,
                     'label' => $this->talentaSkillLabel($key),
                     'count' => $group->count(),
                 ];
@@ -686,17 +674,15 @@ class PublicController extends Controller
             ->all();
     }
 
-
     private function talentaSkillLabel(string $key): string
     {
         return match ($key) {
             'programming' => 'Programming',
-            'design'      => 'Design',
-            'marketing'   => 'Marketing',
-            default       => 'Data Analysis',
+            'design' => 'Design',
+            'marketing' => 'Marketing',
+            default => 'Data Analysis',
         };
     }
-
 
     /**
      * =========================================================
@@ -743,7 +729,6 @@ class PublicController extends Controller
             compact('talent')
         );
     }
-
 
     /**
      * =========================================================
@@ -795,7 +780,7 @@ class PublicController extends Controller
         |--------------------------------------------------------------------------
         */
 
-        if (!$request->filled('show_past')) {
+        if (! $request->filled('show_past')) {
             $query->upcoming();
         }
 
@@ -815,7 +800,6 @@ class PublicController extends Controller
             compact('kegiatans')
         );
     }
-
 
     /**
      * =========================================================
@@ -889,7 +873,6 @@ class PublicController extends Controller
         );
     }
 
-
     /**
      * =========================================================
      * DAFTAR KEGIATAN / REGISTER
@@ -906,42 +889,6 @@ class PublicController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Cek slot
-        |--------------------------------------------------------------------------
-        */
-
-        if (!$kegiatan->hasAvailableSlots()) {
-            return back()->with(
-                'error',
-                'Maaf, kegiatan ini sudah penuh.'
-            );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Cek pendaftaran sebelumnya
-        |--------------------------------------------------------------------------
-        */
-
-        $existing = KegiatanParticipant::where(
-            'id_kegiatan',
-            $kegiatan->id_kegiatan
-        )
-            ->where(
-                'id_user',
-                auth()->id()
-            )
-            ->first();
-
-        if ($existing) {
-            return back()->with(
-                'error',
-                'Anda sudah terdaftar untuk kegiatan ini.'
-            );
-        }
-
-        /*
-        |--------------------------------------------------------------------------
         | Validasi
         |--------------------------------------------------------------------------
         */
@@ -952,24 +899,84 @@ class PublicController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | Simpan peserta
+        | Simpan peserta (aman terhadap race condition)
+        |
+        | Transaksi + lockForUpdate menjamin pengecekan kuota & duplikat
+        | bersifat atomik. Unique violation (SQLSTATE 23505) dari constraint
+        | (id_kegiatan, id_user) ditangani sebagai "sudah terdaftar".
         |--------------------------------------------------------------------------
         */
 
-        KegiatanParticipant::create([
-            'id_kegiatan'   => $kegiatan->id_kegiatan,
-            'id_user'       => auth()->id(),
-            'status'        => 'registered',
-            'registered_at' => now(),
-            'notes'         => $validated['notes'] ?? null,
-        ]);
+        try {
+            $redirect = DB::transaction(function () use ($kegiatan, $validated) {
+                $locked = Kegiatan::where('id_kegiatan', $kegiatan->id_kegiatan)
+                    ->lockForUpdate()
+                    ->firstOrFail();
 
-        return back()->with(
-            'success',
-            'Pendaftaran berhasil! Silakan tunggu konfirmasi dari admin.'
-        );
+                if (! $locked->hasAvailableSlots()) {
+                    return back()->with(
+                        'error',
+                        'Maaf, kegiatan ini sudah penuh.'
+                    );
+                }
+
+                $existing = KegiatanParticipant::where(
+                    'id_kegiatan',
+                    $locked->id_kegiatan
+                )
+                    ->where(
+                        'id_user',
+                        auth()->id()
+                    )
+                    ->first();
+
+                if ($existing) {
+                    // Pendaftaran yang sebelumnya dibatalkan dapat diaktifkan kembali
+                    if ($existing->status === 'cancelled') {
+                        $existing->update([
+                            'status' => 'registered',
+                            'registered_at' => now(),
+                            'notes' => $validated['notes'] ?? $existing->notes,
+                        ]);
+
+                        return back()->with(
+                            'success',
+                            'Pendaftaran berhasil! Silakan tunggu konfirmasi dari admin.'
+                        );
+                    }
+
+                    return back()->with(
+                        'error',
+                        'Anda sudah terdaftar untuk kegiatan ini.'
+                    );
+                }
+
+                KegiatanParticipant::create([
+                    'id_kegiatan' => $locked->id_kegiatan,
+                    'id_user' => auth()->id(),
+                    'status' => 'registered',
+                    'registered_at' => now(),
+                    'notes' => $validated['notes'] ?? null,
+                ]);
+
+                return back()->with(
+                    'success',
+                    'Pendaftaran berhasil! Silakan tunggu konfirmasi dari admin.'
+                );
+            });
+        } catch (QueryException $e) {
+            if ((string) $e->getCode() === '23505') {
+                return back()->with(
+                    'error',
+                    'Anda sudah terdaftar untuk kegiatan ini.'
+                );
+            }
+
+            throw $e;
+        }
+
+        return $redirect;
     }
-
 
     /**
      * =========================================================

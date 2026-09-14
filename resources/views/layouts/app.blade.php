@@ -413,7 +413,7 @@
 
 
                         <a
-                            href="{{ route('tentang-kami') }}#kegiatan"
+                            href="{{ route('public.kegiatans.index') }}"
                             class="
                                 close-all-dropdowns
                                 block
@@ -1156,7 +1156,7 @@
 
 
                 <a
-                    href="{{ route('tentang-kami') }}#kegiatan"
+                    href="{{ route('public.kegiatans.index') }}"
                     class="
                         close-all-dropdowns
                         block
