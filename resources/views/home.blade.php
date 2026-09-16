@@ -8637,6 +8637,33 @@
         return null;
     }
 
+    // Nilai khusus pada dropdown tahun untuk mode akumulasi SELURUH tahun.
+    const ALL_YEARS_VALUE = 'all';
+
+    function isAllYears(value) {
+        return String(value ?? '').toLowerCase() === ALL_YEARS_VALUE;
+    }
+
+    // Label singkat untuk status/dropdown: "2025" atau "Semua Tahun".
+    function yearLabel(value) {
+        return isAllYears(value) ? 'Semua Tahun' : String(value ?? '');
+    }
+
+    // Frasa untuk kalimat: "tahun 2025" atau "semua tahun".
+    function yearPhrase(value) {
+        return isAllYears(value) ? 'semua tahun' : `tahun ${value}`;
+    }
+
+    // Keterangan periode pada panel info wilayah.
+    function infoPeriodLabel(props) {
+        if (prop(props, 'akumulasi') === true) {
+            return 'Semua Tahun';
+        }
+
+        const tahun = prop(props, 'tahun');
+        return `Tahun ${tahun ?? yearSelect.value}`;
+    }
+
     // Warna khusus per wilayah agar setiap kabupaten/kota mudah dibedakan
     // (semua memiliki ciri khas / warna yang unik).
     const regionStyles = {
@@ -8674,7 +8701,7 @@
         const client = prop(props, 'jumlah_client', 'JUMLAH_CLIENT') ?? 0;
 
         infoName.textContent = name;
-        infoType.textContent = `${type} · Tahun ${yearSelect.value}`;
+        infoType.textContent = `${type} · ${infoPeriodLabel(props)}`;
         infoStats.innerHTML = `
             <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Project</div><div class="font-bold text-slate-900">${n(project)}</div></div>
             <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Mentor</div><div class="font-bold text-slate-900">${n(mentor)}</div></div>
@@ -8790,9 +8817,10 @@
                 throw new Error('Belum ada tahun tersedia dari database.');
             }
 
-            yearSelect.innerHTML = normalized
-                .map(year => `<option value="${year}">${year}</option>`)
-                .join('');
+            yearSelect.innerHTML = `<option value="${ALL_YEARS_VALUE}">Semua Tahun</option>`
+                + normalized
+                    .map(year => `<option value="${year}">${year}</option>`)
+                    .join('');
 
             yearSelect.value = String(normalized[0]);
             await loadYear(normalized[0]);
@@ -8810,11 +8838,14 @@
     async function loadYear(year) {
         if (!year || !yearSelect) return;
 
+        const label = yearLabel(year);
+        const phrase = yearPhrase(year);
+
         initMap();
         statusEl.classList.remove('hidden');
-        statusEl.innerHTML = '<span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>Memuat ' + year;
+        statusEl.innerHTML = '<span class="w-2 h-2 bg-teal-700 rounded-full mr-2 animate-pulse"></span>Memuat ' + label;
         placeholder.classList.remove('hidden');
-        placeholderText.textContent = `Mengambil data 7 wilayah tahun ${year} dari PostGIS...`;
+        placeholderText.textContent = `Mengambil data 7 wilayah ${phrase} dari PostGIS...`;
         infoPanel.classList.add('hidden');
 
         try {
@@ -8837,17 +8868,17 @@
             }
 
             if (data.features.length !== 7) {
-                console.warn(`API tahun ${year} mengembalikan ${data.features.length} feature; target sistem adalah 7 wilayah.`);
+                console.warn(`API ${phrase} mengembalikan ${data.features.length} feature; target sistem adalah 7 wilayah.`);
             }
 
             yearSelect.value = String(year);
             createLayer(data);
             placeholder.classList.add('hidden');
-            statusEl.innerHTML = `<span class="w-2 h-2 bg-green-700 rounded-full mr-2"></span>${year} · ${data.features.length} wilayah`;
+            statusEl.innerHTML = `<span class="w-2 h-2 bg-green-700 rounded-full mr-2"></span>${label} · ${data.features.length} wilayah`;
         } catch (err) {
             console.error('Gagal memuat peta:', err);
             placeholder.classList.remove('hidden');
-            placeholderText.textContent = `Gagal memuat data tahun ${year}: ${err.message}`;
+            placeholderText.textContent = `Gagal memuat data ${phrase}: ${err.message}`;
             statusEl.innerHTML = '<span class="w-2 h-2 bg-red-700 rounded-full mr-2"></span>Error';
         }
     }
