@@ -499,6 +499,47 @@
                     <div class="bg-[#fafcf7] rounded-2xl p-5">
 
                         <p class="text-sm text-[#94a3b8]">
+                            Google Drive
+                        </p>
+
+                        @if(!empty($talent->gdrive_src))
+
+                            <a
+                                href="{{ $talent->gdrive_src }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#8aaa28]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                Buka Google Drive
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#17324d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
                             Tag Keahlian
                         </p>
 

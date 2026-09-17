@@ -87,6 +87,7 @@ class TalentController extends Controller
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
@@ -130,6 +131,7 @@ class TalentController extends Controller
                 'url_ktp' => $ktpPath,
                 'url_cv' => $cvPath,
                 'url_butap' => $butapPath,
+                'url_gdrive' => $validated['url_gdrive'] ?? null,
                 'status' => $validated['status'],
                 'created_by' => auth()->id(),
             ]);
@@ -213,6 +215,7 @@ class TalentController extends Controller
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 

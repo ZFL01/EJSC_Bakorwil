@@ -18,7 +18,7 @@ class Client extends Model
         'id_user', 'id_wilayah', 'nama_ukm', 'foto_logo',
         'alamat_lengkap', 'domisili', 'nama_produk', 'deskripsi_usaha',
         'nama_pemilik', 'no_hp', 'email', 'website',
-        'latitude', 'longitude', 'status', 'is_public',
+        'latitude', 'longitude', 'status', 'is_public', 'url_gdrive',
         'created_by', 'updated_by',
     ];
 
@@ -43,7 +43,8 @@ class Client extends Model
         return $q->select(
             'id_client','id_user','id_wilayah','nama_ukm','foto_logo',
             'alamat_lengkap','domisili','nama_produk','deskripsi_usaha',
-            'nama_pemilik','no_hp','email','website','status','is_public'
+            'nama_pemilik','no_hp','email','website','status','is_public',
+            'url_gdrive'
         );
     }
 
@@ -107,6 +108,26 @@ class Client extends Model
         }
 
         return 'https://' . $website;
+    }
+
+    /**
+     * Link Google Drive client yang sudah dinormalkan untuk href aman.
+     * Terima nilai tanpa skema (mis. "drive.google.com/drive/folders/xxx")
+     * dengan menambahkan https:// di depan.
+     */
+    public function getGdriveSrcAttribute(): ?string
+    {
+        $value = trim((string) $this->url_gdrive);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        return 'https://' . $value;
     }
 
     /** URL foto logo yang aman (file storage publik bila tersedia). */

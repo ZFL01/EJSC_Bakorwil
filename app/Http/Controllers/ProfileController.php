@@ -149,6 +149,7 @@ class ProfileController extends Controller
             'nama_pemilik' => 'required|string|max:255',
             'website' => 'nullable|url|max:255',
             'foto_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
         ]);
 
         if ($request->hasFile('foto_logo')) {
@@ -182,6 +183,7 @@ class ProfileController extends Controller
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
+            'url_gdrive' => 'nullable|string|max:500',
         ]);
 
         if ($request->hasFile('foto')) {
@@ -237,6 +239,7 @@ class ProfileController extends Controller
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
         ]);
 
         if ($request->hasFile('foto')) {

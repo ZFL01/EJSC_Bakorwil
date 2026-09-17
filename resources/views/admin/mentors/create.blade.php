@@ -93,6 +93,11 @@
                 <label class="block text-xs font-semibold text-gray-600 mb-1">CV (PDF/DOC)</label>
                 <input type="file" name="url_cv" class="text-xs text-gray-500 w-full">
             </div>
+            <div class="md:col-span-2">
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Link Google Drive</label>
+                <input type="text" name="url_gdrive" value="{{ old('url_gdrive') }}" placeholder="https://drive.google.com/drive/folders/..." class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <p class="text-xs text-gray-400 mt-1">Link folder/file Google Drive mentor. Kosongkan jika belum ada.</p>
+            </div>
         </div>
 
         <div class="flex justify-end gap-2 pt-4 border-t">

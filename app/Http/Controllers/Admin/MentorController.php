@@ -78,6 +78,7 @@ class MentorController extends Controller
             'is_available' => 'boolean',
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
@@ -116,6 +117,7 @@ class MentorController extends Controller
                 'jumlah_mentee' => 0,
                 'url_ktp' => $ktpPath,
                 'url_cv' => $cvPath,
+                'url_gdrive' => $validated['url_gdrive'] ?? null,
                 'status' => $validated['status'],
                 'created_by' => auth()->id(),
             ]);
@@ -192,6 +194,7 @@ class MentorController extends Controller
             'is_available' => 'boolean',
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 

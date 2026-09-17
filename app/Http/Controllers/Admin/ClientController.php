@@ -68,6 +68,7 @@ class ClientController extends Controller
             'no_hp' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
             'foto_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
@@ -96,6 +97,7 @@ class ClientController extends Controller
                 'no_hp' => $validated['no_hp'],
                 'alamat_lengkap' => $validated['alamat_lengkap'],
                 'foto_logo' => $logoPath,
+                'url_gdrive' => $validated['url_gdrive'] ?? null,
                 'status' => $validated['status'],
                 'created_by' => auth()->id(),
             ]);
@@ -166,6 +168,7 @@ class ClientController extends Controller
             'no_hp' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
             'foto_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+            'url_gdrive' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 

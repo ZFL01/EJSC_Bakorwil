@@ -150,6 +150,15 @@
                             <input type="file" name="foto_logo" accept="image/jpeg,image/png"
                                    class="w-full border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                         </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Link Google Drive</label>
+                            @if($profile->gdrive_src)
+                                <p class="text-[11px] text-slate-500 mb-2">Link saat ini: <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#56b8c2] underline">Buka Google Drive</a></p>
+                            @endif
+                            <input type="text" name="url_gdrive" value="{{ old('url_gdrive', $profile->url_gdrive) }}" placeholder="https://drive.google.com/drive/folders/..."
+                                   class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            <p class="text-[11px] text-slate-500 mt-1">Tempel link folder/file Google Drive Anda agar bisa dibuka langsung. Kosongkan jika tidak ada.</p>
+                        </div>
                     </section>
                 @elseif($user->isMentor())
                     <section class="space-y-4 border-t border-slate-200 pt-6">
@@ -249,6 +258,15 @@
                                     <input type="file" name="url_cv" accept=".pdf,.doc,.docx" class="hidden">
                                 </label>
                             </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Link Google Drive</label>
+                            @if($profile->gdrive_src)
+                                <p class="text-[11px] text-slate-500 mb-2">Link saat ini: <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#56b8c2] underline">Buka Google Drive</a></p>
+                            @endif
+                            <input type="text" name="url_gdrive" value="{{ old('url_gdrive', $profile->url_gdrive) }}" placeholder="https://drive.google.com/drive/folders/..."
+                                   class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            <p class="text-[11px] text-slate-500 mt-1">Tempel link folder/file Google Drive Anda agar bisa dibuka langsung. Kosongkan jika tidak ada.</p>
                         </div>
 
                         <div>
@@ -390,6 +408,15 @@
                                     <input type="file" name="url_cv" accept=".pdf,.doc,.docx" class="hidden">
                                 </label>
                             </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-2">Link Google Drive</label>
+                            @if($profile->gdrive_src)
+                                <p class="text-[11px] text-slate-500 mb-2">Link saat ini: <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#56b8c2] underline">Buka Google Drive</a></p>
+                            @endif
+                            <input type="text" name="url_gdrive" value="{{ old('url_gdrive', $profile->url_gdrive) }}" placeholder="https://drive.google.com/drive/folders/..."
+                                   class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            <p class="text-[11px] text-slate-500 mt-1">Tempel link folder/file Google Drive Anda agar bisa dibuka langsung. Kosongkan jika tidak ada.</p>
                         </div>
 
                         <div>

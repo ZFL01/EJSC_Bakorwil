@@ -62,6 +62,16 @@
             <textarea name="deskripsi_usaha" rows="3" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('deskripsi_usaha', $client->deskripsi_usaha) }}</textarea>
         </div>
 
+        <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Link Google Drive</h3>
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Link Google Drive</label>
+            @if($client->gdrive_src)
+                <p class="text-xs text-gray-500 mb-1">Link saat ini: <a href="{{ $client->gdrive_src }}" target="_blank" rel="noopener" class="text-[#56b8c2] underline">Buka Google Drive</a></p>
+            @endif
+            <input type="text" name="url_gdrive" value="{{ old('url_gdrive', $client->url_gdrive) }}" placeholder="https://drive.google.com/drive/folders/..." class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            <p class="text-xs text-gray-400 mt-1">Link folder/file Google Drive client. Kosongkan jika tidak ada.</p>
+        </div>
+
         <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Foto</h3>
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Foto Logo/Produk UMKM</label>

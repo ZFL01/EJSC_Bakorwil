@@ -384,6 +384,47 @@
 
                     </div>
 
+
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Google Drive
+                        </p>
+
+                        @if(!empty($client->gdrive_src))
+
+                            <a
+                                href="{{ $client->gdrive_src }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#a28d20]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                Buka Google Drive
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#30352f]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
                 </div>
 
 

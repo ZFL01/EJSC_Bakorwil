@@ -85,6 +85,16 @@
                         @endif
                     </dd>
                 </div>
+                <div>
+                    <dt class="text-xs text-rose-500 mb-1">Link Google Drive</dt>
+                    <dd>
+                        @if($mentor->gdrive_src)
+                            <a href="{{ $mentor->gdrive_src }}" target="_blank" rel="noopener" class="inline-flex items-center gap-1 text-xs text-rose-600 underline hover:text-rose-800">Buka Google Drive</a>
+                        @else
+                            <span class="text-xs text-gray-400 italic">Tidak ada link</span>
+                        @endif
+                    </dd>
+                </div>
             </dl>
         </div>
     </div>

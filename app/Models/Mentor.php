@@ -18,7 +18,7 @@ class Mentor extends Model
         'id_user', 'id_wilayah', 'nama', 'jenis_kelamin', 'foto',
         'domisili', 'alamat_lengkap', 'no_wa', 'email', 'bio',
         'keahlian', 'pengalaman', 'portofolio_url', 'latitude', 'longitude',
-        'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap',
+        'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap', 'url_gdrive',
         'created_by', 'updated_by', 'expertise_tags', 'is_available', 'jumlah_mentee',
     ];
 
@@ -47,7 +47,7 @@ class Mentor extends Model
             'id_mentor','id_user','id_wilayah','nama','jenis_kelamin','foto',
             'domisili','alamat_lengkap','no_wa','email','bio','keahlian',
             'pengalaman','portofolio_url','status','is_public','url_cv',
-            'expertise_tags','is_available','jumlah_mentee'
+            'expertise_tags','is_available','jumlah_mentee','url_gdrive'
         );
     }
 
@@ -257,5 +257,25 @@ class Mentor extends Model
     public function getButapSrcAttribute(): ?string
     {
         return $this->safeFileUrl($this->url_butap);
+    }
+
+    /**
+     * Link Google Drive mentor yang sudah dinormalkan untuk href aman.
+     * Terima nilai tanpa skema (mis. "drive.google.com/drive/folders/xxx")
+     * dengan menambahkan https:// di depan.
+     */
+    public function getGdriveSrcAttribute(): ?string
+    {
+        $value = trim((string) $this->url_gdrive);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        return 'https://' . $value;
     }
 }

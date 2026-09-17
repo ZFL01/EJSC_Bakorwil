@@ -18,7 +18,7 @@ class Talent extends Model
         'id_user', 'id_wilayah', 'nama', 'jenis_kelamin', 'foto',
         'domisili', 'alamat_lengkap', 'no_wa', 'email', 'bidang_pekerjaan',
         'keahlian', 'bio', 'pengalaman', 'portofolio_url', 'latitude', 'longitude',
-        'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap',
+        'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap', 'url_gdrive',
         'created_by', 'updated_by', 'skill_tags', 'mentor_id', 'status_pekerjaan',
     ];
 
@@ -46,7 +46,7 @@ class Talent extends Model
             'id_talenta','id_user','id_wilayah','nama','jenis_kelamin','foto',
             'domisili','alamat_lengkap','no_wa','email','bidang_pekerjaan',
             'keahlian','bio','pengalaman','portofolio_url','status','is_public',
-            'url_cv','skill_tags','mentor_id','status_pekerjaan'
+            'url_cv','skill_tags','mentor_id','status_pekerjaan','url_gdrive'
         );
     }
 
@@ -243,5 +243,25 @@ class Talent extends Model
     public function getButapSrcAttribute(): ?string
     {
         return $this->safeFileUrl($this->url_butap);
+    }
+
+    /**
+     * Link Google Drive talenta yang sudah dinormalkan untuk href aman.
+     * Terima nilai tanpa skema (mis. "drive.google.com/drive/folders/xxx")
+     * dengan menambahkan https:// di depan.
+     */
+    public function getGdriveSrcAttribute(): ?string
+    {
+        $value = trim((string) $this->url_gdrive);
+
+        if ($value === '') {
+            return null;
+        }
+
+        if (preg_match('#^(https?:|//)#i', $value) === 1) {
+            return $value;
+        }
+
+        return 'https://' . $value;
     }
 }

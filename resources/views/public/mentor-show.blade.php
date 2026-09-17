@@ -610,6 +610,58 @@
                                 text-[#78909c]
                             "
                         >
+                            Google Drive
+                        </p>
+
+                        @if(!empty($mentor->gdrive_src))
+
+                            <a
+                                href="{{ $mentor->gdrive_src }}"
+                                target="_blank"
+                                rel="noopener"
+                                class="
+                                    mt-1
+                                    inline-block
+                                    font-semibold
+                                    text-[#16b8c4]
+                                    hover:underline
+                                    break-all
+                                "
+                            >
+                                Buka Google Drive
+                            </a>
+
+                        @else
+
+                            <p
+                                class="
+                                    mt-1
+                                    font-semibold
+                                    text-[#12344d]
+                                "
+                            >
+                                -
+                            </p>
+
+                        @endif
+
+                    </div>
+
+
+                    <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
                             Tag Keahlian
                         </p>
 

@@ -238,6 +238,16 @@
                                     <dt class="text-sm text-gray-500">Status</dt>
                                     <dd class="text-sm font-medium {{ $profile->status === 'aktif' ? 'text-emerald-600' : 'text-gray-600' }}">{{ ucfirst($profile->status) }}</dd>
                                 </div>
+                                <div>
+                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
+                                    <dd class="text-sm font-medium text-gray-800">
+                                        @if($profile->gdrive_src)
+                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
+                                        @else
+                                            <span class="font-normal text-gray-400">Belum diisi</span>
+                                        @endif
+                                    </dd>
+                                </div>
                             </dl>
                         @elseif($user->isMentor())
                             <dl class="profile-details">
@@ -253,6 +263,16 @@
                                     <dt class="text-sm text-gray-500">Ketersediaan</dt>
                                     <dd class="text-sm font-medium {{ $profile->is_available ? 'text-emerald-600' : 'text-amber-600' }}">{{ $profile->is_available ? 'Available' : 'Unavailable' }}</dd>
                                 </div>
+                                <div>
+                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
+                                    <dd class="text-sm font-medium text-gray-800">
+                                        @if($profile->gdrive_src)
+                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
+                                        @else
+                                            <span class="font-normal text-gray-400">Belum diisi</span>
+                                        @endif
+                                    </dd>
+                                </div>
                             </dl>
                         @elseif($user->isTalent())
                             <dl class="profile-details">
@@ -267,6 +287,16 @@
                                 <div>
                                     <dt class="text-sm text-gray-500">Mentor</dt>
                                     <dd class="text-sm font-medium text-gray-800">{{ $profile->mentor->nama ?? '-' }}</dd>
+                                </div>
+                                <div>
+                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
+                                    <dd class="text-sm font-medium text-gray-800">
+                                        @if($profile->gdrive_src)
+                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
+                                        @else
+                                            <span class="font-normal text-gray-400">Belum diisi</span>
+                                        @endif
+                                    </dd>
                                 </div>
                             </dl>
                         @endif
