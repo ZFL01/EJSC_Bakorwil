@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('wilayah', function (Blueprint $table) {
-            $table->bigIncrements('id_wilayah');
-            $table->string('nama_wilayah', 100);
-            $table->string('jenis_wilayah', 20);
-            $table->string('bakorwil', 100)->default('Bakorwil Jember');
-            $table->string('kode_bps', 20)->nullable();
-            $table->timestamps();
-        });
+        if (! Schema::hasTable('wilayah')) {
+            Schema::create('wilayah', function (Blueprint $table) {
+                $table->bigIncrements('id_wilayah');
+                $table->string('nama_wilayah', 100);
+                $table->string('jenis_wilayah', 20);
+                $table->string('bakorwil', 100)->default('Bakorwil Jember');
+                $table->string('kode_bps', 20)->nullable();
+                $table->timestamps();
+            });
+        }
     }
 
     /**

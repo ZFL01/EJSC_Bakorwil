@@ -444,6 +444,23 @@
                         >
                             Kegiatan
                         </a>
+                        <a
+                            href="{{ route('booking.index') }}"
+                            class="
+                                close-all-dropdowns
+                                block
+                                px-4
+                                py-2
+                                text-sm
+                                {{ request()->routeIs('booking.*')
+                                    ? 'text-[#56b8c2] bg-[#f0f9fa] font-semibold'
+                                    : 'text-gray-700' }}
+                                hover:bg-[#f0f9fa]
+                                hover:text-[#56b8c2]
+                            "
+                        >
+                            Booking Ruangan
+                        </a>
 
                     </div>
 
@@ -1188,7 +1205,24 @@
                 >
                     Kegiatan
                 </a>
-
+                <a
+                    href="{{ route('booking.index') }}"
+                    class="
+                        close-all-dropdowns
+                        block
+                        px-3
+                        py-2
+                        rounded-md
+                        text-sm
+                        {{ request()->routeIs('booking.*')
+                            ? 'text-[#56b8c2] bg-[#f0f9fa] font-semibold'
+                            : 'text-gray-700' }}
+                        hover:bg-[#f0f9fa]
+                        hover:text-[#56b8c2]
+                    "
+                >
+                    Booking Ruangan
+                </a>
             </div>
 
 

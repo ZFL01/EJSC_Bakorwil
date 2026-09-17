@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('profile_changes', function (Blueprint $table) {
+        if (! Schema::hasTable('profile_changes')) {
+            Schema::create('profile_changes', function (Blueprint $table) {
             $table->bigIncrements('id_change');
             $table->unsignedBigInteger('id_user');
             $table->string('table_name', 100);
@@ -28,7 +29,8 @@ return new class extends Migration
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('reviewed_by')->references('id_user')->on('users')->onDelete('set null');
             $table->index(['table_name', 'record_id']);
-        });
+            });
+        }
     }
 
     /**

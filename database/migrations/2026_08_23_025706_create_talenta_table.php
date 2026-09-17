@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('talenta', function (Blueprint $table) {
+        if (! Schema::hasTable('talenta')) {
+            Schema::create('talenta', function (Blueprint $table) {
             $table->bigIncrements('id_talenta');
             $table->unsignedBigInteger('id_user')->nullable();
             $table->unsignedBigInteger('id_wilayah')->nullable();
@@ -43,7 +44,8 @@ return new class extends Migration
             
             $table->foreign('id_wilayah')->references('id_wilayah')->on('wilayah')->onDelete('set null');
             $table->foreign('mentor_id')->references('id_mentor')->on('mentor')->onDelete('set null');
-        });
+            });
+        }
     }
 
     /**

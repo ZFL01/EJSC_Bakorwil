@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admin_logs', function (Blueprint $table) {
+        if (! Schema::hasTable('admin_logs')) {
+            Schema::create('admin_logs', function (Blueprint $table) {
             $table->bigIncrements('id_log');
             $table->unsignedBigInteger('id_user');
             $table->string('action', 100);
@@ -26,7 +27,8 @@ return new class extends Migration
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->index('table_name');
             $table->index('record_id');
-        });
+            });
+        }
     }
 
     /**

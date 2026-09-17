@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoomBookingController;
+use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -190,3 +192,93 @@ Route::redirect('/kelola/talenta', '/admin/talents')
 
 Route::redirect('/kelola/client', '/admin/clients')
     ->name('kelola.client');
+
+/*
+|--------------------------------------------------------------------------
+| Booking Ruangan
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/booking-ruangan',
+    [RoomBookingController::class, 'index']
+)->name('booking.index');
+
+Route::get(
+    '/booking-ruangan/jadwal',
+    [RoomBookingController::class, 'schedule']
+)->name('booking.schedule');
+
+Route::post(
+    '/booking-ruangan',
+    [RoomBookingController::class, 'store']
+)->name('booking.store');
+
+Route::get(
+    '/booking-ruangan/success/{id}',
+    [RoomBookingController::class, 'success']
+)->name('booking.success');
+
+/*
+|--------------------------------------------------------------------------
+| Detail Booking dari Jadwal
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/booking-ruangan/detail/{id}',
+    [RoomBookingController::class, 'detail']
+)->name('booking.detail');
+
+/*
+|--------------------------------------------------------------------------
+| Booking Saya
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/booking-saya',
+    [RoomBookingController::class, 'myBookings']
+)->middleware('auth')
+ ->name('booking.my');
+ /*
+|--------------------------------------------------------------------------
+| Admin Booking Ruangan
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get(
+            '/bookings',
+            [AdminRoomBookingController::class, 'index']
+        )->name('bookings.index');
+
+        Route::get(
+            '/bookings/{id}',
+            [AdminRoomBookingController::class, 'show']
+        )->name('bookings.show');
+
+        Route::post(
+            '/bookings/{id}/approve',
+            [AdminRoomBookingController::class, 'approve']
+        )->name('bookings.approve');
+
+        Route::post(
+            '/bookings/{id}/reject',
+            [AdminRoomBookingController::class, 'reject']
+        )->name('bookings.reject');
+
+        Route::post(
+            '/bookings/{id}/cancel',
+            [AdminRoomBookingController::class, 'cancel']
+        )->name('bookings.cancel');
+
+        Route::post(
+            '/bookings/{id}/complete',
+            [AdminRoomBookingController::class, 'complete']
+        )->name('bookings.complete');
+    });

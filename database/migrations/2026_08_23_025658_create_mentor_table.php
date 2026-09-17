@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mentor', function (Blueprint $table) {
+        if (! Schema::hasTable('mentor')) {
+            Schema::create('mentor', function (Blueprint $table) {
             $table->bigIncrements('id_mentor');
             $table->unsignedBigInteger('id_user')->nullable();
             $table->unsignedBigInteger('id_wilayah')->nullable();
@@ -41,7 +42,8 @@ return new class extends Migration
             $table->timestamps();
             
             $table->foreign('id_wilayah')->references('id_wilayah')->on('wilayah')->onDelete('set null');
-        });
+            });
+        }
     }
 
     /**

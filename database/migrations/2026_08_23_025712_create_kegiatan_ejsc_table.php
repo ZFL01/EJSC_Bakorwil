@@ -11,7 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kegiatan_ejsc', function (Blueprint $table) {
+        if (! Schema::hasTable('kegiatan_ejsc')) {
+            Schema::create('kegiatan_ejsc', function (Blueprint $table) {
             $table->bigIncrements('id_kegiatan');
             $table->string('judul_kegiatan', 255);
             $table->text('deskripsi')->nullable();
@@ -26,7 +27,8 @@ return new class extends Migration
             $table->timestamps();
             
             $table->foreign('organizer_id')->references('id_user')->on('users')->onDelete('set null');
-        });
+            });
+        }
     }
 
     /**
