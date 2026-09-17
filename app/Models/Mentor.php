@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasKeahlianList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Mentor extends Model
 {
-    use HasFactory;
+    use HasFactory, HasKeahlianList;
 
     protected $table = 'mentor';
     protected $primaryKey = 'id_mentor';
@@ -23,6 +24,20 @@ class Mentor extends Model
     ];
 
     protected $hidden = ['no_wa', 'alamat_lengkap'];
+
+    /**
+     * Pilihan Bidang Keahlian (keahlian) yang disarankan pada field
+     * "Bidang Keahlian" di form profil mentor maupun form admin.
+     *
+     * Field-nya berupa combobox satu input: nilai bisa dipilih dari daftar ini
+     * atau diketik bebas, sehingga data lama di luar daftar tetap bisa dipakai.
+     */
+    public const BIDANG_KEAHLIAN_OPTIONS = [
+        'Bisnis',
+        'Desain',
+        'Pendidikan',
+        'Teknologi',
+    ];
 
     protected function casts(): array
     {
@@ -54,45 +69,63 @@ class Mentor extends Model
     /**
      * Tentukan kategori bidang dari data mentor.
      * Dipakai oleh halaman publik (filter & badge) dan controller.
+     *
+     * Satu mentor boleh punya lebih dari satu bidang (mis. "Desain,
+     * Teknologi"), karena itu kategori utama diambil dari bidang pertama
+     * yang cocok mengikuti urutan prioritas lama. Untuk semua kategori
+     * yang cocok, pakai bidangKeys().
      */
     public static function bidangKey($mentor): string
     {
-        $bidang = strtolower((string) ($mentor->bidang ?? ''));
+        $keys = static::bidangKeys($mentor);
+
+        return $keys[0] ?? 'pendidikan';
+    }
+
+    /**
+     * Semua kategori bidang yang cocok dengan isi kolom keahlian.
+     * Satu mentor bisa punya beberapa bidang, karena itu hasilnya berupa
+     * daftar (urutan mengikuti prioritas lama: teknologi → bisnis →
+     * desain → pendidikan).
+     */
+    public static function bidangKeys($mentor): array
+    {
+        $bidang = is_object($mentor)
+            ? strtolower((string) ($mentor->bidang ?? ''))
+            : strtolower((string) $mentor);
 
         if ($bidang !== '') {
-            return $bidang;
+            return [$bidang];
         }
 
-        $keahlian = strtolower((string) ($mentor->keahlian ?? ''));
+        $keahlian = strtolower(implode(', ', static::keahlianList($mentor)));
 
-        if (
-            str_contains($keahlian, 'program')
-            || str_contains($keahlian, 'software')
-            || str_contains($keahlian, 'teknologi')
-            || str_contains($keahlian, 'cloud')
-            || str_contains($keahlian, 'data')
-            || preg_match('/\b(ai)\b/', $keahlian)
-        ) {
-            return 'teknologi';
+        if ($keahlian === '') {
+            return [];
         }
 
-        if (
-            str_contains($keahlian, 'bisnis')
-            || str_contains($keahlian, 'marketing')
-            || str_contains($keahlian, 'usaha')
-        ) {
-            return 'bisnis';
+        $kamus = [
+            'teknologi' => ['program', 'software', 'teknologi', 'cloud', 'data', 'ai'],
+            'bisnis' => ['bisnis', 'marketing', 'usaha'],
+            'desain' => ['desain', 'design', 'ui', 'ux'],
+        ];
+
+        $keys = [];
+
+        foreach ($kamus as $key => $kataKunci) {
+            foreach ($kataKunci as $kunci) {
+                $cocok = in_array($kunci, ['ai', 'ui', 'ux'], true)
+                    ? preg_match('/\b'.$kunci.'\b/', $keahlian) === 1
+                    : str_contains($keahlian, $kunci);
+
+                if ($cocok) {
+                    $keys[] = $key;
+                    break;
+                }
+            }
         }
 
-        if (
-            str_contains($keahlian, 'desain')
-            || str_contains($keahlian, 'design')
-            || preg_match('/\b(ui|ux)\b/', $keahlian)
-        ) {
-            return 'desain';
-        }
-
-        return 'pendidikan';
+        return $keys === [] ? ['pendidikan'] : $keys;
     }
 
         /**

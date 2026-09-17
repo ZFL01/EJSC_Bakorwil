@@ -666,6 +666,42 @@
             #65763d;
     }
 
+    .badge-foto {
+
+        background:
+            #e8f4f8;
+
+        color:
+            #2b6076;
+    }
+
+    .badge-keuangan {
+
+        background:
+            #fdf3e3;
+
+        color:
+            #8a6024;
+    }
+
+    .badge-video {
+
+        background:
+            #f3ecfa;
+
+        color:
+            #61458a;
+    }
+
+    .badge-lainnya {
+
+        background:
+            #eef2f6;
+
+        color:
+            #47586b;
+    }
+
 
     /* =========================================================
        LEVEL BADGE
@@ -1105,38 +1141,62 @@
             /*
              * Mapping keahlian (helper terpusat agar konsisten
              * dengan filter/dropdown dari controller).
+             *
+             * Bidang keahlian boleh lebih dari satu (mis. "Desain, Video"),
+             * jadi semua kategori yang cocok dihitung untuk badge.
              */
 
-            $skillKey =
-                \App\Models\Talent::skillKey($talent);
+            $skillKeys =
+                \App\Models\Talent::skillKeys($talent);
 
+            if ($skillKeys === []) {
 
-            $skillLabel = match($skillKey) {
+                $skillKeys = [
+                    \App\Models\Talent::skillKey($talent)
+                ];
+            }
 
-                'programming' =>
-                    [
-                        'label' => 'Programming',
-                        'class' => 'badge-programming'
-                    ],
+            /*
+             * Label & warna badge per kategori (dipakai untuk semua bidang
+             * yang dimiliki talenta, bukan hanya bidang utamanya).
+             */
 
-                'design' =>
-                    [
-                        'label' => 'Design',
-                        'class' => 'badge-design'
-                    ],
+            $badgeOf = function (string $key): array {
 
-                'marketing' =>
-                    [
-                        'label' => 'Marketing',
-                        'class' => 'badge-marketing'
-                    ],
+                return [
+                    'label' =>
+                        \App\Models\Talent::skillLabel($key),
 
-                default =>
-                    [
-                        'label' => 'Data Analysis',
-                        'class' => 'badge-data'
-                    ],
+                    'class' => match ($key) {
+                        'programming' =>
+                            'badge-programming',
+
+                        'design' =>
+                            'badge-design',
+
+                        'marketing' =>
+                            'badge-marketing',
+
+                        'foto' =>
+                            'badge-foto',
+
+                        'keuangan' =>
+                            'badge-keuangan',
+
+                        'video' =>
+                            'badge-video',
+
+                        'lainnya' =>
+                            'badge-lainnya',
+
+                        default =>
+                            'badge-data',
+                    },
+                ];
             };
+
+
+            // Badge kategori sudah dihitung oleh $badgeOf() di atas.
 
 
             /*
@@ -1184,7 +1244,7 @@
             class="talenta-card"
             data-nama="{{ strtolower($nama) }}"
             data-keahlian="{{ strtolower($keahlian) }}"
-            data-kategori="{{ $skillKey }}"
+            data-kategori="{{ implode(' ', $skillKeys) }}"
         >
 
             <!-- TOP -->
@@ -1272,22 +1332,39 @@
             </p>
 
 
-            <!-- KEAHLIAN -->
+            <!-- KEAHLIAN (satu badge per bidang yang dimiliki) -->
 
-            <span
+            <div
                 class="
-                    inline-block
-                    px-3
-                    py-1
-                    rounded-full
-                    text-xs
-                    font-medium
-                    {{ $skillLabel['class'] }}
                     mb-4
+                    flex
+                    flex-wrap
+                    items-center
+                    gap-2
                 "
             >
-                {{ $skillLabel['label'] }}
-            </span>
+                @foreach($skillKeys as $skillCategory)
+
+                    @php
+                        $badge = $badgeOf($skillCategory);
+                    @endphp
+
+                    <span
+                        class="
+                            inline-block
+                            px-3
+                            py-1
+                            rounded-full
+                            text-xs
+                            font-medium
+                            {{ $badge['class'] }}
+                        "
+                    >
+                        {{ $badge['label'] }}
+                    </span>
+
+                @endforeach
+            </div>
 
 
             <!-- STATUS PEKERJAAN -->
@@ -1563,7 +1640,9 @@ document.addEventListener(
                     const cocokKategori =
                         kategori === 'semua'
                         ||
-                        cardKategori === kategori;
+                        cardKategori
+                            .split(' ')
+                            .includes(kategori);
 
 
                     if (

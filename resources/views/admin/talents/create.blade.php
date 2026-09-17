@@ -37,10 +37,10 @@
                 <label class="block text-xs font-semibold text-gray-600 mb-1">No WhatsApp</label>
                 <input type="text" name="no_wa" value="{{ old('no_wa') }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Bidang Keahlian</label>
-                <input type="text" name="keahlian" value="{{ old('keahlian') }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
-            </div>
+            @include('partials._bidang-keahlian', [
+                'bkFieldKey' => 'bidang-keahlian-talent-create',
+                'bkValue' => null,
+            ])
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Wilayah/Domisili</label>
                 <select name="id_wilayah" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">

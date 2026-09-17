@@ -509,12 +509,15 @@ class PublicController extends Controller
     {
         return Mentor::active()
             ->get(['keahlian'])
-            ->groupBy(fn ($mentor) => Mentor::bidangKey($mentor))
-            ->map(function ($group, $key) {
+            // Satu mentor bisa punya beberapa bidang, jadi dihitung pada semua
+            // kategori yang cocok (bukan hanya kategori utamanya).
+            ->flatMap(fn ($mentor) => Mentor::bidangKeys($mentor))
+            ->countBy()
+            ->map(function ($count, $key) {
                 return [
                     'key' => $key,
                     'label' => $this->mentorBidangLabel($key),
-                    'count' => $group->count(),
+                    'count' => $count,
                     'color' => 'badge-'.$key,
                 ];
             })
@@ -672,27 +675,25 @@ class PublicController extends Controller
     {
         return Talent::active()
             ->get(['keahlian'])
-            ->groupBy(fn ($talent) => Talent::skillKey($talent))
-            ->map(function ($group, $key) {
+            // Satu talenta bisa punya beberapa bidang, jadi dihitung pada semua
+            // kategori yang cocok (bukan hanya kategori utamanya).
+            ->flatMap(fn ($talent) => Talent::skillKeys($talent) ?: [Talent::skillKey($talent)])
+            ->countBy()
+            ->sortDesc()
+            ->map(function ($count, $key) {
                 return [
                     'key' => $key,
                     'label' => $this->talentaSkillLabel($key),
-                    'count' => $group->count(),
+                    'count' => $count,
                 ];
             })
-            ->sortByDesc('count')
             ->values()
             ->all();
     }
 
     private function talentaSkillLabel(string $key): string
     {
-        return match ($key) {
-            'programming' => 'Programming',
-            'design' => 'Design',
-            'marketing' => 'Marketing',
-            default => 'Data Analysis',
-        };
+        return Talent::skillLabel($key);
     }
 
     /**

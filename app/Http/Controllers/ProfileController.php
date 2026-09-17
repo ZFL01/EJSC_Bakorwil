@@ -176,7 +176,8 @@ class ProfileController extends Controller
             'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Teknologi").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
@@ -211,6 +212,9 @@ class ProfileController extends Controller
             $validated['expertise_tags'] = array_map('trim', explode(',', $validated['expertise_tags']));
         }
 
+        // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+        $validated['keahlian'] = Mentor::normalizeKeahlian($validated['keahlian']);
+
         $validated['updated_by'] = auth()->id();
         $mentor->update($validated);
     }
@@ -230,7 +234,8 @@ class ProfileController extends Controller
             'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Video").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
             'mentor_id' => 'nullable|exists:mentor,id_mentor',
@@ -286,6 +291,9 @@ class ProfileController extends Controller
                 }
             }
         }
+
+        // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+        $validated['keahlian'] = Talent::normalizeKeahlian($validated['keahlian']);
 
         $validated['updated_by'] = auth()->id();
         $talent->update($validated);

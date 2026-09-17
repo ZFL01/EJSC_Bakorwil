@@ -79,7 +79,8 @@ class TalentController extends Controller
             'alamat_lengkap' => 'required|string',
             'id_wilayah' => 'required|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Video").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
             'mentor_id' => 'nullable|exists:mentor,id_mentor',
@@ -115,6 +116,9 @@ class TalentController extends Controller
             $skillTags = $validated['skill_tags'] 
                 ? array_map('trim', explode(',', $validated['skill_tags'])) 
                 : [];
+
+            // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+            $validated['keahlian'] = Talent::normalizeKeahlian($validated['keahlian']);
 
             $talent = Talent::create([
                 'id_user' => $user->id_user,
@@ -207,7 +211,8 @@ class TalentController extends Controller
             'nama' => 'required|string|max:255',
             'no_wa' => 'required|string|max:20',
             'alamat_lengkap' => 'required|string',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Video").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'skill_tags' => 'nullable|string',
             'mentor_id' => 'nullable|exists:mentor,id_mentor',
@@ -270,6 +275,9 @@ class TalentController extends Controller
                 $validated['password'],
                 $validated['password_confirmation']
             );
+
+            // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+            $validated['keahlian'] = Talent::normalizeKeahlian($validated['keahlian']);
 
             $validated['updated_by'] = auth()->id();
             $talent->update($validated);

@@ -175,9 +175,14 @@
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Keahlian</label>
-                                <input type="text" name="keahlian" value="{{ old('keahlian', $profile->keahlian) }}" required
-                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            @include('partials._bidang-keahlian', [
+                                'bkFieldKey' => 'bidang-keahlian-mentor-profile',
+                                'bkValue' => $profile->keahlian ?? null,
+                                'bkModel' => 'mentor',
+                                'bkLabel' => 'Keahlian',
+                                'bkLabelClass' => 'block text-sm font-medium text-slate-700 mb-2',
+                                'bkInputClass' => 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition',
+                            ])
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">No WhatsApp</label>

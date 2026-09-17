@@ -843,33 +843,41 @@
 
                         /*
                         * Kategori bidang ditentukan lewat helper terpusat
-                        * agar konsisten dengan JS & controller.
+                        * agar konsisten dengan JS & controller. Bidang boleh
+                        * lebih dari satu, jadi semua kategori yang cocok
+                        * dihitung untuk badge.
                         */
-                        $bidang =
-                            \App\Models\Mentor::bidangKey($mentor);
+                        $bidangKeys =
+                            \App\Models\Mentor::bidangKeys($mentor);
 
+                        if ($bidangKeys === []) {
+                            $bidangKeys = [
+                                \App\Models\Mentor::bidangKey($mentor)
+                            ];
+                        }
 
-                        $bidangLabel = match($bidang) {
+                        $badgeOf = function (string $key): array {
+                            return match($key) {
+                                'teknologi' => [
+                                    'label' => 'Teknologi',
+                                    'class' => 'badge-teknologi'
+                                ],
 
-                            'teknologi' => [
-                                'label' => 'Teknologi',
-                                'class' => 'badge-teknologi'
-                            ],
+                                'bisnis' => [
+                                    'label' => 'Bisnis',
+                                    'class' => 'badge-bisnis'
+                                ],
 
-                            'bisnis' => [
-                                'label' => 'Bisnis',
-                                'class' => 'badge-bisnis'
-                            ],
+                                'desain' => [
+                                    'label' => 'Desain',
+                                    'class' => 'badge-desain'
+                                ],
 
-                            'desain' => [
-                                'label' => 'Desain',
-                                'class' => 'badge-desain'
-                            ],
-
-                            default => [
-                                'label' => 'Pendidikan',
-                                'class' => 'badge-pendidikan'
-                            ],
+                                default => [
+                                    'label' => 'Pendidikan',
+                                    'class' => 'badge-pendidikan'
+                                ],
+                            };
                         };
                     @endphp
 
@@ -878,7 +886,7 @@
                         class="mentor-card"
                         data-nama="{{ strtolower($nama) }}"
                         data-keahlian="{{ strtolower($keahlian) }}"
-                        data-bidang="{{ $bidang }}"
+                        data-bidang="{{ implode(' ', $bidangKeys) }}"
                     >
 
                         <!-- TOP -->
@@ -905,20 +913,28 @@
                             </div>
 
 
-                            <!-- BADGE -->
+                            <!-- BADGE (satu badge per bidang yang dimiliki) -->
 
-                            <span
-                                class="
-                                    px-3
-                                    py-1
-                                    rounded-full
-                                    text-xs
-                                    font-medium
-                                    {{ $bidangLabel['class'] }}
-                                "
-                            >
-                                {{ $bidangLabel['label'] }}
-                            </span>
+                            <div class="flex flex-wrap items-center justify-end gap-2">
+                                @foreach($bidangKeys as $bidangCategory)
+                                    @php
+                                        $badge = $badgeOf($bidangCategory);
+                                    @endphp
+
+                                    <span
+                                        class="
+                                            px-3
+                                            py-1
+                                            rounded-full
+                                            text-xs
+                                            font-medium
+                                            {{ $badge['class'] }}
+                                        "
+                                    >
+                                        {{ $badge['label'] }}
+                                    </span>
+                                @endforeach
+                            </div>
 
                         </div>
 
@@ -1187,7 +1203,7 @@
                             card.dataset.keahlian || '';
 
                         const cardBidang =
-                            card.dataset.bidang || '';
+                            (card.dataset.bidang || '').split(/\s+/).filter(Boolean);
 
 
                         const cocokKeyword =
@@ -1199,7 +1215,7 @@
                         const cocokBidang =
                             bidang === 'semua'
                             ||
-                            cardBidang === bidang;
+                            cardBidang.includes(bidang);
 
 
                         if (

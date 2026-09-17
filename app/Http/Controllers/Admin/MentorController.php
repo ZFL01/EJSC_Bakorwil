@@ -72,7 +72,8 @@ class MentorController extends Controller
             'alamat_lengkap' => 'required|string',
             'id_wilayah' => 'required|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Teknologi").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
@@ -102,6 +103,9 @@ class MentorController extends Controller
             $expertiseTags = $validated['expertise_tags'] 
                 ? array_map('trim', explode(',', $validated['expertise_tags'])) 
                 : [];
+
+            // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+            $validated['keahlian'] = Mentor::normalizeKeahlian($validated['keahlian']);
 
             $mentor = Mentor::create([
                 'id_user' => $user->id_user,
@@ -188,7 +192,8 @@ class MentorController extends Controller
             'alamat_lengkap' => 'required|string',
             'id_wilayah' => 'required|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
-            'keahlian' => 'required|string|max:255',
+            // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Teknologi").
+            'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
@@ -219,6 +224,9 @@ class MentorController extends Controller
             if (isset($validated['expertise_tags'])) {
                 $validated['expertise_tags'] = array_map('trim', explode(',', $validated['expertise_tags']));
             }
+
+            // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
+            $validated['keahlian'] = Mentor::normalizeKeahlian($validated['keahlian']);
 
             // Perbarui akun user terkait (nama, email, password bila diisi)
             if ($mentor->id_user) {

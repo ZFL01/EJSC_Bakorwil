@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasKeahlianList;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class Talent extends Model
 {
-    use HasFactory;
+    use HasFactory, HasKeahlianList {
+        HasKeahlianList::keahlianList as traitKeahlianList;
+        HasKeahlianList::normalizeKeahlian as traitNormalizeKeahlian;
+    }
 
     protected $table = 'talenta';
     protected $primaryKey = 'id_talenta';
@@ -23,6 +27,34 @@ class Talent extends Model
     ];
 
     protected $hidden = ['no_wa', 'alamat_lengkap'];
+
+    /**
+     * Pilihan Bidang Keahlian (keahlian) yang disarankan pada field
+     * "Bidang Keahlian" di form profil talenta maupun form admin.
+     *
+     * Field-nya berupa combobox satu input: nilai bisa dipilih dari daftar ini
+     * atau diketik bebas, sehingga data lama di luar daftar tetap bisa dipakai.
+     */
+    public const BIDANG_KEAHLIAN_OPTIONS = [
+        'Desain',
+        'Foto',
+        'Keuangan',
+        'Pemrograman',
+        'Video',
+    ];
+
+    /**
+     * Pemisah antar bidang keahlian di kolom `keahlian`.
+     *
+     * Satu talenta boleh punya lebih dari satu bidang keahlian. Nilainya
+     * disimpan sebagai teks yang dipisah koma, mis. "Desain, Video", sehingga
+     * pencarian (ILIKE) dan filter lama di halaman publik tetap berjalan.
+     *
+     * Dipertahankan untuk kompatibilitas mundur (dipakai partial
+     * _bidang-keahlian); logika pemisahan/normalisasi ada di trait
+     * HasKeahlianList.
+     */
+    public const KEAHLIAN_SEPARATOR = ', ';
 
     protected function casts(): array
     {
@@ -51,34 +83,101 @@ class Talent extends Model
     }
 
     /**
-     * Tentukan kategori skill dari data talenta.
+     * Pisahkan isi kolom keahlian menjadi daftar bidang yang rapi.
+     * (Dipertahankan untuk kompatibilitas mundur; diteruskan ke trait
+     * HasKeahlianList supaya pemanggilan lama tetap jalan.)
+     */
+    public static function keahlianList($talent): array
+    {
+        return static::traitKeahlianList($talent);
+    }
+
+    /**
+     * Rapikan daftar bidang keahlian menjadi satu string siap simpan.
+     * (Dipertahankan untuk kompatibilitas mundur; diteruskan ke trait
+     * HasKeahlianList supaya pemanggilan lama tetap jalan.)
+     */
+    public static function normalizeKeahlian($value): ?string
+    {
+        return static::traitNormalizeKeahlian($value);
+    }
+
+    /**
+     * Semua kategori skill yang cocok dengan isi kolom keahlian.
+     *
+     * Satu talenta bisa punya beberapa bidang (mis. "Desain, Video"), karena
+     * itu hasilnya berupa daftar. Urutan kategori mengikuti prioritas lama
+     * (programming → design → marketing → data → foto → keuangan → video)
+     * supaya hasil badge tidak berubah untuk data satu bidang.
+     */
+    public static function skillKeys($talent): array
+    {
+        $keahlian = strtolower(implode(', ', static::keahlianList($talent)));
+
+        if ($keahlian === '') {
+            return [];
+        }
+
+        $kamus = [
+            'programming' => ['program', 'pemrogram', 'pemogram', 'developer', 'software'],
+            'design' => ['design', 'desain', 'ui', 'ux'],
+            'marketing' => ['marketing'],
+            'data' => ['data', 'analis', 'business intelligence'],
+            'foto' => ['foto', 'photograph'],
+            'keuangan' => ['keuangan', 'akuntan', 'finance'],
+            'video' => ['video', 'film'],
+        ];
+
+        $keys = [];
+
+        foreach ($kamus as $key => $kataKunci) {
+            foreach ($kataKunci as $kunci) {
+                $cocok = in_array($kunci, ['ui', 'ux'], true)
+                    ? preg_match('/\b'.$kunci.'\b/', $keahlian) === 1
+                    : str_contains($keahlian, $kunci);
+
+                if ($cocok) {
+                    $keys[] = $key;
+                    break;
+                }
+            }
+        }
+
+        return $keys;
+    }
+
+    /**
+     * Tentukan kategori skill utama dari data talenta.
      * Dipakai oleh halaman publik (filter & badge) dan controller.
      */
     public static function skillKey($talent): string
     {
-        $keahlian = strtolower((string) ($talent->keahlian ?? ''));
+        $keys = static::skillKeys($talent);
 
-        if (
-            str_contains($keahlian, 'program')
-            || str_contains($keahlian, 'developer')
-            || str_contains($keahlian, 'software')
-        ) {
-            return 'programming';
+        if ($keys !== []) {
+            return $keys[0];
         }
 
-        if (
-            str_contains($keahlian, 'design')
-            || str_contains($keahlian, 'desain')
-            || preg_match('/\b(ui|ux)\b/', $keahlian)
-        ) {
-            return 'design';
-        }
+        // Nilai tidak dikenali (mis. hasil ketikan bebas pada field Bidang Keahlian)
+        return static::keahlianList($talent) === [] ? 'data' : 'lainnya';
+    }
 
-        if (str_contains($keahlian, 'marketing')) {
-            return 'marketing';
-        }
 
-        return 'data';
+    /**
+     * Label kategori skill untuk tampilan publik (badge & dropdown filter).
+     */
+    public static function skillLabel(string $key): string
+    {
+        return match ($key) {
+            'programming' => 'Programming',
+            'design' => 'Design',
+            'marketing' => 'Marketing',
+            'foto' => 'Foto',
+            'keuangan' => 'Keuangan',
+            'video' => 'Video',
+            'lainnya' => 'Lainnya',
+            default => 'Data Analysis',
+        };
     }
 
         /**

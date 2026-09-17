@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -51,6 +52,43 @@ class User extends Authenticatable
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    /**
+     * Lengkapi username otomatis saat user dibuat tanpa username.
+     *
+     * Kolom users.username bersifat NOT NULL + UNIQUE (lihat migration
+     * 2026_09_16_080000_add_username_to_users_table), sedangkan beberapa
+     * alur admin (tambah talent/mentor/client) membuat user tanpa mengisi
+     * username. Tanpa hook ini pembuatannya gagal dengan error
+     * "null value in column username violates not-null constraint".
+     */
+    protected static function booted(): void
+    {
+        static::creating(function (self $user) {
+            if (blank($user->username)) {
+                $user->username = static::makeUsername((string) $user->email, $user->name);
+            }
+        });
+    }
+
+    /**
+     * Buat username unik dari email (fallback: nama).
+     * Pola sama dengan RegisterController/GoogleAuthController.
+     */
+    public static function makeUsername(string $email, ?string $nama = null): string
+    {
+        $base = Str::slug(explode('@', strtolower($email))[0], '') ?: Str::slug((string) $nama);
+        $base = substr($base === '' ? 'user' : $base, 0, 90);
+
+        $username = $base;
+        $i = 1;
+
+        while (static::query()->where('username', $username)->exists()) {
+            $username = $base.($i++);
+        }
+
+        return $username;
     }
 
     public function getAuthPassword()

@@ -40,8 +40,11 @@
                 <input type="text" name="no_wa" value="{{ old('no_wa', $mentor->no_wa) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
             </div>
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1">Bidang Keahlian</label>
-                <input type="text" name="keahlian" value="{{ old('keahlian', $mentor->keahlian) }}" required class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            @include('partials._bidang-keahlian', [
+                'bkFieldKey' => 'bidang-keahlian-mentor-edit',
+                'bkValue' => $mentor->keahlian ?? null,
+                'bkModel' => 'mentor',
+            ])
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Wilayah/Domisili</label>
