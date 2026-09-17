@@ -952,17 +952,18 @@
                             {{ $nama }}
                         </h3>
 
-                    <!-- ALAMAT -->
+                    <!-- DOMISILI -->
 
-                        <p
-                            class="
-                                mentor-location
-                                text-sm
-                                mb-3
-                            "
-                        >
-                            <strong>Alamat:</strong> {{ $mentor->alamat_lengkap ?? $mentor->domisili ?? '-' }}
-                        </p>
+                    <p
+                        class="
+                            mentor-location
+                            text-sm
+                            mb-3
+                        "
+                    >
+                        <strong>Domisili:</strong> {{ $mentor->domisili ?? '-' }}
+                    </p>
+                    
                         <!-- SKILL -->
 
                         <p

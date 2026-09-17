@@ -1179,18 +1179,17 @@
                 {{ $produk }}
             </p>
 
-                <!-- ALAMAT -->
+                <!-- DOMISILI -->
 
-            <p
-                class="
-                    client-location
-                    text-sm
-                    mb-3
-                "
->
-                <strong>Alamat:</strong>
-            {{ $client->alamat_lengkap ?? $client->alamat ?? $client->domisili ?? '-' }}
-        </p>
+                <p
+                    class="
+                        klien-location
+                        text-sm
+                        mb-3
+                    "
+                >
+                    <strong>Domisili:</strong> {{ $klien->domisili ?? '-' }}
+                </p>
             <!-- INFO -->
 
             <div
