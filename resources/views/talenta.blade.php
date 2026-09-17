@@ -1315,17 +1315,16 @@
                     mb-3
                 "
             >
-            <!-- ALAMAT -->
+           <!-- DOMISILI -->
 
             <p
-                 class="
+                class="
                     talenta-location
                     text-sm
-                     mb-3
-    "
->
-            <strong>Alamat:</strong>
-            {{ $talent->alamat_lengkap ?? $talent->domisili ?? '-' }}
+                    mb-3
+                "
+            >
+                <strong>Domisili:</strong> {{ $talenta->domisili ?? '-' }}
             </p>
 
                 {{ $keahlian }}
