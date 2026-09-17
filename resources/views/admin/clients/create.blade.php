@@ -48,8 +48,25 @@
                     <option value="tidak aktif">Tidak Aktif</option>
                 </select>
             </div>
+              <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Perizinan</label>
+                <select name="perizinan" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                    <option value="SIUP">Pilih Perizinan....</option>
+                    <option value="NIB">NIB</option>
+                    <option value="Halal">Halal</option>
+                    <option value="Sertifikat">Sertifikat</option>
+                    <option value="PIP">PIP</option>
+                    <option value="KBLI">KBLI</option>
+                    <option value="PL">PL</option>
+                    <option value="SBU">SBU</option>
+                    <option value="BPOM">BPOM</option>
+                </select>
+            </div>
+             <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Media Sosial</label>
+                 <input type="text" name="sosial_media" value="{{ old('sosial_media') }}" placeholder="Instagram, Tiktok, Facebook" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
         </div>
-
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Alamat Lengkap</label>
             <textarea name="alamat_lengkap" required rows="2" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('alamat_lengkap') }}</textarea>
