@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\EjscProject;
 use App\Models\Kegiatan;
 use App\Models\KegiatanParticipant;
 use App\Models\Mentor;
@@ -79,6 +80,15 @@ class PublicController extends Controller
                     'deskripsi' => $item->deskripsi ?: 'Informasi kegiatan akan segera tersedia.',
                 ];
             });
+
+        $projectList = EjscProject::query()
+            ->where('is_published', true)
+            ->with(['talents', 'mentors', 'experts'])
+            ->orderBy('sort_order')
+            ->orderByDesc('tahun')
+            ->orderBy('judul')
+            ->limit(6)
+            ->get();
 
         /*
         |--------------------------------------------------------------------------
@@ -176,6 +186,7 @@ class PublicController extends Controller
             'pertumbuhan',
             'distribusiWilayah',
             'kegiatanList',
+            'projectList',
             'tahunList',
             'tahun'
         ));

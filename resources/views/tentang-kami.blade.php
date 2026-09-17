@@ -218,6 +218,75 @@
         </div>
     </section>
 
+    <!-- PROJEK KAMI -->
+    <section id="project" class="py-12 relative z-10 scroll-mt-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="section-heading mb-10">
+                <span class="inline-flex items-center gap-2 bg-[#eafcfd] px-4 py-1.5 rounded-full text-sm font-medium text-[#14b8c4] mb-4">
+                    ✦ Projek Kami
+                </span>
+                        <h2 class="hero-title">Projek yang sedang kami jalankan</h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                @forelse ($projectList as $project)
+                    @php
+                        $projectStatus = [
+                            'rencana' => ['label' => 'Rencana', 'class' => 'bg-amber-100 text-amber-700'],
+                            'berjalan' => ['label' => 'Sedang Berjalan', 'class' => 'bg-emerald-100 text-emerald-700'],
+                            'selesai' => ['label' => 'Selesai', 'class' => 'bg-slate-100 text-slate-600'],
+                        ][$project->status] ?? ['label' => ucfirst($project->status), 'class' => 'bg-slate-100 text-slate-600'];
+                    @endphp
+                    <button type="button" class="w-full text-left bg-white border border-[#e3f6f8] rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden" data-project-open data-project-name="{{ $project->judul }}" data-project-description="{{ $project->deskripsi ?: $project->ringkasan }}" data-project-image="{{ !empty($project->galeri) ? asset('storage/' . $project->galeri[0]) : '' }}" data-project-link="{{ $project->link ?? '' }}">
+                        <div class="relative h-52 bg-gradient-to-br from-[#dffbfc] to-[#a9e8ec]">
+                            @if(!empty($project->galeri))
+                                <img src="{{ asset('storage/' . $project->galeri[0]) }}" alt="Gambar kegiatan {{ $project->judul }}" class="h-full w-full object-cover">
+                            @else
+                                <div class="h-full flex items-center justify-center text-[#3d9aa3] text-sm font-semibold">Projek EJSC</div>
+                            @endif
+                            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-white/95 text-[#335663] text-xs font-semibold shadow-sm">{{ $project->tahun ?? 'Projek' }}</span>
+                            <span class="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm {{ $projectStatus['class'] }}">{{ $projectStatus['label'] }}</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-[#17384d]">{{ $project->judul }}</h3>
+                            @if($project->ringkasan)
+                                <p class="mt-3 text-sm leading-relaxed text-[#3d6473]">{{ Str::limit($project->ringkasan, 150) }}</p>
+                            @elseif($project->deskripsi)
+                                <p class="mt-3 text-sm leading-relaxed text-[#3d6473]">{{ Str::limit($project->deskripsi, 150) }}</p>
+                            @endif
+                        @foreach(['talents' => 'Talenta', 'mentors' => 'Mentor', 'experts' => 'Tenaga Ahli'] as $relation => $label)
+                            @if($project->{$relation}->isNotEmpty())
+                                <div class="mt-4">
+                                    <p class="text-xs font-bold uppercase tracking-wide text-[#7da0ad]">{{ $label }}</p>
+                                    <p class="mt-1 text-sm text-[#3d6473]">{{ $project->{$relation}->map(fn ($member) => $member->nama)->implode(', ') }}</p>
+                                </div>
+                            @endif
+                        @endforeach
+                        </div>
+                    </button>
+                @empty
+                    <div class="md:col-span-2 lg:col-span-3 text-center py-12 text-[#7da0ad]">
+                        Belum ada projek yang dapat ditampilkan.
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <div class="fasilitas-modal" data-project-modal aria-hidden="true">
+        <div class="fasilitas-modal-backdrop" data-project-close></div>
+        <div class="fasilitas-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+            <button type="button" class="fasilitas-modal-close" data-project-close aria-label="Tutup detail projek">&times;</button>
+            <img src="" alt="" class="fasilitas-modal-image" data-project-modal-image>
+            <div class="fasilitas-modal-content">
+                <span class="fasilitas-badge">Projek EJSC</span>
+                <h2 id="project-modal-title" data-project-modal-name></h2>
+                <p data-project-modal-description></p>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex mt-4 items-center rounded-lg bg-[#14b8c4] px-4 py-2 text-sm font-semibold text-white hover:bg-[#0f9d58]" data-project-modal-link>Lihat Projek Kami</a>
+            </div>
+        </div>
+    </div>
+
     <!-- FASILITAS -->
     <section id="fasilitas" class="py-12 relative z-10 scroll-mt-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -348,6 +417,43 @@
             });
             document.addEventListener('keydown', function (event) {
                 if (event.key === 'Escape') closeFasilitasModal();
+            });
+        }
+
+        const projectModal = document.querySelector('[data-project-modal]');
+        if (projectModal) {
+            const modalImage = projectModal.querySelector('[data-project-modal-image]');
+            const modalName = projectModal.querySelector('[data-project-modal-name]');
+            const modalDescription = projectModal.querySelector('[data-project-modal-description]');
+            const modalLink = projectModal.querySelector('[data-project-modal-link]');
+
+            const closeProjectModal = function () {
+                projectModal.classList.remove('is-open');
+                projectModal.setAttribute('aria-hidden', 'true');
+                document.body.classList.remove('fasilitas-modal-open');
+            };
+
+            document.querySelectorAll('[data-project-open]').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    const image = card.dataset.projectImage;
+                    modalImage.src = image;
+                    modalImage.alt = card.dataset.projectName;
+                    modalImage.hidden = !image;
+                    modalName.textContent = card.dataset.projectName;
+                    modalDescription.textContent = card.dataset.projectDescription || 'Informasi projek akan segera tersedia.';
+                    modalLink.href = card.dataset.projectLink;
+                    modalLink.hidden = !card.dataset.projectLink;
+                    projectModal.classList.add('is-open');
+                    projectModal.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('fasilitas-modal-open');
+                });
+            });
+
+            projectModal.querySelectorAll('[data-project-close]').forEach(function (element) {
+                element.addEventListener('click', closeProjectModal);
+            });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') closeProjectModal();
             });
         }
 
