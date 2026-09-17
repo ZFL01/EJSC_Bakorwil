@@ -69,7 +69,7 @@ class KegiatanController extends Controller
 
         $validated = $request->validate([
             'judul_kegiatan' => 'required|string|max:255',
-            'tanggal_kegiatan' => 'required|date|after_or_equal:today',
+            'tanggal_kegiatan' => 'required|date|after_or_equal:2021-01-01',
             'deskripsi' => 'nullable|string',
             'lokasi' => 'required|string|max:255',
             'status' => 'nullable|in:akan_datang,berlangsung,selesai,dibatalkan',

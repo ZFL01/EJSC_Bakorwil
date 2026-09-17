@@ -80,6 +80,7 @@ class MentorController extends Controller
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_gdrive' => 'nullable|string|max:500',
+            'sosial_media' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 
@@ -122,6 +123,7 @@ class MentorController extends Controller
                 'url_ktp' => $ktpPath,
                 'url_cv' => $cvPath,
                 'url_gdrive' => $validated['url_gdrive'] ?? null,
+                'sosial_media' => $validated['sosial_media'] ?? null,
                 'status' => $validated['status'],
                 'created_by' => auth()->id(),
             ]);
@@ -200,6 +202,7 @@ class MentorController extends Controller
             'url_foto_ktp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_gdrive' => 'nullable|string|max:500',
+            'sosial_media' => 'nullable|string|max:500',
             'status' => 'required|in:aktif,tidak aktif',
         ]);
 

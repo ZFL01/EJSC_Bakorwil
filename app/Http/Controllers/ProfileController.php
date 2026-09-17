@@ -146,6 +146,8 @@ class ProfileController extends Controller
             'id_wilayah' => 'required|integer|exists:wilayah,id_wilayah',
             'domisili' => 'required|string|max:255',
             'alamat_lengkap' => 'required|string',
+            'sosial_media' => 'nullable|string|max:500',
+            'perizinan' => 'nullable|in:NIB,SIUP,Halal,Sertifikat,PIP,KBLI,PL,SBU,BPOM',
             'nama_pemilik' => 'required|string|max:255',
             'website' => 'nullable|url|max:255',
             'foto_logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -179,6 +181,7 @@ class ProfileController extends Controller
             // Boleh lebih dari satu bidang, dipisah koma (mis. "Desain, Teknologi").
             'keahlian' => 'required|string|max:300',
             'pengalaman' => 'nullable|string',
+            'sosial_media' => 'nullable|string|max:500',
             'expertise_tags' => 'nullable|string',
             'is_available' => 'boolean',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
@@ -245,6 +248,7 @@ class ProfileController extends Controller
             'url_cv' => 'nullable|mimes:pdf,doc,docx|max:5120',
             'url_butap' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
             'url_gdrive' => 'nullable|string|max:500',
+            'sosial_media' => 'nullable|string|max:500',
         ]);
 
         if ($request->hasFile('foto')) {

@@ -414,7 +414,7 @@
                                 text-[#30352f]
                             "
                         >
-                            {{ $client->nama_produk ?? '-' }}
+                            {{ $client->perizinan ?? '-' }}
                         </p>
 
                     </div>

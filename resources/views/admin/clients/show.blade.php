@@ -68,6 +68,14 @@
                     </dd>
                 </div>
                 <div>
+                    <dt class="text-xs text-rose-500">Sosial Media</dt>
+                    <dd class="font-semibold text-gray-800">{{ $client->sosial_media ?? '-' }}</dd>
+                </div>
+                <div>
+                    <dt class="text-xs text-rose-500">Perizinan</dt>
+                    <dd class="font-semibold text-gray-800">{{ $client->perizinan ?? '-' }}</dd>
+                </div>
+                <div>
                     <dt class="text-xs text-rose-500 mb-1">Link Google Drive</dt>
                     <dd>
                         @if($client->gdrive_src)

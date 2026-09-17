@@ -24,6 +24,7 @@ class Talent extends Model
         'keahlian', 'bio', 'pengalaman', 'portofolio_url', 'latitude', 'longitude',
         'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap', 'url_gdrive',
         'created_by', 'updated_by', 'skill_tags', 'mentor_id', 'status_pekerjaan',
+        'sosial_media',
     ];
 
     protected $hidden = ['no_wa', 'alamat_lengkap'];
@@ -78,7 +79,7 @@ class Talent extends Model
             'id_talenta','id_user','id_wilayah','nama','jenis_kelamin','foto',
             'domisili','alamat_lengkap','no_wa','email','bidang_pekerjaan',
             'keahlian','bio','pengalaman','portofolio_url','status','is_public',
-            'url_cv','skill_tags','mentor_id','status_pekerjaan','url_gdrive'
+            'url_cv','skill_tags','mentor_id','status_pekerjaan','url_gdrive','sosial_media'
         );
     }
 

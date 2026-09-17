@@ -62,6 +62,23 @@
             <textarea name="deskripsi_usaha" rows="3" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('deskripsi_usaha', $client->deskripsi_usaha) }}</textarea>
         </div>
 
+        <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Perizinan & Media Sosial</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Perizinan</label>
+                <select name="perizinan" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                    <option value="">-- Pilih Perizinan (opsional) --</option>
+                    @foreach(['NIB','SIUP','Halal','Sertifikat','PIP','KBLI','PL','SBU','BPOM'] as $izinOption)
+                        <option value="{{ $izinOption }}" {{ old('perizinan', $client->perizinan) === $izinOption ? 'selected' : '' }}>{{ $izinOption }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Media Sosial</label>
+                <input type="text" name="sosial_media" value="{{ old('sosial_media', $client->sosial_media) }}" placeholder="Instagram, Tiktok, Facebook" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
+        </div>
+
         <h3 class="text-md font-bold text-gray-700 border-b pb-2 pt-4">Link Google Drive</h3>
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Link Google Drive</label>

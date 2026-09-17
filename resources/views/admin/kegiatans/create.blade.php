@@ -16,7 +16,7 @@
             </div>
             <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Tanggal</label>
-                <input type="date" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan') }}" required min="{{ date('Y-m-d') }}" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+                <input type="date" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan') }}" required min="2021-01-01" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
                 <p class="text-xs text-rose-500 mt-1">* Hanya 1 kegiatan yang diperbolehkan per hari.</p>
             </div>
             <div>

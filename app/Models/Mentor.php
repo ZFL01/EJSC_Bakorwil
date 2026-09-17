@@ -21,6 +21,7 @@ class Mentor extends Model
         'keahlian', 'pengalaman', 'portofolio_url', 'latitude', 'longitude',
         'status', 'is_public', 'url_cv', 'url_ktp', 'url_butap', 'url_gdrive',
         'created_by', 'updated_by', 'expertise_tags', 'is_available', 'jumlah_mentee',
+        'sosial_media',
     ];
 
     protected $hidden = ['no_wa', 'alamat_lengkap'];
@@ -62,7 +63,7 @@ class Mentor extends Model
             'id_mentor','id_user','id_wilayah','nama','jenis_kelamin','foto',
             'domisili','alamat_lengkap','no_wa','email','bio','keahlian',
             'pengalaman','portofolio_url','status','is_public','url_cv',
-            'expertise_tags','is_available','jumlah_mentee','url_gdrive'
+            'expertise_tags','is_available','jumlah_mentee','url_gdrive','sosial_media'
         );
     }
 

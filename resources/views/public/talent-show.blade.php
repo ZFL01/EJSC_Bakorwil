@@ -571,7 +571,7 @@
                                 text-[#17324d]
                             "
                         >
-                            {{ $talent->media_sosial ?? '-' }}
+                            {{ $talent->sosial_media ?? '-' }}
                         </p>
 
                     </div>

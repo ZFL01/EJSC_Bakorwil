@@ -51,7 +51,7 @@
               <div>
                 <label class="block text-xs font-semibold text-gray-600 mb-1">Perizinan</label>
                 <select name="perizinan" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
-                    <option value="SIUP">Pilih Perizinan....</option>
+                    <option value="">-- Pilih Perizinan (opsional) --</option>
                     <option value="NIB">NIB</option>
                     <option value="Halal">Halal</option>
                     <option value="Sertifikat">Sertifikat</option>

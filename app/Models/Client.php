@@ -17,7 +17,7 @@ class Client extends Model
     protected $fillable = [
         'id_user', 'id_wilayah', 'nama_ukm', 'foto_logo',
         'alamat_lengkap', 'domisili', 'nama_produk', 'deskripsi_usaha',
-        'nama_pemilik', 'no_hp', 'email', 'website',
+        'nama_pemilik', 'no_hp', 'email', 'website', 'sosial_media', 'perizinan',
         'latitude', 'longitude', 'status', 'is_public', 'url_gdrive',
         'created_by', 'updated_by',
     ];
@@ -43,7 +43,7 @@ class Client extends Model
         return $q->select(
             'id_client','id_user','id_wilayah','nama_ukm','foto_logo',
             'alamat_lengkap','domisili','nama_produk','deskripsi_usaha',
-            'nama_pemilik','no_hp','email','website','status','is_public',
+            'nama_pemilik','no_hp','email','website','sosial_media','perizinan','status','is_public',
             'url_gdrive'
         );
     }

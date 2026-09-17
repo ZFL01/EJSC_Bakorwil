@@ -140,6 +140,23 @@
                             <textarea name="deskripsi_usaha" rows="3"
                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">{{ old('deskripsi_usaha', $profile->deskripsi_usaha) }}</textarea>
                         </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Perizinan</label>
+                                <select name="perizinan"
+                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                                    <option value="">-- Pilih Perizinan (opsional) --</option>
+                                    @foreach(['NIB','SIUP','Halal','Sertifikat','PIP','KBLI','PL','SBU','BPOM'] as $izinOption)
+                                        <option value="{{ $izinOption }}" {{ old('perizinan', $profile->perizinan) === $izinOption ? 'selected' : '' }}>{{ $izinOption }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Media Sosial</label>
+                                <input type="text" name="sosial_media" value="{{ old('sosial_media', $profile->sosial_media) }}" placeholder="Instagram, Tiktok, Facebook"
+                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
+                            </div>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-700 mb-2">Logo UKM</label>
                             @if($profile->foto_logo)
@@ -226,8 +243,8 @@
                             </div>
                             
                              <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Keahlian</label>
-                                <input type="text" name="keahlian" value="{{ old('keahlian', $profile->keahlian) }}" required
+                                <label class="block text-sm font-medium text-slate-700 mb-2">Sosial Media</label>
+                                <input type="text" name="sosial_media" value="{{ old('sosial_media', $profile->sosial_media) }}" placeholder="Instagram, Tiktok, Facebook"
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                         </div>

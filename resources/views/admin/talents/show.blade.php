@@ -114,6 +114,10 @@
                         @endif
                     </dd>
                 </div>
+                <div>
+                    <dt class="text-xs text-rose-500">Sosial Media</dt>
+                    <dd class="font-semibold text-gray-800">{{ $talent->sosial_media ?? '-' }}</dd>
+                </div>
             </dl>
         </div>
     </div>
