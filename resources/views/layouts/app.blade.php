@@ -396,6 +396,23 @@
 
 
                         <a
+                            href="{{ route('tentang-kami') }}#project"
+                            class="
+                                close-all-dropdowns
+                                block
+                                px-4
+                                py-2
+                                text-sm
+                                text-gray-700
+                                hover:bg-[#f0f9fa]
+                                hover:text-[#56b8c2]
+                            "
+                        >
+                            Projek Kami
+                        </a>
+
+
+                        <a
                             href="{{ route('tentang-kami') }}#fasilitas"
                             class="
                                 close-all-dropdowns

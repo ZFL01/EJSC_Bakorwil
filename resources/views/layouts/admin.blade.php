@@ -86,6 +86,13 @@
                     </svg>
                     Kelola Project
                 </a>
+                <a href="{{ route('admin.ejsc-projects.index') }}"
+                   class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition {{ request()->routeIs('admin.ejsc-projects.*') ? 'bg-[#56b8c2] text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5h16M4 12h16M4 19h16"/>
+                    </svg>
+                    Kelola Projek Kami
+                </a>
 <a href="{{ route('admin.excel-export.index') }}" 
                    class="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition {{ request()->routeIs('admin.excel-export.*') ? 'bg-[#56b8c2] text-white' : 'text-slate-300 hover:bg-slate-700 hover:text-white' }}">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

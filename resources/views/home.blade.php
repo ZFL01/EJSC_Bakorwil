@@ -8822,8 +8822,9 @@
                     .map(year => `<option value="${year}">${year}</option>`)
                     .join('');
 
-            yearSelect.value = String(normalized[0]);
-            await loadYear(normalized[0]);
+            // Default = "Semua Tahun" (akumulasi), sesuai opsi pertama dropdown.
+            yearSelect.value = ALL_YEARS_VALUE;
+            await loadYear(ALL_YEARS_VALUE);
         } catch (err) {
             console.error('Gagal memuat daftar tahun:', err);
             yearSelect.innerHTML = '<option value="">Tidak tersedia</option>';
@@ -8884,7 +8885,7 @@
     }
 
     yearSelect.addEventListener('change', () => loadYear(yearSelect.value));
-    window.loadQGISData = () => loadYear(yearSelect.value || 2025);
+    window.loadQGISData = () => loadYear(yearSelect.value || ALL_YEARS_VALUE);
     initMap();
     loadYears();
 })();
