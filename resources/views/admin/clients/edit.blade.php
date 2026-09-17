@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Edit Client')
-@section('header', 'Edit Client (UMKM)')
+@section('title', 'Edit Klien')
+@section('header', 'Edit Klien (UMKM)')
 
 @section('content')
 <div class="max-w-3xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">

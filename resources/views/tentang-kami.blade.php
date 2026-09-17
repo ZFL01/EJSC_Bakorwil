@@ -16,11 +16,11 @@
                     </span>
 
                     <h1 class="hero-title">
-                        Menghubungkan <span class="hero-highlight">Mentor, Talenta &amp; Client</span> di Jawa Timur.
+                        Menghubungkan <span class="hero-highlight">Mentor, Talenta &amp; Klien</span> di Jawa Timur.
                     </h1>
 
                     <p class="hero-description">
-                        Platform resmi EJSC Bakorwil untuk mengakselerasi pengembangan talenta, mempertemukan mentor berpengalaman, dan membuka akses bagi client yang membutuhkan sumber daya manusia berkualitas.
+                        Platform resmi EJSC Bakorwil untuk mengakselerasi pengembangan talenta, mempertemukan mentor berpengalaman, dan membuka akses bagi klien yang membutuhkan sumber daya manusia berkualitas.
                     </p>
 
                     <div class="hero-actions">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="hero-visual" aria-label="Visual kolaborasi mentor talenta client">
+                <div class="hero-visual" aria-label="Visual kolaborasi mentor talenta klien">
                     <div class="hero-visual-card">
                         <div class="hero-card-top">
                             <span class="mini-pill">Ecosystem</span>
@@ -57,7 +57,7 @@
                             <div class="person person-three">
                                 <div class="person-avatar">C</div>
                                 <div class="person-meta">
-                                    <strong>Client</strong>
+                                    <strong>Klien</strong>
                                     <small>Talent Match</small>
                                 </div>
                             </div>
@@ -102,8 +102,8 @@
                     <div class="label">Talenta Terdaftar</div>
                 </div>
                 <div class="stat-mini">
-                    <div class="value">{{ $statistik['client'] }}</div>
-                    <div class="label">Client Bergabung</div>
+                   <div class="value">{{ $statistik['client'] }}</div>
+                    <div class="label">klien Bergabung</div>
                 </div>
                 <div class="stat-mini">
                     <div class="value">{{ $statistik['kegiatan'] }}</div>
@@ -127,7 +127,7 @@
                     </h3>
                     <p>
                         {{-- TODO: ganti dengan visi resmi EJSC Bakorwil --}}
-                        Menjadi ekosistem terdepan yang menghubungkan mentor, talenta, dan client
+                        Menjadi ekosistem terdepan yang menghubungkan mentor, talenta, dan klien
                         untuk mempercepat pertumbuhan sumber daya manusia di wilayah kerja Bakorwil.
                     </p>
                 </div>
@@ -141,7 +141,7 @@
                     <ul class="list-disc pl-5 space-y-1">
                         {{-- TODO: ganti dengan misi resmi EJSC Bakorwil --}}
                         <li>Menghubungkan mentor berpengalaman dengan talenta yang membutuhkan bimbingan.</li>
-                        <li>Membuka akses kolaborasi antara talenta dan client secara transparan.</li>
+                        <li>Membuka akses kolaborasi antara talenta dan klien secara transparan.</li>
                         <li>Memantau pertumbuhan platform secara berkelanjutan melalui data.</li>
                     </ul>
                 </div>
@@ -155,7 +155,7 @@
 
             <div class="section-heading mb-10">
                 <h2 class="hero-title">Pertumbuhan &amp; Distribusi</h2>
-                <p class="hero-description">Data ringkas seputar perkembangan mentor, talenta, dan client kami.</p>
+                <p class="hero-description">Data ringkas seputar perkembangan mentor, talenta, dan klien kami.</p>
             </div>
 
             <!-- Pertumbuhan (line chart) -->
@@ -163,7 +163,7 @@
                 <div class="chart-card-head">
                     <div>
                         <h3>Pertumbuhan Platform</h3>
-                        <p class="desc">Jumlah mentor, talenta, dan client per bulan pada tahun terpilih</p>
+                        <p class="desc">Jumlah mentor, talenta, dan klien per bulan pada tahun terpilih</p>
                     </div>
                     <div class="flex items-center gap-3">
                         <form method="GET" action="{{ route('tentang-kami') }}" class="flex items-center gap-2">
@@ -301,7 +301,7 @@
                 @php
                     $fasilitasList = [
                         ['nama' => 'Conference Room', 'deskripsi' => 'Ruang konferensi yang nyaman untuk seminar, presentasi, dan kegiatan kolaborasi berskala besar.', 'kategori' => 'Ruang', 'image' => 'resources/images/coference room.jpeg'],
-                        ['nama' => 'Coworking Space', 'deskripsi' => 'Area kerja terbuka yang mendukung produktivitas, networking, dan kolaborasi talenta serta client.', 'kategori' => 'Ruang', 'image' => 'resources/images/cowork.jpeg'],
+                        ['nama' => 'Coworking Space', 'deskripsi' => 'Area kerja terbuka yang mendukung produktivitas, networking, dan kolaborasi talenta serta klien.', 'kategori' => 'Ruang', 'image' => 'resources/images/cowork.jpeg'],
                         ['nama' => 'Meeting Room', 'deskripsi' => 'Ruang meeting yang tenang untuk rapat, diskusi tim, dan pertemuan dengan mitra.', 'kategori' => 'Ruang', 'image' => 'resources/images/meeting room.jpeg'],
                     ];
                 @endphp
@@ -460,6 +460,10 @@
         const pertumbuhan = @json($pertumbuhan);
         const distribusiWilayah = @json($distribusiWilayah);
 
+        if (typeof window.Chart !== 'function') {
+            return;
+        }
+
         new window.Chart(document.getElementById('chartPertumbuhan'), {
             type: 'line',
             data: {
@@ -467,7 +471,7 @@
                 datasets: [
                     { label: 'Mentor', data: pertumbuhan.mentor, borderColor: '#14b8c4', backgroundColor: 'rgba(20,184,196,0.1)', tension: 0.35, fill: true },
                     { label: 'Talenta', data: pertumbuhan.talenta, borderColor: '#67e8f9', backgroundColor: 'rgba(103,232,249,0.1)', tension: 0.35, fill: true },
-                    { label: 'Client', data: pertumbuhan.client, borderColor: '#0f9d58', backgroundColor: 'rgba(15,157,88,0.1)', tension: 0.35, fill: true },
+                    { label: 'Klien', data: pertumbuhan.client, borderColor: '#0f9d58', backgroundColor: 'rgba(15,157,88,0.1)', tension: 0.35, fill: true },
                 ],
             },
             options: {
@@ -483,7 +487,7 @@
             data: {
                 labels: distribusiWilayah.map((wilayah) => wilayah.label),
                 datasets: [{
-                    data: distribusiWilayah.map((wilayah) => wilayah.mentor + wilayah.talenta + wilayah.client),
+                        data: distribusiWilayah.map((wilayah) => wilayah.mentor + wilayah.talenta + wilayah.client),
                     backgroundColor: ['#14b8c4', '#67e8f9', '#0f9d58', '#f59e0b', '#7c3aed', '#ef4444', '#3b82f6'],
                     borderColor: '#ffffff',
                     borderWidth: 3,

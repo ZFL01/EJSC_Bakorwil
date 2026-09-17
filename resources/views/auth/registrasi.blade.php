@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register - EJSC Bakorwil</title>
-    <meta name="description" content="Platform untuk menghubungkan Mentor, Talenta, dan Client.">
+    <meta name="description" content="Platform untuk menghubungkan Mentor, Talenta, dan Klien.">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -641,7 +641,7 @@
                             <a href="{{ route('client') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
 
-                                Client
+                                Klien
 
                             </a>
 
@@ -721,7 +721,7 @@
                     <a href="{{ route('client') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fcfd] hover:text-[#35BFD1]">
 
-                        Client
+                        Klien
 
                     </a>
 
@@ -898,7 +898,7 @@
                             </label>
 
 
-                            <!-- Client -->
+                            <!-- Klien -->
 
                             <label class="role-card">
 
@@ -920,7 +920,7 @@
 
                                     <p class="text-xs font-medium text-gray-700 mt-1">
 
-                                        Client
+                                        Klien
 
                                     </p>
 

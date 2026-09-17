@@ -2,7 +2,7 @@
 
 @section(
     'title',
-    'Profil Client - ' . ($client->nama_ukm ?? 'Client')
+    'Profil Klien - ' . ($client->nama_ukm ?? 'Klien')
 )
 
 @section('content')
@@ -40,7 +40,7 @@
 
             </svg>
 
-            Kembali ke Client
+            Kembali ke Klien
 
         </a>
 
@@ -74,7 +74,7 @@
 
                     $nama =
                         $client->nama_ukm
-                        ?? 'Client';
+                        ?? 'Klien';
 
                     $avatar =
                         collect(
@@ -152,7 +152,7 @@
                                 mb-3
                             "
                         >
-                            Client
+                            Klien
                         </span>
 
 
@@ -198,7 +198,7 @@
                         mb-6
                     "
                 >
-                    Informasi Client
+                    Informasi Klien
                 </h2>
 
 
@@ -213,7 +213,7 @@
                     <div class="bg-[#fffef5] rounded-2xl p-5">
 
                         <p class="text-sm text-[#a6a48c]">
-                            Nama UKM / Client
+                            Nama UKM / Klien
                         </p>
 
                         <p
@@ -438,7 +438,7 @@
                             mb-3
                         "
                     >
-                        Tentang Client
+                        Tentang Klien
                     </h2>
 
                     <p

@@ -15,7 +15,7 @@
 
     <meta
         name="description"
-        content="Platform untuk menghubungkan Mentor, Talenta, dan Client."
+        content="Platform untuk menghubungkan Mentor, Talenta, dan Klien."
     >
 
     @vite([
@@ -300,7 +300,7 @@
                             : '' }}
                     "
                 >
-                    Home
+                    Beranda
                 </a>
 
 
@@ -575,7 +575,7 @@
                                     hover:text-[#56b8c2]
                                 "
                             >
-                                Client
+                                Klien
                             </a>
 
 
@@ -642,7 +642,7 @@
                                         hover:text-[#56b8c2]
                                     "
                                 >
-                                    Client
+                                    Klien
                                 </a>
 
 
@@ -682,7 +682,7 @@
                                         hover:text-[#56b8c2]
                                     "
                                 >
-                                    Client
+                                    Klien
                                 </a>
 
 
@@ -722,7 +722,7 @@
                                         hover:text-[#56b8c2]
                                     "
                                 >
-                                    Client
+                                    Klien
                                 </a>
 
 
@@ -819,7 +819,7 @@
                                         hover:text-[#56b8c2]
                                     "
                                 >
-                                    Client
+                                    Klien
                                 </a>
 
                             @endif
@@ -1110,7 +1110,7 @@
                     hover:text-[#56b8c2]
                 "
             >
-                Home
+                Beranda
             </a>
 
 
@@ -1266,7 +1266,7 @@
                             hover:text-[#56b8c2]
                         "
                     >
-                        Client
+                        Klien
                     </a>
 
 
@@ -1331,7 +1331,7 @@
                                 hover:text-[#56b8c2]
                             "
                         >
-                            Client
+                            Klien
                         </a>
 
 
@@ -1369,7 +1369,7 @@
                                 hover:text-[#56b8c2]
                             "
                         >
-                            Client
+                            Klien
                         </a>
 
 
@@ -1407,7 +1407,7 @@
                                 hover:text-[#56b8c2]
                             "
                         >
-                            Client
+                            Klien
                         </a>
 
 
@@ -1501,7 +1501,7 @@
                                 hover:text-[#56b8c2]
                             "
                         >
-                            Client
+                            Klien
                         </a>
 
                     @endif
