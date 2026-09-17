@@ -77,7 +77,11 @@
 <div class="fasilitas-modal" data-fasilitas-modal aria-hidden="true">
     <div class="fasilitas-modal-backdrop" data-fasilitas-close></div>
     <div class="fasilitas-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="fasilitas-modal-title">
-        <button type="button" class="fasilitas-modal-close" data-fasilitas-close aria-label="Tutup detail fasilitas">&times;</button>
+        <button type="button" class="fasilitas-modal-close" data-fasilitas-close aria-label="Tutup detail fasilitas">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+        </button>
         <img src="" alt="" class="fasilitas-modal-image" data-fasilitas-modal-image>
         <div class="fasilitas-modal-content">
             <span class="fasilitas-badge" data-fasilitas-modal-category></span>
