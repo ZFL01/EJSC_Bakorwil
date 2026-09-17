@@ -747,10 +747,39 @@
                             {{ $mentor->jumlah_mentee ?? '0' }}
                         </p>
 
+                    </div
+                    
+                    >
+                      <div
+                        class="
+                            rounded-2xl
+                            bg-[#f8feff]
+                            p-5
+                        "
+                    >
+
+                        <p
+                            class="
+                                text-sm
+                                text-[#78909c]
+                            "
+                        >
+                            Sosial Media
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#12344d]
+                            "
+                        >
+                            {{ $mentor->sosial_media ?? '-' }}
+                        </p>
+
                     </div>
 
                 </div>
-
 
                 <div class="mt-8">
 
@@ -760,7 +789,7 @@
                             font-bold
                             text-[#12344d]
                             mb-3
-                        "
+                        "   
                     >
                         Tentang Mentor
                     </h2>
