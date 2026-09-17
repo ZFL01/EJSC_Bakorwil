@@ -50,7 +50,7 @@
                         <th class="p-3 w-20">Tahun</th>
                         <th class="p-3 w-20 text-center">Mentor</th>
                         <th class="p-3 w-20 text-center">Talenta</th>
-                        <th class="p-3 w-20 text-center">Client</th>
+                        <th class="p-3 w-20 text-center">Klien</th>
                         <th class="p-3 w-24">Status</th>
                         <th class="p-3 w-40">Aksi</th>
                     </tr>

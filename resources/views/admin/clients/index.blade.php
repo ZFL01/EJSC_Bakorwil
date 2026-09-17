@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Kelola Client')
-@section('header', 'Kelola Client (UMKM)')
+@section('title', 'Kelola Klien')
+@section('header', 'Kelola Klien (UMKM)')
 
 @section('content')
 <div class="space-y-6">
@@ -17,7 +17,7 @@
             <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition">Filter</button>
         </form>
         <a href="{{ route('admin.clients.create') }}" class="bg-[#56b8c2] hover:bg-[#3d9aa3] text-white px-4 py-2 rounded-lg text-sm font-medium transition whitespace-nowrap">
-            + Tambah Client Baru
+            + Tambah Klien Baru
         </a>
     </div>
 
@@ -55,7 +55,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="p-8 text-center text-gray-400">Data Client belum tersedia.</td>
+                            <td colspan="5" class="p-8 text-center text-gray-400">Data Klien belum tersedia.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -95,7 +95,7 @@
                             ],
                             'client' => [
                                 'icon' => 'business_center',
-                                'judul' => 'Client',
+                                'judul' => 'Klien',
                                 'deskripsi' => 'Mencari mentor dan talenta'
                             ],
                         ];

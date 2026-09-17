@@ -305,6 +305,22 @@
                 <div class="feature-item"><span class="icon"><span class="material-symbols-outlined">check_circle</span></span><span>Admin telah diberi notifikasi dan akan meninjau pendaftaran Anda.</span></div>
                 <div class="feature-item"><span class="icon"><span class="material-symbols-outlined">schedule</span></span><span>Proses persetujuan biasanya cepat. Anda belum dapat login sebelum disetujui.</span></div>
                 <div class="feature-item"><span class="icon"><span class="material-symbols-outlined">login</span></span><span>Setelah disetujui, cukup <strong>Login dengan Email &amp; Password</strong> yang sudah Anda daftarkan.</span></div>
+                <div class="feature-item"><span style="text-align: center; width: 100%;">Hubungi Admin<br><ahref="https://wa.me/6287838522297"target="_blank"rel="noopener noreferrer"
+                style="
+                display: inline-block;
+                color: #fff;
+                background: #25D366;
+                font-weight: 700;
+                text-decoration: none;
+                padding: 4px 10px;
+                border-radius: 6px;
+                margin-top: 5px;
+            "
+        >
+            WhatsApp Admin
+        </a>
+    </span>
+</div>
             </div>
             <a href="{{ route('public.index') }}" class="btn btn-secondary"><span class="material-symbols-outlined">home</span>Kembali ke Beranda</a>
             <a href="{{ route('login') }}" class="btn btn-primary"><span class="material-symbols-outlined">login</span>Ke Halaman Login</a>

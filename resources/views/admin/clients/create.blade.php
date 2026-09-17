@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title', 'Tambah Client')
-@section('header', 'Tambah Client (UMKM)')
+@section('title', 'Tambah Klien')
+@section('header', 'Tambah Klien (UMKM)')
 
 @section('content')
 <div class="max-w-3xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">

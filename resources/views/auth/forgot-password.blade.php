@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lupa Password - EJSC Bakorwil</title>
-    <meta name="description" content="Platform untuk menghubungkan Mentor, Talenta, dan Client.">
+    <meta name="description" content="Platform untuk menghubungkan Mentor, Talenta, dan Klien.">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -535,7 +535,7 @@
                             <a href="{{ route('client') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                                Client
+                                Klien
 
                             </a>
 
@@ -568,7 +568,7 @@
                             <a href="{{ route('client') }}"
                                class="close-all-dropdowns block px-4 py-2 text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                                Client
+                                Klien
 
                             </a>
 
@@ -655,7 +655,7 @@
                     <a href="{{ route('client') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                        Client
+                        Klien
 
                     </a>
 
@@ -690,7 +690,7 @@
                     <a href="{{ route('client') }}"
                        class="close-all-dropdowns block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-[#f0fbfd] hover:text-[#35BFD1]">
 
-                        Client
+                        Klien
 
                     </a>
 

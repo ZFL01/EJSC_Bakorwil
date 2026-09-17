@@ -499,7 +499,7 @@
        TEXT
     ========================================================= */
 
-    /* Nama mengikuti navy "Menghubungkan / Client" */
+    /* Nama mengikuti navy "Menghubungkan / Klien" */
 
     .mentor-name {
         color: #12344d;
@@ -936,7 +936,17 @@
                             {{ $nama }}
                         </h3>
 
+                    <!-- ALAMAT -->
 
+                        <p
+                            class="
+                                mentor-location
+                                text-sm
+                                mb-3
+                            "
+                        >
+                            <strong>Alamat:</strong> {{ $mentor->alamat_lengkap ?? $mentor->domisili ?? '-' }}
+                        </p>
                         <!-- SKILL -->
 
                         <p

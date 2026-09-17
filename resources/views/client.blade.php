@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Daftar Client - EJSC Bakorwil')
+@section('title', 'Daftar Klien - EJSC Bakorwil')
 
 @section('content')
 
@@ -864,7 +864,7 @@
                 >
 
                     Daftar
-                    <span>Client</span>
+                    <span>Klien</span>
 
                 </h1>
 
@@ -874,7 +874,7 @@
                         text-lg
                     "
                 >
-                    Terhubung dengan client yang membutuhkan
+                    Terhubung dengan klien yang membutuhkan
                     layanan dan keahlian terbaik
                 </p>
 
@@ -1035,7 +1035,7 @@
 
             $nama =
                 $client->nama_ukm
-                ?? 'Client';
+                ?? 'Klien';
 
             $produk =
                 $client->nama_produk
@@ -1179,7 +1179,18 @@
                 {{ $produk }}
             </p>
 
+                <!-- ALAMAT -->
 
+            <p
+                class="
+                    client-location
+                    text-sm
+                    mb-3
+                "
+>
+                <strong>Alamat:</strong>
+            {{ $client->alamat_lengkap ?? $client->alamat ?? $client->domisili ?? '-' }}
+        </p>
             <!-- INFO -->
 
             <div
@@ -1227,7 +1238,7 @@
 
                     </svg>
 
-                    Client Aktif
+                    Klien Aktif
 
                 </span>
 
@@ -1395,7 +1406,7 @@
             mb-2
         "
     >
-        Client tidak ditemukan
+        Klien tidak ditemukan
     </h3>
 
 
@@ -1439,7 +1450,7 @@ document.addEventListener(
             );
 
 
-        function filterClients() {
+        function filterKliens() {
 
             const keyword =
                 searchInput.value
@@ -1518,13 +1529,13 @@ document.addEventListener(
 
         searchInput?.addEventListener(
             'input',
-            filterClients
+            filterKliens
         );
 
 
         filterSelect?.addEventListener(
             'change',
-            filterClients
+            filterKliens
         );
 
     }

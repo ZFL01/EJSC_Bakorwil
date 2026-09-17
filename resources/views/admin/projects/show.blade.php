@@ -134,7 +134,7 @@
     <!-- CLIENT / UKM -->
     <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
         <div class="flex items-center justify-between mb-3">
-            <h3 class="text-base font-bold text-gray-800">Client / UKM Terlibat <span class="text-gray-400 font-medium">({{ $project->clients->count() }})</span></h3>
+            <h3 class="text-base font-bold text-gray-800">Klien / UKM Terlibat <span class="text-gray-400 font-medium">({{ $project->clients->count() }})</span></h3>
         </div>
 
         @if($project->clients->count())

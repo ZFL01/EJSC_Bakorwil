@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'EJSC Bakorwil - Platform Mentor, Talenta & Client')
+@section('title', 'EJSC Bakorwil - Platform Mentor, Talenta & klien')
 
 @section('content')
 
@@ -241,15 +241,14 @@
             </div>
 
             <h1 class="ejsc-title">
-                Menghubungkan
-                <span>Mentor, Talenta &amp;</span>
-                Client
-            </h1>
-
+    Menghubungkan
+    <span>Mentor, Talenta &amp;</span>
+    <span>Klien</span>
+</h1>
             <p class="ejsc-description">
                 Platform terpercaya untuk menemukan mentor berpengalaman,
                 mengembangkan talenta terbaik, dan menghubungkan dengan
-                client yang tepat.
+                klien yang tepat.
             </p>
 
             <div class="ejsc-buttons">
@@ -390,7 +389,7 @@
                     </div>
 
 
-                    <!-- CLIENT -->
+                    <!-- klien -->
 
                     <div class="ejsc-stat-box">
 
@@ -428,8 +427,8 @@
                         </div>
 
                         <div>
-                            <div class="ejsc-stat-number">{{ number_format($stats['clients'], 0, ',', '.') }}</div>
-                            <div class="ejsc-stat-label">Client</div>
+                            <div class="ejsc-stat-number">{{ number_format($stats['client'], 0, ',', '.') }}</div>
+                            <div class="ejsc-stat-label">Klien</div>
                         </div>
 
                     </div>
@@ -1143,7 +1142,6 @@
 
 .ejsc-title span {
     display: block;
-
     color: #10b9c5;
 
     background:
@@ -3208,10 +3206,10 @@
 
 
             <!-- =================================================
-                 CLIENT
+                 klien
             ================================================== -->
 
-            <article class="ejsc-service-card ejsc-card-client">
+            <article class="ejsc-service-card ejsc-card-klien">
 
                 <div class="ejsc-card-glow"></div>
 
@@ -3272,11 +3270,11 @@
                     </span>
 
                     <h3>
-                        Client
+                        Klien
                     </h3>
 
                     <p>
-                        Terhubung dengan client yang membutuhkan layanan
+                        Terhubung dengan klien yang membutuhkan layanan
                         dan keahlian terbaik untuk proyek Anda.
                     </p>
 
@@ -3291,7 +3289,7 @@
                 >
 
                     <span>
-                        Lihat Client
+                        Lihat Klien
                     </span>
 
                     <span class="ejsc-arrow">
@@ -4116,7 +4114,7 @@
 }
 
 
-.ejsc-card-client {
+.ejsc-card-klien {
 
     --accent: #d99b17;
     --accent-soft: rgba(217,155,23,.12);
@@ -4764,7 +4762,7 @@
 }
 
 
-.ejsc-card-client::before {
+.ejsc-card-klien::before {
     animation-delay: -6s;
 }
 
@@ -5343,7 +5341,7 @@
                 </h3>
 
                 <p>
-                    Pilih mentor, talenta, atau client sesuai kebutuhan
+                    Pilih mentor, talenta, atau klien sesuai kebutuhan
                 </p>
 
                 <div class="step-pulse"></div>
@@ -8671,7 +8669,7 @@
         const project = prop(props, 'jumlah_project', 'JUMLAH_PROJECT') ?? 0;
         const mentor = prop(props, 'jumlah_mentor', 'JUMLAH_MENTOR') ?? 0;
         const talenta = prop(props, 'jumlah_talenta', 'JUMLAH_TALENTA') ?? 0;
-        const client = prop(props, 'jumlah_client', 'JUMLAH_CLIENT') ?? 0;
+        const klien = prop(props, 'jumlah_klien', 'JUMLAH_klien') ?? 0;
 
         infoName.textContent = name;
         infoType.textContent = `${type} · Tahun ${yearSelect.value}`;
@@ -8679,7 +8677,7 @@
             <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Project</div><div class="font-bold text-slate-900">${n(project)}</div></div>
             <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Mentor</div><div class="font-bold text-slate-900">${n(mentor)}</div></div>
             <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Talenta</div><div class="font-bold text-slate-900">${n(talenta)}</div></div>
-            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Client</div><div class="font-bold text-slate-900">${n(client)}</div></div>
+            <div class="rounded-lg bg-slate-50 p-2"><div class="text-xs text-slate-500">Klien</div><div class="font-bold text-slate-900">${n(klien)}</div></div>
         `;
         infoPanel.classList.remove('hidden');
     }

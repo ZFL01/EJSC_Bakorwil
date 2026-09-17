@@ -1255,6 +1255,19 @@
                     mb-3
                 "
             >
+            <!-- ALAMAT -->
+
+            <p
+                 class="
+                    talenta-location
+                    text-sm
+                     mb-3
+    "
+>
+            <strong>Alamat:</strong>
+            {{ $talent->alamat_lengkap ?? $talent->domisili ?? '-' }}
+            </p>
+
                 {{ $keahlian }}
             </p>
 

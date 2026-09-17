@@ -7,7 +7,7 @@
     $hariIndo  = ['Sunday' => 'Minggu', 'Monday' => 'Senin', 'Tuesday' => 'Selasa', 'Wednesday' => 'Rabu', 'Thursday' => 'Kamis', 'Friday' => 'Jumat', 'Saturday' => 'Sabtu'];
     $bulanIndo = [1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
-    $totalClientAktif  = $stats->total_client_aktif  ?? 0;
+    $totalKlienAktif  = $stats->total_client_aktif  ?? 0;
     $totalMentorAktif  = $stats->total_mentor_aktif  ?? 0;
     $totalTalentaAktif = $stats->total_talenta_aktif ?? 0;
     $totalKegiatan     = $stats->total_kegiatan      ?? 0;
@@ -38,7 +38,7 @@
             </div>
             <div class="flex flex-wrap gap-2">
                 <span class="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-full text-xs font-semibold">{{ $kegiatanUpcoming }} kegiatan mendatang</span>
-                <span class="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-full text-xs font-semibold">{{ number_format($totalClientAktif + $totalMentorAktif + $totalTalentaAktif) }} data aktif</span>
+                <span class="inline-flex items-center gap-1.5 bg-white/15 backdrop-blur px-3 py-1.5 rounded-full text-xs font-semibold">{{ number_format($totalKlienAktif + $totalMentorAktif + $totalTalentaAktif) }} data aktif</span>
             </div>
         </div>
     </div>
@@ -69,14 +69,14 @@
 
     <!-- Kartu Statistik Utama (menuju halaman kelola) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {{-- Client --}}
+        {{-- Klien --}}
         <a href="{{ route('admin.clients.index') }}" class="group bg-white p-5 rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition">
             <div class="flex items-start justify-between">
-                <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-2xl" title="Client">&#127970;</div>
+                <div class="w-12 h-12 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center text-2xl" title="Klien">&#127970;</div>
                 <svg class="w-5 h-5 text-gray-300 group-hover:text-sky-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
             </div>
-            <p class="mt-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kelola Client</p>
-            <h3 class="text-2xl font-bold text-gray-800">{{ number_format($totalClientAktif) }}</h3>
+            <p class="mt-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Kelola Klien</p>
+            <h3 class="text-2xl font-bold text-gray-800">{{ number_format($totalKlienAktif) }}</h3>
             <p class="text-xs text-gray-400 mt-0.5">aktif &middot; {{ number_format($totals['clients']) }} total terdaftar</p>
         </a>
 
@@ -191,7 +191,7 @@
                 <p class="text-xs text-gray-400">Tambah data baru dengan satu klik</p>
             </div>
             <div class="grid grid-cols-1 gap-2">
-                <a href="{{ route('admin.clients.create') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-sm font-medium transition"><span>&#127970;</span> Tambah Client</a>
+                <a href="{{ route('admin.clients.create') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-sm font-medium transition"><span>&#127970;</span> Tambah Klien</a>
                 <a href="{{ route('admin.mentors.create') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-medium transition"><span>&#127891;</span> Tambah Mentor</a>
                 <a href="{{ route('admin.talents.create') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 text-sm font-medium transition"><span>&#128161;</span> Tambah Talenta</a>
                 <a href="{{ route('admin.kegiatans.create') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-medium transition"><span>&#128197;</span> Tambah Kegiatan</a>
@@ -266,14 +266,14 @@
         </div>
     </div>
 
-    <!-- Client Terbaru -->
+    <!-- Klien Terbaru -->
     <div class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
         <div class="flex items-center justify-between mb-4">
             <div>
-                <h3 class="text-base font-bold text-gray-800">Client Terbaru</h3>
-                <p class="text-xs text-gray-400">Client (UMKM) yang paling baru ditambahkan</p>
+                <h3 class="text-base font-bold text-gray-800">Klien Terbaru</h3>
+                <p class="text-xs text-gray-400">Klien (UMKM) yang paling baru ditambahkan</p>
             </div>
-            <a href="{{ route('admin.clients.index') }}" class="text-xs text-[#56b8c2] hover:underline font-medium">Kelola Client</a>
+            <a href="{{ route('admin.clients.index') }}" class="text-xs text-[#56b8c2] hover:underline font-medium">Kelola Klien</a>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-3">
             @forelse($recentClients as $client)
@@ -316,7 +316,7 @@
                 data: {
                     labels: @json($growth['labels']),
                     datasets: [
-                        { label: 'Client',  data: @json($growth['clients']), borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,.08)', tension: .35, fill: true, pointRadius: 3 },
+                        { label: 'Klien',  data: @json($growth['clients']), borderColor: '#f59e0b', backgroundColor: 'rgba(245,158,11,.08)', tension: .35, fill: true, pointRadius: 3 },
                         { label: 'Mentor',  data: @json($growth['mentors']), borderColor: '#10b981', backgroundColor: 'rgba(16,185,129,.08)', tension: .35, fill: true, pointRadius: 3 },
                         { label: 'Talenta', data: @json($growth['talents']), borderColor: PRIMARY, backgroundColor: 'rgba(86,184,194,.12)', tension: .35, fill: true, pointRadius: 3 }
                     ]

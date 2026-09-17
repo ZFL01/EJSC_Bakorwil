@@ -21,7 +21,7 @@ class PublicController extends Controller
     public function index()
     {
         $stats = [
-            'clients' => Client::active()->count(),
+            'client' => Client::active()->count(),
             'mentors' => Mentor::active()->count(),
             'talents' => Talent::active()->count(),
             'kegiatans' => Kegiatan::public()->upcoming()->count(),
@@ -247,7 +247,7 @@ class PublicController extends Controller
 
     /**
      * =========================================================
-     * DAFTAR CLIENT
+     * DAFTAR client
      * =========================================================
      */
     public function clients(Request $request)
@@ -297,7 +297,7 @@ class PublicController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | DAFTAR CLIENT ADA DI:
+        | DAFTAR client ADA DI:
         | resources/views/client.blade.php
         |--------------------------------------------------------------------------
         */
@@ -315,7 +315,7 @@ class PublicController extends Controller
 
     /**
      * =========================================================
-     * KATEGORI CLIENT (untuk filter halaman publik)
+     * KATEGORI client (untuk filter halaman publik)
      * =========================================================
      */
     private function kategoriClient(): array
@@ -352,7 +352,7 @@ class PublicController extends Controller
 
     /**
      * =========================================================
-     * DETAIL CLIENT
+     * DETAIL client
      * =========================================================
      */
     public function clientShow(Client $client)
@@ -382,7 +382,7 @@ class PublicController extends Controller
 
         /*
         |--------------------------------------------------------------------------
-        | DETAIL CLIENT ADA DI:
+        | DETAIL client ADA DI:
         | resources/views/public/client-show.blade.php
         |--------------------------------------------------------------------------
         */
