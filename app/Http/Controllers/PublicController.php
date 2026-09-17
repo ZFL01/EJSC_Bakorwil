@@ -7,6 +7,7 @@ use App\Models\EjscProject;
 use App\Models\Kegiatan;
 use App\Models\KegiatanParticipant;
 use App\Models\Mentor;
+use App\Models\Project;
 use App\Models\Talent;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
@@ -81,12 +82,12 @@ class PublicController extends Controller
                 ];
             });
 
-        $projectList = EjscProject::query()
-            ->where('is_published', true)
-            ->with(['talents', 'mentors', 'experts'])
-            ->orderBy('sort_order')
+        $projectList = Project::query()
+            ->with(['talents', 'mentors', 'clients'])
+            ->orderByRaw("CASE status WHEN 'berjalan' THEN 1 WHEN 'draft' THEN 2 WHEN 'selesai' THEN 3 WHEN 'dibatalkan' THEN 4 ELSE 5 END")
             ->orderByDesc('tahun')
-            ->orderBy('judul')
+            ->orderBy('opd')
+            ->orderBy('nama_project')
             ->limit(6)
             ->get();
 

@@ -228,40 +228,39 @@
                         <h2 class="hero-title">Projek yang sedang kami jalankan</h2>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
                 @forelse ($projectList as $project)
                     @php
                         $projectStatus = [
-                            'rencana' => ['label' => 'Rencana', 'class' => 'bg-amber-100 text-amber-700'],
+                            'draft' => ['label' => 'Draft', 'class' => 'bg-amber-100 text-amber-700'],
                             'berjalan' => ['label' => 'Sedang Berjalan', 'class' => 'bg-emerald-100 text-emerald-700'],
                             'selesai' => ['label' => 'Selesai', 'class' => 'bg-slate-100 text-slate-600'],
+                            'dibatalkan' => ['label' => 'Dibatalkan', 'class' => 'bg-rose-100 text-rose-700'],
                         ][$project->status] ?? ['label' => ucfirst($project->status), 'class' => 'bg-slate-100 text-slate-600'];
                     @endphp
-                    <button type="button" class="w-full text-left bg-white border border-[#e3f6f8] rounded-2xl shadow-sm hover:shadow-lg transition overflow-hidden" data-project-open data-project-name="{{ $project->judul }}" data-project-description="{{ $project->deskripsi ?: $project->ringkasan }}" data-project-image="{{ !empty($project->galeri) ? asset('storage/' . $project->galeri[0]) : '' }}" data-project-link="{{ $project->link ?? '' }}">
-                        <div class="relative h-52 bg-gradient-to-br from-[#dffbfc] to-[#a9e8ec]">
-                            @if(!empty($project->galeri))
-                                <img src="{{ asset('storage/' . $project->galeri[0]) }}" alt="Gambar kegiatan {{ $project->judul }}" class="h-full w-full object-cover">
+                    <button type="button" class="project-card" data-project-open data-project-name="{{ $project->nama_project }}" data-project-description="{{ $project->output_project ?: 'Informasi project akan segera tersedia.' }}" data-project-image="{{ $project->gambar ? asset('storage/' . $project->gambar) : '' }}" data-project-link="{{ $project->link ?? '' }}">
+                        <div class="project-card-cover">
+                            @if($project->gambar)
+                                <img src="{{ asset('storage/' . $project->gambar) }}" alt="Gambar {{ $project->nama_project }}" class="project-card-image">
                             @else
-                                <div class="h-full flex items-center justify-center text-[#3d9aa3] text-sm font-semibold">Projek EJSC</div>
+                                <div class="project-card-mark" aria-hidden="true">EJSC</div>
                             @endif
-                            <span class="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-white/95 text-[#335663] text-xs font-semibold shadow-sm">{{ $project->tahun ?? 'Projek' }}</span>
-                            <span class="absolute top-4 right-4 px-3 py-1.5 rounded-full text-xs font-semibold shadow-sm {{ $projectStatus['class'] }}">{{ $projectStatus['label'] }}</span>
+                            <span class="project-card-year">{{ $project->tahun ?? 'Project' }}</span>
+                            <span class="project-card-status {{ $projectStatus['class'] }}">{{ $projectStatus['label'] }}</span>
                         </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-[#17384d]">{{ $project->judul }}</h3>
-                            @if($project->ringkasan)
-                                <p class="mt-3 text-sm leading-relaxed text-[#3d6473]">{{ Str::limit($project->ringkasan, 150) }}</p>
-                            @elseif($project->deskripsi)
-                                <p class="mt-3 text-sm leading-relaxed text-[#3d6473]">{{ Str::limit($project->deskripsi, 150) }}</p>
+                        <div class="project-card-body">
+                            <div class="project-card-heading">
+                                <h3>{{ $project->nama_project }}</h3>
+                                <span class="project-card-arrow" aria-hidden="true">↗</span>
+                            </div>
+                            @if($project->output_project)
+                                <p class="project-card-description">{{ Str::limit($project->output_project, 150) }}</p>
                             @endif
-                        @foreach(['talents' => 'Talenta', 'mentors' => 'Mentor', 'experts' => 'Tenaga Ahli'] as $relation => $label)
-                            @if($project->{$relation}->isNotEmpty())
-                                <div class="mt-4">
-                                    <p class="text-xs font-bold uppercase tracking-wide text-[#7da0ad]">{{ $label }}</p>
-                                    <p class="mt-1 text-sm text-[#3d6473]">{{ $project->{$relation}->map(fn ($member) => $member->nama)->implode(', ') }}</p>
-                                </div>
-                            @endif
-                        @endforeach
+                            <p class="project-card-meta">{{ $project->opd }}@if($project->bidang) <span aria-hidden="true">·</span> {{ $project->bidang }}@endif</p>
+                            <div class="project-card-footer">
+                                <span>{{ $project->mentors->count() + $project->talents->count() + $project->clients->count() }} anggota terlibat</span>
+                                <span class="project-card-detail">Lihat detail</span>
+                            </div>
                         </div>
                     </button>
                 @empty

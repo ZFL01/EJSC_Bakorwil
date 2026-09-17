@@ -23,6 +23,8 @@ class Project extends Model
         'tanggal',
         'output_project',
         'status',
+        'link',
+        'gambar',
     ];
 
     protected function casts(): array

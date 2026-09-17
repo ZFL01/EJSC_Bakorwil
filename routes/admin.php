@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\EjscProjectController;
 use App\Http\Controllers\Admin\ExcelExportController;
 use App\Http\Controllers\Admin\KegiatanController;
 use App\Http\Controllers\Admin\MentorController;
@@ -87,19 +86,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::delete('/{project}', [ProjectController::class, 'destroy'])->name('destroy');
         Route::post('/{project}/attach', [ProjectController::class, 'attach'])->name('attach');
         Route::post('/{project}/detach', [ProjectController::class, 'detach'])->name('detach');
-    });
-
-    // Projek Kami EJSC (konten publik, terpisah dari project relasi talenta/klien)
-    Route::prefix('ejsc-projects')->name('ejsc-projects.')->group(function () {
-        Route::get('/', [EjscProjectController::class, 'index'])->name('index');
-        Route::get('/create', [EjscProjectController::class, 'create'])->name('create');
-        Route::post('/', [EjscProjectController::class, 'store'])->name('store');
-        Route::get('/{ejscProject}', [EjscProjectController::class, 'show'])->name('show');
-        Route::get('/{ejscProject}/edit', [EjscProjectController::class, 'edit'])->name('edit');
-        Route::put('/{ejscProject}', [EjscProjectController::class, 'update'])->name('update');
-        Route::delete('/{ejscProject}', [EjscProjectController::class, 'destroy'])->name('destroy');
-        Route::post('/{ejscProject}/attach', [EjscProjectController::class, 'attach'])->name('attach');
-        Route::post('/{ejscProject}/detach', [EjscProjectController::class, 'detach'])->name('detach');
     });
 
     // Kegiatans Management
