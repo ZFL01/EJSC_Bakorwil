@@ -558,6 +558,23 @@
                         </p>
 
                     </div>
+ <div class="bg-[#fafcf7] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#94a3b8]">
+                            Sosial Media
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#17324d]
+                            "
+                        >
+                            {{ $talent->media_sosial ?? '-' }}
+                        </p>
+
+                    </div>
 
                 </div>
 
@@ -570,8 +587,9 @@
                             font-bold
                             text-[#17324d]
                             mb-3
-                        "
-                    >
+                        " 
+                    > 
+                    
                         Tentang Talenta
                     </h2>
 
@@ -630,6 +648,7 @@
                                 {{ $talent->mentor->keahlian ?? '-' }}
                             </p>
 
+                            
                         </div>
 
                     </div>

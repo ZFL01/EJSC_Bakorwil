@@ -379,11 +379,45 @@
                             >
                                 -
                             </p>
+                            
 
                         @endif
 
                     </div>
+                    <div class="bg-[#fffef5] rounded-2xl p-5">
 
+                        <p class="text-sm text-[#a6a48c]">
+                            Sosial Media
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                            "
+                        >
+                            {{ $client->sosial_media ?? '-' }}
+                        </p>
+
+                    </div>
+                      <div class="bg-[#fffef5] rounded-2xl p-5">
+
+                        <p class="text-sm text-[#a6a48c]">
+                            Perizinan
+                        </p>
+
+                        <p
+                            class="
+                                mt-1
+                                font-semibold
+                                text-[#30352f]
+                            "
+                        >
+                            {{ $client->nama_produk ?? '-' }}
+                        </p>
+
+                    </div>
 
                     <div class="bg-[#fffef5] rounded-2xl p-5">
 

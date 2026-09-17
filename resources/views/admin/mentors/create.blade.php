@@ -79,6 +79,10 @@
                     <option value="tidak aktif">Tidak Aktif</option>
                 </select>
             </div>
+            <div>
+                <label class="block text-xs font-semibold text-gray-600 mb-1">Sosial Media</label>
+                <input type="text" name="sosial_media" value="{{ old('sosial_media') }}" placeholder="Instagram, Tiktok, Facebook" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            </div>
         </div>
 
         <div>

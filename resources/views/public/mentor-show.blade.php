@@ -751,18 +751,12 @@
                     
                     >
                       <div
-                        class="
-                            rounded-2xl
-                            bg-[#f8feff]
-                            p-5
-                        "
+                        class="rounded-2xl bg-[#f8feff] p-5"
                     >
-
                         <p
                             class="
                                 text-sm
-                                text-[#78909c]
-                            "
+                                text-[#78909c]"
                         >
                             Sosial Media
                         </p>
