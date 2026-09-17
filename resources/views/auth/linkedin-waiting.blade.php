@@ -77,9 +77,33 @@
                     <span>Setelah disetujui, cukup <strong>Login dengan LinkedIn</strong> lagi dan Anda langsung masuk — tanpa perlu memilih peran lagi.</span>
                 </div>
             </div>
+             <div class="feature-item">
+                <span style="text-align: center; width: 100%;">
+                    Hubungi Admin
+                    <br>
+
+                    <a
+                        href="https://wa.me/6287838522297"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="
+                            display: inline-block;
+                            color: #fff;
+                            background: #25D366;
+                            font-weight: 700;
+                            text-decoration: none;
+                            padding: 4px 10px;
+                            border-radius: 6px;
+                            margin-top: 5px;
+                        "
+                    >
+                        WhatsApp Admin
+                    </a>
+                </span>
+            </div>
 
             {{-- Button --}}
-            <a href="{{ route('login') }}" class="btn-primary">
+            <a href="{{ route('login') }}" class="btn-primary" style="margin-top: 20px;">
                 Kembali ke Halaman Login
             </a>
 

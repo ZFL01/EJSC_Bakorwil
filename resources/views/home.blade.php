@@ -7211,10 +7211,10 @@
                      SECONDARY BUTTON
                 ================================================== --}}
 
-                <a
-                    href="{{ route('client') }}"
-                    class="cta-secondary"
-                >
+               <a href="https://wa.me/6287838522297"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="cta-secondary">
 
                     <span>
                         Hubungi Kami

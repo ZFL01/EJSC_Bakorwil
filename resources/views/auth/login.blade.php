@@ -419,7 +419,7 @@
                     <a href="{{ route('public.index') }}"
                        class="close-all-dropdowns px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#35BFD1] rounded-md hover:bg-[#f0f9fa] transition">
 
-                        Home
+                        Beranda
 
                     </a>
 
@@ -515,7 +515,7 @@
                 <a href="{{ route('public.index') }}"
                    class="close-all-dropdowns block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-[#f0f9fa] hover:text-[#35BFD1]">
 
-                    Home
+                    Beranda
 
                 </a>
 
