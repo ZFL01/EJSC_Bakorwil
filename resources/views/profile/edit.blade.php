@@ -284,11 +284,12 @@
                             <h3 class="text-lg font-bold text-slate-800">Data Talent</h3>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-2">Keahlian</label>
-                                <input type="text" name="keahlian" value="{{ old('keahlian', $profile->keahlian) }}" required
-                                       class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
-                            </div>
+                            @include('partials._bidang-keahlian', [
+                                'bkFieldKey' => 'bidang-keahlian-talent-profile',
+                                'bkValue' => $profile->keahlian ?? null,
+                                'bkLabelClass' => 'block text-sm font-medium text-slate-700 mb-2',
+                                'bkInputClass' => 'w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition',
+                            ])
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">No WhatsApp</label>
                                 <input type="text" name="no_wa" value="{{ old('no_wa', $profile->no_wa) }}" required
