@@ -83,12 +83,7 @@ class RoomBookingController extends Controller
         /*
          * Data ruangan untuk filter
          */
-        $rooms = Room::where(
-                'is_active',
-                true
-            )
-            ->orderBy('name')
-            ->get();
+        $rooms = Room::orderBy('name')->get();
 
         return view(
             'admin.bookings.index',
@@ -97,6 +92,71 @@ class RoomBookingController extends Controller
                 'rooms'
             )
         );
+    }
+
+    /**
+     * Form tambah ruangan.
+     */
+    public function createRoom()
+    {
+        return view('admin.bookings.rooms.create');
+    }
+
+    /**
+     * Simpan ruangan baru.
+     */
+    public function storeRoom(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:rooms,name'],
+            'description' => ['nullable', 'string'],
+            'capacity' => ['required', 'integer', 'min:1'],
+            'facilities' => ['nullable', 'string'],
+            'is_active' => ['nullable', 'boolean'],
+        ]);
+
+        $facilities = collect(explode(',', $validated['facilities'] ?? ''))
+            ->map(fn (string $facility) => trim($facility))
+            ->filter()
+            ->values()
+            ->all();
+
+        $slug = str()->slug($validated['name']);
+        $slugBase = $slug;
+        $suffix = 2;
+
+        while (Room::where('slug', $slug)->exists()) {
+            $slug = $slugBase.'-'.$suffix++;
+        }
+
+        Room::create([
+            'name' => $validated['name'],
+            'slug' => $slug,
+            'description' => $validated['description'] ?? null,
+            'capacity' => $validated['capacity'],
+            'facilities' => $facilities,
+            'is_active' => $request->boolean('is_active', true),
+        ]);
+
+        return redirect()->route('admin.bookings.index')
+            ->with('success', 'Ruangan berhasil ditambahkan.');
+    }
+
+    /**
+     * Hapus ruangan yang belum pernah dipakai booking.
+     */
+    public function destroyRoom(Room $room)
+    {
+        if ($room->bookings()->exists()) {
+            return back()->with(
+                'error',
+                'Ruangan tidak dapat dihapus karena sudah memiliki riwayat booking.'
+            );
+        }
+
+        $room->delete();
+
+        return back()->with('success', 'Ruangan berhasil dihapus.');
     }
 
     /**
@@ -143,7 +203,7 @@ class RoomBookingController extends Controller
                 '!=',
                 $booking->id
             )
-            ->whereDate(
+            ->where(
                 'date',
                 $booking->date
             )

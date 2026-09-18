@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('room_bookings', function (Blueprint $table) {
+        Schema::create('bookings', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('room_id')
@@ -20,10 +20,10 @@ return new class extends Migration
                 ->constrained('users', 'id_user')
                 ->nullOnDelete();
 
-            $table->date('booking_date');
+            $table->date('date');
 
-            $table->time('start_time');
-            $table->time('end_time');
+            $table->time('time_start');
+            $table->time('time_end');
 
             $table->string('name');
 
@@ -31,13 +31,13 @@ return new class extends Migration
 
             $table->string('whatsapp');
 
-            $table->unsignedInteger('participant_count');
+            $table->unsignedInteger('participants');
 
             $table->text('purpose');
 
-            $table->json('additional_facilities')->nullable();
+            $table->json('facilities')->nullable();
 
-            $table->string('status')->default('pending');
+            $table->string('status')->default('menunggu');
 
             $table->text('admin_note')->nullable();
 
@@ -49,9 +49,9 @@ return new class extends Migration
 
             $table->index([
                 'room_id',
-                'booking_date',
-                'start_time',
-                'end_time'
+                'date',
+                'time_start',
+                'time_end'
             ]);
 
             $table->index('status');
@@ -60,6 +60,6 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('room_bookings');
+        Schema::dropIfExists('bookings');
     }
 };
