@@ -14,7 +14,7 @@
         #gis-section {
             position: relative;
             z-index: 1;
-            margin-top: calc(4rem + 1px); /* tinggi navbar h-16 + border-b */
+            /* Offset navbar fixed ditangani padding-top <main> di layouts/app.blade.php */
             border-top: 0 !important;
             border-bottom: 0 !important;
         }
@@ -7272,7 +7272,7 @@
 
     position: relative;
 
-    padding: 120px 0;
+    padding: 120px 0 180px;
 
     overflow: hidden;
 
@@ -7300,6 +7300,8 @@
 ========================================================= */
 
 .cta-wave {
+
+    display: none;
 
     position: absolute;
 
@@ -8454,7 +8456,7 @@
     .cta-section {
 
         padding:
-            100px 0;
+            100px 0 150px;
 
     }
 
@@ -8470,7 +8472,7 @@
     .cta-section {
 
         padding:
-            85px 0;
+            85px 0 125px;
 
     }
 
@@ -8493,7 +8495,7 @@
     .cta-section {
 
         padding:
-            75px 0;
+            75px 0 110px;
 
     }
 

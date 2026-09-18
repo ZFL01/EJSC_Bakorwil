@@ -26,6 +26,47 @@
     <style>
 
         /* =========================================================
+           MAIN CONTENT OFFSET
+           Navbar fixed setinggi 4rem + 1px border.
+           Offset dipasang di body (bukan main) + !important agar
+           tidak bisa ditimpa CSS apapun dari halaman manapun.
+        ========================================================= */
+
+        body {
+            padding-top: calc(4rem + 1px) !important;
+        }
+
+        main {
+            padding-top: 0 !important;
+        }
+
+        /* =========================================================
+           NAVBAR GAP DINAMIS
+           Jarak kiri-kanan mengikuti lebar layar secara fluid:
+           min 1rem (hp) → 4vw (tumbuh mengikuti layar) → maks 3rem
+        ========================================================= */
+
+        .navbar-inner {
+            width: 100%;
+
+            padding-left:
+                clamp(0.75rem, 1.5vw, 1.5rem);
+
+            padding-right:
+                clamp(0.75rem, 1.5vw, 1.5rem);
+        }
+
+        /* Kompensasi padding internal item di tepi desktop menu,
+           supaya gap kiri dan kanan terlihat seimbang */
+        .navbar-menu > *:first-child {
+            margin-left: -8px;
+        }
+
+        .navbar-menu > *:last-child {
+            margin-right: -8px;
+        }
+
+        /* =========================================================
            NAVBAR SCROLL
         ========================================================= */
 
@@ -97,7 +138,7 @@
 
         .logo-img {
             height:
-                68px;
+                64px;
 
             width:
                 auto;
@@ -217,12 +258,7 @@
 >
 
     <div
-        class="
-            w-full
-            px-4
-            sm:px-8
-            lg:px-12
-        "
+        class="navbar-inner"
     >
 
         <div
@@ -268,6 +304,7 @@
 
             <div
                 class="
+                    navbar-menu
                     hidden
                     md:flex
                     items-center
@@ -306,108 +343,107 @@
 
 
                 <!-- =================================================
-                     TENTANG KAMI
-                ================================================== -->
+     TENTANG KAMI
+================================================== -->
 
-                <div class="relative menu-group">
+<div class="relative menu-group ml-4">
 
-                    <button
-                        type="button"
-                        data-menu="tentang"
-                        class="
-                            menu-btn
-                            px-4
-                            py-2
-                            text-sm
-                            font-medium
-                            text-gray-700
-                            hover:text-[#56b8c2]
-                            rounded-md
-                            hover:bg-[#f0f9fa]
-                            transition
-                            flex
-                            items-center
-                            gap-1
-                            {{ request()->routeIs('tentang-kami')
-                                ? 'text-[#56b8c2] bg-[#f0f9fa]'
-                                : '' }}
-                        "
-                    >
+    <button
+        type="button"
+        data-menu="tentang"
+        class="
+            menu-btn
+            px-5
+            py-2
+            text-sm
+            font-medium
+            text-gray-700
+            hover:text-[#56b8c2]
+            rounded-md
+            hover:bg-[#f0f9fa]
+            transition
+            flex
+            items-center
+            gap-1
+            {{ request()->routeIs('tentang-kami')
+                ? 'text-[#56b8c2] bg-[#f0f9fa]'
+                : '' }}
+        "
+    >
+        Tentang Kami
 
-                        Tentang Kami
+        <svg
+            class="
+                w-4
+                h-4
+                menu-arrow
+                transition-transform
+            "
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
 
-                        <svg
-                            class="
-                                w-4
-                                h-4
-                                menu-arrow
-                                transition-transform
-                            "
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+            />
 
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M19 9l-7 7-7-7"
-                            />
+        </svg>
 
-                        </svg>
-
-                    </button>
-
-
-                    <div
-                        id="menu-tentang"
-                        class="
-                            menu-dropdown
-                            absolute
-                            left-0
-                            mt-2
-                            w-48
-                            bg-white
-                            rounded-lg
-                            shadow-lg
-                            ring-1
-                            ring-black/5
-                            py-1
-                            hidden
-                        "
-                    >
-
-                        <a
-                            href="{{ route('tentang-kami') }}#about"
-                            class="
-                                close-all-dropdowns
-                                block
-                                px-4
-                                py-2
-                                text-sm
-                                text-gray-700
-                                hover:bg-[#f0f9fa]
-                                hover:text-[#56b8c2]
-                            "
-                        >
-                            Tentang Kami
-                        </a>
+    </button>
 
 
-                        <a
-                            href="{{ route('tentang-kami') }}#project"
-                            class="
-                                close-all-dropdowns
-                                block
-                                px-4
-                                py-2
-                                text-sm
-                                text-gray-700
-                                hover:bg-[#f0f9fa]
-                                hover:text-[#56b8c2]
-                            "
-                        >
+    <div
+        id="menu-tentang"
+        class="
+            menu-dropdown
+            absolute
+            left-0
+            mt-2
+            w-48
+            bg-white
+            rounded-lg
+            shadow-lg
+            ring-1
+            ring-black/5
+            py-1
+            hidden
+        "
+    >
+
+        <a
+            href="{{ route('tentang-kami') }}#about"
+            class="
+                close-all-dropdowns
+                block
+                px-4
+                py-2
+                text-sm
+                text-gray-700
+                hover:bg-[#f0f9fa]
+                hover:text-[#56b8c2]
+            "
+        >
+            Tentang Kami
+        </a>
+
+
+        <a
+            href="{{ route('tentang-kami') }}#project"
+            class="
+                close-all-dropdowns
+                block
+                px-4
+                py-2
+                text-sm
+                text-gray-700
+                hover:bg-[#f0f9fa]
+                hover:text-[#56b8c2]
+            "
+        >
                             Projek Kami
                         </a>
 
@@ -1689,12 +1725,7 @@
      MAIN CONTENT
 ============================================================= -->
 
-<main
-    class="
-        pt-16
-        flex-1
-    "
->
+<main>
 
     {{-- Flash Messages --}}
     @if(session('success'))

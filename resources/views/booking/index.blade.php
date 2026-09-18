@@ -5,7 +5,7 @@
 <div class="bg-white min-h-screen overflow-x-hidden">
 
     {{-- HERO --}}
-    <section class="relative bg-gradient-to-b from-[#eef9fb] via-[#f8fbfc] to-white py-16 overflow-hidden">
+    <section class="relative bg-gradient-to-b from-[#eef9fb] via-[#f8fbfc] to-white pt-6 pb-16 overflow-hidden">
 
         {{-- Dekorasi halus --}}
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#56b8c2]/10 rounded-full blur-3xl animate-float-slow"></div>
@@ -156,9 +156,9 @@
 
 
     {{-- PILIH RUANGAN --}}
-    <section class="py-16">
+   <section class="py-16 -mt-6">
 
-        <div class="max-w-7xl mx-auto px-6">
+         <div class="max-w-7xl mx-auto px-6">
 
             <div class="mb-10 animate-fade-in-up">
                 <div class="flex items-center gap-3 mb-2">
