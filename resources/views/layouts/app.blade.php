@@ -1688,7 +1688,11 @@
      MAIN CONTENT
 ============================================================= -->
 
-<main>
+<main
+    class="
+        pt-[calc(4rem+1px)]
+    "
+>
 
     {{-- Flash Messages --}}
     @if(session('success'))
