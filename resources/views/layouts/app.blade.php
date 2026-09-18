@@ -27,11 +27,43 @@
 
         /* =========================================================
            MAIN CONTENT OFFSET
-           Konten mulai tepat setelah navbar (h-16 = 4rem + 1px border)
+           Navbar fixed setinggi 4rem + 1px border.
+           Offset dipasang di body (bukan main) + !important agar
+           tidak bisa ditimpa CSS apapun dari halaman manapun.
         ========================================================= */
 
+        body {
+            padding-top: calc(4rem + 1px) !important;
+        }
+
         main {
-            padding-top: calc(4rem + 1px);
+            padding-top: 0 !important;
+        }
+
+        /* =========================================================
+           NAVBAR GAP DINAMIS
+           Jarak kiri-kanan mengikuti lebar layar secara fluid:
+           min 1rem (hp) → 4vw (tumbuh mengikuti layar) → maks 3rem
+        ========================================================= */
+
+        .navbar-inner {
+            width: 100%;
+
+            padding-left:
+                clamp(0.75rem, 1.5vw, 1.5rem);
+
+            padding-right:
+                clamp(0.75rem, 1.5vw, 1.5rem);
+        }
+
+        /* Kompensasi padding internal item di tepi desktop menu,
+           supaya gap kiri dan kanan terlihat seimbang */
+        .navbar-menu > *:first-child {
+            margin-left: -8px;
+        }
+
+        .navbar-menu > *:last-child {
+            margin-right: -8px;
         }
 
         /* =========================================================
@@ -106,7 +138,7 @@
 
         .logo-img {
             height:
-                68px;
+                64px;
 
             width:
                 auto;
@@ -226,12 +258,7 @@
 >
 
     <div
-        class="
-            w-full
-            px-4
-            sm:px-8
-            lg:px-12
-        "
+        class="navbar-inner"
     >
 
         <div
@@ -277,6 +304,7 @@
 
             <div
                 class="
+                    navbar-menu
                     hidden
                     md:flex
                     items-center

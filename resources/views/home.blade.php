@@ -14,7 +14,7 @@
         #gis-section {
             position: relative;
             z-index: 1;
-            /* Offset navbar ditangani padding-top pada <main> di layouts/app.blade.php */
+            /* Offset navbar fixed ditangani padding-top <main> di layouts/app.blade.php */
             border-top: 0 !important;
             border-bottom: 0 !important;
         }
