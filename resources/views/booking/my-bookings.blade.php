@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="min-h-screen bg-[#f8fbfc] py-12">
+<div class="min-h-screen bg-[#f8fbfc] py-0">
 
-    <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-6xl mx-auto px-4 -mt-10">
 
         {{-- HEADER --}}
         <div class="mb-8">

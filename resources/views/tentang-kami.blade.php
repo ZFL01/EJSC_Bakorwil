@@ -3,6 +3,16 @@
 @section('title', 'Tentang Kami - EJSC Bakorwil')
 
 @section('content')
+<style>
+/* TULISAN JELAJAHI PROGRAM JADI PUTIH */
+.tentang-hero .hero-button {
+    color: #ffffff !important;
+}
+
+.tentang-hero .hero-button span {
+    color: #ffffff !important;
+}
+</style>
 
 <div id="about" class="tentang-page">
 

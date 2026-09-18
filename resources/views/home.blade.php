@@ -7276,7 +7276,7 @@
 
     position: relative;
 
-    padding: 120px 0;
+    padding: 120px 0 180px;
 
     overflow: hidden;
 
@@ -7304,6 +7304,8 @@
 ========================================================= */
 
 .cta-wave {
+
+    display: none;
 
     position: absolute;
 
@@ -8458,7 +8460,7 @@
     .cta-section {
 
         padding:
-            100px 0;
+            100px 0 150px;
 
     }
 
@@ -8474,7 +8476,7 @@
     .cta-section {
 
         padding:
-            85px 0;
+            85px 0 125px;
 
     }
 
@@ -8497,7 +8499,7 @@
     .cta-section {
 
         padding:
-            75px 0;
+            75px 0 110px;
 
     }
 
