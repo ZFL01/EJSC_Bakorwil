@@ -253,29 +253,25 @@
 
             <div class="ejsc-buttons">
 
-                <a href="{{ route('mentor') }}"
-                   class="ejsc-btn-primary">
+               <a 
+                 href="https://docs.google.com/forms/d/e/1FAIpQLSdLP-uZnwGnCpNDx-yStzu-k0ohhaZWwNl3lXkEm0hb6Iqvvg/viewform?pli=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="ejsc-btn-primary">
 
-                    <span>Cari Mentor</span>
+                     <span>Daftar Hadir Buku Tamu</span>
 
-                    <svg viewBox="0 0 24 24">
-                        <path
-                            d="M5 12h13M13 6l6 6-6 6"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-
-                </a>
-
-                <a href="{{ route('talenta') }}"
-                   class="ejsc-btn-secondary">
-
-                    Lihat Talenta
-
+                     <svg viewBox="0 0 24 24">
+                     <path
+            d="M5 12h13M13 6l6 6-6 6"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+        />
+    </svg>
+</a>
                 </a>
 
             </div>

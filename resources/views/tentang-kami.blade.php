@@ -34,10 +34,16 @@
                     </p>
 
                     <div class="hero-actions">
-                        <a href="#fasilitas" class="hero-button">
-                            Jelajahi Program <span aria-hidden="true">→</span>
-                        </a>
+                        <a 
+                         href="https://docs.google.com/forms/d/e/1FAIpQLSdLP-uZnwGnCpNDx-yStzu-k0ohhaZWwNl3lXkEm0hb6Iqvvg/viewform?pli=1"
+                         class="hero-button"
+                         target="_blank"
+                          rel="noopener noreferrer"
+                         >
+                               Daftar Hadir Buku Tamu <span aria-hidden="true">→</span>
+                    </a>
                     </div>
+                    
                 </div>
 
                <div class="hero-visual" aria-label="Gedung EJSC Bakorwil">

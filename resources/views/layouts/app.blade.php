@@ -1818,11 +1818,13 @@
 
 
                 <a
-                    href="{{ route('tentang-kami') }}"
-                    class="
-                        text-sm
-                        text-gray-600
-                        hover:text-[#56b8c2]
+                   href="https://wa.me/6287838522297"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="
+        text-sm
+        text-gray-600
+        hover:text-[#56b8c2]
                     "
                 >
                     Kontak

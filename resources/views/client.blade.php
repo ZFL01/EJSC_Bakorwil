@@ -1186,6 +1186,7 @@
                         klien-location
                         text-sm
                         mb-3
+                          text-gray-500
                     "
                 >
                     <strong>Domisili:</strong> {{ $klien->domisili ?? '-' }}

@@ -65,6 +65,16 @@
 
         <div class="flex items-center gap-3">
 
+            <a
+                href="{{ route('admin.bookings.rooms.create') }}"
+                class="inline-flex items-center gap-2 px-4 py-3 rounded-xl bg-[#0e4f81] text-white text-sm font-semibold shadow-md shadow-[#0e4f81]/20 hover:bg-[#0b416b] transition-all duration-200"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"/>
+                </svg>
+                Tambah Ruangan
+            </a>
+
             <div class="group relative overflow-hidden px-5 py-3 bg-gradient-to-br from-white to-slate-50 border border-slate-200 rounded-2xl shadow-sm hover:shadow-md hover:border-[#56b8c2]/40 transition-all duration-300">
                 <div class="absolute -top-6 -right-6 w-16 h-16 rounded-full bg-[#56b8c2]/10 group-hover:bg-[#56b8c2]/20 transition-colors"></div>
 
@@ -88,6 +98,64 @@
 
         </div>
 
+    </div>
+
+    {{-- =========================================================
+        ROOM MANAGEMENT
+    ========================================================== --}}
+
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+            <div>
+                <h3 class="text-lg font-bold text-slate-800">Daftar Ruangan</h3>
+                <p class="text-sm text-slate-500 mt-1">Kelola ruangan yang tampil pada halaman booking publik.</p>
+            </div>
+            <a
+                href="{{ route('admin.bookings.rooms.create') }}"
+                class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#56b8c2] text-[#0e4f81] text-sm font-semibold hover:bg-[#eef9fb] transition"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v14m-7-7h14"/>
+                </svg>
+                Ruangan Baru
+            </a>
+        </div>
+
+        @if($rooms->isEmpty())
+            <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center text-sm text-slate-500">
+                Belum ada ruangan. Tambahkan ruangan untuk membuka pilihan booking.
+            </div>
+        @else
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+                @foreach($rooms as $room)
+                    <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 p-4 hover:border-[#56b8c2]/50 transition">
+                        <div class="min-w-0">
+                            <p class="font-semibold text-slate-800 truncate">{{ $room->name }}</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <p class="text-xs text-slate-500">Kapasitas {{ $room->capacity }} orang</p>
+                                <span class="text-[10px] font-semibold {{ $room->is_active ? 'text-emerald-600' : 'text-slate-400' }}">
+                                    {{ $room->is_active ? 'Aktif' : 'Nonaktif' }}
+                                </span>
+                            </div>
+                        </div>
+                        <form action="{{ route('admin.bookings.rooms.destroy', $room) }}" method="POST" class="flex-shrink-0">
+                            @csrf
+                            @method('DELETE')
+                            <button
+                                type="submit"
+                                onclick="return confirm('Hapus ruangan {{ addslashes($room->name) }}? Ruangan yang sudah dipakai booking tidak dapat dihapus.')"
+                                class="inline-flex items-center justify-center w-9 h-9 rounded-lg text-rose-600 hover:bg-rose-50 transition"
+                                title="Hapus ruangan"
+                            >
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 7h12m-10 0v10m4-10v10m4-10v10M9 7V4h6v3m-8 0h10l-.7 13H7.7L7 7z"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        @endif
     </div>
 
 

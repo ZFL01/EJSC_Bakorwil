@@ -955,13 +955,14 @@
                     <!-- DOMISILI -->
 
                     <p
-                        class="
-                            mentor-location
-                            text-sm
-                            mb-3
+                       class="
+        mentor-location 
+        text-sm 
+        mb-3 
+          text-gray-500
                         "
                     >
-                        <strong>Domisili:</strong> {{ $mentor->domisili ?? '-' }}
+                       <strong>Domisili:</strong> {{ $mentor->domisili ?? '-' }}
                     </p>
                     
                         <!-- SKILL -->

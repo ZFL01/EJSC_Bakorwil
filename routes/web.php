@@ -258,6 +258,21 @@ Route::prefix('admin')
         )->name('bookings.index');
 
         Route::get(
+            '/bookings/rooms/create',
+            [AdminRoomBookingController::class, 'createRoom']
+        )->name('bookings.rooms.create');
+
+        Route::post(
+            '/bookings/rooms',
+            [AdminRoomBookingController::class, 'storeRoom']
+        )->name('bookings.rooms.store');
+
+        Route::delete(
+            '/bookings/rooms/{room}',
+            [AdminRoomBookingController::class, 'destroyRoom']
+        )->name('bookings.rooms.destroy');
+
+        Route::get(
             '/bookings/{id}',
             [AdminRoomBookingController::class, 'show']
         )->name('bookings.show');
