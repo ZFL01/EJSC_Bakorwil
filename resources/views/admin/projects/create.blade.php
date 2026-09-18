@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-3xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-    <form action="{{ route('admin.projects.store') }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -42,6 +42,18 @@
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Output Project</label>
             <textarea name="output_project" rows="3" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('output_project') }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Link Project</label>
+            <input type="url" name="link" value="{{ old('link') }}" placeholder="https://contoh.com/project" maxlength="2048" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            <p class="mt-1 text-xs text-gray-400">Opsional. Link harus diawali http:// atau https://.</p>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Gambar Project</label>
+            <input type="file" name="gambar" accept="image/jpeg,image/png,image/webp" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            <p class="mt-1 text-xs text-gray-400">Opsional. Format JPG, PNG, atau WEBP, maksimal 2 MB.</p>
         </div>
 
         <p class="text-xs text-gray-400">Setelah tersimpan, Anda akan diarahkan ke halaman detail untuk menautkan mentor, talenta, dan client.</p>

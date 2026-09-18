@@ -11,6 +11,7 @@ use App\Models\Talent;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -69,6 +70,10 @@ class ProjectController extends Controller
         if ($this->isDuplicate($validated)) {
             return back()->withInput()
                 ->with('error', 'Sudah ada project dengan OPD dan bidang yang sama pada tahun tersebut.');
+        }
+
+        if ($request->hasFile('gambar')) {
+            $validated['gambar'] = $request->file('gambar')->store('projects', 'public');
         }
 
         $project = Project::create($validated);
@@ -139,6 +144,14 @@ class ProjectController extends Controller
         }
 
         $old = $project->toArray();
+        if ($request->hasFile('gambar')) {
+            if ($project->gambar) {
+                Storage::disk('public')->delete($project->gambar);
+            }
+
+            $validated['gambar'] = $request->file('gambar')->store('projects', 'public');
+        }
+
         $project->update($validated);
 
         AdminLog::log(
@@ -245,6 +258,10 @@ class ProjectController extends Controller
         $old = $project->toArray();
         $id = $project->id_project;
 
+        if ($project->gambar) {
+            Storage::disk('public')->delete($project->gambar);
+        }
+
         DB::transaction(function () use ($project) {
             // Lepas tautan dulu (tabel legacy tidak punya FK cascade)
             DB::table('project_mentor')->where('id_project', $project->id_project)->delete();
@@ -280,6 +297,8 @@ class ProjectController extends Controller
             'tanggal' => ['nullable', 'date'],
             'output_project' => ['nullable', 'string'],
             'status' => ['required', 'in:draft,berjalan,selesai,dibatalkan'],
+            'link' => ['nullable', 'url:http,https', 'max:2048'],
+            'gambar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
     }
 

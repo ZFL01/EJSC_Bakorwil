@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="max-w-3xl bg-white p-6 rounded-xl border border-gray-200 shadow-sm space-y-6">
-    <form action="{{ route('admin.projects.update', $project->id_project) }}" method="POST" class="space-y-4">
+    <form action="{{ route('admin.projects.update', $project->id_project) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
 
@@ -43,6 +43,21 @@
         <div>
             <label class="block text-xs font-semibold text-gray-600 mb-1">Output Project</label>
             <textarea name="output_project" rows="3" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">{{ old('output_project', $project->output_project) }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Link Project</label>
+            <input type="url" name="link" value="{{ old('link', $project->link) }}" placeholder="https://contoh.com/project" maxlength="2048" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            <p class="mt-1 text-xs text-gray-400">Opsional. Link harus diawali http:// atau https://.</p>
+        </div>
+
+        <div>
+            <label class="block text-xs font-semibold text-gray-600 mb-1">Gambar Project</label>
+            <input type="file" name="gambar" accept="image/jpeg,image/png,image/webp" class="w-full border rounded-lg p-2 text-sm focus:ring-2 focus:ring-[#56b8c2]">
+            <p class="mt-1 text-xs text-gray-400">Opsional. Upload gambar baru untuk mengganti gambar saat ini. Maksimal 2 MB.</p>
+            @if($project->gambar)
+                <img src="{{ asset('storage/' . $project->gambar) }}" alt="Gambar {{ $project->nama_project }}" class="mt-3 h-32 w-full max-w-xs rounded-lg border object-cover">
+            @endif
         </div>
 
         <div class="flex justify-end gap-2 pt-4 border-t">

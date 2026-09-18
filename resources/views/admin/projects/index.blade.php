@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title', 'Project')
-@section('header', 'Kelola Project')
+@section('header', 'Kelola Projek EJSC')
 
 @section('content')
 <div class="space-y-6">
