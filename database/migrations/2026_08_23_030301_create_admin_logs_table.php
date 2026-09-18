@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->timestamp('created_at')->useCurrent();
-            
+
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->index('table_name');
             $table->index('record_id');

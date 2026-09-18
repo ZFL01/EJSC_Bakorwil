@@ -33,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
-            
+
             $table->foreign('id_wilayah')->references('id_wilayah')->on('wilayah')->onDelete('set null');
             });
         }

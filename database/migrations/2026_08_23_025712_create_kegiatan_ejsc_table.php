@@ -25,7 +25,7 @@ return new class extends Migration
             $table->boolean('is_public')->default(true);
             $table->json('gallery')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('organizer_id')->references('id_user')->on('users')->onDelete('set null');
             });
         }

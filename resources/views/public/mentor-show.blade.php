@@ -748,7 +748,7 @@
                         </p>
 
                     </div
-                    
+
                     >
                       <div
                         class="rounded-2xl bg-[#f8feff] p-5"
@@ -783,7 +783,7 @@
                             font-bold
                             text-[#12344d]
                             mb-3
-                        "   
+                        "
                     >
                         Tentang Mentor
                     </h2>

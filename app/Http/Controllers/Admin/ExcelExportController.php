@@ -160,7 +160,7 @@ class ExcelExportController extends Controller
         $sheet1->setTitle('Rekap Project ' . $year);
 
         $headers = [
-            'NO', 'OPD / DINAS', 'BIDANG', 'TANGGAL', 
+            'NO', 'OPD / DINAS', 'BIDANG', 'TANGGAL',
             'NAMA MENTOR', 'JK MENTOR', 'DOMISILI MENTOR', 'NO WA MENTOR',
             'NAMA TALENTA', 'JK TALENTA', 'DOMISILI TALENTA', 'NO WA TALENTA', 'BIDANG TALENTA',
             'NAMA UKM/CLIENT', 'NAMA PRODUK', 'NAMA PEMILIK', 'DOMISILI UKM', 'NO HP UKM'

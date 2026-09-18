@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedInteger('id_wilayah')->nullable()->after('role');
-            
+
             // Foreign key ke tabel wilayah
             $table->foreign('id_wilayah')
                   ->references('id_wilayah')

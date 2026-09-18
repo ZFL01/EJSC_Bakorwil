@@ -1,4 +1,4 @@
-"@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Edit Profil')
 
@@ -241,14 +241,14 @@
                                 <input type="text" name="domisili" value="{{ old('domisili', $profile->domisili) }}" required
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition" placeholder="Contoh: Kec. Kaliwates, Jember">
                             </div>
-                            
+
                              <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Sosial Media</label>
                                 <input type="text" name="sosial_media" value="{{ old('sosial_media', $profile->sosial_media) }}" placeholder="Instagram, Tiktok, Facebook"
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                         </div>
-                        
+
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
@@ -387,7 +387,7 @@
                                        class="w-full border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]/30 focus:border-[#56b8c2] transition">
                             </div>
                         </div>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-2">Foto KTP</label>
@@ -470,4 +470,4 @@
         </form>
     </div>
 </div>
-@endsection"
+@endsection

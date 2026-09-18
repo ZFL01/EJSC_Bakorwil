@@ -26,7 +26,7 @@ class KegiatanPolicy
         if ($kegiatan->is_public) {
             return true;
         }
-        
+
         return $user !== null;
     }
 

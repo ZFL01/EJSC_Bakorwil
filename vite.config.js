@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 
+            input: ['resources/css/app.css',
                 'resources/css/google-waiting.css',
                 'resources/css/google-role.css',
                 'resources/css/linkedin-role.css',

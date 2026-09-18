@@ -41,7 +41,7 @@ return new class extends Migration
             $table->unsignedBigInteger('mentor_id')->nullable();
             $table->string('status_pekerjaan', 100)->nullable();
             $table->timestamps();
-            
+
             $table->foreign('id_wilayah')->references('id_wilayah')->on('wilayah')->onDelete('set null');
             $table->foreign('mentor_id')->references('id_mentor')->on('mentor')->onDelete('set null');
             });

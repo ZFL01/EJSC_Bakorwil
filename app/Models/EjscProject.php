@@ -39,17 +39,17 @@ class EjscProject extends Model
             'galeri' => 'array',
         ];
     }
-    
+
     public function talents()
     {
         return $this->belongsToMany(Talent::class, 'ejsc_project_talenta', 'ejsc_project_id', 'id_talenta');
     }
-    
+
     public function mentors()
     {
         return $this->belongsToMany(Mentor::class, 'ejsc_project_mentor', 'ejsc_project_id', 'id_mentor');
     }
-    
+
     public function experts()
     {
         return $this->hasMany(EjscProjectExpert::class, 'ejsc_project_id');

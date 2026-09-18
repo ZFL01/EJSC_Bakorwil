@@ -14,7 +14,7 @@ use App\Http\Controllers\Auth\LoginController;
 Route::middleware('guest')->group(function () {
     // Show login form
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-    
+
     // Handle login
     Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
 

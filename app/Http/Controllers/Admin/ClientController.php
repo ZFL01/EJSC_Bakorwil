@@ -47,7 +47,7 @@ class ClientController extends Controller
     public function create()
     {
         $this->authorize('create', Client::class);
-        
+
         return view('admin.clients.create');
     }
 
@@ -123,7 +123,7 @@ class ClientController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal menambahkan client: ' . $e->getMessage());
         }
@@ -233,7 +233,7 @@ class ClientController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal mengupdate client: ' . $e->getMessage());
         }
@@ -278,7 +278,7 @@ class ClientController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->with('error', 'Gagal menghapus client: ' . $e->getMessage());
         }
     }

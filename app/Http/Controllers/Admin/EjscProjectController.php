@@ -38,11 +38,11 @@ class EjscProjectController extends Controller
     {
         return view('admin.ejsc-projects.create');
     }
-    
+
     public function show(EjscProject $ejscProject)
     {
         $ejscProject->load(['talents', 'mentors', 'experts']);
-        
+
         $talentOptions = Talent::active()
             ->whereNotIn('id_talenta', $ejscProject->talents->pluck('id_talenta'))
             ->orderBy('nama')
@@ -51,10 +51,10 @@ class EjscProjectController extends Controller
             ->whereNotIn('id_mentor', $ejscProject->mentors->pluck('id_mentor'))
             ->orderBy('nama')
             ->get(['id_mentor', 'nama', 'keahlian']);
-        
+
         return view('admin.ejsc-projects.show', compact('ejscProject', 'talentOptions', 'mentorOptions'));
     }
-    
+
     public function attach(Request $request, EjscProject $ejscProject)
     {
         $data = $request->validate([
@@ -63,36 +63,36 @@ class EjscProjectController extends Controller
             'nama' => ['nullable', 'string', 'max:255'],
             'keahlian' => ['nullable', 'string', 'max:255'],
         ]);
-        
+
         if ($data['type'] === 'talenta') {
             $ejscProject->talents()->syncWithoutDetaching([(int) $data['id']]);
             return back()->with('success', 'Talenta berhasil ditautkan.');
         }
-        
+
         if ($data['type'] === 'mentor') {
             $ejscProject->mentors()->syncWithoutDetaching([(int) $data['id']]);
             return back()->with('success', 'Mentor berhasil ditautkan.');
         }
-        
+
         if (blank($data['nama'])) {
             return back()->with('error', 'Nama tenaga ahli wajib diisi.');
         }
-        
+
         $ejscProject->experts()->create([
             'nama' => $data['nama'],
             'keahlian' => $data['keahlian'] ?? null,
         ]);
-        
+
         return back()->with('success', 'Tenaga ahli berhasil ditambahkan.');
     }
-    
+
     public function detach(Request $request, EjscProject $ejscProject)
     {
         $data = $request->validate([
             'type' => ['required', 'in:talenta,mentor,tenaga_ahli'],
             'id' => ['required', 'integer'],
         ]);
-        
+
         if ($data['type'] === 'talenta') {
             $ejscProject->talents()->detach($data['id']);
         } elseif ($data['type'] === 'mentor') {
@@ -100,7 +100,7 @@ class EjscProjectController extends Controller
         } else {
             $ejscProject->experts()->whereKey($data['id'])->delete();
         }
-        
+
         return back()->with('success', 'Anggota berhasil dilepas dari projek.');
     }
 

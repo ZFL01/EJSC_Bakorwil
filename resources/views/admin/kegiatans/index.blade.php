@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-4 rounded-xl border border-gray-200">
         <form action="{{ route('admin.kegiatans.index') }}" method="GET" class="flex flex-wrap gap-2 w-full md:w-auto">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kegiatan..." 
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama kegiatan..."
                    class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
             <select name="status" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
                 <option value="">-- Semua Status --</option>

@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 previewYear.textContent = year;
                 previewBody.innerHTML = '';
-                
+
                 if (data.rows.length === 0) {
                     previewBody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Tidak ada data untuk tahun ' + year + '</td></tr>';
                 } else {
