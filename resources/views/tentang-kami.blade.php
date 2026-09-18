@@ -7,7 +7,7 @@
 <div id="about" class="tentang-page">
 
     <!-- HERO -->
-    <section class="tentang-hero">
+    <section class="tentang-hero" style="--hero-image: url('{{ Vite::asset('resources/images/ejsc.png') }}');">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="hero-shell">
                 <div class="hero-copy">
@@ -30,63 +30,24 @@
                     </div>
                 </div>
 
-                <div class="hero-visual" aria-label="Visual kolaborasi mentor talenta klien">
-                    <div class="hero-visual-card">
-                        <div class="hero-card-top">
-                            <span class="mini-pill">Ecosystem</span>
-                            <span class="mini-dot"></span>
-                        </div>
+               <div class="hero-visual" aria-label="Gedung EJSC Bakorwil">
 
-                        <div class="hero-people">
-                            <div class="person person-one">
-                                <div class="person-avatar">M</div>
-                                <div class="person-meta">
-                                    <strong>Mentor</strong>
-                                    <small>Expert Guidance</small>
-                                </div>
-                            </div>
+    <div class="hero-visual-card">
 
-                            <div class="person person-two">
-                                <div class="person-avatar">T</div>
-                                <div class="person-meta">
-                                    <strong>Talenta</strong>
-                                    <small>Growth Journey</small>
-                                </div>
-                            </div>
-
-                            <div class="person person-three">
-                                <div class="person-avatar">C</div>
-                                <div class="person-meta">
-                                    <strong>Klien</strong>
-                                    <small>Talent Match</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="hero-analytics">
-                            <div class="analytic-card">
-                                <span class="analytic-label">Kolaborasi</span>
-                                <strong>150+</strong>
-                            </div>
-                            <div class="analytic-card accent">
-                                <span class="analytic-label">Pengembangan</span>
-                                <strong>98%</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="floating-card floating-card-one">
-                        <span class="floating-title">Mentoring</span>
-                        <strong>1:1 Coaching</strong>
-                    </div>
-
-                    <div class="floating-card floating-card-two">
-                        <span class="floating-title">Talent Match</span>
-                        <strong>Skilled &amp; Ready</strong>
-                    </div>
-                </div>
-            </div>
+        <!-- FOTO GEDUNG EJSC -->
+        <div class="hero-building-image">
+            <img
+                src="{{ Vite::asset('resources/images/ejsc.png') }}"
+                alt="Gedung EJSC "
+            >
         </div>
+
+        
+        </div>
+
+    </div>
+
+</div>
     </section>
 
     <!-- STATISTIK -->
