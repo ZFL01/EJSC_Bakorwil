@@ -7,255 +7,199 @@
 
 .tentang-page::before,
 .tentang-page::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.tentang-page::before {
-    width: 320px;
-    height: 320px;
-    left: -160px;
-    top: 300px;
-    background: rgba(103, 232, 249, 0.10);
-    animation: floatingBubble 8s ease-in-out infinite;
-}
-
-.tentang-page::after {
-    width: 380px;
-    height: 380px;
-    right: -200px;
-    bottom: 100px;
-    background: rgba(20, 184, 196, 0.07);
-    animation: floatingBubble2 10s ease-in-out infinite;
-}
-
-@keyframes floatingBubble {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(35px, -25px) scale(1.08); }
-}
-
-@keyframes floatingBubble2 {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(-30px, 25px); }
+    display: none !important;
 }
 
 .tentang-hero {
     position: relative;
+    width: 100%;
+    min-height: calc(100svh - 88px);
+    display: flex;
+    align-items: center;
     overflow: hidden;
-    color: #102f4a;
-    background:
-        radial-gradient(circle at 2% 8%, rgba(0,221,229,.28), transparent 20%),
-        radial-gradient(circle at 96% 18%, rgba(100,222,230,.25), transparent 24%),
-        radial-gradient(circle at 73% 61%, rgba(47,211,220,.17), transparent 25%),
-        radial-gradient(circle at 15% 78%, rgba(107,226,232,.16), transparent 25%),
-        linear-gradient(135deg, #ffffff 0%, #f8fdfe 38%, #f1fbfc 70%, #e9fafd 100%);
-    padding: 96px 0 88px;
-    font-family: "Inter", "Poppins", Arial, sans-serif;
+    background-image:
+        linear-gradient(90deg, rgba(0, 20, 28, 0.58) 0%, rgba(3, 24, 34, 0.42) 31%, rgba(3, 24, 34, 0.12) 58%, rgba(3, 24, 34, 0.16) 100%),
+        var(--hero-image, url('../images/ejsc.png'));
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
 }
 
 .tentang-hero::before {
     content: "";
     position: absolute;
-    width: 390px;
-    height: 300px;
-    left: -170px;
-    top: -120px;
-    border-radius: 45% 55% 60% 40%;
-    background: radial-gradient(ellipse at center, #13d7dc 0%, #27cbd5 35%, rgba(62,215,221,.55) 65%, rgba(62,215,221,0) 100%);
-    filter: blur(2px);
-    opacity: .95;
-    animation: heroBlobOne 8s ease-in-out infinite;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(0, 12, 16, 0.12) 0%, rgba(0, 12, 16, 0.02) 32%, rgba(0, 12, 16, 0.06) 100%);
+    pointer-events: none;
+    z-index: 0;
 }
 
 .tentang-hero::after {
-    content: "";
-    position: absolute;
-    width: 420px;
-    height: 270px;
-    right: -145px;
-    top: 45px;
-    border-radius: 60% 35% 60% 40%;
-    background: linear-gradient(135deg, rgba(183,243,247,.20), rgba(54,211,220,.40));
-    filter: blur(1px);
-    opacity: .9;
-    animation: heroBlobTwo 9s ease-in-out infinite;
+    display: none;
+    pointer-events: none;
+    z-index: 0;
 }
 
-@keyframes heroBlobOne {
-    0%, 100% { transform: translate3d(0,0,0) rotate(-18deg) scale(1); }
-    50% { transform: translate3d(30px,25px,0) rotate(-10deg) scale(1.08); }
-}
-
-@keyframes heroBlobTwo {
-    0%, 100% { transform: translate3d(0,0,0) rotate(-25deg) scale(1); }
-    50% { transform: translate3d(-30px,30px,0) rotate(-18deg) scale(1.07); }
-}
-
-.hero-shell {
+.tentang-hero > .max-w-7xl {
+    width: 100%;
+    max-width: 1480px;
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: 1.08fr 0.92fr;
-    align-items: center;
-    gap: 72px;
-    min-height: 640px;
 }
 
-.hero-copy {
+.tentang-hero .hero-shell {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.hero-kicker {
-    display: inline-flex;
     align-items: center;
-    gap: 9px;
-    min-height: 43px;
-    padding: 0 17px;
-    margin-bottom: 42px;
-    border: 1px solid #0fc9d3;
-    border-radius: 13px;
-    background: rgba(255,255,255,.72);
-    color: #08aabb;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    box-shadow: 0 8px 25px rgba(15,198,208,.06);
+    width: 100%;
+    min-height: calc(100svh - 88px);
 }
 
-.hero-title {
-    color: #102f4a;
-    font-family: "Inter", "Poppins", Arial, sans-serif;
-    font-size: clamp(48px, 5.2vw, 58px);
-    line-height: 1.18;
-    letter-spacing: -2.6px;
-    font-weight: 800;
-    max-width: 630px;
-    margin: 0 0 22px;
+.tentang-hero .hero-copy {
+    width: min(52%, 660px);
+    padding: 72px 0;
+    position: relative;
+    z-index: 1;
 }
 
-.hero-highlight {
-    display: block;
-    color: #10b9c5;
-    background: linear-gradient(110deg, #08aeba 0%, #13c7d0 35%, #ffffff 48%, #ffffff 52%, #13c7d0 65%, #09afbb 100%);
-    background-size: 250% 100%;
-    background-position: 200% 0;
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: heroTextShimmer 4s ease-in-out infinite;
-}
-
-@keyframes heroTextShimmer {
-    0% { background-position: 200% 0; }
-    35% { background-position: -20% 0; }
-    100% { background-position: -20% 0; }
-}
-
-.hero-description {
-    max-width: 485px;
-    font-size: 15.5px;
-    line-height: 1.75;
-    color: #4d6b87;
-    margin: 0;
-}
-
-.hero-actions {
-    margin-top: 34px;
-}
-
-.hero-button {
+.tentang-hero .hero-kicker {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(135deg, #0bc6d6 0%, #18d3e8 100%);
-    color: #0e1b2f;
-    font-size: 1rem;
+    min-height: 44px;
+    padding: 0 20px;
+    margin-bottom: 26px;
+    border: 1px solid rgba(122, 234, 255, 0.88);
+    border-radius: 999px;
+    background: rgba(7, 22, 30, 0.18);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    color: #dffcff;
+    font-size: 0.82rem;
     font-weight: 700;
-    padding: 15px 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(16, 185, 197, 0.18);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-.hero-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(16, 185, 197, 0.22);
+.tentang-hero .hero-title {
+    margin: 0 0 24px;
+    max-width: 650px;
+    font-size: clamp(2.6rem, 3.2vw, 4.4rem);
+    line-height: 0.98;
+    letter-spacing: -0.07em;
+    font-weight: 900;
+    color: #f3feff;
+    text-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
 }
 
-.hero-visual {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 520px;
+.tentang-hero .hero-highlight {
+    display: block;
+    color: #5ee6ff;
+    background: linear-gradient(90deg, #88ecff 0%, #54dbea 30%, #dffcff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.hero-visual-card {
-    position: relative;
-    width: min(100%, 520px);
-    min-height: 480px;
-    padding: 26px 26px 18px;
-    border-radius: 30px;
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(16,185,197,.12);
-    box-shadow: 0 28px 80px rgba(24, 42, 52, 0.12);
-    backdrop-filter: blur(10px);
+.tentang-hero .hero-description {
+    max-width: 560px;
+    margin: 0;
+    font-size: clamp(0.92rem, 1.05vw, 1.15rem);
+    line-height: 1.62;
+    color: rgba(232, 247, 255, 0.92);
+    text-shadow: 0 8px 18px rgba(0,0,0,0.16);
 }
 
-.hero-visual-card::before {
-    content: "";
-    position: absolute;
-    inset: 20px 18px auto auto;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(19, 215, 220, 0.18), rgba(19, 215, 220, 0));
-    filter: blur(10px);
-    pointer-events: none;
+.tentang-hero .hero-actions {
+    margin-top: 34px;
 }
 
-.hero-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 28px;
-}
-
-.mini-pill {
+.tentang-hero .hero-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 12px;
-    border-radius: 999px;
-    background: rgba(19, 215, 220, 0.12);
-    border: 1px solid rgba(16,185,197,.15);
-    color: #0c8e9f;
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    gap: 10px;
+    padding: 18px 32px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #16d9eb 0%, #3ee2f5 100%);
+    color: #0b1e2a;
+    font-size: 1.08rem;
+    font-weight: 800;
+    box-shadow: 0 14px 28px rgba(14, 198, 220, 0.3);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.mini-dot {
-    display: block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #10b9c5;
-    box-shadow: 0 0 16px rgba(16, 185, 197, 0.4);
+.tentang-hero .hero-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 32px rgba(14, 198, 220, 0.38);
 }
 
-.hero-people {
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
+.tentang-hero .hero-visual,
+.tentang-hero .hero-building-image,
+.tentang-hero .hero-visual-card {
+    display: none !important;
+}
+
+@media (max-width: 1280px) {
+    .tentang-hero {
+        min-height: calc(100svh - 88px);
+    }
+
+    .tentang-hero .hero-shell {
+        min-height: calc(100svh - 88px);
+    }
+
+    .tentang-hero .hero-copy {
+        width: min(56%, 640px);
+    }
+}
+
+@media (max-width: 900px) {
+    .tentang-hero {
+        min-height: calc(100svh - 72px);
+        background-image:
+            linear-gradient(180deg, rgba(5, 18, 24, 0.72) 0%, rgba(5, 18, 24, 0.52) 100%),
+            var(--hero-image, url('../images/ejsc.png'));
+    }
+
+    .tentang-hero .hero-shell {
+        min-height: calc(100svh - 72px);
+    }
+
+    .tentang-hero .hero-copy {
+        width: 100%;
+        padding: 54px 0 44px;
+    }
+}
+
+@media (max-width: 640px) {
+    .tentang-hero {
+        min-height: calc(100svh - 64px);
+    }
+
+    .tentang-hero .hero-shell {
+        min-height: calc(100svh - 64px);
+    }
+
+    .tentang-hero .hero-kicker {
+        font-size: 0.72rem;
+        padding: 0 15px;
+        min-height: 38px;
+        letter-spacing: 0.06em;
+    }
+
+    .tentang-hero .hero-title {
+        font-size: clamp(2.5rem, 13vw, 4rem);
+    }
+
+    .tentang-hero .hero-description {
+        font-size: 1rem;
+    }
+
+    .tentang-hero .hero-button {
+        width: 100%;
+        max-width: 280px;
+    }
 }
 
 .person {
