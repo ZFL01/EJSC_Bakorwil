@@ -8580,7 +8580,107 @@
 
     let qgisMap = null;
     let geoLayer = null;
-    let initialBoundsApplied = false;
+    let userAdjusted = false;    // pengguna sudah menggeser/mem-zoom peta sendiri
+    let programmaticFit = false; // fitBounds otomatis sedang berjalan (bukan aksi pengguna)
+    let refitTimer = null;
+
+    /* Kandidat ruang tepi (padding) saat peta dipaskan ke seluruh wilayah.
+       Tinggi/lebar overlay UI diukur langsung dari DOM (kartu judul, tombol
+       "Halaman Berikutnya", petunjuk zoom, legenda, dan tombol zoom).
+       Legenda bisa dihindari dari sisi kanan (band vertikal) atau dari sisi
+       bawah (band horizontal) — dua skenario itu dikembalikan di sini, lalu
+       applyFit() memilih yang memberi tampilan paling dekat. */
+    function mapFitPaddingCandidates() {
+        const fallback = [{ paddingTopLeft: [16, 16], paddingBottomRight: [16, 16] }];
+        if (!mapElement) return fallback;
+
+        const mapRect = mapElement.getBoundingClientRect();
+        if (!mapRect.width || !mapRect.height) return fallback;
+
+        const margin = 12;
+        const maxTop = mapRect.height * 0.32;
+        const maxSide = mapRect.width * 0.32;
+
+        // Abaikan elemen di luar area peta (mis. halaman sudah digulir menjauh).
+        const rectOf = (selector) => {
+            const el = document.querySelector(selector);
+            if (!el) return null;
+            const rect = el.getBoundingClientRect();
+            if ((!rect.width && !rect.height) || rect.bottom <= mapRect.top || rect.top >= mapRect.bottom) return null;
+            return rect;
+        };
+        const clamp = (value, max) => Math.max(16, Math.min(Math.ceil(value) + margin, max));
+
+        // 1) Kartu judul selalu di tepi atas.
+        const headerRect = rectOf('#gis-map-header .gis-header-card');
+        const top = headerRect ? clamp(headerRect.bottom - mapRect.top, maxTop) : 16;
+
+        // 2) Tombol "Halaman Berikutnya" + petunjuk zoom selalu di tepi bawah.
+        let bottom = 16;
+        ['#gis-scroll-down', '#gis-map-hint'].forEach((selector) => {
+            const rect = rectOf(selector);
+            if (rect) bottom = Math.max(bottom, clamp(mapRect.bottom - rect.top, maxTop));
+        });
+
+        // 3) Tombol zoom berada di sudut kanan-bawah.
+        const zoomRect = rectOf('#qgis-map .leaflet-control-zoom');
+        const zoomRight = zoomRect ? clamp(mapRect.right - zoomRect.left, maxSide) : 16;
+        const zoomBottom = zoomRect ? clamp(mapRect.bottom - zoomRect.top, maxTop) : 16;
+
+        // 4) Legenda wilayah juga di sudut kanan-bawah (menumpuk di atas tombol zoom).
+        const legendRect = rectOf('#qgis-map .region-legend');
+        const legendRight = legendRect ? clamp(mapRect.right - legendRect.left, maxSide) : 16;
+        const legendBottom = legendRect ? clamp(mapRect.bottom - legendRect.top, maxTop) : 16;
+
+        const padBottom = Math.max(bottom, zoomBottom);
+
+        return [
+            // Skenario A: legenda dihindari dari sisi kanan (band vertikal penuh).
+            { paddingTopLeft: [16, top], paddingBottomRight: [Math.max(zoomRight, legendRight), padBottom] },
+            // Skenario B: legenda dihindari dari sisi bawah (band horizontal).
+            { paddingTopLeft: [16, top], paddingBottomRight: [zoomRight, Math.max(padBottom, legendBottom)] },
+        ];
+    }
+
+    /* Paskan tampilan peta ke seluruh wilayah.
+       Dari beberapa skenario padding dipilih yang memberi zoom terbesar
+       (tampilan paling dekat) selama seluruh wilayah tetap muat di area yang
+       tidak tertutup overlay. Peta memakai zoomSnap 0.25 sehingga
+       getBoundsZoom/fitBounds bisa berhenti di zoom pecahan (mis. 9.75)
+       dan wilayah tampil jauh lebih besar di layar 1080p dibanding
+       zoom bulat 9. */
+    function applyFit(bounds, options = {}) {
+        if (!qgisMap || !bounds || !bounds.isValid()) return;
+
+        const maxZoom = options.maxZoom ?? 12;
+        let best = null;
+
+        mapFitPaddingCandidates().forEach((candidate) => {
+            const totalX = candidate.paddingTopLeft[0] + candidate.paddingBottomRight[0];
+            const totalY = candidate.paddingTopLeft[1] + candidate.paddingBottomRight[1];
+            const zoom = Math.min(qgisMap.getBoundsZoom(bounds, false, L.point(totalX, totalY)), maxZoom);
+
+            if (!best || zoom > best.zoom) best = { ...candidate, zoom };
+        });
+
+        programmaticFit = true;
+        qgisMap.fitBounds(bounds, {
+            paddingTopLeft: best.paddingTopLeft,
+            paddingBottomRight: best.paddingBottomRight,
+            animate: false,
+            maxZoom,
+            ...options
+        });
+        setTimeout(() => { programmaticFit = false; }, 0);
+    }
+
+    /* Paskan ulang hanya bila pengguna belum mengatur tampilan peta sendiri. */
+    function refitIfUntouched() {
+        if (userAdjusted || !qgisMap || !geoLayer) return;
+
+        const bounds = geoLayer.getBounds();
+        if (bounds.isValid()) applyFit(bounds);
+    }
 
     function initMap() {
         if (qgisMap || !mapElement) return;
@@ -8594,6 +8694,8 @@
         qgisMap = L.map(mapElement, {
             center: [-8.1, 113.7],
             zoom: 8,
+            zoomSnap: 0.25,         // izinkan zoom pecahan (9.25/9.5/9.75) agar fit di 1080p bisa pas & besar
+            zoomDelta: 0.5,         // langkah tombol +/- lebih halus
             minZoom: 6,            // batas paling jauh saat zoom out
             maxZoom: 18,           // batas paling dekat saat zoom in
             maxBounds: mapBounds,  // wilayah tampilan peta dibatasi
@@ -8625,6 +8727,24 @@
         }).addTo(qgisMap);
         addRegionLegend();
         setTimeout(() => qgisMap.invalidateSize(), 300);
+
+        // Tandai interaksi pengguna supaya peta tidak "ditarik" ulang setelahnya.
+        qgisMap.on('zoomstart dragstart', () => {
+            if (!programmaticFit) userAdjusted = true;
+        });
+
+        // Ukuran overlay (kartu judul, legenda) berubah saat jendela di-resize
+        // atau perangkat diputar, jadi paskan ulang selama peta belum diatur pengguna.
+        const refitAfterResize = () => {
+            clearTimeout(refitTimer);
+            refitTimer = setTimeout(() => {
+                if (!qgisMap) return;
+                qgisMap.invalidateSize();
+                refitIfUntouched();
+            }, 200);
+        };
+        window.addEventListener('resize', refitAfterResize);
+        window.addEventListener('orientationchange', refitAfterResize);
     }
 
     function n(value) { return Number(value ?? 0).toLocaleString('id-ID'); }
@@ -8775,14 +8895,12 @@
             }
         }).addTo(qgisMap);
         const bounds = geoLayer.getBounds();
-        if (bounds.isValid()) {
-            if (!initialBoundsApplied) {
-                qgisMap.fitBounds(bounds, { padding: [20, 20] });
-                initialBoundsApplied = true;
-            } else {
-                qgisMap.fitBounds(bounds, { padding: [20, 20] });
-            }
-        }
+        if (bounds.isValid()) applyFit(bounds);
+
+        // Kartu judul/legenda bisa berubah ukuran setelah font & tata letak stabil,
+        // jadi paskan sekali lagi selama pengguna belum menggeser peta.
+        clearTimeout(refitTimer);
+        refitTimer = setTimeout(refitIfUntouched, 400);
     }
 
     async function loadYears() {
