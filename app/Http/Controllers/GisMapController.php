@@ -15,10 +15,6 @@ class GisMapController extends Controller
      */
     private const ALL_YEARS_ALIASES = ['all', 'semua', 'semua-tahun', 'akumulasi'];
 
-    public function index()
-{
-    return view('gis');
-}
     /**
      * Daftar tahun yang tersedia pada view PostGIS.
      *

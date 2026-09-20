@@ -160,19 +160,11 @@ class GoogleAuthController extends Controller
     /**
      * Buat username unik otomatis dari email Google.
      * Kolom users.username adalah NOT NULL + UNIQUE.
+     * DELEGASI ke User::makeUsername() agar polanya tunggal.
      */
     private function makeUsername(string $email): string
     {
-        $base = Str::slug(explode('@', strtolower($email))[0], '') ?: 'user';
-        $base = substr($base, 0, 90);
-
-        $username = $base;
-        $i = 1;
-        while (User::where('username', $username)->exists()) {
-            $username = $base.($i++);
-        }
-
-        return $username;
+        return User::makeUsername($email);
     }
 
     /**
