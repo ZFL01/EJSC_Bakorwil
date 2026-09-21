@@ -320,3 +320,10 @@ Route::prefix('admin')
     )
         ->middleware('auth')
         ->name('admin.ratings.destroy');
+
+    Route::post(
+    '/admin/ratings',
+    [\App\Http\Controllers\Admin\RatingController::class, 'store']
+)
+    ->middleware('auth')
+    ->name('admin.ratings.store');

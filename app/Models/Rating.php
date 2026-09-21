@@ -10,6 +10,8 @@ class Rating extends Model
 
     protected $fillable = [
         'client_id',
+        'admin_id',
+        'rater_name',
         'rateable_type',
         'rateable_id',
         'rating',
@@ -20,9 +22,6 @@ class Rating extends Model
         'rating' => 'integer',
     ];
 
-    /**
-     * Relasi ke client yang memberikan rating.
-     */
     public function client()
     {
         return $this->belongsTo(
@@ -32,9 +31,15 @@ class Rating extends Model
         );
     }
 
-    /**
-     * Relasi polymorphic ke Talent atau Mentor.
-     */
+    public function admin()
+    {
+        return $this->belongsTo(
+            User::class,
+            'admin_id',
+            'id_user'
+        );
+    }
+
     public function rateable()
     {
         return $this->morphTo();
