@@ -312,4 +312,14 @@ class Mentor extends Model
 
         return 'https://' . $value;
     }
+    /**
+     * Relasi rating yang diterima oleh Mentor.
+     */
+    public function ratings()
+    {
+        return $this->morphMany(
+            Rating::class,
+            'rateable'
+        );
+    }
 }

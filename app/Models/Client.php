@@ -151,4 +151,17 @@ class Client extends Model
 
         return null;
     }
+
+    /**
+     * Relasi rating yang diberikan oleh Client.
+     */
+    public function ratings()
+    {
+        return $this->hasMany(
+            Rating::class,
+            'client_id',
+            'id_client'
+        );
+    }
 }
+    

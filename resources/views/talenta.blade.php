@@ -1275,18 +1275,68 @@
                 </div>
 
 
-                <span
-                    class="
-                        px-3
-                        py-1
-                        rounded-full
-                        text-xs
-                        font-medium
-                        {{ $levelClass }}
-                    "
-                >
-                    {{ $levelLabel }}
-                </span>
+                <!-- BADGE + RATING -->
+                <div class="flex flex-col items-end gap-2">
+
+                    <!-- LEVEL BADGE -->
+                    <span
+                        class="
+                            px-3
+                            py-1
+                            rounded-full
+                            text-xs
+                            font-medium
+                            {{ $levelClass }}
+                        "
+                    >
+                        {{ $levelLabel }}
+                    </span>
+
+
+                    <!-- RATING -->
+                    @php
+                        $ratingCount = $talent->ratings->count();
+
+                        $ratingAverage = $ratingCount > 0
+                            ? $talent->ratings->avg('rating')
+                            : 0;
+                    @endphp
+
+                    @if($ratingCount > 0)
+
+                        <div class="flex items-center gap-1 text-sm">
+
+                            <span class="text-amber-400 text-base">
+                                ★
+                            </span>
+
+                            <span class="font-semibold text-[#17324d]">
+                                {{ number_format($ratingAverage, 1) }}
+                            </span>
+
+                            <span class="text-xs text-gray-400">
+                                ({{ $ratingCount }})
+                            </span>
+
+                        </div>
+
+                    @else
+
+                        <div class="flex items-center gap-1 text-xs text-gray-400">
+
+                            <span class="text-gray-300 text-base">
+                                ★
+                            </span>
+
+                            <span>
+                                Belum ada rating
+                            </span>
+
+                        </div>
+
+                    @endif
+
+                </div>
 
             </div>
 

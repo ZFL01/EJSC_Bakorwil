@@ -915,25 +915,79 @@
 
                             <!-- BADGE (satu badge per bidang yang dimiliki) -->
 
-                            <div class="flex flex-wrap items-center justify-end gap-2">
-                                @foreach($bidangKeys as $bidangCategory)
-                                    @php
-                                        $badge = $badgeOf($bidangCategory);
-                                    @endphp
+                            <!-- BADGE + RATING -->
 
-                                    <span
-                                        class="
-                                            px-3
-                                            py-1
-                                            rounded-full
-                                            text-xs
-                                            font-medium
-                                            {{ $badge['class'] }}
-                                        "
-                                    >
-                                        {{ $badge['label'] }}
-                                    </span>
-                                @endforeach
+                            <div class="flex flex-col items-end gap-2">
+
+                                <!-- BADGE -->
+                                <div class="flex flex-wrap items-center justify-end gap-2">
+
+                                    @foreach($bidangKeys as $bidangCategory)
+
+                                        @php
+                                            $badge = $badgeOf($bidangCategory);
+                                        @endphp
+
+                                        <span
+                                            class="
+                                                px-3
+                                                py-1
+                                                rounded-full
+                                                text-xs
+                                                font-medium
+                                                {{ $badge['class'] }}
+                                            "
+                                        >
+                                            {{ $badge['label'] }}
+                                        </span>
+
+                                    @endforeach
+
+                                </div>
+
+
+                                <!-- RATING -->
+                                @php
+                                    $ratingCount = $mentor->ratings->count();
+                                    $ratingAverage = $ratingCount > 0
+                                        ? $mentor->ratings->avg('rating')
+                                        : 0;
+                                @endphp
+
+                                @if($ratingCount > 0)
+
+                                    <div class="flex items-center gap-1 text-sm">
+
+                                        <span class="text-amber-400 text-base">
+                                            ★
+                                        </span>
+
+                                        <span class="font-semibold text-[#17324d]">
+                                            {{ number_format($ratingAverage, 1) }}
+                                        </span>
+
+                                        <span class="text-xs text-gray-400">
+                                            ({{ $ratingCount }})
+                                        </span>
+
+                                    </div>
+
+                                @else
+
+                                    <div class="flex items-center gap-1 text-xs text-gray-400">
+
+                                        <span class="text-gray-300 text-base">
+                                            ★
+                                        </span>
+
+                                        <span>
+                                            Belum ada rating
+                                        </span>
+
+                                    </div>
+
+                                @endif
+
                             </div>
 
                         </div>

@@ -566,6 +566,7 @@ class PublicController extends Controller
                 $mentor->id_mentor
             )
             ->firstOrFail();
+        $mentor->load('ratings.client');
 
         /*
         |--------------------------------------------------------------------------
@@ -729,7 +730,7 @@ class PublicController extends Controller
                 'mentor:id_mentor,nama,keahlian'
             )
             ->firstOrFail();
-
+        $talent->load('ratings.client');
         /*
         |--------------------------------------------------------------------------
         | DETAIL TALENTA ADA DI:

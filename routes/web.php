@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoomBookingController;
 use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingController;
+use App\Http\Controllers\Admin\RatingController as AdminRatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -297,3 +298,25 @@ Route::prefix('admin')
             [AdminRoomBookingController::class, 'complete']
         )->name('bookings.complete');
     });
+    /*
+    |--------------------------------------------------------------------------
+    | Rating
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/rating', [\App\Http\Controllers\RatingController::class, 'store'])
+    ->middleware('auth')
+    ->name('rating.store');
+
+    Route::get(
+    '/admin/ratings',
+    [AdminRatingController::class, 'index']
+    )
+        ->middleware('auth')
+        ->name('admin.ratings.index');
+
+    Route::delete(
+        '/admin/ratings/{rating}',
+        [AdminRatingController::class, 'destroy']
+    )
+        ->middleware('auth')
+        ->name('admin.ratings.destroy');

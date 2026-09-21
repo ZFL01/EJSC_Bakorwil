@@ -12,6 +12,7 @@ use App\Policies\ClientPolicy;
 use App\Policies\MentorPolicy;
 use App\Policies\TalentPolicy;
 use App\Policies\KegiatanPolicy;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Relation::morphMap([
+        'talenta' => Talent::class,
+        'mentor'  => Mentor::class,
+]);
         // Register policies
         Gate::policy(Client::class, ClientPolicy::class);
         Gate::policy(Mentor::class, MentorPolicy::class);

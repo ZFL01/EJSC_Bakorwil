@@ -364,4 +364,14 @@ class Talent extends Model
 
         return 'https://' . $value;
     }
+    /**
+     * Relasi rating yang diterima oleh Talent.
+     */
+    public function ratings()
+    {
+        return $this->morphMany(
+            Rating::class,
+            'rateable'
+        );
+    }
 }
