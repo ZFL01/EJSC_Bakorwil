@@ -36,6 +36,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // User Approval (pendaftaran via Google, status pending)
     Route::get('/users/pending', [UserController::class, 'pendingIndex'])->name('users.pending');
+
+    // Kelola Akun Admin (daftar, tambah, ubah, hapus)
+    Route::prefix('users/admins')->name('users.admins.')->group(function () {
+        Route::get('/', [UserController::class, 'adminsIndex'])->name('index');
+        Route::get('/create', [UserController::class, 'adminsCreate'])->name('create');
+        Route::post('/', [UserController::class, 'adminsStore'])->name('store');
+        Route::get('/{user}/edit', [UserController::class, 'adminsEdit'])->name('edit');
+        Route::put('/{user}', [UserController::class, 'adminsUpdate'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'adminsDestroy'])->name('destroy');
+    });
+
     Route::post('/users/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
     Route::post('/users/{user}/reject', [UserController::class, 'reject'])->name('users.reject');
     Route::post('/users/{user}/activate', [UserController::class, 'activate'])->name('users.activate');
