@@ -74,6 +74,7 @@ class User extends Authenticatable
 
     /**
      * Buat username unik dari email (fallback: nama).
+     * Dipakai SEMUA alur pendaftaran (manual, Google, LinkedIn).
      * Pola sama dengan RegisterController/GoogleAuthController.
      */
     public static function makeUsername(string $email, ?string $nama = null): string

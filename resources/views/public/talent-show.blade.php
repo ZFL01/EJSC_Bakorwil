@@ -587,9 +587,9 @@
                             font-bold
                             text-[#17324d]
                             mb-3
-                        " 
-                    > 
-                    
+                        "
+                    >
+
                         Tentang Talenta
                     </h2>
 
@@ -648,7 +648,7 @@
                                 {{ $talent->mentor->keahlian ?? '-' }}
                             </p>
 
-                            
+
                         </div>
 
                     </div>

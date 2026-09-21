@@ -11,7 +11,7 @@
             <p class="text-sm text-gray-500">Keahlian: {{ $talent->keahlian }}</p>
         </div>
         <div class="flex items-center gap-2">
-            <span class="px-3 py-1 rounded-full text-xs font-semibold 
+            <span class="px-3 py-1 rounded-full text-xs font-semibold
                 {{ $talent->status_pekerjaan === 'bekerja' ? 'bg-emerald-100 text-emerald-700' : '' }}
                 {{ $talent->status_pekerjaan === 'belum bekerja' ? 'bg-amber-100 text-amber-700' : '' }}
                 {{ $talent->status_pekerjaan === 'magang' ? 'bg-sky-100 text-sky-700' : '' }}">

@@ -33,7 +33,7 @@
                             <td class="p-4 font-semibold text-gray-800">{{ $p->user->name ?? '-' }}</td>
                             <td class="p-4 text-gray-600">{{ $p->user->email ?? '-' }}</td>
                             <td class="p-4">
-                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold 
+                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold
                                     {{ $p->status === 'registered' ? 'bg-sky-100 text-sky-700' : '' }}
                                     {{ $p->status === 'confirmed' ? 'bg-emerald-100 text-emerald-700' : '' }}
                                     {{ $p->status === 'attended' ? 'bg-purple-100 text-purple-700' : '' }}

@@ -50,7 +50,7 @@ class MentorController extends Controller
     public function create()
     {
         $this->authorize('create', Mentor::class);
-        
+
         $wilayah = Wilayah::orderBy('nama_wilayah')->get();
 
         return view('admin.mentors.create', compact('wilayah'));
@@ -93,16 +93,16 @@ class MentorController extends Controller
                 'role' => 'mentor',
             ]);
 
-            $ktpPath = $request->hasFile('url_foto_ktp') 
-                ? $request->file('url_foto_ktp')->store('ktp', 'public') 
-                : null;
-            
-            $cvPath = $request->hasFile('url_cv') 
-                ? $request->file('url_cv')->store('cv', 'public') 
+            $ktpPath = $request->hasFile('url_foto_ktp')
+                ? $request->file('url_foto_ktp')->store('ktp', 'public')
                 : null;
 
-            $expertiseTags = $validated['expertise_tags'] 
-                ? array_map('trim', explode(',', $validated['expertise_tags'])) 
+            $cvPath = $request->hasFile('url_cv')
+                ? $request->file('url_cv')->store('cv', 'public')
+                : null;
+
+            $expertiseTags = $validated['expertise_tags']
+                ? array_map('trim', explode(',', $validated['expertise_tags']))
                 : [];
 
             // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
@@ -144,7 +144,7 @@ class MentorController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal menambahkan mentor: ' . $e->getMessage());
         }
@@ -272,7 +272,7 @@ class MentorController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal mengupdate mentor: ' . $e->getMessage());
         }
@@ -317,7 +317,7 @@ class MentorController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->with('error', 'Gagal menghapus mentor: ' . $e->getMessage());
         }
     }

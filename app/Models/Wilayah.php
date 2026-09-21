@@ -8,7 +8,7 @@ class Wilayah extends Model
 {
     protected $table = 'wilayah';
     protected $primaryKey = 'id_wilayah';
-    
+
     public $timestamps = false;
 
     protected $fillable = [

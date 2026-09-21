@@ -1,212 +1,353 @@
 @extends('layouts.app')
 
-@section('title', 'Profil Saya')
+@section('title', 'Profil Pengguna')
 
 @section('content')
 
 <style>
-    /* =========================================================
-       PROFILE PAGE — TEAL / GREEN LEAF AESTHETIC
-       ========================================================= */
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f6f8fa !important;
+    }
 
     .profile-page {
+        min-height: calc(100vh - 64px);
+        padding: 18px 24px 42px;
+        background: #f6f8fa;
+        color: #17344f;
+
+        width: 100vw;
         position: relative;
-        min-height: calc(100vh - 72px);
-        overflow: hidden;
-        padding: 24px 16px 48px;
-        background: #39dacd;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
     }
 
     /* =========================================================
-       CARD
+       BREADCRUMB
+       ========================================================= */
+
+    .profile-breadcrumb {
+        width: 100%;
+        max-width: 1040px;
+        margin: 0 auto 14px;
+
+        display: flex;
+        align-items: center;
+        gap: 9px;
+
+        color: #83909a;
+        font-size: 13px;
+        font-weight: 400;
+    }
+
+    .profile-breadcrumb strong {
+        color: #18364f;
+        font-weight: 700;
+    }
+
+    /* =========================================================
+       MAIN CARD
        ========================================================= */
 
     .profile-card {
-        position: relative;
-        z-index: 2;
-
         width: 100%;
-        max-width: 850px;
+        max-width: 1040px;
         margin: 0 auto;
 
-        overflow: hidden;
-
-        border: 1px solid rgba(210, 230, 228, 0.9);
-        border-radius: 16px;
-
         background: #ffffff;
+        border: 1px solid #e7edf0;
+        border-radius: 10px;
+
+        overflow: visible;
 
         box-shadow:
-            0 18px 45px rgba(20, 90, 95, 0.10),
-            0 3px 12px rgba(20, 90, 95, 0.06);
+            0 4px 14px rgba(24, 54, 79, 0.04);
     }
 
     /* =========================================================
        HERO
        ========================================================= */
 
-    .profile-hero {
-        position: relative;
+   .profile-hero {
+    position: relative;
 
-        min-height: 128px;
+    min-height: 100px;
 
-        overflow: hidden;
+     padding: 20px 60px 26px;
 
-        display: flex;
-        align-items: center;
+   margin-top: -32px;
+    margin-left: -32px;
+    margin-right: -32px;
 
-        padding: 22px 32px;
+    border-radius: 10px 10px 0 0;
 
-        isolation: isolate;
+    overflow: hidden;
 
-        background:
-            radial-gradient(
-                ellipse 75% 145% at 82% 5%,
-                rgba(112, 210, 193, 0.95) 0%,
-                rgba(112, 210, 193, 0.70) 28%,
-                rgba(112, 210, 193, 0.25) 52%,
-                rgba(112, 210, 193, 0) 74%
-            ),
-            radial-gradient(
-                ellipse 58% 125% at 48% 110%,
-                rgba(53, 193, 200, 0.82) 0%,
-                rgba(53, 193, 200, 0.35) 44%,
-                rgba(53, 193, 200, 0) 74%
-            ),
-            linear-gradient(
-                110deg,
-                #1596ad 0%,
-                #1eabb9 25%,
-                #2db9c0 48%,
-                #43c2bd 70%,
-                #60cab8 100%
-            );
-    }
+    background:
+        radial-gradient(
+            circle at 88% 20%,
+            rgba(54, 178, 168, 0.25),
+            transparent 30%
+        ),
+        linear-gradient(
+            110deg,
+            #126a6d 0%,
+            #087d7b 45%,
+            #157e7b 100%
+        );
 
-    /* =========================================================
-       GRADASI LEMBUT SEPERTI AWAN
-       ========================================================= */
-
-    .profile-hero::before {
-        content: "";
-        position: absolute;
-
-        inset: -40% -10% -40% 20%;
-
-        z-index: 1;
-
-        pointer-events: none;
-
-        background:
-            radial-gradient(
-                ellipse 70% 75% at 75% 18%,
-                rgba(155, 225, 207, 0.38) 0%,
-                rgba(155, 225, 207, 0.18) 34%,
-                rgba(155, 225, 207, 0) 70%
-            ),
-            radial-gradient(
-                ellipse 65% 70% at 40% 88%,
-                rgba(93, 207, 203, 0.30) 0%,
-                rgba(93, 207, 203, 0) 72%
-            );
-
-        filter: blur(20px);
-    }
-
-    /* =========================================================
-       CAHAYA HALUS DI ATAS GRADASI
-       ========================================================= */
-
+    color: #ffffff;
+}
     .profile-hero::after {
         content: "";
+
         position: absolute;
-
         inset: 0;
-
-        z-index: 2;
 
         pointer-events: none;
 
         background:
             radial-gradient(
-                ellipse 65% 110% at 72% 0%,
-                rgba(255, 255, 255, 0.16) 0%,
-                rgba(255, 255, 255, 0.07) 35%,
-                rgba(255, 255, 255, 0) 70%
+                circle at 20% 120%,
+                rgba(255,255,255,.05),
+                transparent 35%
+            ),
+            linear-gradient(
+                90deg,
+                transparent,
+                rgba(255,255,255,.025)
             );
     }
-
-    /* =========================================================
-       HERO CONTENT
-       ========================================================= */
 
     .profile-hero-content {
         position: relative;
-        z-index: 4;
-
-        display: flex;
-        align-items: center;
-
-        gap: 22px;
+        z-index: 2;
     }
 
-    /* =========================================================
-       AVATAR
-       ========================================================= */
-
-    .profile-avatar {
-        width: 88px;
-        height: 88px;
-        flex: 0 0 88px;
-
-        overflow: hidden;
-
-        display: flex;
+    .profile-label {
+        display: inline-flex;
         align-items: center;
-        justify-content: center;
+        gap: 5px;
 
-        border: 3px solid rgba(255, 255, 255, 0.9);
+        margin-bottom: 5px;
+
+        padding: 3px 8px;
+
+        border-radius: 20px;
+
+        background: rgba(0, 61, 64, .35);
+
+        color: #d8ffff;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .profile-label::before {
+        content: "";
+        width: 4px;
+        height: 4px;
+
         border-radius: 50%;
 
-        background: rgba(255, 255, 255, 0.22);
-
-        color: #ffffff;
-
-        box-shadow:
-            0 3px 9px rgba(10, 60, 65, 0.18);
+        background: #67d6ce;
     }
-
-    .profile-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-
-    /* =========================================================
-       HERO TYPOGRAPHY
-       ========================================================= */
 
     .profile-hero h1 {
         margin: 0;
 
         color: #ffffff;
 
-        font-size: 25px;
-        font-weight: 700;
-
+        font-size: 13px;
         line-height: 1.15;
-
-        text-shadow: 0 1px 4px rgba(10, 60, 65, 0.15);
+        font-weight: 800;
     }
 
-    .profile-hero p {
-        margin-top: 4px;
+    .profile-hero-description {
+        margin-top: 3px;
 
-        color: rgba(255, 255, 255, 0.95);
+        color: rgba(255,255,255,.88);
 
-        font-size: 16px;
+        font-size: 13px;
+        line-height: 1.4;
+    }
 
-        text-shadow: 0 1px 3px rgba(10, 60, 65, 0.12);
+    .profile-id {
+        position: absolute;
+
+        top: 17px;
+        right: 20px;
+
+        padding: 6px 10px;
+
+        border-radius: 15px;
+
+        background: rgba(255,255,255,.10);
+
+        color: rgba(255,255,255,.8);
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* =========================================================
+       IDENTITY BAR
+       ========================================================= */
+
+    .profile-identity {
+        position: relative;
+
+        min-height: 64px;
+
+        padding: 0 28px 0 142px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        border-bottom: 1px solid #edf1f3;
+
+        background: #ffffff;
+    }
+
+    .profile-avatar {
+        position: absolute;
+
+        left: 28px;
+        top: -27px;
+
+        width: 78px;
+        height: 78px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        overflow: hidden;
+
+        border: 3px solid #ffffff;
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                145deg,
+                #143c4d,
+                #1c5960
+            );
+
+        color: #ffffff;
+
+        box-shadow:
+            0 3px 8px rgba(15, 45, 60, .18);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+    .profile-avatar svg {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile-name-wrap {
+        padding: 8px 0;
+    }
+
+    .profile-name {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+    }
+
+    .profile-name h2 {
+        margin: 0;
+
+        color: #18364f;
+
+        font-size: 13px;
+        line-height: 1.2;
+        font-weight: 800;
+    }
+
+    .verified-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+
+        padding: 2px 6px;
+
+        border-radius: 10px;
+
+        background: #eaf4ff;
+
+        color: #2877b7;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .verified-badge::before {
+        content: "●";
+        font-size: 13px;
+    }
+
+    .profile-subtitle {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        margin-top: 5px;
+
+        color: #6b8a9a;
+
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .profile-subtitle-dot {
+        color: #7c8f98;
+    }
+
+    .profile-subtitle-role {
+        color: #32c857;
+        font-weight: 600;
+    }
+
+    .profile-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+
+        padding: 5px 9px;
+
+        border-radius: 15px;
+
+        background: #e9f8ef;
+
+        color: #168348;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .profile-status::before {
+        content: "";
+
+        width: 5px;
+        height: 5px;
+
+        border-radius: 50%;
+
+        background: #1ca463;
     }
 
     /* =========================================================
@@ -214,30 +355,23 @@
        ========================================================= */
 
     .profile-body {
-        padding: 21px 24px 19px;
-
+        padding: 18px 28px 14px;
         background: #ffffff;
     }
 
-    /* =========================================================
-       COLUMNS
-       ========================================================= */
-
     .profile-columns {
         display: grid;
-        grid-template-columns: 1fr 1.15fr;
+        grid-template-columns: 1fr 1.18fr;
+        gap: 30px;
     }
 
     .profile-column {
-        min-height: 220px;
-
-        padding: 0 28px 0 0;
+        min-width: 0;
     }
 
     .profile-column + .profile-column {
-        padding: 0 0 0 28px;
-
-        border-left: 1px solid #e6efee;
+        padding-left: 30px;
+        border-left: 1px solid #edf1f3;
     }
 
     /* =========================================================
@@ -247,75 +381,324 @@
     .profile-section-title {
         display: flex;
         align-items: center;
+        gap: 8px;
 
-        gap: 14px;
+        margin: 0 0 14px;
+        padding-bottom: 9px;
 
-        margin: 0 0 15px;
+        border-bottom: 1px solid #edf1f3;
 
-        color: #10365a;
+        color: #17364f;
 
-        font-size: 18px;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    .profile-section-icon {
+        width: 20px;
+        height: 20px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 5px;
+    }
+
+    .profile-section-icon.account {
+        color: #129aa3;
+        background: #effafa;
+    }
+
+    .profile-section-icon.document {
+        color: #319b69;
+        background: #eff9f1;
+    }
+
+    .profile-section-icon svg {
+        width: 11px;
+        height: 11px;
+    }
+
+    /* =========================================================
+       INFORMATION BOX
+       ========================================================= */
+
+    .info-box {
+        margin-bottom: 8px;
+        padding: 13px 14px;
+
+        border: 1px solid #edf1f3;
+        border-radius: 7px;
+
+        background: #fbfcfd;
+    }
+
+    .info-label {
+        margin-bottom: 4px;
+
+        color: #80909b;
+
+        font-size: 13px;
+        line-height: 1.2;
+        font-weight: 600;
+
+        text-transform: uppercase;
+        letter-spacing: .25px;
+    }
+
+    .info-value {
+        color: #243d51;
+
+        font-size: 13px;
+        line-height: 1.3;
+        font-weight: 700;
+    }
+
+    .info-value.light {
+        font-weight: 400;
+    }
+
+    .info-value-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+    }
+
+    .copy-text {
+        color: #3b8e83;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        cursor: pointer;
+        user-select: none;
+
+        transition: .2s ease;
+    }
+
+    .copy-text:hover {
+        color: #23766d;
+    }
+
+    .standard-badge {
+        display: inline-block;
+
+        margin-left: 4px;
+        padding: 2px 5px;
+
+        border-radius: 3px;
+
+        background: #dff5e7;
+
+        color: #36915b;
+
+        font-size: 13px;
         font-weight: 700;
     }
 
     /* =========================================================
-       SECTION ICON
+       SKILLS
        ========================================================= */
 
-    .profile-section-icon {
+    .skill-area {
+        margin-bottom: 10px;
+    }
+
+    .skill-label {
+        margin-bottom: 7px;
+
+        color: #80909b;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+    }
+
+    .skill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .skill-tag {
         display: inline-flex;
-
-        width: 34px;
-        height: 34px;
-
-        flex: 0 0 34px;
-
         align-items: center;
-        justify-content: center;
 
-        border-radius: 50%;
-    }
+        padding: 4px 7px;
 
-    .profile-section-icon.account {
-        color: #1598ad;
-        background: #d3f0f0;
-    }
+        border: 1px solid #d9eeee;
+        border-radius: 5px;
 
-    .profile-section-icon.document {
-        color: #3f9b52;
-        background: #dcf0d6;
+        background: #effafa;
+
+        color: #27817f;
+
+        font-size: 13px;
+        font-weight: 600;
     }
 
     /* =========================================================
-       DETAILS
+       TWO SMALL CARDS
        ========================================================= */
 
-    .profile-details {
+    .profile-small-grid {
         display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
 
-        gap: 15px;
-
-        margin: 0;
+        margin-bottom: 9px;
     }
 
-    .profile-details dt {
-        margin-bottom: 2px;
+    .profile-small-card {
+        min-height: 56px;
 
-        color: #6b8a9a;
+        padding: 9px 10px;
 
-        font-size: 14px;
+        border: 1px solid #edf1f3;
+        border-radius: 7px;
+
+        background: #ffffff;
+    }
+
+    .profile-small-label {
+        margin-bottom: 5px;
+
+        color: #83909a;
+
+        font-size: 13px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+    }
+
+    .profile-small-value {
+        color: #253f51;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .profile-small-value.muted {
+        color: #88939b;
+        font-style: italic;
         font-weight: 400;
     }
 
-    .profile-details dd {
-        margin: 0;
+    .profile-small-description {
+        margin-top: 4px;
 
-        color: #10365a;
+        color: #8a969d;
 
-        font-size: 14px;
+        font-size: 13px;
+        line-height: 1.35;
+    }
+
+    /* =========================================================
+       PORTFOLIO
+       ========================================================= */
+
+    .portfolio-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        padding: 9px 10px;
+
+        border: 1px solid #edf1f3;
+        border-radius: 7px;
+
+        background: #ffffff;
+    }
+
+    /* Seluruh kotak portfolio aktif sebagai link Google Drive */
+   .portfolio-box-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+        transition: .2s ease;
+    }
+
+    .portfolio-box-link:hover {
+        background: #f8fcfb;
+    }
+
+    .portfolio-box-link:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(42, 141, 131, .12);
+    }
+
+    .portfolio-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        min-width: 0;
+    }
+
+    .portfolio-icon {
+        width: 20px;
+        height: 20px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        flex: 0 0 20px;
+
+        border-radius: 5px;
+
+        background: #fff8e8;
+        color: #c08b27;
+    }
+
+    .portfolio-icon svg {
+        width: 11px;
+        height: 11px;
+    }
+
+    .portfolio-title {
+        color: #273f51;
+
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .portfolio-description {
+        margin-top: 2px;
+
+        color: #8b969d;
+
+        font-size: 13px;
+    }
+
+    .portfolio-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 5px 8px;
+
+        border: 1px solid #d9ebe9;
+        border-radius: 5px;
+
+        background: #ffffff;
+
+        color: #2a8d83;
+
+        font-size: 13px;
         font-weight: 600;
 
-        line-height: 1.35;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .portfolio-button:hover {
+        background: #f2fbfa;
     }
 
     /* =========================================================
@@ -325,133 +708,182 @@
     .profile-actions {
         display: flex;
         align-items: center;
+        justify-content: space-between;
 
-        gap: 16px;
+        margin-top: 16px;
+        padding-top: 13px;
 
-        margin-top: 1px;
+        border-top: 1px solid #edf1f3;
+    }
+
+    .profile-actions-left,
+    .profile-actions-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .profile-action {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 5px;
 
-        gap: 8px;
+        min-height: 28px;
 
-        min-height: 37px;
+        padding: 5px 10px;
 
-        padding: 7px 16px;
+        border: 1px solid #e2e9ec;
+        border-radius: 6px;
 
-        border: 1px solid transparent;
-        border-radius: 9px;
+        background: #ffffff;
 
-        font-size: 14px;
+        color: #456172;
+
+        font-size: 13px;
         font-weight: 600;
 
         text-decoration: none;
 
-        transition:
-            transform 0.25s ease,
-            background-color 0.25s ease,
-            border-color 0.25s ease,
-            box-shadow 0.25s ease;
+        transition: .2s ease;
     }
 
     .profile-action:hover {
-        transform: translateY(-1px);
+        background: #f7fafb;
     }
 
     .profile-action.primary {
+        border-color: #16867f;
+
+        background: #16867f;
+
         color: #ffffff;
 
-        background: linear-gradient(135deg, #1598ad, #17aab3);
-
-        box-shadow: 0 5px 13px rgba(21, 152, 173, 0.28);
+        box-shadow: 0 3px 7px rgba(22, 134, 127, .18);
     }
 
-    .profile-action.primary:hover {
-        color: #ffffff;
-
-        background: linear-gradient(135deg, #128a9d, #149ba4);
-
-        box-shadow: 0 7px 16px rgba(21, 152, 173, 0.34);
-    }
-
-    .profile-action.secondary {
-        color: #10365a;
-
-        border-color: #cfe6e8;
-
-        background: #eef8f8;
-    }
-
-    .profile-action.secondary:hover {
-        color: #10365a;
-
-        border-color: #b7dade;
-
-        background: #e3f2f2;
+    .profile-action svg {
+        width: 10px;
+        height: 10px;
     }
 
     /* =========================================================
-       MOBILE
+       PRIVACY
        ========================================================= */
 
-    @media (max-width: 640px) {
+    .profile-privacy {
+        width: 100%;
+        max-width: 1040px;
+
+        margin: 12px auto 0;
+        padding: 8px 11px;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 7px;
+
+        border: 1px solid #dfecef;
+        border-radius: 6px;
+
+        background: #f5f9fb;
+
+        color: #6c7f8c;
+
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    .profile-privacy svg {
+        width: 11px;
+        height: 11px;
+
+        flex: 0 0 11px;
+
+        color: #418fa2;
+    }
+
+    .profile-privacy strong {
+        color: #3c6577;
+    }
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 768px) {
 
         .profile-page {
-            padding: 18px 12px 32px;
-        }
-
-        .profile-card {
-            border-radius: 13px;
+            padding: 14px 12px 30px;
         }
 
         .profile-hero {
-            min-height: 116px;
-            padding: 18px 20px;
+            padding: 20px 20px 2px;
+        }
+
+        .profile-id {
+            display: none;
+        }
+
+        .profile-identity {
+            padding-left: 112px;
+            padding-right: 16px;
         }
 
         .profile-avatar {
-            width: 72px;
-            height: 72px;
-            flex-basis: 72px;
-        }
-
-        .profile-hero-content {
-            gap: 14px;
-        }
-
-        .profile-hero h1 {
-            font-size: 22px;
-        }
-
-        .profile-hero p {
-            font-size: 14px;
+            left: 18px;
+            width: 68px;
+            height: 68px;
+            top: -23px;
         }
 
         .profile-body {
-            padding: 20px;
+            padding: 16px;
         }
 
         .profile-columns {
-            display: block;
-        }
-
-        .profile-column,
-        .profile-column + .profile-column {
-            min-height: auto;
-            padding: 0 0 22px;
-            border: 0;
+            grid-template-columns: 1fr;
+            gap: 20px;
         }
 
         .profile-column + .profile-column {
-            padding-top: 22px;
-            border-top: 1px solid #e6efee;
+            padding-left: 0;
+            padding-top: 20px;
+            border-left: 0;
+            border-top: 1px solid #edf1f3;
         }
 
         .profile-actions {
             flex-wrap: wrap;
+            gap: 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+
+        .profile-name h2 {
+            font-size: 13px;
+        }
+
+        .profile-subtitle {
+            font-size: 13px;
+        }
+
+        .profile-status {
+            font-size: 13px;
+        }
+
+        .profile-small-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .profile-actions,
+        .profile-actions-left,
+        .profile-actions-right {
+            width: 100%;
+        }
+
+        .profile-actions {
+            justify-content: space-between;
         }
     }
 </style>
@@ -460,89 +892,149 @@
 <div class="profile-page">
 
     {{-- =========================================================
-         PROFILE CARD
+         BREADCRUMB
          ========================================================= --}}
 
-    <div class="profile-card">
 
+    {{-- =========================================================
+         PROFILE CARD
+         ========================================================= --}}
+    <div class="profile-card">
 
         {{-- =====================================================
              HERO
              ====================================================== --}}
         <div class="profile-hero">
 
-
-            {{-- =====================================================
-                 HERO CONTENT
-                 ====================================================== --}}
             <div class="profile-hero-content">
 
-                <div class="profile-avatar">
+                <div class="profile-label">
+                    Profil Talenta Resmi EJSC Bakorwil V Jember
+                </div>
 
-                    @if($user->profile_photo_src)
+                <h1>
+                    Ringkasan Profil Talenta
+                </h1>
 
-                        <img
-                            src="{{ $user->profile_photo_src }}"
-                            alt=""
-                            class="w-full h-full object-cover"
-                            onerror="
-                                this.classList.add('hidden');
-                                this.nextElementSibling.classList.remove('hidden');
-                            "
-                        >
+                <div class="profile-hero-description">
+                    Data terverifikasi pada sistem manajemen talenta Millennial Job Center Jawa Timur.
+                </div>
 
-                        <svg
-                            class="hidden h-12 w-12"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
-                        </svg>
+            </div>
 
+            <div class="profile-id">
+                ID Talenta:
+                EJSC-TLN-2026-{{ str_pad($user->id ?? 0, 4, '0', STR_PAD_LEFT) }}
+            </div>
+
+        </div>
+
+
+        {{-- =====================================================
+             IDENTITY
+             ====================================================== --}}
+        <div class="profile-identity">
+
+            <div class="profile-avatar">
+
+                @if($user->profile_photo_src)
+
+                    <img
+                        src="{{ $user->profile_photo_src }}"
+                        alt=""
+                        onerror="
+                            this.classList.add('hidden');
+                            this.nextElementSibling.classList.remove('hidden');
+                        "
+                    >
+
+                    <svg
+                        class="hidden"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
+                    </svg>
+
+                @else
+
+                    <svg
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                    >
+                        <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
+                    </svg>
+
+                @endif
+
+            </div>
+
+
+            <div class="profile-name-wrap">
+
+                <div class="profile-name">
+
+                    <h2>
+                        {{ $user->name }}
+                    </h2>
+
+                    <span class="verified-badge">
+                        Terverifikasi
+                    </span>
+
+                </div>
+
+                <div class="profile-subtitle">
+                    {{ $profile->keahlian ?? 'UI/UX Designer & Web Enthusiast' }}
+                    <span class="profile-subtitle-dot">•</span>
+                   <span class="profile-subtitle-role">
+    @if($user->role === 'mentor')
+        Mentor MJC
+    @elseif($user->role === 'client' || $user->role === 'klien')
+        Klien MJC
+    @else
+        Talenta MJC
+    @endif
+</span>
+                </div>
+
+            </div>
+
+
+            <div class="profile-status">
+
+                @if($user->isTalent())
+
+                    @if(($profile->status_pekerjaan ?? '') === 'mencari_kerja')
+                        Status: Mencari Kerja (Open to Work)
+                    @elseif(($profile->status_pekerjaan ?? '') === 'bekerja')
+                        Status: Sedang Bekerja
                     @else
-
-                        <svg
-                            class="h-12 w-12"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                        >
-                            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5Z"/>
-                        </svg>
-
+                        Status: {{ ucfirst(str_replace('_', ' ', $profile->status_pekerjaan ?? 'Mencari Kerja')) }}
                     @endif
 
-                </div>
+                @else
 
+                    Status: Aktif
 
-                <div>
-
-                    <h1 class="text-[25px] font-bold leading-tight text-white">
-                        {{ $user->name }}
-                    </h1>
-
-                    <p class="mt-1 text-base text-white">
-                        {{ ucfirst($user->role) }}
-                    </p>
-
-                </div>
+                @endif
 
             </div>
 
         </div>
 
 
-        {{-- =========================================================
-             PROFILE BODY
-             ========================================================== --}}
+        {{-- =====================================================
+             BODY
+             ====================================================== --}}
         <div class="profile-body">
 
             <div class="profile-columns">
 
-
                 {{-- =================================================
-                     ACCOUNT
+                     LEFT COLUMN
                      ================================================= --}}
                 <div class="profile-column">
 
@@ -551,11 +1043,9 @@
                         <span class="profile-section-icon account">
 
                             <svg
-                                class="h-5 w-5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
-                                aria-hidden="true"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -572,40 +1062,93 @@
                     </h3>
 
 
-                    <dl class="profile-details">
+                    {{-- EMAIL --}}
+                    <div class="info-box">
 
-                        <div>
+                        <div class="info-label">
+                            Alamat Surel (E-mail)
+                        </div>
 
-                            <dt>
-                                E-mail
-                            </dt>
+                        <div class="info-value-row">
 
-                            <dd>
+                            <div
+                                class="info-value"
+                                id="profile-email"
+                            >
                                 {{ $user->email }}
-                            </dd>
+                            </div>
+
+                            <span
+                                class="copy-text"
+                                id="copy-email"
+                                role="button"
+                                tabindex="0"
+                                title="Salin alamat email"
+                            >
+                                ◉ Salin
+                            </span>
 
                         </div>
 
+                    </div>
 
-                        <div>
 
-                            <dt>
-                                Peran
-                            </dt>
+                    {{-- PERAN --}}
+                    <div class="info-box">
 
-                            <dd>
-                                {{ ucfirst($user->role) }}
-                            </dd>
-
+                        <div class="info-label">
+                            Peran Akun
                         </div>
 
-                    </dl>
+                        <div class="info-value">
+    @if($user->role === 'mentor')
+        Mentor Profesional
+    @elseif($user->role === 'client' || $user->role === 'klien')
+        Klien Profesional
+    @else
+        Talenta Profesional
+    @endif
+
+    <span class="standard-badge">
+        Standard
+    </span>
+</div>
+
+                    </div>
+
+
+                    {{-- WILAYAH --}}
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Wilayah Kerja Bakorwil
+                        </div>
+
+                        <div class="info-value">
+                            Bakorwil V Jember (Jawa Timur)
+                        </div>
+
+                    </div>
+
+
+                    {{-- TANGGAL --}}
+                    <div class="info-box">
+
+                        <div class="info-label">
+                            Tanggal Bergabung
+                        </div>
+
+                        <div class="info-value">
+                            {{ optional($user->created_at)->translatedFormat('F Y') ?? '-' }}
+                        </div>
+
+                    </div>
 
                 </div>
 
 
                 {{-- =================================================
-                     PROFILE
+                     RIGHT COLUMN
                      ================================================= --}}
                 <div class="profile-column">
 
@@ -614,11 +1157,9 @@
                         <span class="profile-section-icon document">
 
                             <svg
-                                class="h-5 w-5"
                                 fill="none"
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
-                                aria-hidden="true"
                             >
                                 <path
                                     stroke-linecap="round"
@@ -630,186 +1171,224 @@
 
                         </span>
 
-                        Profil
+                        Profil & Keahlian Profesional
 
                     </h3>
 
 
-                    @if($profile)
+                    {{-- KEAHLIAN --}}
+                    <div class="skill-area">
+
+                        <div class="skill-label">
+                            Keahlian & Kompetensi
+                        </div>
+
+                        <div class="skill-list">
+
+                            @php
+                                $skills = array_filter(
+                                    array_map(
+                                        'trim',
+                                        preg_split(
+                                            '/[,;|]/',
+                                            $profile->keahlian ?? ''
+                                        )
+                                    )
+                                );
+                            @endphp
+
+                            @forelse($skills as $skill)
+
+                                <span class="skill-tag">
+                                    {{ $skill }}
+                                </span>
+
+                            @empty
+
+                                <span class="skill-tag">
+                                    Belum diisi
+                                </span>
+
+                            @endforelse
+
+                        </div>
+
+                    </div>
 
 
-                        {{-- CLIENT --}}
-                        @if($user->isClient())
+                    {{-- STATUS + MENTOR --}}
+                    <div class="profile-small-grid">
 
-                            <dl class="profile-details">
+                        <div class="profile-small-card">
 
-                                <div>
-                                    <dt>Nama UKM</dt>
-                                    <dd>{{ $profile->nama_ukm }}</dd>
+                            <div class="profile-small-label">
+                                Status Ketenagakerjaan
+                            </div>
+
+                            <div class="profile-small-value">
+
+                                @if(($profile->status_pekerjaan ?? '') === 'mencari_kerja')
+                                    Mencari Kerja
+                                @else
+                                    {{ ucfirst(str_replace('_', ' ', $profile->status_pekerjaan ?? '-')) }}
+                                @endif
+
+                            </div>
+
+                            <div class="profile-small-description">
+                                Siap ditempatkan pada project MJC atau mitra industri.
+                            </div>
+
+                        </div>
+
+
+                        <div class="profile-small-card">
+
+                            <div class="profile-small-label">
+                                Mentor Pembimbing
+                            </div>
+
+                            @if($profile->mentor ?? false)
+
+                                <div class="profile-small-value">
+                                    {{ $profile->mentor->nama }}
                                 </div>
 
-                                <div>
-                                    <dt>Jenis Produk</dt>
-                                    <dd>{{ $profile->nama_produk }}</dd>
+                            @else
+
+                                <div class="profile-small-value muted">
+                                    Belum Ditentukan
                                 </div>
 
-                                <div>
-                                    <dt>Status</dt>
-                                    <dd
-                                        class="{{ $profile->status === 'aktif'
-                                            ? 'text-emerald-600'
-                                            : 'text-gray-500' }}"
-                                    >
-                                        {{ ucfirst($profile->status) }}
-                                    </dd>
-                                </div>
-                                <div>
-                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
-                                    <dd class="text-sm font-medium text-gray-800">
-                                        @if($profile->gdrive_src)
-                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
-                                        @else
-                                            <span class="font-normal text-gray-400">Belum diisi</span>
-                                        @endif
-                                    </dd>
-                                </div>
-                            </dl>
+                            @endif
+
+                            <div class="profile-small-description">
+                                Akan dikonsultasikan saat onboarding project.
+                            </div>
+
+                        </div>
+
+                    </div>
 
 
-                        {{-- MENTOR --}}
-                        @elseif($user->isMentor())
+                    {{-- =================================================
+                         PORTFOLIO GOOGLE DRIVE
+                         ================================================= --}}
+                  @if(!empty($profile->gdrive_src))
+    <a
+        href="{{ $profile->gdrive_src }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="portfolio-box portfolio-box-link"
+    >
+        <div class="portfolio-left">
+            <div class="portfolio-icon">
+                <!-- icon tetap -->
+            </div>
 
-                            <dl class="profile-details">
+            <div>
+                <div class="portfolio-title">
+                    Berkas Portofolio (Google Drive)
+                </div>
 
-                                <div>
-                                    <dt>Keahlian</dt>
-                                    <dd>{{ $profile->keahlian }}</dd>
-                                </div>
+                <div class="portfolio-description">
+                    Lihat berkas portofolio di Google Drive
+                </div>
+            </div>
+        </div>
 
-                                <div>
-                                    <dt>Pengalaman</dt>
-                                    <dd>{{ $profile->pengalaman ?? '-' }}</dd>
-                                </div>
+        <div class="portfolio-button">
+            Buka Google Drive
+        </div>
+    </a>
+@else
+    <a
+        href="{{ route('profile.edit') }}"
+        class="portfolio-box portfolio-box-link"
+    >
+        <div class="portfolio-left">
+            <div class="portfolio-icon">
+                <!-- icon tetap -->
+            </div>
 
-                                <div>
-                                    <dt>Ketersediaan</dt>
-                                    <dd
-                                        class="{{ $profile->is_available
-                                            ? 'text-emerald-600'
-                                            : 'text-amber-600' }}"
-                                    >
-                                        {{ $profile->is_available
-                                            ? 'Available'
-                                            : 'Unavailable' }}
-                                    </dd>
-                                </div>
-                                <div>
-                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
-                                    <dd class="text-sm font-medium text-gray-800">
-                                        @if($profile->gdrive_src)
-                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
-                                        @else
-                                            <span class="font-normal text-gray-400">Belum diisi</span>
-                                        @endif
-                                    </dd>
-                                </div>
-                            </dl>
+            <div>
+                <div class="portfolio-title">
+                    Berkas Portofolio (Google Drive)
+                </div>
 
+                <div class="portfolio-description">
+                    Tambahkan tautan Google Drive
+                </div>
+            </div>
+        </div>
 
-                        {{-- TALENT --}}
-                        @elseif($user->isTalent())
-
-                            <dl class="profile-details">
-
-                                <div>
-                                    <dt>Keahlian</dt>
-                                    <dd>{{ $profile->keahlian }}</dd>
-                                </div>
-
-                                <div>
-                                    <dt>Status Pekerjaan</dt>
-                                    <dd>{{ ucfirst($profile->status_pekerjaan ?? '-') }}</dd>
-                                </div>
-
-                                <div>
-                                    <dt>Mentor</dt>
-                                    <dd>{{ $profile->mentor->nama ?? '-' }}</dd>
-                                </div>
-                                <div>
-                                    <dt class="text-sm text-gray-500">Link Google Drive</dt>
-                                    <dd class="text-sm font-medium text-gray-800">
-                                        @if($profile->gdrive_src)
-                                            <a href="{{ $profile->gdrive_src }}" target="_blank" rel="noopener" class="text-[#079aaa] underline hover:text-[#087f91]">Buka Google Drive</a>
-                                        @else
-                                            <span class="font-normal text-gray-400">Belum diisi</span>
-                                        @endif
-                                    </dd>
-                                </div>
-                            </dl>
-
-                        @endif
-
-
-                    @else
-
-                        <p class="text-sm text-gray-500">
-                            Profil belum lengkap.
-                        </p>
-
-                    @endif
-
+        <div class="portfolio-button">
+            Tambah Tautan
+        </div>
+    </a>
+@endif
                 </div>
 
             </div>
 
 
             {{-- =====================================================
-                 BUTTONS
+                 ACTION BUTTONS
                  ====================================================== --}}
             <div class="profile-actions">
 
-                <a href="{{ route('profile.edit') }}" class="profile-action primary">
+                <div class="profile-actions-left">
 
-                    <svg
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
+                    <a
+                        href="{{ route('public.index') }}"
+                        class="profile-action"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="m16.86 3.49 3.65 3.65M4 20l3.95-.8L19.5 7.65a2.58 2.58 0 0 0-3.65-3.65L4.3 15.55 4 20Z"
-                        />
-                    </svg>
 
-                    Edit Profil
+                        <svg
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="M19 12H5m6-6-6 6 6 6"
+                            />
+                        </svg>
 
-                </a>
+                        Kembali ke Beranda
+
+                    </a>
+
+                </div>
 
 
-                <a href="{{ route('public.index') }}" class="profile-action secondary">
+                <div class="profile-actions-right">
 
-                    <svg
-                        class="h-4 w-4"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                        aria-hidden="true"
+                    <a
+                        href="{{ route('profile.edit') }}"
+                        class="profile-action primary"
                     >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            d="M19 12H5m6-6-6 6 6 6"
-                        />
-                    </svg>
 
-                    Kembali ke Beranda
+                        <svg
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="1.8"
+                                d="m16.86 3.49 3.65 3.65M4 20l3.95-.8L19.5 7.65a2.58 2.58 0 0 0-3.65-3.65L4.3 15.55 4 20Z"
+                            />
+                        </svg>
 
-                </a>
+                        Edit Profil
+
+                    </a>
+
+                </div>
 
             </div>
 
@@ -817,6 +1396,127 @@
 
     </div>
 
+
+    {{-- =========================================================
+         PRIVACY
+         ========================================================= --}}
+    <div class="profile-privacy">
+
+        <svg
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <circle
+                cx="12"
+                cy="12"
+                r="9"
+                stroke-width="1.6"
+            />
+
+            <path
+                stroke-linecap="round"
+                stroke-width="1.6"
+                d="M12 10v6m0-9h.01"
+            />
+        </svg>
+
+        <div>
+
+            <strong>
+                Informasi Privasi & Validasi:
+            </strong>
+
+            Profil Anda ditampilkan pada direktori resmi East Java Super Corridor (EJSC).
+            Pastikan alamat email dan keahlian selalu mutakhir agar mempermudah proses kurasi talent matching oleh Bakorwil V Jember.
+
+        </div>
+
+    </div>
+
 </div>
+
+
+{{-- =========================================================
+     COPY EMAIL
+     ========================================================= --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const copyButton = document.getElementById('copy-email');
+    const emailElement = document.getElementById('profile-email');
+
+    if (!copyButton || !emailElement) {
+        return;
+    }
+
+    async function copyEmail() {
+
+        const email = emailElement.textContent.trim();
+
+        if (!email) {
+            return;
+        }
+
+        try {
+
+            if (navigator.clipboard && window.isSecureContext) {
+
+                await navigator.clipboard.writeText(email);
+
+            } else {
+
+                const textarea = document.createElement('textarea');
+
+                textarea.value = email;
+
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-999999px';
+                textarea.style.top = '0';
+                textarea.style.opacity = '0';
+
+                document.body.appendChild(textarea);
+
+                textarea.focus();
+                textarea.select();
+                textarea.setSelectionRange(0, textarea.value.length);
+
+                document.execCommand('copy');
+
+                textarea.remove();
+            }
+
+            const originalText = copyButton.innerHTML;
+
+            copyButton.innerHTML = '✓ Tersalin';
+
+            setTimeout(function () {
+                copyButton.innerHTML = originalText;
+            }, 1500);
+
+        } catch (error) {
+
+            console.error('Gagal menyalin email:', error);
+
+            alert('Email gagal disalin. Silakan salin secara manual.');
+
+        }
+    }
+
+    copyButton.addEventListener('click', copyEmail);
+
+    copyButton.addEventListener('keydown', function (event) {
+
+        if (event.key === 'Enter' || event.key === ' ') {
+
+            event.preventDefault();
+
+            copyEmail();
+        }
+
+    });
+
+});
+</script>
 
 @endsection

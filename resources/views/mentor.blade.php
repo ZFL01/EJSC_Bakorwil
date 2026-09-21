@@ -956,15 +956,15 @@
 
                     <p
                        class="
-        mentor-location 
-        text-sm 
-        mb-3 
+        mentor-location
+        text-sm
+        mb-3
           text-gray-500
                         "
                     >
                        <strong>Domisili:</strong> {{ $mentor->domisili ?? '-' }}
                     </p>
-                    
+
                         <!-- SKILL -->
 
                         <p

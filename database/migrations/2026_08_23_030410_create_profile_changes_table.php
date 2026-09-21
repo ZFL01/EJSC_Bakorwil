@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('reviewed_at')->nullable();
             $table->text('review_notes')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
             $table->foreign('reviewed_by')->references('id_user')->on('users')->onDelete('set null');
             $table->index(['table_name', 'record_id']);

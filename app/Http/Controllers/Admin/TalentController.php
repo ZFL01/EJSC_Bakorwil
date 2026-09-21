@@ -56,10 +56,10 @@ class TalentController extends Controller
     public function create()
     {
         $this->authorize('create', Talent::class);
-        
+
         $mentors = Mentor::active()->get();
         $wilayah = Wilayah::orderBy('nama_wilayah')->get();
-        
+
         return view('admin.talents.create', compact('mentors', 'wilayah'));
     }
 
@@ -102,20 +102,20 @@ class TalentController extends Controller
                 'role' => 'talenta',
             ]);
 
-            $ktpPath = $request->hasFile('url_foto_ktp') 
-                ? $request->file('url_foto_ktp')->store('ktp', 'public') 
-                : null;
-            
-            $cvPath = $request->hasFile('url_cv') 
-                ? $request->file('url_cv')->store('cv', 'public') 
+            $ktpPath = $request->hasFile('url_foto_ktp')
+                ? $request->file('url_foto_ktp')->store('ktp', 'public')
                 : null;
 
-            $butapPath = $request->hasFile('url_butap') 
-                ? $request->file('url_butap')->store('butap', 'public') 
+            $cvPath = $request->hasFile('url_cv')
+                ? $request->file('url_cv')->store('cv', 'public')
                 : null;
 
-            $skillTags = $validated['skill_tags'] 
-                ? array_map('trim', explode(',', $validated['skill_tags'])) 
+            $butapPath = $request->hasFile('url_butap')
+                ? $request->file('url_butap')->store('butap', 'public')
+                : null;
+
+            $skillTags = $validated['skill_tags']
+                ? array_map('trim', explode(',', $validated['skill_tags']))
                 : [];
 
             // Rapikan bidang keahlian menjadi satu string (boleh lebih dari satu).
@@ -164,7 +164,7 @@ class TalentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal menambahkan talent: ' . $e->getMessage());
         }
@@ -311,7 +311,7 @@ class TalentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->withInput()
                 ->with('error', 'Gagal mengupdate talent: ' . $e->getMessage());
         }
@@ -365,7 +365,7 @@ class TalentController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
-            
+
             return back()->with('error', 'Gagal menghapus talent: ' . $e->getMessage());
         }
     }

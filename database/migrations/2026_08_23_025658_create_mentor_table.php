@@ -40,7 +40,7 @@ return new class extends Migration
             $table->boolean('is_available')->default(true);
             $table->integer('jumlah_mentee')->default(0);
             $table->timestamps();
-            
+
             $table->foreign('id_wilayah')->references('id_wilayah')->on('wilayah')->onDelete('set null');
             });
         }

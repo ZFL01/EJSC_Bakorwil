@@ -8,7 +8,7 @@
     <form action="{{ route('admin.clients.update', $client->id_client) }}" method="POST" enctype="multipart/form-data" class="space-y-4">
         @csrf
         @method('PUT')
-        
+
         <h3 class="text-md font-bold text-gray-700 border-b pb-2">Informasi Akun User</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>

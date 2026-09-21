@@ -7,7 +7,7 @@
 <div class="space-y-6">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-white p-4 rounded-xl border border-gray-200">
         <form action="{{ route('admin.talents.index') }}" method="GET" class="flex flex-wrap gap-2 w-full md:w-auto">
-            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau skill..." 
+            <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama atau skill..."
                    class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
             <select name="status_pekerjaan" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#56b8c2]">
                 <option value="">-- Semua Status --</option>
@@ -53,7 +53,7 @@
                             </td>
                             <td class="p-4 text-gray-600">{{ $t->mentor->nama ?? '-' }}</td>
                             <td class="p-4">
-                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold 
+                                <span class="px-2.5 py-1 rounded-full text-xs font-semibold
                                     {{ $t->status_pekerjaan === 'bekerja' ? 'bg-emerald-100 text-emerald-700' : '' }}
                                     {{ $t->status_pekerjaan === 'belum bekerja' ? 'bg-amber-100 text-amber-700' : '' }}
                                     {{ $t->status_pekerjaan === 'magang' ? 'bg-sky-100 text-sky-700' : '' }}">
