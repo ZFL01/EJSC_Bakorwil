@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\Auth\LinkedinAuthController;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,8 +15,10 @@ Route::middleware('guest')->group(function () {
     // Show login form
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
-    // Handle login
-    Route::post('/login', [LoginController::class, 'login'])->name('login.attempt');
+    // Handle login (rate limit 5 percobaan/menit per kombinasi email + IP)
+    Route::post('/login', [LoginController::class, 'login'])
+        ->middleware('throttle:auth')
+        ->name('login.attempt');
 
     /*
     | Google OAuth

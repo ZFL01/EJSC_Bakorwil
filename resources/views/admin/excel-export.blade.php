@@ -89,11 +89,43 @@
 @endsection
 @section('scripts')
 <script>
+function cellText(value) {
+    return (value === undefined || value === null) ? '' : String(value);
+}
+
+function cellTd(text, className) {
+    var td = document.createElement('td');
+    if (className) td.className = className;
+    td.textContent = cellText(text);
+    return td;
+}
+
+function spanBadge(text, className) {
+    var span = document.createElement('span');
+    if (className) span.className = className;
+    span.textContent = cellText(text);
+    return span;
+}
+
 function addRow(previewBody, data, color) {
     var tr = document.createElement('tr');
     tr.className = 'hover:bg-gray-50';
     var sc = data.status === 'aktif' ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-600';
-    tr.innerHTML = '<td class="p-3"><span class="px-2 py-0.5 bg-' + color + '-100 text-' + color + '-700 text-xs rounded-full">' + data.kategori + '</span></td><td class="p-3 font-medium">' + data.nama + '</td><td class="p-3">' + data.jk + '</td><td class="p-3 text-gray-600">' + data.domisili + '</td><td class="p-3 text-gray-600 max-w-xs truncate">' + data.alamat + '</td><td class="p-3 text-gray-600">' + data.noWa + '</td><td class="p-3"><span class="px-2 py-0.5 rounded-full text-xs font-medium ' + sc + '">' + data.status + '</span></td>';
+
+    var badgeTd = cellTd('', 'p-3');
+    badgeTd.appendChild(spanBadge(data.kategori, 'px-2 py-0.5 bg-' + color + '-100 text-' + color + '-700 text-xs rounded-full'));
+
+    tr.appendChild(badgeTd);
+    tr.appendChild(cellTd(data.nama, 'p-3 font-medium'));
+    tr.appendChild(cellTd(data.jk, 'p-3'));
+    tr.appendChild(cellTd(data.domisili, 'p-3 text-gray-600'));
+    tr.appendChild(cellTd(data.alamat, 'p-3 text-gray-600 max-w-xs truncate'));
+    tr.appendChild(cellTd(data.noWa, 'p-3 text-gray-600'));
+
+    var statusTd = cellTd('', 'p-3');
+    statusTd.appendChild(spanBadge(data.status, 'px-2 py-0.5 rounded-full text-xs font-medium ' + sc));
+    tr.appendChild(statusTd);
+
     previewBody.appendChild(tr);
 }
 
@@ -132,7 +164,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 previewBody.innerHTML = '';
 
                 if (data.rows.length === 0) {
-                    previewBody.innerHTML = '<tr><td colspan="7" class="p-8 text-center text-gray-400">Tidak ada data untuk tahun ' + year + '</td></tr>';
+                    var noRowsTd = document.createElement('td');
+                    noRowsTd.setAttribute('colspan', '7');
+                    noRowsTd.className = 'p-8 text-center text-gray-400';
+
+                    var noRowsText = document.createElement('span');
+                    noRowsText.textContent = 'Tidak ada data untuk tahun ';
+                    noRowsTd.appendChild(noRowsText);
+
+                    var noRowsYear = document.createElement('strong');
+                    noRowsYear.textContent = String(year);
+                    noRowsTd.appendChild(noRowsYear);
+
+                    var noRowsTr = document.createElement('tr');
+                    noRowsTr.appendChild(noRowsTd);
+                    previewBody.appendChild(noRowsTr);
                 } else {
                     data.rows.forEach(function(row) {
                         addRow(previewBody, {

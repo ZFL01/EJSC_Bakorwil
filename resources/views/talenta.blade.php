@@ -986,7 +986,16 @@
 
             <div class="mb-8">
 
-                <div
+                {{--
+                    Form GET ke route 'talenta': kata kunci pencarian dikirim ke
+                    server sehingga mencakup SELURUH data (bukan hanya 12 kartu
+                    yang sedang tampil di halaman ini). Filter kategori tetap
+                    dijalankan client-side oleh script di bagian bawah.
+                --}}
+                <form
+                    method="GET"
+                    action="{{ route('talenta') }}"
+                    role="search"
                     class="
                         flex
                         flex-col
@@ -1030,7 +1039,9 @@
 
                         <input
                             id="search-input"
+                            name="search"
                             type="text"
+                            value="{{ request('search') }}"
                             placeholder="Cari talenta..."
                             class="
                                 talenta-search
@@ -1084,7 +1095,7 @@
 
                     </div>
 
-                </div>
+                </form>
 
             </div>
 
@@ -1732,6 +1743,100 @@ document.addEventListener(
             'change',
             filterTalenta
         );
+
+
+        /*
+         * LIVE SEARCH (tanpa perlu Enter).
+         *
+         * filterTalenta() di atas hanya menyaring 12 kartu yang sedang
+         * tampil, jadi nama yang ada di halaman lain bisa terlihat
+         * "tidak ditemukan". Karena itu ketikan juga dikirim ke server
+         * (PublicController@talents) dan dicari ke SELURUH data.
+         *
+         * Alurnya:
+         *   1) setiap ketikan  → kartu yang tampil difilter instan (tanpa request)
+         *   2) berhenti 500 ms → form disubmit otomatis ke server
+         *
+         * Debounce 500 ms dipakai agar 1 kata tidak memicu puluhan request +
+         * reload penuh (query ILIKE ke seluruh tabel talenta).
+         */
+        const searchDelay = 500;
+
+        const submittedSearch =
+            searchInput
+                ? searchInput.value.trim()
+                : '';
+
+        let searchTimer = null;
+
+
+        searchInput?.addEventListener(
+            'input',
+            function () {
+
+                clearTimeout(
+                    searchTimer
+                );
+
+
+                if (
+                    searchInput.value
+                        .trim()
+                    === submittedSearch
+                ) {
+
+                    // Kembali ke kata kunci awal halaman ini → tanpa reload.
+                    return;
+                }
+
+
+                searchTimer = setTimeout(
+                    function () {
+
+                        searchInput.form?.submit();
+                    },
+                    searchDelay
+                );
+            }
+        );
+
+
+        /*
+         * Enter tetap berfungsi untuk mencari langsung
+         * (tanpa menunggu debounce selesai).
+         */
+        searchInput?.addEventListener(
+            'keydown',
+            function (event) {
+
+                if (event.key !== 'Enter') {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+                clearTimeout(searchTimer);
+
+                searchInput.form?.submit();
+            }
+        );
+
+
+        /*
+         * Setelah hasil dari server dirender, kembalikan fokus ke kotak cari
+         * (kursor di akhir teks) supaya pengguna bisa lanjut mengetik tanpa
+         * klik ulang.
+         */
+        if (searchInput?.value) {
+
+            searchInput.focus();
+
+            searchInput.setSelectionRange(
+                searchInput.value.length,
+                searchInput.value.length
+            );
+        }
 
     }
 );

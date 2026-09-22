@@ -4,27 +4,14 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
+use Tests\Concerns\UsesPostgresTestDatabase;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Gunakan koneksi PostgreSQL asli (DB disetup lewat import SQL,
-        // bukan migration), sehingga tabel sudah ada.
-        // phpunit.xml memaksa DB_DATABASE=:memory:, jadi override di sini.
-        config([
-            'database.default' => 'pgsql',
-            'database.connections.pgsql.database' => 'bakorwil_jember',
-        ]);
-
-        DB::purge('pgsql');
-    }
+    // Gunakan koneksi PostgreSQL asli (DB hasil import SQL, bukan migration)
+    // sehingga tabel sudah ada; perubahan di-rollback otomatis setelah test.
+    use DatabaseTransactions, UsesPostgresTestDatabase;
 
     public function test_halaman_registrasi_tampil(): void
     {

@@ -6,26 +6,14 @@ use App\Models\Mentor;
 use App\Models\Talent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
+use Tests\Concerns\UsesPostgresTestDatabase;
 use Tests\TestCase;
 
 class TalentBidangKeahlianTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Halaman admin & profil butuh PostgreSQL asli (DB diimport lewat SQL).
-        // phpunit.xml memaksa DB_DATABASE=:memory:, jadi override di sini.
-        config([
-            'database.default' => 'pgsql',
-            'database.connections.pgsql.database' => 'bakorwil_jember',
-        ]);
-
-        DB::purge('pgsql');
-    }
+    // Halaman admin & profil butuh PostgreSQL asli (DB hasil import SQL),
+    // tetapi setiap perubahan di-rollback otomatis setelah test.
+    use DatabaseTransactions, UsesPostgresTestDatabase;
 
     private function admin(): User
     {
