@@ -15,7 +15,8 @@
 </style>
 
 <div
-    class="tentang-page"
+    id="about"
+    class="tentang-page scroll-mt-16"
     style="--page-image: url('{{ Vite::asset('resources/images/ejsc.png') }}');"
 >
 
@@ -94,7 +95,7 @@
     </section>
 
     <!-- VISI & MISI -->
-    <section id="about" class="py-8 relative z-10 scroll-mt-24">
+    <section class="py-8 relative z-10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid md:grid-cols-2 gap-6">
                 <div class="vm-card">
