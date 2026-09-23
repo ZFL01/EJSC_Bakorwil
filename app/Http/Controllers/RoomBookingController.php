@@ -18,7 +18,84 @@ class RoomBookingController extends Controller
             ->orderBy('id')
             ->get();
 
-        return view('booking.index', compact('rooms'));
+        /*
+        |--------------------------------------------------------------------------
+        | Jam operasional EJSC
+        |--------------------------------------------------------------------------
+        */
+
+        $openingTime = '08:00';
+        $closingTime = '16:00';
+
+        /*
+        |--------------------------------------------------------------------------
+        | Preview jadwal HARI INI (data asli, bukan contoh)
+        |--------------------------------------------------------------------------
+        |
+        | Hanya jadwal tanggal hari ini (hari H) untuk ruangan pertama yang
+        | ditampilkan pada ilustrasi halaman daftar ruangan.
+        |
+        */
+
+        $today = now()->format('Y-m-d');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Ruangan untuk preview
+        |--------------------------------------------------------------------------
+        |
+        | Utamakan ruangan yang punya jadwal pada hari ini supaya ilustrasi
+        | menampilkan aktivitas nyata. Jika semua ruangan kosong, pakai
+        | ruangan pertama.
+        |
+        */
+
+        $roomIdsWithBooking = RoomBooking::whereDate(
+                'date',
+                $today
+            )
+            ->whereIn('status', [
+                'menunggu',
+                'disetujui',
+            ])
+            ->pluck('room_id')
+            ->unique();
+
+        $previewRoom = $rooms->first(
+            fn (Room $room) => $roomIdsWithBooking->contains($room->id)
+        ) ?: $rooms->first();
+
+        $previewSlots = $previewRoom
+            ? $this->buildDaySlots($previewRoom, $today)
+            : [];
+
+        /*
+        |--------------------------------------------------------------------------
+        | Jadwal hari ini untuk SEMUA ruangan
+        |--------------------------------------------------------------------------
+        |
+        | Dipakai tombol pemilih ruangan di bawah kartu ilustrasi, supaya
+        | pengunjung bisa cek jadwal tiap ruangan pada hari yang sama tanpa
+        | pindah halaman.
+        |
+        */
+
+        $todaySlots = $rooms->mapWithKeys(
+            fn (Room $room) => [$room->id => $this->buildDaySlots($room, $today)]
+        );
+
+        return view(
+            'booking.index',
+            compact(
+                'rooms',
+                'previewRoom',
+                'previewSlots',
+                'todaySlots',
+                'today',
+                'openingTime',
+                'closingTime'
+            )
+        );
     }
 
     /**
@@ -95,6 +172,21 @@ class RoomBookingController extends Controller
         $openingTime = '08:00';
         $closingTime = '16:00';
 
+        /*
+        |--------------------------------------------------------------------------
+        | Slot jadwal (data asli dari database)
+        |--------------------------------------------------------------------------
+        |
+        | Logika penggabungan slot hanya ada di buildDaySlots() supaya halaman
+        | jadwal dan preview jadwal hari ini memakai sumber data yang sama.
+        |
+        */
+
+        $scheduleItems = $this->buildDaySlots(
+            $room,
+            $selectedDate
+        );
+
         return view(
             'booking.schedule',
             compact(
@@ -102,9 +194,147 @@ class RoomBookingController extends Controller
                 'room',
                 'selectedDate',
                 'bookings',
+                'scheduleItems',
                 'openingTime',
                 'closingTime'
             )
+        );
+    }
+
+    /**
+     * Susun slot jadwal satu ruangan pada tanggal tertentu.
+     *
+     * Sumber data: tabel `bookings` dengan status menunggu & disetujui saja.
+     * Hasilnya berupa timeline:
+     * - type "available" : slot kosong yang bisa dibooking
+     * - type "booking"   : slot yang sudah terpakai
+     *
+     * Dipakai bersama oleh halaman jadwal dan preview jadwal hari ini pada
+     * halaman daftar ruangan, sehingga tidak ada data contoh (dummy).
+     */
+    private function buildDaySlots(Room $room, string $date): array
+    {
+        $openingMinutes = $this->timeToMinutes('08:00');
+        $closingMinutes = $this->timeToMinutes('16:00');
+
+        $activeBookings = RoomBooking::where(
+                'room_id',
+                $room->id
+            )
+            ->whereDate(
+                'date',
+                $date
+            )
+            ->whereIn('status', [
+                'menunggu',
+                'disetujui',
+            ])
+            ->orderBy('time_start')
+            ->get()
+            ->map(function (RoomBooking $booking) use ($openingMinutes, $closingMinutes) {
+                /*
+                |----------------------------------------------------------------------
+                | Clamp ke jam operasional agar slot tetap valid
+                |----------------------------------------------------------------------
+                */
+
+                $bookingStart = max(
+                    $this->timeToMinutes($booking->time_start),
+                    $openingMinutes
+                );
+
+                $bookingEnd = min(
+                    $this->timeToMinutes($booking->time_end),
+                    $closingMinutes
+                );
+
+                return [
+                    'booking' => $booking,
+                    'startMinutes' => $bookingStart,
+                    'endMinutes' => $bookingEnd,
+                ];
+            })
+            ->filter(
+                fn (array $item) => $item['endMinutes'] > $item['startMinutes']
+            )
+            ->sortBy('startMinutes')
+            ->values();
+
+        /*
+        |--------------------------------------------------------------------------
+        | Gabungkan booking yang beririsan menjadi timeline
+        |--------------------------------------------------------------------------
+        */
+
+        $scheduleItems = [];
+        $cursor = $openingMinutes;
+
+        foreach ($activeBookings as $item) {
+            $bookingStart = $item['startMinutes'];
+            $bookingEnd = $item['endMinutes'];
+
+            // Booking yang sudah "ketelan" booking sebelumnya
+            if ($bookingEnd <= $cursor) {
+                continue;
+            }
+
+            if ($bookingStart < $cursor) {
+                $bookingStart = $cursor;
+            }
+
+            // Slot kosong sebelum booking
+            if ($cursor < $bookingStart) {
+                $scheduleItems[] = [
+                    'type' => 'available',
+                    'start' => $this->minutesToTime($cursor),
+                    'end' => $this->minutesToTime($bookingStart),
+                    'booking' => null,
+                ];
+            }
+
+            // Slot yang terpakai
+            $scheduleItems[] = [
+                'type' => 'booking',
+                'start' => $this->minutesToTime($bookingStart),
+                'end' => $this->minutesToTime($bookingEnd),
+                'booking' => $item['booking'],
+            ];
+
+            $cursor = $bookingEnd;
+        }
+
+        // Sisa waktu sampai jam tutup
+        if ($cursor < $closingMinutes) {
+            $scheduleItems[] = [
+                'type' => 'available',
+                'start' => $this->minutesToTime($cursor),
+                'end' => $this->minutesToTime($closingMinutes),
+                'booking' => null,
+            ];
+        }
+
+        return $scheduleItems;
+    }
+
+    /**
+     * Konversi jam "HH:MM" (boleh "HH:MM:SS") menjadi jumlah menit.
+     */
+    private function timeToMinutes(string $time): int
+    {
+        [$hour, $minute] = explode(':', substr($time, 0, 5));
+
+        return ((int) $hour * 60) + (int) $minute;
+    }
+
+    /**
+     * Konversi jumlah menit menjadi jam "HH:MM".
+     */
+    private function minutesToTime(int $minutes): string
+    {
+        return sprintf(
+            '%02d:%02d',
+            intdiv($minutes, 60),
+            $minutes % 60
         );
     }
 
@@ -174,6 +404,11 @@ class RoomBookingController extends Controller
             'additional_facilities' => [
                 'nullable',
                 'array',
+            ],
+
+            'additional_facilities.*' => [
+                'string',
+                'max:100',
             ],
         ]);
 
@@ -343,7 +578,11 @@ class RoomBookingController extends Controller
                 $validated['purpose'],
 
             'facilities' =>
-                $validated['additional_facilities'] ?? [],
+                array_values(
+                    array_filter(
+                        $validated['additional_facilities'] ?? []
+                    )
+                ),
 
             'date' =>
                 $validated['booking_date'],

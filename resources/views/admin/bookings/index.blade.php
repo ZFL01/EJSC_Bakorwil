@@ -394,6 +394,10 @@
                             Peserta
                         </th>
 
+                        <th class="px-5 py-4 text-left text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                            Fasilitas Tambahan
+                        </th>
+
                         <th class="px-5 py-4 text-center text-[11px] font-bold text-slate-500 uppercase tracking-wider">
                             Status
                         </th>
@@ -554,6 +558,55 @@
                                     {{ $booking->participants }}
 
                                 </span>
+
+                            </td>
+
+
+                            {{-- Fasilitas Tambahan --}}
+                            <td class="px-5 py-4">
+
+                                @php
+                                    /*
+                                    |--------------------------------------------------------------------------
+                                    | Fasilitas tambahan yang dipilih pembooking saat mengajukan.
+                                    | Kolom database: `facilities` (json, cast array).
+                                    |--------------------------------------------------------------------------
+                                    */
+                                    $facilities = is_array($booking->facilities)
+                                        ? array_filter($booking->facilities)
+                                        : [];
+                                @endphp
+
+                                @if(count($facilities))
+
+                                    <div class="flex flex-wrap items-center gap-1.5 max-w-[220px]">
+
+                                        @foreach(array_slice($facilities, 0, 2) as $facility)
+
+                                            <span class="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-cyan-50 text-cyan-700 text-[11px] font-semibold border border-cyan-100 whitespace-nowrap">
+                                                {{ $facility }}
+                                            </span>
+
+                                        @endforeach
+
+                                        @if(count($facilities) > 2)
+
+                                            <span class="inline-flex items-center px-2 py-1 rounded-lg bg-slate-100 text-slate-600 text-[11px] font-semibold border border-slate-200 whitespace-nowrap"
+                                                  title="{{ implode(', ', $facilities) }}">
+                                                +{{ count($facilities) - 2 }} lagi
+                                            </span>
+
+                                        @endif
+
+                                    </div>
+
+                                @else
+
+                                    <span class="text-xs text-slate-400 italic">
+                                        Tidak ada
+                                    </span>
+
+                                @endif
 
                             </td>
 
@@ -723,7 +776,7 @@
 
                         <tr>
 
-                            <td colspan="8" class="px-5 py-16 text-center">
+                            <td colspan="9" class="px-5 py-16 text-center">
 
                                 <div class="flex flex-col items-center justify-center">
 

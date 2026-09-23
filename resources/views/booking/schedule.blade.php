@@ -13,9 +13,6 @@
 
     Carbon::setLocale('id');
 
-    $openingTime = '08:00';
-    $closingTime = '16:00';
-
     // Validasi tanggal
     try {
         $dateObject = Carbon::parse($selectedDate)->startOfDay();
@@ -25,99 +22,14 @@
 
     /*
     |--------------------------------------------------------------------------
-    | Helper: Konversi "HH:MM" ke menit (untuk perbandingan akurat)
+    | Slot jadwal (data asli dari database)
     |--------------------------------------------------------------------------
+    |
+    | Timeline slot tersedia / terpakai dihitung di RoomBookingController
+    | (method buildDaySlots) agar logika hanya ada di satu tempat dan datanya
+    | selalu sesuai tanggal yang dipilih.
+    |
     */
-
-    $toMinutes = function (string $time): int {
-        [$h, $m] = explode(':', $time);
-        return ((int) $h) * 60 + (int) $m;
-    };
-
-    $toTime = function (int $minutes): string {
-        return sprintf('%02d:%02d', intdiv($minutes, 60), $minutes % 60);
-    };
-
-    /*
-    |--------------------------------------------------------------------------
-    | Filter Booking Aktif + Normalisasi Waktu
-    |--------------------------------------------------------------------------
-    */
-
-    $activeBookings = $bookings
-        ->filter(fn ($b) => in_array($b->status, ['menunggu', 'disetujui']))
-        ->map(function ($b) use ($toMinutes, $openingTime, $closingTime) {
-            $start = Carbon::parse($b->time_start)->format('H:i');
-            $end   = Carbon::parse($b->time_end)->format('H:i');
-
-            // Clamp ke jam operasional
-            $startMin = max($toMinutes($start), $toMinutes($openingTime));
-            $endMin   = min($toMinutes($end),   $toMinutes($closingTime));
-
-            return [
-                'booking'    => $b,
-                'startMin'   => $startMin,
-                'endMin'     => $endMin,
-            ];
-        })
-        ->filter(fn ($item) => $item['endMin'] > $item['startMin']) // buang yang invalid
-        ->sortBy('startMin')
-        ->values();
-
-    /*
-    |--------------------------------------------------------------------------
-    | Susun Timeline (Merge Overlap)
-    |--------------------------------------------------------------------------
-    */
-
-    $scheduleItems = [];
-    $cursor = $toMinutes($openingTime);
-    $closingMin = $toMinutes($closingTime);
-
-    foreach ($activeBookings as $item) {
-        $bStart = $item['startMin'];
-        $bEnd   = $item['endMin'];
-
-        // Lewati booking yang sudah "ketelan" oleh booking sebelumnya
-        if ($bEnd <= $cursor) {
-            continue;
-        }
-
-        // Jika booking mulai sebelum cursor (overlap), majukan start-nya
-        if ($bStart < $cursor) {
-            $bStart = $cursor;
-        }
-
-        // Slot kosong sebelum booking
-        if ($cursor < $bStart) {
-            $scheduleItems[] = [
-                'type'    => 'available',
-                'start'   => $toTime($cursor),
-                'end'     => $toTime($bStart),
-                'booking' => null,
-            ];
-        }
-
-        // Slot booking
-        $scheduleItems[] = [
-            'type'    => 'booking',
-            'start'   => $toTime($bStart),
-            'end'     => $toTime($bEnd),
-            'booking' => $item['booking'],
-        ];
-
-        $cursor = $bEnd;
-    }
-
-    // Sisa waktu sampai closing
-    if ($cursor < $closingMin) {
-        $scheduleItems[] = [
-            'type'    => 'available',
-            'start'   => $toTime($cursor),
-            'end'     => $toTime($closingMin),
-            'booking' => null,
-        ];
-    }
 
     /*
     |--------------------------------------------------------------------------
@@ -418,7 +330,7 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <div class="font-bold text-gray-800">08:00 - 16:00</div>
+                                        <div class="font-bold text-gray-800">{{ $openingTime }} - {{ $closingTime }}</div>
                                         <div class="inline-flex items-center gap-1.5 text-xs text-green-600 font-medium mt-1">
                                             <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
                                             Tersedia
@@ -454,7 +366,7 @@
                     <h4 class="font-semibold text-[#0e4f81]">Informasi Jadwal</h4>
                     <p class="text-sm text-gray-600 mt-1 leading-relaxed">
                         Jadwal booking mengikuti waktu penggunaan yang diajukan.
-                        Jam operasional EJSC adalah pukul <strong>08.00–16.00</strong>.
+                        Jam operasional EJSC adalah pukul <strong>{{ str_replace(':', '.', $openingTime) }}&ndash;{{ str_replace(':', '.', $closingTime) }}</strong>.
                         Klik jadwal yang sudah dibooking atau masih menunggu persetujuan untuk melihat detail booking.
                     </p>
                 </div>
@@ -650,6 +562,31 @@
 | Pilih Waktu Booking
 |--------------------------------------------------------------------------
 */
+/*
+|--------------------------------------------------------------------------
+| Helper: Fokus ke kotak jam + langsung buka pilihan jam
+|--------------------------------------------------------------------------
+| Dipakai saat user klik tombol "Booking" pada slot jadwal maupun saat
+| user klik/ketuk kotak jam secara langsung.
+*/
+function openTimePicker(input) {
+    if (!input) return;
+
+    try {
+        input.focus({ preventScroll: true });
+    } catch (error) {
+        input.focus();
+    }
+
+    if (typeof input.showPicker === 'function') {
+        try {
+            input.showPicker();
+        } catch (error) {
+            // Diabaikan: sebagian browser butuh interaksi langsung dari user.
+        }
+    }
+}
+
 function selectTime(startTime, endTime) {
     const startInput = document.getElementById('startTime');
     const endInput   = document.getElementById('endTime');
@@ -665,6 +602,64 @@ function selectTime(startTime, endTime) {
         form.style.boxShadow = '0 0 0 3px rgba(86,184,194,.35)';
         setTimeout(() => { form.style.boxShadow = ''; }, 1200);
     }
+
+    // Kursor langsung masuk ke kotak Jam Mulai + pilihan jam muncul otomatis.
+    openTimePicker(startInput);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Kotak Jam: klik / ketuk = langsung tampilkan pilihan jam
+|--------------------------------------------------------------------------
+| Tidak perlu lagi klik ikon jam kecil di ujung input.
+*/
+document.querySelectorAll('input[type="time"]').forEach(function (input) {
+    input.addEventListener('click', function () {
+        if (typeof input.showPicker === 'function') {
+            try {
+                input.showPicker();
+            } catch (error) {
+                // Diabaikan.
+            }
+        }
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Jam Selesai otomatis menyesuaikan Jam Mulai
+|--------------------------------------------------------------------------
+| Jika Jam Selesai masih kosong atau tidak lebih besar dari Jam Mulai,
+| otomatis diisi Jam Mulai + 1 jam (maksimal 16:00 / jam tutup).
+*/
+function timeToMinutes(value) {
+    const parts = String(value).split(':');
+
+    return (parseInt(parts[0], 10) * 60) + parseInt(parts[1], 10);
+}
+
+const startInputEl = document.getElementById('startTime');
+const endInputEl   = document.getElementById('endTime');
+
+if (startInputEl && endInputEl) {
+    startInputEl.addEventListener('change', function () {
+        if (!this.value) return;
+
+        const closingMin = timeToMinutes('16:00');
+        const startMin   = timeToMinutes(this.value);
+        const endMin     = endInputEl.value ? timeToMinutes(endInputEl.value) : 0;
+
+        if (!endInputEl.value || endMin <= startMin) {
+            const suggested = Math.min(startMin + 60, closingMin);
+
+            if (suggested > startMin) {
+                const hour   = String(Math.floor(suggested / 60)).padStart(2, '0');
+                const minute = String(suggested % 60).padStart(2, '0');
+
+                endInputEl.value = hour + ':' + minute;
+            }
+        }
+    });
 }
 
 /*

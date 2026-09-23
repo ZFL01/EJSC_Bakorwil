@@ -1,8 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Detail Booking Ruangan')
+@section('header', 'Detail Booking Ruangan')
 
 @section('content')
 
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-cyan-50/30 to-slate-50 py-10">
+<div class="-m-6 p-6 bg-gradient-to-br from-slate-50 via-cyan-50/30 to-slate-50">
 
     <div class="max-w-4xl mx-auto px-6">
 
@@ -55,11 +58,11 @@
 
                     @php
                         $statusConfig = [
-                            'pending' => ['label' => 'Menunggu Persetujuan', 'class' => 'bg-amber-400/20 text-amber-50 border-amber-300/30', 'dot' => 'bg-amber-300', 'icon' => '🟡'],
-                            'approved' => ['label' => 'Disetujui', 'class' => 'bg-emerald-400/20 text-emerald-50 border-emerald-300/30', 'dot' => 'bg-emerald-300', 'icon' => '🟢'],
-                            'rejected' => ['label' => 'Ditolak', 'class' => 'bg-rose-400/20 text-rose-50 border-rose-300/30', 'dot' => 'bg-rose-300', 'icon' => '🔴'],
-                            'completed' => ['label' => 'Selesai', 'class' => 'bg-sky-400/20 text-sky-50 border-sky-300/30', 'dot' => 'bg-sky-300', 'icon' => '🔵'],
-                            'cancelled' => ['label' => 'Dibatalkan', 'class' => 'bg-gray-400/20 text-gray-50 border-gray-300/30', 'dot' => 'bg-gray-300', 'icon' => '⚪'],
+                            'menunggu' => ['label' => 'Menunggu Persetujuan', 'class' => 'bg-amber-400/20 text-amber-50 border-amber-300/30', 'dot' => 'bg-amber-300', 'icon' => '🟡'],
+                            'disetujui' => ['label' => 'Disetujui', 'class' => 'bg-emerald-400/20 text-emerald-50 border-emerald-300/30', 'dot' => 'bg-emerald-300', 'icon' => '🟢'],
+                            'ditolak' => ['label' => 'Ditolak', 'class' => 'bg-rose-400/20 text-rose-50 border-rose-300/30', 'dot' => 'bg-rose-300', 'icon' => '🔴'],
+                            'selesai' => ['label' => 'Selesai', 'class' => 'bg-sky-400/20 text-sky-50 border-sky-300/30', 'dot' => 'bg-sky-300', 'icon' => '🔵'],
+                            'dibatalkan' => ['label' => 'Dibatalkan', 'class' => 'bg-gray-400/20 text-gray-50 border-gray-300/30', 'dot' => 'bg-gray-300', 'icon' => '⚪'],
                         ];
                         $config = $statusConfig[$booking->status] ?? ['label' => $booking->status, 'class' => 'bg-gray-400/20 text-gray-50 border-gray-300/30', 'dot' => 'bg-gray-300', 'icon' => '⚪'];
                     @endphp
@@ -137,7 +140,7 @@
                             <div class="min-w-0">
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Tanggal</p>
                                 <p class="font-semibold text-gray-800 mt-1">
-                                    {{ $booking->booking_date ? $booking->booking_date->translatedFormat('d F Y') : ($booking->date ? \Carbon\Carbon::parse($booking->date)->translatedFormat('d F Y') : '-') }}
+                                    {{ $booking->date ? $booking->date->translatedFormat('d F Y') : '-' }}
                                 </p>
                             </div>
                         </div>
@@ -155,9 +158,9 @@
                             <div class="min-w-0">
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Waktu</p>
                                 <p class="font-semibold text-gray-800 mt-1">
-                                    {{ substr($booking->start_time ?? $booking->time_start, 0, 5) }}
+                                    {{ substr($booking->time_start, 0, 5) }}
                                     -
-                                    {{ substr($booking->end_time ?? $booking->time_end, 0, 5) }}
+                                    {{ substr($booking->time_end, 0, 5) }}
                                 </p>
                             </div>
                         </div>
@@ -175,7 +178,7 @@
                             <div class="min-w-0">
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Jumlah Peserta</p>
                                 <p class="font-semibold text-gray-800 mt-1">
-                                    {{ $booking->participant_count ?? $booking->participants ?? 0 }} orang
+                                    {{ $booking->participants ?? 0 }} orang
                                 </p>
                             </div>
                         </div>
@@ -209,7 +212,7 @@
                             <div class="min-w-0 flex-1">
                                 <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Fasilitas Tambahan</p>
                                 <div class="flex flex-wrap gap-2">
-                                    @forelse($booking->additional_facilities ?? [] as $facility)
+                                    @forelse($booking->facilities ?? [] as $facility)
                                         <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 text-sm font-medium border border-cyan-100">
                                             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
@@ -231,7 +234,7 @@
                      ACTION BUTTONS
                 ========================================================== --}}
 
-                @if($booking->status === 'pending')
+                @if($booking->status === 'menunggu')
 
                     <div class="border-t border-gray-100 mt-8 pt-8">
 
@@ -268,6 +271,26 @@
                                 </svg>
                                 Tolak Booking
                             </button>
+
+
+                            {{-- Batalkan --}}
+                            <form
+                                method="POST"
+                                action="{{ route('admin.bookings.cancel', $booking->id) }}"
+                                onsubmit="return confirm('Batalkan booking ini?')"
+                                class="flex-1 md:flex-none"
+                            >
+                                @csrf
+                                <button
+                                    type="submit"
+                                    class="w-full inline-flex items-center justify-center gap-2 bg-white border-2 border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 rounded-xl px-6 py-3.5 font-semibold transition-all duration-200"
+                                >
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                                    </svg>
+                                    Batalkan Booking
+                                </button>
+                            </form>
 
                         </div>
 
@@ -316,7 +339,7 @@
                 @endif
 
 
-                @if($booking->status === 'approved')
+                @if($booking->status === 'disetujui')
 
                     <div class="border-t border-gray-100 mt-8 pt-8">
 
@@ -334,6 +357,26 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 Tandai Selesai
+                            </button>
+                        </form>
+
+
+                        {{-- Batalkan --}}
+                        <form
+                            method="POST"
+                            action="{{ route('admin.bookings.cancel', $booking->id) }}"
+                            onsubmit="return confirm('Batalkan booking ini?')"
+                            class="mt-4"
+                        >
+                            @csrf
+                            <button
+                                type="submit"
+                                class="inline-flex items-center gap-2 bg-white border-2 border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-xl px-6 py-3.5 font-semibold transition-all duration-200"
+                            >
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                                </svg>
+                                Batalkan Booking
                             </button>
                         </form>
 
