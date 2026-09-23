@@ -3,19 +3,61 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Mentor;
 use App\Models\Talent;
-use App\Models\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class ExcelExportController extends Controller
 {
+    /**
+     * Batas tahun yang diizinkan untuk export/preview. Mencegah input tahun
+     * aneh (mis. injeksi header `Content-Disposition` lewat nama file, atau
+     * query berat di luar jangkauan data) sekaligus menjaga dropdown tetap
+     * pendek dan selalu mengandung tahun yang ada data.
+     */
+    protected function exportYear(Request $request): int
+    {
+        $currentYear = now()->year;
+
+        $year = (int) $request->input('tahun', $currentYear);
+
+        return max($currentYear - 5, min($currentYear + 1, $year));
+    }
+
+    /**
+     * Netralkan formula spreadsheet (CSV/Excel formula injection).
+     *
+     * Nilai yang diawali `=`, `+`, `-`, `@`, tab, atau carriage return dapat
+     * diperlakukan sebagai formula/macro oleh Excel/Sheets saat file dibuka.
+     * Karena isi sel berasal dari input pengguna, nilai semacam itu diawali
+     * apostrof agar selalu diperlakukan sebagai teks biasa.
+     */
+    protected function safeCellValue(mixed $value): mixed
+    {
+        if (is_int($value) || is_float($value) || is_bool($value) || $value === null) {
+            return $value;
+        }
+
+        $text = (string) $value;
+
+        if ($text === '') {
+            return $text;
+        }
+
+        if (in_array($text[0], ['=', '+', '-', '@', "\t", "\r"], true)) {
+            return "'".$text;
+        }
+
+        return $text;
+    }
+
     public function index()
     {
         $currentYear = now()->year;
@@ -31,11 +73,11 @@ class ExcelExportController extends Controller
 
     public function preview(Request $request)
     {
-        $year = $request->input('tahun', now()->year);
+        $year = $this->exportYear($request);
 
         // Get projects for the year
         $projects = DB::table('project')
-            ->where('tahun', (int)$year)
+            ->where('tahun', $year)
             ->get();
 
         $rows = [];
@@ -68,10 +110,10 @@ class ExcelExportController extends Controller
             // zodat het aantal preview-rijen gelijk is aan het aantal
             // geëxporteerde rijen (compare / vergelijking consistent).
             foreach ($this->blockRows($mentors, $talentas, $clients) as $b) {
-                $mentor  = $b['mentor'];
+                $mentor = $b['mentor'];
                 $talenta = $b['talenta'];
-                $client  = $b['client'];
-                $i       = $b['index'];
+                $client = $b['client'];
+                $i = $b['index'];
 
                 $rows[] = [
                     'project_opd' => $project->opd ?? '',
@@ -95,7 +137,7 @@ class ExcelExportController extends Controller
                     'client_nama_pemilik' => $client ? ($client->nama_pemilik ?? '-') : '-',
                     'client_no_hp' => $client ? ($client->no_hp ?? '-') : '-',
                     // Extra velden die de blade (addRow) rechtstreeks gebruikt.
-                    'kategori' => $i === 0 ? (($project->opd ?? '') . ' / ' . ($project->bidang ?? '')) : '',
+                    'kategori' => $i === 0 ? (($project->opd ?? '').' / '.($project->bidang ?? '')) : '',
                     'nama' => $talenta ? ($talenta->nama ?? '-') : ($mentor ? ($mentor->nama ?? '-') : ($client ? ($client->nama_ukm ?? '-') : '-')),
                     'jk' => $talenta ? ($talenta->jenis_kelamin ?? '-') : ($mentor ? ($mentor->jenis_kelamin ?? '-') : '-'),
                     'domisili' => $talenta ? ($talenta->domisili ?? '-') : ($mentor ? ($mentor->domisili ?? '-') : ($client ? ($client->domisili ?? '-') : '-')),
@@ -117,7 +159,7 @@ class ExcelExportController extends Controller
 
     public function export(Request $request)
     {
-        $year = $request->input('tahun', now()->year);
+        $year = $this->exportYear($request);
 
         return $this->generateCombinedExcel($year);
     }
@@ -139,37 +181,37 @@ class ExcelExportController extends Controller
         $rows = [];
         for ($i = 0; $i < $maxRows; $i++) {
             $rows[] = [
-                'index'   => $i,
-                'mentor'  => $mentors[$i] ?? null,
+                'index' => $i,
+                'mentor' => $mentors[$i] ?? null,
                 'talenta' => $talentas[$i] ?? null,
-                'client'  => $clients[$i] ?? null,
+                'client' => $clients[$i] ?? null,
             ];
         }
 
         return $rows;
     }
 
-        protected function generateCombinedExcel(string $year)
+    protected function generateCombinedExcel(string $year)
     {
-        $filename = 'Data_Laporan_Bakorwil_' . $year . '.xlsx';
+        $filename = 'Data_Laporan_Bakorwil_'.$year.'.xlsx';
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
 
         // SHEET 1: Rekap Project / Kegiatan
         $sheet1 = $spreadsheet->getActiveSheet();
-        $sheet1->setTitle('Rekap Project ' . $year);
+        $sheet1->setTitle('Rekap Project '.$year);
 
         $headers = [
             'NO', 'OPD / DINAS', 'BIDANG', 'TANGGAL',
             'NAMA MENTOR', 'JK MENTOR', 'DOMISILI MENTOR', 'NO WA MENTOR',
             'NAMA TALENTA', 'JK TALENTA', 'DOMISILI TALENTA', 'NO WA TALENTA', 'BIDANG TALENTA',
-            'NAMA UKM/CLIENT', 'NAMA PRODUK', 'NAMA PEMILIK', 'DOMISILI UKM', 'NO HP UKM'
+            'NAMA UKM/CLIENT', 'NAMA PRODUK', 'NAMA PEMILIK', 'DOMISILI UKM', 'NO HP UKM',
         ];
 
         $sheet1->fromArray($headers, null, 'A1');
         $this->styleHeader($sheet1, 'A1:R1');
 
-        $projects = DB::table('project')->where('tahun', (int)$year)->get();
+        $projects = DB::table('project')->where('tahun', (int) $year)->get();
         $rowNum = 2;
         $no = 1;
 
@@ -198,26 +240,29 @@ class ExcelExportController extends Controller
                 $t = $b['talenta'];
                 $c = $b['client'];
 
-                $sheet1->fromArray([
-                    $b['index'] === 0 ? $no++ : '',
-                    $b['index'] === 0 ? ($project->opd ?? '-') : '',
-                    $b['index'] === 0 ? ($project->bidang ?? '-') : '',
-                    $b['index'] === 0 ? ($project->tanggal ?? '-') : '',
-                    $m ? ($m->nama ?? '-') : '-',
-                    $m ? ($m->jenis_kelamin ?? '-') : '-',
-                    $m ? ($m->domisili ?? '-') : '-',
-                    $m ? ($m->no_wa ?? '-') : '-',
-                    $t ? ($t->nama ?? '-') : '-',
-                    $t ? ($t->jenis_kelamin ?? '-') : '-',
-                    $t ? ($t->domisili ?? '-') : '-',
-                    $t ? ($t->no_wa ?? '-') : '-',
-                    $t ? ($t->bidang_pekerjaan ?? '-') : '-',
-                    $c ? ($c->nama_ukm ?? '-') : '-',
-                    $c ? ($c->nama_produk ?? '-') : '-',
-                    $c ? ($c->nama_pemilik ?? '-') : '-',
-                    $c ? ($c->domisili ?? '-') : '-',
-                    $c ? ($c->no_hp ?? '-') : '-',
-                ], null, 'A' . $rowNum);
+                $sheet1->fromArray(array_map(
+                    [$this, 'safeCellValue'],
+                    [
+                        $b['index'] === 0 ? $no++ : '',
+                        $b['index'] === 0 ? ($project->opd ?? '-') : '',
+                        $b['index'] === 0 ? ($project->bidang ?? '-') : '',
+                        $b['index'] === 0 ? ($project->tanggal ?? '-') : '',
+                        $m ? ($m->nama ?? '-') : '-',
+                        $m ? ($m->jenis_kelamin ?? '-') : '-',
+                        $m ? ($m->domisili ?? '-') : '-',
+                        $m ? ($m->no_wa ?? '-') : '-',
+                        $t ? ($t->nama ?? '-') : '-',
+                        $t ? ($t->jenis_kelamin ?? '-') : '-',
+                        $t ? ($t->domisili ?? '-') : '-',
+                        $t ? ($t->no_wa ?? '-') : '-',
+                        $t ? ($t->bidang_pekerjaan ?? '-') : '-',
+                        $c ? ($c->nama_ukm ?? '-') : '-',
+                        $c ? ($c->nama_produk ?? '-') : '-',
+                        $c ? ($c->nama_pemilik ?? '-') : '-',
+                        $c ? ($c->domisili ?? '-') : '-',
+                        $c ? ($c->no_hp ?? '-') : '-',
+                    ]
+                ), null, 'A'.$rowNum);
 
                 $rowNum++;
             }
@@ -231,7 +276,6 @@ class ExcelExportController extends Controller
         $sheet2->fromArray($headerMentors, null, 'A1');
         $this->styleHeader($sheet2, 'A1:K1');
 
-
         $mentorsData = Mentor::query()->whereYear('created_at', $year)->get();
         if ($mentorsData->isEmpty()) {
             $mentorsData = Mentor::all();
@@ -240,19 +284,22 @@ class ExcelExportController extends Controller
         $r2 = 2;
         $idx = 1;
         foreach ($mentorsData as $m) {
-            $sheet2->fromArray([
-                $idx++,
-                $m->nama ?? '-',
-                $m->jenis_kelamin ?? '-',
-                $m->domisili ?? '-',
-                $m->alamat_lengkap ?? '-',
-                $m->no_wa ?? '-',
-                $m->email ?? '-',
-                $m->keahlian ?? '-',
-                $m->pengalaman ?? '-',
-                $m->bidang ?? '-',
-                $m->is_available ? 'Aktif / Tersedia' : 'Sibuk',
-            ], null, 'A' . $r2++);
+            $sheet2->fromArray(array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $idx++,
+                    $m->nama ?? '-',
+                    $m->jenis_kelamin ?? '-',
+                    $m->domisili ?? '-',
+                    $m->alamat_lengkap ?? '-',
+                    $m->no_wa ?? '-',
+                    $m->email ?? '-',
+                    $m->keahlian ?? '-',
+                    $m->pengalaman ?? '-',
+                    $m->bidang ?? '-',
+                    $m->is_available ? 'Aktif / Tersedia' : 'Sibuk',
+                ]
+            ), null, 'A'.$r2++);
         }
         $this->autoSizeColumns($sheet2, 'A', 'K', $r2 - 1);
 
@@ -271,19 +318,22 @@ class ExcelExportController extends Controller
         $r3 = 2;
         $idx = 1;
         foreach ($talentsData as $t) {
-            $sheet3->fromArray([
-                $idx++,
-                $t->nama ?? '-',
-                $t->jenis_kelamin ?? '-',
-                $t->domisili ?? '-',
-                $t->alamat_lengkap ?? '-',
-                $t->no_wa ?? '-',
-                $t->email ?? '-',
-                $t->bidang_pekerjaan ?? '-',
-                $t->keahlian ?? '-',
-                $t->pengalaman ?? '-',
-                $t->status_pekerjaan ?? '-',
-            ], null, 'A' . $r3++);
+            $sheet3->fromArray(array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $idx++,
+                    $t->nama ?? '-',
+                    $t->jenis_kelamin ?? '-',
+                    $t->domisili ?? '-',
+                    $t->alamat_lengkap ?? '-',
+                    $t->no_wa ?? '-',
+                    $t->email ?? '-',
+                    $t->bidang_pekerjaan ?? '-',
+                    $t->keahlian ?? '-',
+                    $t->pengalaman ?? '-',
+                    $t->status_pekerjaan ?? '-',
+                ]
+            ), null, 'A'.$r3++);
         }
         $this->autoSizeColumns($sheet3, 'A', 'K', $r3 - 1);
 
@@ -302,18 +352,21 @@ class ExcelExportController extends Controller
         $r4 = 2;
         $idx = 1;
         foreach ($clientsData as $c) {
-            $sheet4->fromArray([
-                $idx++,
-                $c->nama_ukm ?? '-',
-                $c->nama_pemilik ?? '-',
-                $c->nama_produk ?? '-',
-                $c->domisili ?? '-',
-                $c->alamat_lengkap ?? '-',
-                $c->no_hp ?? '-',
-                $c->email ?? '-',
-                $c->website ?? '-',
-                $c->deskripsi_usaha ?? '-',
-            ], null, 'A' . $r4++);
+            $sheet4->fromArray(array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $idx++,
+                    $c->nama_ukm ?? '-',
+                    $c->nama_pemilik ?? '-',
+                    $c->nama_produk ?? '-',
+                    $c->domisili ?? '-',
+                    $c->alamat_lengkap ?? '-',
+                    $c->no_hp ?? '-',
+                    $c->email ?? '-',
+                    $c->website ?? '-',
+                    $c->deskripsi_usaha ?? '-',
+                ]
+            ), null, 'A'.$r4++);
         }
         $this->autoSizeColumns($sheet4, 'A', 'J', $r4 - 1);
 
@@ -326,24 +379,27 @@ class ExcelExportController extends Controller
 
         return response($content)
             ->header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-            ->header('Content-Disposition', 'attachment; filename="' . $filename . '"')
+            ->header('Content-Disposition', 'attachment; filename="'.$filename.'"')
             ->header('Cache-Control', 'max-age=0')
             ->header('Expires', '0');
     }
 
     private function writeRow($sheet, $rowNum, $project, $mentor, $talenta, $client)
     {
-        $sheet->fromArray([
-            $project->opd ?? '', $project->bidang ?? '', $project->tanggal ?? '',
-            $mentor->nama ?? '', $mentor->jenis_kelamin ?? '', $mentor->domisili ?? '',
-            $mentor->alamat_lengkap ?? '', $mentor->no_wa ?? '', $mentor->url_cv ?? '',
-            $mentor->url_ktp ?? '', $mentor->url_butap ?? '', $mentor->portofolio_url ?? '',
-            $talenta->nama ?? '', $talenta->jenis_kelamin ?? '', $talenta->alamat_lengkap ?? '',
-            $talenta->domisili ?? '', $talenta->no_wa ?? '', $talenta->url_cv ?? '',
-            $talenta->url_ktp ?? '', '', $talenta->portofolio_url ?? '', $talenta->bidang_pekerjaan ?? '',
-            $client->nama_ukm ?? '', $client->alamat_lengkap ?? '', $client->domisili ?? '',
-            $client->nama_produk ?? '', $client->nama_pemilik ?? '', $client->no_hp ?? '', '',
-        ], null, 'A' . $rowNum);
+        $sheet->fromArray(array_map(
+            [$this, 'safeCellValue'],
+            [
+                $project->opd ?? '', $project->bidang ?? '', $project->tanggal ?? '',
+                $mentor->nama ?? '', $mentor->jenis_kelamin ?? '', $mentor->domisili ?? '',
+                $mentor->alamat_lengkap ?? '', $mentor->no_wa ?? '', $mentor->url_cv ?? '',
+                $mentor->url_ktp ?? '', $mentor->url_butap ?? '', $mentor->portofolio_url ?? '',
+                $talenta->nama ?? '', $talenta->jenis_kelamin ?? '', $talenta->alamat_lengkap ?? '',
+                $talenta->domisili ?? '', $talenta->no_wa ?? '', $talenta->url_cv ?? '',
+                $talenta->url_ktp ?? '', '', $talenta->portofolio_url ?? '', $talenta->bidang_pekerjaan ?? '',
+                $client->nama_ukm ?? '', $client->alamat_lengkap ?? '', $client->domisili ?? '',
+                $client->nama_produk ?? '', $client->nama_pemilik ?? '', $client->no_hp ?? '', '',
+            ]
+        ), null, 'A'.$rowNum);
     }
 
     protected function getMentorData(string $year): array
@@ -352,24 +408,27 @@ class ExcelExportController extends Controller
 
         $rows = [];
         foreach ($result as $mentor) {
-            $kategori = 'MENTOR - ' . ($mentor->bidang ?? 'Pendidikan');
+            $kategori = 'MENTOR - '.($mentor->bidang ?? 'Pendidikan');
 
-            $rows[] = [
-                $kategori,
-                $mentor->nama ?? '-',
-                $mentor->jenis_kelamin ?? '-',
-                $mentor->domisili ?? '-',
-                $mentor->alamat_lengkap ?? '-',
-                $mentor->no_wa ?? '-',
-                $mentor->email ?? '-',
-                $mentor->keahlian ?? '-',
-                $mentor->pengalaman ?? '-',
-                $mentor->bidang ?? '-',
-                '',
-                '',
-                $mentor->status ?? '-',
-                $year,
-            ];
+            $rows[] = array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $kategori,
+                    $mentor->nama ?? '-',
+                    $mentor->jenis_kelamin ?? '-',
+                    $mentor->domisili ?? '-',
+                    $mentor->alamat_lengkap ?? '-',
+                    $mentor->no_wa ?? '-',
+                    $mentor->email ?? '-',
+                    $mentor->keahlian ?? '-',
+                    $mentor->pengalaman ?? '-',
+                    $mentor->bidang ?? '-',
+                    '',
+                    '',
+                    $mentor->status ?? '-',
+                    $year,
+                ]
+            );
         }
 
         return $rows;
@@ -381,25 +440,28 @@ class ExcelExportController extends Controller
 
         $rows = [];
         foreach ($result as $talenta) {
-            $kategori = 'TALENTA - ' . ($talenta->bidang_pekerjaan ?? 'Umum');
+            $kategori = 'TALENTA - '.($talenta->bidang_pekerjaan ?? 'Umum');
 
-            $rows[] = [
-                $kategori,
-                $talenta->nama ?? '-',
-                $talenta->jenis_kelamin ?? '-',
-                $talenta->domisili ?? '-',
-                $talenta->alamat_lengkap ?? '-',
-                $talenta->no_wa ?? '-',
-                $talenta->email ?? '-',
-                $talenta->keahlian ?? '-',
-                $talenta->pengalaman ?? '-',
-                $talenta->status_pekerjaan ?? '-',
-                $talenta->bidang_pekerjaan ?? '-',
-                '',
-                '',
-                $talenta->status ?? '-',
-                $year,
-            ];
+            $rows[] = array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $kategori,
+                    $talenta->nama ?? '-',
+                    $talenta->jenis_kelamin ?? '-',
+                    $talenta->domisili ?? '-',
+                    $talenta->alamat_lengkap ?? '-',
+                    $talenta->no_wa ?? '-',
+                    $talenta->email ?? '-',
+                    $talenta->keahlian ?? '-',
+                    $talenta->pengalaman ?? '-',
+                    $talenta->status_pekerjaan ?? '-',
+                    $talenta->bidang_pekerjaan ?? '-',
+                    '',
+                    '',
+                    $talenta->status ?? '-',
+                    $year,
+                ]
+            );
         }
 
         return $rows;
@@ -411,32 +473,36 @@ class ExcelExportController extends Controller
 
         $rows = [];
         foreach ($result as $client) {
-            $kategori = 'UKM/CLIENT - ' . (Client::kategoriKey($client) ?? 'UMKM');
+            $kategori = 'UKM/CLIENT - '.(Client::kategoriKey($client) ?? 'UMKM');
 
-            $rows[] = [
-                $kategori,
-                $client->nama_ukm ?? '-',
-                $client->alamat_lengkap ?? '-',
-                $client->domisili ?? '-',
-                $client->nama_pemilik ?? '-',
-                $client->no_hp ?? '-',
-                $client->email ?? '-',
-                $client->website ?? '-',
-                $client->nama_produk ?? '-',
-                $client->deskripsi_usaha ?? '-',
-                '',
-                $year,
-                $client->status ?? '-',
-            ];
+            $rows[] = array_map(
+                [$this, 'safeCellValue'],
+                [
+                    $kategori,
+                    $client->nama_ukm ?? '-',
+                    $client->alamat_lengkap ?? '-',
+                    $client->domisili ?? '-',
+                    $client->nama_pemilik ?? '-',
+                    $client->no_hp ?? '-',
+                    $client->email ?? '-',
+                    $client->website ?? '-',
+                    $client->nama_produk ?? '-',
+                    $client->deskripsi_usaha ?? '-',
+                    '',
+                    $year,
+                    $client->status ?? '-',
+                ]
+            );
         }
 
         return $rows;
     }
-protected function generateExcel(array $mentorData, array $talentaData, array $clientData, string $year)
-    {
-        $filename = 'Data_Mentor_Talenta_UKM_' . $year . '.xlsx';
 
-        $spreadsheet = new Spreadsheet();
+    protected function generateExcel(array $mentorData, array $talentaData, array $clientData, string $year)
+    {
+        $filename = 'Data_Mentor_Talenta_UKM_'.$year.'.xlsx';
+
+        $spreadsheet = new Spreadsheet;
 
         // ===== Sheet 1: Data Mentor =====
         $sheet1 = $spreadsheet->getActiveSheet();
@@ -447,13 +513,13 @@ protected function generateExcel(array $mentorData, array $talentaData, array $c
         $this->styleHeader($sheet1, 'A1:N1');
 
         $rowNum = 2;
-        if (!empty($mentorData)) {
+        if (! empty($mentorData)) {
             foreach ($mentorData as $row) {
-                $sheet1->fromArray($row, null, 'A' . $rowNum);
+                $sheet1->fromArray($row, null, 'A'.$rowNum);
                 $rowNum++;
             }
         } else {
-            $sheet1->setCellValue('A2', 'Tidak ada data mentor untuk tahun ' . $year);
+            $sheet1->setCellValue('A2', 'Tidak ada data mentor untuk tahun '.$year);
             $rowNum = 3;
         }
         $this->autoSizeColumns($sheet1, 'A', 'N', $rowNum);
@@ -467,13 +533,13 @@ protected function generateExcel(array $mentorData, array $talentaData, array $c
         $this->styleHeader($sheet2, 'A1:O1');
 
         $rowNum = 2;
-        if (!empty($talentaData)) {
+        if (! empty($talentaData)) {
             foreach ($talentaData as $row) {
-                $sheet2->fromArray($row, null, 'A' . $rowNum);
+                $sheet2->fromArray($row, null, 'A'.$rowNum);
                 $rowNum++;
             }
         } else {
-            $sheet2->setCellValue('A2', 'Tidak ada data talenta untuk tahun ' . $year);
+            $sheet2->setCellValue('A2', 'Tidak ada data talenta untuk tahun '.$year);
             $rowNum = 3;
         }
         $this->autoSizeColumns($sheet2, 'A', 'O', $rowNum);
@@ -487,13 +553,13 @@ protected function generateExcel(array $mentorData, array $talentaData, array $c
         $this->styleHeader($sheet3, 'A1:M1');
 
         $rowNum = 2;
-        if (!empty($clientData)) {
+        if (! empty($clientData)) {
             foreach ($clientData as $row) {
-                $sheet3->fromArray($row, null, 'A' . $rowNum);
+                $sheet3->fromArray($row, null, 'A'.$rowNum);
                 $rowNum++;
             }
         } else {
-            $sheet3->setCellValue('A2', 'Tidak ada data UKM untuk tahun ' . $year);
+            $sheet3->setCellValue('A2', 'Tidak ada data UKM untuk tahun '.$year);
             $rowNum = 3;
         }
         $this->autoSizeColumns($sheet3, 'A', 'M', $rowNum);
@@ -503,7 +569,7 @@ protected function generateExcel(array $mentorData, array $talentaData, array $c
 
         // Output to browser
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Disposition: attachment; filename="'.$filename.'"');
         header('Cache-Control: max-age=0');
         header('Expires: 0');
 
@@ -513,7 +579,7 @@ protected function generateExcel(array $mentorData, array $talentaData, array $c
         exit;
     }
 
-        protected function styleHeader($sheet, string $range)
+    protected function styleHeader($sheet, string $range)
     {
         $sheet->getStyle($range)->applyFromArray([
             'font' => [

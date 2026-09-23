@@ -6,24 +6,14 @@ use App\Models\Talent;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\DB;
+use Tests\Concerns\UsesPostgresTestDatabase;
 use Tests\TestCase;
 
 class TalentBidangKeahlianPageTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Halaman admin & profil butuh PostgreSQL asli (DB diimport lewat SQL).
-        config([
-            'database.default' => 'pgsql',
-            'database.connections.pgsql.database' => 'bakorwil_jember',
-        ]);
-
-        DB::purge('pgsql');
-    }
+    // Halaman admin & profil butuh PostgreSQL asli (DB hasil import SQL),
+    // tetapi setiap perubahan di-rollback otomatis setelah test.
+    use DatabaseTransactions, UsesPostgresTestDatabase;
 
     private function user(string $role, string $prefix): User
     {
@@ -123,44 +113,35 @@ class TalentBidangKeahlianPageTest extends TestCase
     {
         $email = 'multib'.uniqid().'@gmail.com';
 
-        // Rollback manual: trait DatabaseTransactions tidak menjangkau koneksi
-        // pgsql yang dipakai test ini (di-purge di setUp), sehingga tanpa ini
-        // data uji ikut tersimpan permanen di database lokal.
-        DB::beginTransaction();
+        $admin = $this->user('admin', 'adminmulti');
 
-        try {
-            $admin = $this->user('admin', 'adminmulti');
+        $response = $this->actingAs($admin)->post(route('admin.talents.store'), [
+            'user_name' => 'Talenta Multi',
+            'email' => $email,
+            'password' => 'rahasia123',
+            'password_confirmation' => 'rahasia123',
+            'nama' => 'Talenta Multi',
+            'no_wa' => '081234567891',
+            'keahlian' => 'Desain, Video',
+            'id_wilayah' => DB::table('wilayah')->value('id_wilayah'),
+            'domisili' => 'Kec. Sumbersari, Jember',
+            'alamat_lengkap' => 'Jl. Multi No. 1',
+            'pengalaman' => '',
+            'skill_tags' => 'Figma, Premiere',
+            'mentor_id' => '',
+            'status_pekerjaan' => 'belum bekerja',
+            'url_gdrive' => '',
+            'status' => 'aktif',
+        ]);
 
-            $response = $this->actingAs($admin)->post(route('admin.talents.store'), [
-                'user_name' => 'Talenta Multi',
-                'email' => $email,
-                'password' => 'rahasia123',
-                'password_confirmation' => 'rahasia123',
-                'nama' => 'Talenta Multi',
-                'no_wa' => '081234567891',
-                'keahlian' => 'Desain, Video',
-                'id_wilayah' => DB::table('wilayah')->value('id_wilayah'),
-                'domisili' => 'Kec. Sumbersari, Jember',
-                'alamat_lengkap' => 'Jl. Multi No. 1',
-                'pengalaman' => '',
-                'skill_tags' => 'Figma, Premiere',
-                'mentor_id' => '',
-                'status_pekerjaan' => 'belum bekerja',
-                'url_gdrive' => '',
-                'status' => 'aktif',
-            ]);
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('admin.talents.index'));
 
-            $response->assertSessionHasNoErrors();
-            $response->assertRedirect(route('admin.talents.index'));
+        // Cari lewat email agar tidak tertukar dengan data talenta lain.
+        $user = User::where('email', $email)->firstOrFail();
+        $talent = Talent::where('id_user', $user->id_user)->firstOrFail();
 
-            // Cari lewat email agar tidak tertukar dengan data talenta lain.
-            $user = User::where('email', $email)->firstOrFail();
-            $talent = Talent::where('id_user', $user->id_user)->firstOrFail();
-
-            $this->assertSame('Desain, Video', $talent->keahlian);
-        } finally {
-            DB::rollBack();
-        }
+        $this->assertSame('Desain, Video', $talent->keahlian);
     }
 
     public function test_form_edit_admin_menampilkan_semua_chip_bidang(): void
@@ -180,54 +161,41 @@ class TalentBidangKeahlianPageTest extends TestCase
 
     public function test_halaman_publik_talenta_menampilkan_semua_badge_bidang(): void
     {
-        DB::beginTransaction();
+        $this->talent($this->user('talenta', 'talentapublik'), 'Desain, Video');
 
-        try {
-            $this->talent($this->user('talenta', 'talentapublik'), 'Desain, Video');
+        $response = $this->get(route('talenta'));
 
-            $response = $this->get(route('talenta'));
+        $response->assertOk();
 
-            $response->assertOk();
-
-            // Kartu membawa seluruh kategori (untuk filter) dan kedua badge.
-            $response->assertSee('data-kategori="design video"', false);
-            $response->assertSee('data-keahlian="desain, video"', false);
-            $response->assertSee('Desain, Video', false);
-        } finally {
-            DB::rollBack();
-        }
+        // Kartu membawa seluruh kategori (untuk filter) dan kedua badge.
+        $response->assertSee('data-kategori="design video"', false);
+        $response->assertSee('data-keahlian="desain, video"', false);
+        $response->assertSee('Desain, Video', false);
     }
 
     public function test_profil_talenta_menyimpan_banyak_bidang_keahlian(): void
     {
-        // Rollback manual: lihat catatan pada test simpan admin di atas.
-        DB::beginTransaction();
+        $user = $this->user('talenta', 'talentamulti');
+        $talent = $this->talent($user, 'Desain');
 
-        try {
-            $user = $this->user('talenta', 'talentamulti');
-            $talent = $this->talent($user, 'Desain');
+        // Wilayah wajib; ambil salah satu data wilayah yang ada.
+        $talent->update(['id_wilayah' => DB::table('wilayah')->value('id_wilayah')]);
 
-            // Wilayah wajib; ambil salah satu data wilayah yang ada.
-            $talent->update(['id_wilayah' => DB::table('wilayah')->value('id_wilayah')]);
+        $response = $this->actingAs($user)->put(route('profile.update'), [
+            'name' => 'Talenta Multi',
+            'email' => $user->email,
+            'nama' => 'Talenta Multi',
+            'no_wa' => '081234567899',
+            'id_wilayah' => $talent->id_wilayah,
+            'domisili' => 'Kec. Patrang, Jember',
+            'alamat_lengkap' => 'Jl. Multi No. 4',
+            'keahlian' => 'Video;  desain , video',
+            'skill_tags' => '',
+        ]);
 
-            $response = $this->actingAs($user)->put(route('profile.update'), [
-                'name' => 'Talenta Multi',
-                'email' => $user->email,
-                'nama' => 'Talenta Multi',
-                'no_wa' => '081234567899',
-                'id_wilayah' => $talent->id_wilayah,
-                'domisili' => 'Kec. Patrang, Jember',
-                'alamat_lengkap' => 'Jl. Multi No. 4',
-                'keahlian' => 'Video;  desain , video',
-                'skill_tags' => '',
-            ]);
+        $response->assertSessionHasNoErrors();
 
-            $response->assertSessionHasNoErrors();
-
-            // Dipisah koma, dirapikan spasinya, dan nilai kembar dibuang.
-            $this->assertSame('Video, desain', $talent->refresh()->keahlian);
-        } finally {
-            DB::rollBack();
-        }
+        // Dipisah koma, dirapikan spasinya, dan nilai kembar dibuang.
+        $this->assertSame('Video, desain', $talent->refresh()->keahlian);
     }
 }

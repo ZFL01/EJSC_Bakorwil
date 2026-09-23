@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\RatingController as AdminRatingController;
+use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GisMapController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\RoomBookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\RoomBookingController;
-use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingController;
-use App\Http\Controllers\Admin\RatingController as AdminRatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +21,12 @@ use App\Http\Controllers\Admin\RatingController as AdminRatingController;
 Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])
     ->name('registrasi');
 
-Route::post('/registrasi', [RegisterController::class, 'register']);
+// Name route POST dibedakan dari route GET '/registrasi' di atas supaya tidak
+// ada dua route bernama 'registrasi' (URL-nya sama, jadi semua tautan/form
+// yang memakai route('registrasi') tetap bekerja seperti sebelumnya).
+Route::post('/registrasi', [RegisterController::class, 'register'])
+    ->middleware('throttle:registrasi')
+    ->name('registrasi.attempt');
 
 Route::get('/registrasi/selesai', [RegisterController::class, 'showWaiting'])
     ->name('registrasi.waiting');
@@ -49,7 +55,7 @@ Route::post('/forgot-password', function (Request $request) {
         ? back()->with(['status' => __($status)])
         : back()->withErrors(['email' => __($status)]);
 
-})->name('password.email');
+})->middleware('throttle:registrasi')->name('password.email');
 
 Route::get('/reset-password/{token}', function (Request $request, string $token) {
     return view('auth.reset-password', [
@@ -79,7 +85,7 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => [__($status)]]);
 
-})->name('password.store');
+})->middleware('throttle:registrasi')->name('password.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -241,8 +247,8 @@ Route::get(
     '/booking-saya',
     [RoomBookingController::class, 'myBookings']
 )->middleware('auth')
- ->name('booking.my');
- /*
+    ->name('booking.my');
+/*
 |--------------------------------------------------------------------------
 | Admin Booking Ruangan
 |--------------------------------------------------------------------------
@@ -298,32 +304,32 @@ Route::prefix('admin')
             [AdminRoomBookingController::class, 'complete']
         )->name('bookings.complete');
     });
-    /*
-    |--------------------------------------------------------------------------
-    | Rating
-    |--------------------------------------------------------------------------
-    */
-    Route::post('/rating', [\App\Http\Controllers\RatingController::class, 'store'])
+/*
+|--------------------------------------------------------------------------
+| Rating
+|--------------------------------------------------------------------------
+*/
+Route::post('/rating', [RatingController::class, 'store'])
     ->middleware('auth')
     ->name('rating.store');
 
-    Route::get(
+Route::get(
     '/admin/ratings',
     [AdminRatingController::class, 'index']
-    )
-        ->middleware('auth')
-        ->name('admin.ratings.index');
+)
+    ->middleware('auth')
+    ->name('admin.ratings.index');
 
-    Route::delete(
-        '/admin/ratings/{rating}',
-        [AdminRatingController::class, 'destroy']
-    )
-        ->middleware('auth')
-        ->name('admin.ratings.destroy');
+Route::delete(
+    '/admin/ratings/{rating}',
+    [AdminRatingController::class, 'destroy']
+)
+    ->middleware('auth')
+    ->name('admin.ratings.destroy');
 
-    Route::post(
+Route::post(
     '/admin/ratings',
-    [\App\Http\Controllers\Admin\RatingController::class, 'store']
+    [AdminRatingController::class, 'store']
 )
     ->middleware('auth')
     ->name('admin.ratings.store');

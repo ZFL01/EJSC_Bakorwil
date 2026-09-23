@@ -648,7 +648,8 @@ class PublicController extends Controller
 
         $talents = $query
             ->latest()
-            ->paginate(12);
+            ->paginate(12)
+            ->withQueryString();
 
         /*
         |--------------------------------------------------------------------------

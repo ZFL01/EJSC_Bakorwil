@@ -4,27 +4,14 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Tests\Concerns\UsesPostgresTestDatabase;
 use Tests\TestCase;
 
 class AdminAccountManagementTest extends TestCase
 {
-    use DatabaseTransactions;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // Pakai PostgreSQL asli (DB disetup lewat import SQL).
-        // phpunit.xml memaksa DB_DATABASE=:memory:, jadi override di sini.
-        config([
-            'database.default' => 'pgsql',
-            'database.connections.pgsql.database' => 'bakorwil_jember',
-        ]);
-
-        DB::purge('pgsql');
-    }
+    // Pakai PostgreSQL asli (DB hasil import SQL); perubahan di-rollback otomatis.
+    use DatabaseTransactions, UsesPostgresTestDatabase;
 
     /**
      * Buat satu akun admin untuk kebutuhan test.
