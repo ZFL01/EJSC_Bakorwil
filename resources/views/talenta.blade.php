@@ -1150,6 +1150,16 @@
 
 
             /*
+             * Foto kartu: pakai foto profil talenta bila ada, kalau tidak
+             * pakai foto profil akun (users.profile_photo). Bila keduanya
+             * belum diisi, kartu tetap memakai avatar inisial ($avatar).
+             */
+            $foto =
+                $talent->foto_src
+                ?: $talent->user?->profile_photo_src;
+
+
+            /*
              * Mapping keahlian (helper terpusat agar konsisten
              * dengan filter/dropdown dari controller).
              *
@@ -1275,6 +1285,7 @@
                         w-16
                         h-16
                         rounded-2xl
+                        overflow-hidden
                         flex
                         items-center
                         justify-center
@@ -1282,7 +1293,16 @@
                         font-bold
                     "
                 >
-                    {{ $avatar ?: 'TA' }}
+                    @if($foto)
+                        <img
+                            src="{{ $foto }}"
+                            alt="Foto {{ $nama }}"
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    @else
+                        {{ $avatar ?: 'TA' }}
+                    @endif
                 </div>
 
 
@@ -1386,7 +1406,7 @@
                       text-gray-500
                 "
             >
-                <strong>Domisili:</strong> {{ $talenta->domisili ?? '-' }}
+                <strong>Domisili:</strong> {{ $talent->domisili ?? '-' }}
             </p>
 
                 {{ $keahlian }}

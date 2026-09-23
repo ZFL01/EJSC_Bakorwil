@@ -1061,6 +1061,17 @@
 
 
             /*
+             * Foto kartu: pakai logo UKM yang diupload klien bila ada, kalau
+             * tidak pakai foto profil akun (users.profile_photo). Bila
+             * keduanya belum diisi, kartu tetap memakai avatar inisial
+             * ($avatar).
+             */
+            $foto =
+                $client->foto_logo_src
+                ?: $client->user?->profile_photo_src;
+
+
+            /*
              * Kategori ditentukan lewat helper terpusat agar
              * konsisten dengan filter/dropdown dari controller.
              */
@@ -1124,6 +1135,7 @@
                         w-16
                         h-16
                         rounded-2xl
+                        overflow-hidden
                         flex
                         items-center
                         justify-center
@@ -1132,7 +1144,16 @@
                         font-bold
                     "
                 >
-                    {{ $avatar ?: 'CL' }}
+                    @if($foto)
+                        <img
+                            src="{{ $foto }}"
+                            alt="Foto {{ $nama }}"
+                            class="w-full h-full object-cover"
+                            loading="lazy"
+                        >
+                    @else
+                        {{ $avatar ?: 'CL' }}
+                    @endif
                 </div>
 
 

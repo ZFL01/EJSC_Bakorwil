@@ -294,6 +294,20 @@ class Mentor extends Model
     }
 
     /**
+     * URL foto profil mentor yang aman (dipakai kartu halaman publik).
+     *
+     * Nilai di database bisa berupa path hasil upload (mis.
+     * "mentor/foto/xxx.jpg"), path lama berawalan "storage/", atau URL
+     * absolut. Semuanya diproses lewat safeFileUrl() sehingga hanya
+     * dikembalikan bila file-nya benar-benar ada; selain itu null, agar
+     * kartu bisa jatuh ke avatar inisial.
+     */
+    public function getFotoSrcAttribute(): ?string
+    {
+        return $this->safeFileUrl($this->foto);
+    }
+
+    /**
      * Link Google Drive mentor yang sudah dinormalkan untuk href aman.
      * Terima nilai tanpa skema (mis. "drive.google.com/drive/folders/xxx")
      * dengan menambahkan https:// di depan.

@@ -21,9 +21,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])
     ->name('registrasi');
 
+// Name route POST dibedakan dari route GET '/registrasi' di atas supaya tidak
+// ada dua route bernama 'registrasi' (URL-nya sama, jadi semua tautan/form
+// yang memakai route('registrasi') tetap bekerja seperti sebelumnya).
 Route::post('/registrasi', [RegisterController::class, 'register'])
     ->middleware('throttle:registrasi')
-    ->name('registrasi');
+    ->name('registrasi.attempt');
 
 Route::get('/registrasi/selesai', [RegisterController::class, 'showWaiting'])
     ->name('registrasi.waiting');

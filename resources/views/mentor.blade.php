@@ -842,6 +842,16 @@
                         ->implode('');
 
                         /*
+                         * Foto kartu: pakai foto profil mentor bila ada,
+                         * kalau tidak pakai foto profil akun
+                         * (users.profile_photo). Bila keduanya belum diisi,
+                         * kartu tetap memakai avatar inisial ($avatar).
+                         */
+                        $foto =
+                            $mentor->foto_src
+                            ?: $mentor->user?->profile_photo_src;
+
+                        /*
                         * Kategori bidang ditentukan lewat helper terpusat
                         * agar konsisten dengan JS & controller. Bidang boleh
                         * lebih dari satu, jadi semua kategori yang cocok
@@ -901,6 +911,7 @@
                                     w-16
                                     h-16
                                     rounded-2xl
+                                    overflow-hidden
                                     flex
                                     items-center
                                     justify-center
@@ -909,7 +920,16 @@
                                     font-bold
                                 "
                             >
-                                {{ $avatar ?: 'ME' }}
+                                @if($foto)
+                                    <img
+                                        src="{{ $foto }}"
+                                        alt="Foto {{ $nama }}"
+                                        class="w-full h-full object-cover"
+                                        loading="lazy"
+                                    >
+                                @else
+                                    {{ $avatar ?: 'ME' }}
+                                @endif
                             </div>
 
 
