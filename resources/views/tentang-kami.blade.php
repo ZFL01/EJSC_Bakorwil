@@ -14,7 +14,11 @@
 }
 </style>
 
-<div id="about" class="tentang-page">
+<div
+    id="about"
+    class="tentang-page"
+    style="--page-image: url('{{ Vite::asset('resources/images/ejsc.png') }}');"
+>
 
     <!-- HERO -->
     <section class="tentang-hero" style="--hero-image: url('{{ Vite::asset('resources/images/ejsc.png') }}');">

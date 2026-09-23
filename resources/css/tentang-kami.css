@@ -1,7 +1,13 @@
 .tentang-page {
     position: relative;
     overflow: hidden;
-    background: #f8feff;
+    background-color: #f8feff;
+    background-image:
+        linear-gradient(rgba(248, 254, 255, 0.84), rgba(248, 254, 255, 0.84)),
+        var(--page-image, url('../images/ejsc.png'));
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
     min-height: 100vh;
 }
 
@@ -13,7 +19,7 @@
 .tentang-hero {
     position: relative;
     width: 100%;
-    min-height: calc(100svh - 88px);
+    min-height: calc(100svh - 65px);
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -51,7 +57,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: calc(100svh - 88px);
+    min-height: calc(100svh - 65px);
 }
 
 .tentang-hero .hero-copy {
@@ -142,11 +148,11 @@
 
 @media (max-width: 1280px) {
     .tentang-hero {
-        min-height: calc(100svh - 88px);
+        min-height: calc(100svh - 65px);
     }
 
     .tentang-hero .hero-shell {
-        min-height: calc(100svh - 88px);
+        min-height: calc(100svh - 65px);
     }
 
     .tentang-hero .hero-copy {
@@ -156,14 +162,14 @@
 
 @media (max-width: 900px) {
     .tentang-hero {
-        min-height: calc(100svh - 72px);
+        min-height: calc(100svh - 65px);
         background-image:
             linear-gradient(180deg, rgba(5, 18, 24, 0.72) 0%, rgba(5, 18, 24, 0.52) 100%),
             var(--hero-image, url('../images/ejsc.png'));
     }
 
     .tentang-hero .hero-shell {
-        min-height: calc(100svh - 72px);
+        min-height: calc(100svh - 65px);
     }
 
     .tentang-hero .hero-copy {
@@ -174,11 +180,11 @@
 
 @media (max-width: 640px) {
     .tentang-hero {
-        min-height: calc(100svh - 64px);
+        min-height: calc(100svh - 65px);
     }
 
     .tentang-hero .hero-shell {
-        min-height: calc(100svh - 64px);
+        min-height: calc(100svh - 65px);
     }
 
     .tentang-hero .hero-kicker {
