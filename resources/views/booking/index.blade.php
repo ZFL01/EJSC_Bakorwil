@@ -72,7 +72,7 @@
                 </div>
 
                 {{-- Ilustrasi --}}
-                <div class="hidden lg:flex justify-end">
+                <div class="hidden lg:flex flex-col items-end">
                     <div class="relative w-full max-w-md animate-fade-in-up" style="animation-delay: 0.25s;">
                         <div class="absolute inset-0 bg-gradient-to-br from-[#56b8c2]/20 to-[#0e4f81]/10 rounded-full blur-3xl"></div>
 
@@ -87,47 +87,132 @@
                                 <div class="ml-auto text-[10px] text-gray-400 font-mono">booking.ejsc.id</div>
                             </div>
 
-                            {{-- Preview jadwal --}}
-                            <div class="space-y-2.5">
-
-                                {{-- Slot tersedia --}}
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-green-50/70 border border-green-100">
-                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-gray-700">08:00 - 10:00</div>
-                                        <div class="text-[10px] text-green-600">Tersedia</div>
+                            {{-- Preview jadwal HARI INI (data asli, bukan contoh) --}}
+                            @if($previewRoom)
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="text-[10px] font-semibold text-[#0e4f81] uppercase tracking-wider">
+                                        Jadwal Hari Ini
                                     </div>
-                                    <div class="text-[10px] font-semibold text-[#56b8c2]">Booking →</div>
-                                </div>
-
-                                {{-- Slot booking --}}
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-red-50/70 border border-red-100">
-                                    <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-gray-700">10:00 - 12:00</div>
-                                        <div class="text-[10px] text-red-600">Sudah Dibooking</div>
+                                    <div class="ml-auto text-[10px] text-gray-500">
+                                        {{ \Carbon\Carbon::parse($today)->translatedFormat('d F Y') }}
                                     </div>
                                 </div>
+                            @endif
 
-                                {{-- Slot tersedia --}}
-                                <div class="flex items-center gap-3 p-3 rounded-xl bg-green-50/70 border border-green-100">
-                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
-                                    <div class="flex-1">
-                                        <div class="text-xs font-semibold text-gray-700">13:00 - 16:00</div>
-                                        <div class="text-[10px] text-green-600">Tersedia</div>
-                                    </div>
-                                    <div class="text-[10px] font-semibold text-[#56b8c2]">Booking →</div>
+                            @foreach($rooms as $room)
+
+                                @php
+                                    $roomSlots = $todaySlots[$room->id] ?? [];
+                                @endphp
+
+                                {{-- Panel jadwal hari ini untuk satu ruangan --}}
+                                <div class="space-y-2.5 {{ $room->id === ($previewRoom->id ?? null) ? '' : 'hidden' }}"
+                                     data-room-schedule="{{ $room->id }}"
+                                     data-room-name="{{ $room->name }}"
+                                     data-room-url="{{ route('booking.schedule', ['room_id' => $room->id, 'date' => $today]) }}">
+
+                                    @forelse(array_slice($roomSlots, 0, 3) as $slot)
+
+                                        @if($slot['type'] === 'available')
+
+                                            {{-- Slot tersedia (data asli hari ini) --}}
+                                            <a href="{{ route('booking.schedule', ['room_id' => $room->id, 'date' => $today]) }}"
+                                               class="flex items-center gap-3 p-3 rounded-xl bg-green-50/70 border border-green-100 hover:bg-green-50 transition-colors">
+                                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                                <div class="flex-1">
+                                                    <div class="text-xs font-semibold text-gray-700">{{ $slot['start'] }} - {{ $slot['end'] }}</div>
+                                                    <div class="text-[10px] text-green-600">Tersedia</div>
+                                                </div>
+                                                <div class="text-[10px] font-semibold text-[#56b8c2]">Booking →</div>
+                                            </a>
+
+                                        @else
+
+                                            @php
+                                                $isWaiting = $slot['booking']->status === 'menunggu';
+                                            @endphp
+
+                                            {{-- Slot terpakai (data asli hari ini) --}}
+                                            <div class="flex items-center gap-3 p-3 rounded-xl {{ $isWaiting ? 'bg-amber-50/70 border border-amber-100' : 'bg-red-50/70 border border-red-100' }}">
+                                                <div class="w-2 h-2 rounded-full {{ $isWaiting ? 'bg-amber-500' : 'bg-red-500' }}"></div>
+                                                <div class="flex-1">
+                                                    <div class="text-xs font-semibold text-gray-700">{{ $slot['start'] }} - {{ $slot['end'] }}</div>
+                                                    <div class="text-[10px] {{ $isWaiting ? 'text-amber-600' : 'text-red-600' }}">
+                                                        {{ $isWaiting ? 'Menunggu Konfirmasi' : 'Sudah Dibooking' }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        @endif
+
+                                    @empty
+
+                                        <div class="p-4 rounded-xl bg-gray-50 border border-gray-100 text-center">
+                                            <div class="text-xs font-semibold text-gray-600">Belum ada jadwal</div>
+                                            <div class="text-[10px] text-gray-400 mt-1">
+                                                Jadwal akan tampil otomatis setelah admin menambahkan jadwal.
+                                            </div>
+                                        </div>
+
+                                    @endforelse
+
+                                    @if(count($roomSlots) > 3)
+                                        <div class="mt-3 text-[10px] text-gray-400 text-center">
+                                            + {{ count($roomSlots) - 3 }} jadwal lain hari ini
+                                        </div>
+                                    @endif
+
                                 </div>
 
-                            </div>
+                            @endforeach
+
+                            @if($rooms->isEmpty())
+
+                                <div class="p-4 rounded-xl bg-gray-50 border border-gray-100 text-center">
+                                    <div class="text-xs font-semibold text-gray-600">Belum ada ruangan aktif</div>
+                                    <div class="text-[10px] text-gray-400 mt-1">
+                                        Jadwal akan tampil otomatis setelah ruangan ditambahkan admin.
+                                    </div>
+                                </div>
+
+                            @endif
+
+                            {{-- Pemilih ruangan: cek jadwal hari ini masing-masing ruangan --}}
+                            @if($rooms->count() > 1)
+                                <div class="mt-4 pt-4 border-t border-gray-100">
+                                    <div class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                                        Cek jadwal ruangan hari ini
+                                    </div>
+                                    <div class="flex flex-wrap gap-2">
+                                        @foreach($rooms as $room)
+                                            <button
+                                                type="button"
+                                                data-room-selector="{{ $room->id }}"
+                                                class="room-pill {{ $room->id === ($previewRoom->id ?? null) ? 'is-active' : '' }}"
+                                            >
+                                                {{ $room->name }}
+                                            </button>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
 
                             {{-- Footer mini --}}
                             <div class="mt-5 pt-4 border-t border-gray-100 flex items-center justify-between">
-                                <div class="text-[10px] text-gray-400">Aula Utama</div>
-                                <div class="flex gap-1">
-                                    <div class="w-1 h-1 rounded-full bg-[#56b8c2]"></div>
-                                    <div class="w-1 h-1 rounded-full bg-[#56b8c2]/50"></div>
-                                    <div class="w-1 h-1 rounded-full bg-[#56b8c2]/25"></div>
+                                <div class="text-[10px] text-gray-400" data-preview-room-label>{{ $previewRoom->name ?? 'EJSC Bakorwil' }}</div>
+                                <div class="flex items-center gap-3">
+                                    <a
+                                        href="{{ $previewRoom ? route('booking.schedule', ['room_id' => $previewRoom->id, 'date' => $today]) : route('booking.index') }}"
+                                        data-preview-room-link
+                                        class="text-[10px] font-semibold text-[#56b8c2] hover:text-[#0e4f81] transition-colors"
+                                    >
+                                        Lihat jadwal →
+                                    </a>
+                                    <div class="flex gap-1">
+                                        <div class="w-1 h-1 rounded-full bg-[#56b8c2]"></div>
+                                        <div class="w-1 h-1 rounded-full bg-[#56b8c2]/50"></div>
+                                        <div class="w-1 h-1 rounded-full bg-[#56b8c2]/25"></div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -288,6 +373,63 @@
     .animate-float-slower {
         animation: float-slower 8s ease-in-out infinite;
     }
+
+    /* Tombol pemilih ruangan pada preview jadwal hari ini */
+    .room-pill {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.4;
+        background: #f3f4f6;
+        color: #4b5563;
+        transition: all 0.2s ease;
+    }
+
+    .room-pill:hover {
+        background: #e5e7eb;
+    }
+
+    .room-pill.is-active {
+        background: #0e4f81;
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(14, 79, 129, 0.25);
+    }
 </style>
+
+<script>
+    (function () {
+        var selectors = document.querySelectorAll('[data-room-selector]');
+
+        selectors.forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var roomId = btn.getAttribute('data-room-selector');
+
+                /* Tampilkan panel jadwal ruangan terkait, sembunyikan lainnya */
+                var activePanel = null;
+
+                document.querySelectorAll('[data-room-schedule]').forEach(function (panel) {
+                    var isActive = panel.getAttribute('data-room-schedule') === roomId;
+                    panel.classList.toggle('hidden', !isActive);
+                    if (isActive) activePanel = panel;
+                });
+
+                /* State tombol aktif */
+                selectors.forEach(function (other) {
+                    other.classList.toggle('is-active', other === btn);
+                });
+
+                /* Samakan footer: nama ruangan + link "Lihat jadwal" */
+                if (activePanel) {
+                    var label = document.querySelector('[data-preview-room-label]');
+                    var link = document.querySelector('[data-preview-room-link]');
+
+                    if (label) label.textContent = activePanel.getAttribute('data-room-name');
+                    if (link) link.setAttribute('href', activePanel.getAttribute('data-room-url'));
+                }
+            });
+        });
+    })();
+</script>
 
 @endsection

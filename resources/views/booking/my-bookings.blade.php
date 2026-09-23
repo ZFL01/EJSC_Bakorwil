@@ -200,6 +200,24 @@
 
                                 </p>
 
+
+                                {{-- FASILITAS TAMBAHAN --}}
+                                @if(is_array($booking->facilities) && count(array_filter($booking->facilities)))
+
+                                    <div class="flex flex-wrap items-center gap-1.5 mt-2">
+
+                                        @foreach($booking->facilities as $facility)
+
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md bg-[#eef9fb] text-[#0e4f81] text-[11px] font-medium border border-[#56b8c2]/20">
+                                                {{ $facility }}
+                                            </span>
+
+                                        @endforeach
+
+                                    </div>
+
+                                @endif
+
                             </div>
 
                         </div>

@@ -16,7 +16,7 @@
 
 <div
     id="about"
-    class="tentang-page"
+    class="tentang-page scroll-mt-16"
     style="--page-image: url('{{ Vite::asset('resources/images/ejsc.png') }}');"
 >
 
