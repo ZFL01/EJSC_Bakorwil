@@ -127,6 +127,7 @@
     .profile-hero-content {
         position: relative;
         z-index: 2;
+        transform: translateY(-8px);
     }
 
     .profile-label {
@@ -199,30 +200,30 @@
        IDENTITY BAR
        ========================================================= */
 
-    .profile-identity {
-        position: relative;
+   .profile-identity {
+    position: relative;
 
-        min-height: 64px;
+    min-height: 64px;
 
-        padding: 0 28px 0 142px;
+padding: 0 28px 60px 118px;
 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-        border-bottom: 1px solid #edf1f3;
+    border-bottom: 1px solid #edf1f3;
 
-        background: #ffffff;
-    }
+    background: #ffffff;
+}
 
     .profile-avatar {
         position: absolute;
 
         left: 28px;
-        top: -27px;
+        top: 12px;
 
-        width: 78px;
-        height: 78px;
+        width: 100px;
+        height: 100px;
 
         display: flex;
         align-items: center;
@@ -257,10 +258,11 @@
         width: 40px;
         height: 40px;
     }
-
-    .profile-name-wrap {
-        padding: 8px 0;
-    }
+.profile-name-wrap {
+    padding: 8px 0;
+    margin-left: 20px;
+    transform: translateY(30px);
+}
 
     .profile-name {
         display: flex;
@@ -273,7 +275,7 @@
 
         color: #18364f;
 
-        font-size: 13px;
+        font-size: 15px;
         line-height: 1.2;
         font-weight: 800;
     }
@@ -300,27 +302,35 @@
         font-size: 13px;
     }
 
-    .profile-subtitle {
-        display: flex;
-        align-items: center;
-        gap: 8px;
+   .profile-subtitle {
+    margin-top: 5px;
 
-        margin-top: 5px;
+    color: #6b8a9a;
 
-        color: #6b8a9a;
+    font-size: 15px;
+    font-weight: 500;
+}
 
-        font-size: 13px;
-        font-weight: 500;
-    }
+.profile-subtitle-dot {
+    color: #7c8f98;
+}
 
-    .profile-subtitle-dot {
-        color: #7c8f98;
-    }
+.profile-subtitle-role {
+    display: block;
 
-    .profile-subtitle-role {
-        color: #32c857;
-        font-weight: 600;
-    }
+    color: #32c857;
+    font-weight: 600;
+
+    margin-bottom: 2px;
+}
+
+.profile-subtitle-skill {
+    display: block;
+
+    color: #6b8a9a;
+    font-size: 15px;
+    font-weight: 500;
+}
 
     .profile-status {
         display: inline-flex;
@@ -363,6 +373,7 @@
         display: grid;
         grid-template-columns: 1fr 1.18fr;
         gap: 30px;
+         transform: translateY(25px);
     }
 
     .profile-column {
@@ -439,7 +450,7 @@
 
         color: #80909b;
 
-        font-size: 13px;
+        font-size: 11px;
         line-height: 1.2;
         font-weight: 600;
 
@@ -449,10 +460,11 @@
 
     .info-value {
         color: #243d51;
-
-        font-size: 13px;
-        line-height: 1.3;
-        font-weight: 700;
+        font-family: 'inter', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 600;
+        letter-spacing: 0.1px;
     }
 
     .info-value.light {
@@ -511,7 +523,7 @@
 
         color: #80909b;
 
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
 
         text-transform: uppercase;
@@ -568,7 +580,7 @@
 
         color: #83909a;
 
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
 
         text-transform: uppercase;
@@ -615,13 +627,12 @@
     }
 
     /* Seluruh kotak portfolio aktif sebagai link Google Drive */
-   .portfolio-box-link {
+  .portfolio-box-link {
     text-decoration: none;
     color: inherit;
     cursor: pointer;
+    transition: .2s ease;
 }
-        transition: .2s ease;
-    }
 
     .portfolio-box-link:hover {
         background: #f8fcfb;
@@ -657,8 +668,8 @@
     }
 
     .portfolio-icon svg {
-        width: 11px;
-        height: 11px;
+        width: 18px;
+        height: 18px;
     }
 
     .portfolio-title {
@@ -714,6 +725,8 @@
         padding-top: 13px;
 
         border-top: 1px solid #edf1f3;
+
+    transform: translateY(25px);
     }
 
     .profile-actions-left,
@@ -972,35 +985,37 @@
             </div>
 
 
-            <div class="profile-name-wrap">
+           <div class="profile-name-wrap">
 
-                <div class="profile-name">
+    <div class="profile-name">
+        <h2>
+            {{ $user->name }}
+        </h2>
 
-                    <h2>
-                        {{ $user->name }}
-                    </h2>
+        <span class="verified-badge">
+            Terverifikasi
+        </span>
+    </div>
 
-                    <span class="verified-badge">
-                        Terverifikasi
-                    </span>
+    <div class="profile-subtitle">
 
-                </div>
+        <span class="profile-subtitle-role">
+            @if($user->role === 'mentor')
+                Mentor MJC
+            @elseif($user->role === 'client' || $user->role === 'klien')
+                Klien MJC
+            @else
+                Talenta MJC
+            @endif
+        </span>
 
-                <div class="profile-subtitle">
-                    {{ $profile->keahlian ?? 'UI/UX Designer & Web Enthusiast' }}
-                    <span class="profile-subtitle-dot">•</span>
-                   <span class="profile-subtitle-role">
-    @if($user->role === 'mentor')
-        Mentor MJC
-    @elseif($user->role === 'client' || $user->role === 'klien')
-        Klien MJC
-    @else
-        Talenta MJC
-    @endif
-</span>
-                </div>
+        <span class="profile-subtitle-skill">
+            {{ $profile->keahlian ?? 'UI/UX Designer & Web Enthusiast' }}
+        </span>
 
-            </div>
+    </div>
+
+</div>
 
 
             <div class="profile-status">
@@ -1071,22 +1086,14 @@
 
                         <div class="info-value-row">
 
-                            <div
-                                class="info-value"
-                                id="profile-email"
-                            >
-                                {{ $user->email }}
-                            </div>
+                       <div
+                        class="info-value"
+                        id="profile-email"
+                        style="font-weight: 400;"
+                    >
+                        {{ $user->email }}
+                    </div>
 
-                            <span
-                                class="copy-text"
-                                id="copy-email"
-                                role="button"
-                                tabindex="0"
-                                title="Salin alamat email"
-                            >
-                                ◉ Salin
-                            </span>
 
                         </div>
 
@@ -1109,9 +1116,8 @@
         Talenta Profesional
     @endif
 
-    <span class="standard-badge">
-        Standard
-    </span>
+
+  
 </div>
 
                     </div>
@@ -1272,9 +1278,10 @@
 
 
                     {{-- =================================================
-                         PORTFOLIO GOOGLE DRIVE
-                         ================================================= --}}
-                  @if(!empty($profile->gdrive_src))
+                    {{-- =================================================
+     PORTFOLIO GOOGLE DRIVE
+     ================================================= --}}
+@if(!empty($profile->gdrive_src))
     <a
         href="{{ $profile->gdrive_src }}"
         target="_blank"
@@ -1282,8 +1289,30 @@
         class="portfolio-box portfolio-box-link"
     >
         <div class="portfolio-left">
-            <div class="portfolio-icon">
-                <!-- icon tetap -->
+
+            <div class="portfolio-icon" aria-hidden="true">
+                <svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M10.59 13.41a2 2 0 0 0 2.83 0l3.54-3.54a2 2 0 0 0-2.83-2.83l-1.29 1.29"
+                        stroke="#EAB308"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M13.41 10.59a2 2 0 0 0-2.83 0l-3.54 3.54a2 2 0 0 0 2.83 2.83l1.29-1.29"
+                        stroke="#EAB308"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
             </div>
 
             <div>
@@ -1295,20 +1324,45 @@
                     Lihat berkas portofolio di Google Drive
                 </div>
             </div>
+
         </div>
 
         <div class="portfolio-button">
             Buka Google Drive
         </div>
     </a>
+
 @else
+
     <a
         href="{{ route('profile.edit') }}"
         class="portfolio-box portfolio-box-link"
     >
         <div class="portfolio-left">
-            <div class="portfolio-icon">
-                <!-- icon tetap -->
+
+            <div class="portfolio-icon" aria-hidden="true">
+                <svg
+                    width="19"
+                    height="19"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M10.59 13.41a2 2 0 0 0 2.83 0l3.54-3.54a2 2 0 0 0-2.83-2.83l-1.29 1.29"
+                        stroke="#EAB308"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                    <path
+                        d="M13.41 10.59a2 2 0 0 0-2.83 0l-3.54 3.54a2 2 0 0 0 2.83 2.83l1.29-1.29"
+                        stroke="#EAB308"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    />
+                </svg>
             </div>
 
             <div>
@@ -1320,11 +1374,36 @@
                     Tambahkan tautan Google Drive
                 </div>
             </div>
+
         </div>
 
         <div class="portfolio-button">
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style="margin-right: 5px;"
+                aria-hidden="true"
+            >
+                <path
+                    d="M12 5V19"
+                    stroke="#2A8D83"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+                <path
+                    d="M5 12H19"
+                    stroke="#2A8D83"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                />
+            </svg>
+
             Tambah Tautan
         </div>
+
     </a>
 @endif
                 </div>
