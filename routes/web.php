@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingControll
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GisMapController;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RoomBookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -308,11 +307,8 @@ Route::prefix('admin')
 |--------------------------------------------------------------------------
 | Rating
 |--------------------------------------------------------------------------
+| Rating hanya diberikan oleh Admin melalui panel /admin/ratings.
 */
-Route::post('/rating', [RatingController::class, 'store'])
-    ->middleware('auth')
-    ->name('rating.store');
-
 Route::get(
     '/admin/ratings',
     [AdminRatingController::class, 'index']
