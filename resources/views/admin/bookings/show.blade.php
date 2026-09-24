@@ -5,328 +5,733 @@
 
 @section('content')
 
-<div class="-m-6 p-6 bg-gradient-to-br from-slate-50 via-cyan-50/30 to-slate-50">
+<div class="min-h-full bg-gradient-to-br from-slate-50 via-cyan-50/30 to-slate-50">
 
-    <div class="max-w-4xl mx-auto px-6">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 py-5 pb-12">
 
-        {{-- Back Button --}}
-        <a
-            href="{{ route('admin.bookings.index') }}"
-            class="inline-flex items-center gap-2 text-[#0e4f81] text-sm font-medium hover:gap-3 transition-all duration-200 group"
-        >
-            <div class="w-8 h-8 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:shadow-md transition-shadow">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
-                </svg>
-            </div>
-            Kembali ke daftar booking
-        </a>
+        {{-- =========================================================
+             MAIN CARD
+        ========================================================== --}}
+        <div class="bg-white rounded-[28px] shadow-lg shadow-gray-200/50 overflow-hidden border border-gray-100">
 
 
-        {{-- Main Card --}}
-        <div class="bg-white border border-gray-100 rounded-3xl shadow-lg shadow-gray-200/50 mt-5 overflow-hidden">
+            {{-- =====================================================
+                 HEADER
+            ====================================================== --}}
+            <div class="relative bg-gradient-to-br from-[#0b4654] via-[#0d6668] to-[#126d72] px-6 sm:px-7 pt-6 pb-8 overflow-hidden">
 
-            {{-- Header --}}
-            <div class="relative px-6 md:px-8 py-6 bg-gradient-to-r from-[#0e4f81] via-[#1a6fa8] to-[#56b8c2] overflow-hidden">
+                {{-- Decorative background --}}
+                <div class="absolute -top-20 -right-20 w-52 h-52 rounded-full bg-cyan-300/10"></div>
+                <div class="absolute -bottom-24 -left-16 w-48 h-48 rounded-full bg-teal-300/10"></div>
 
-                {{-- Decorative circles --}}
-                <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10"></div>
-                <div class="absolute -bottom-16 -left-8 w-32 h-32 rounded-full bg-white/5"></div>
+                <div class="relative">
 
-                <div class="relative flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                    {{-- STATUS --}}
+                    <div class="flex justify-end mb-5">
 
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <div class="w-8 h-8 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                            </div>
-                            <span class="text-white/80 text-xs font-semibold uppercase tracking-wider">Detail Pemesanan</span>
-                        </div>
-                        <h1 class="text-2xl font-bold text-white">
+                        @php
+                            $statusConfig = [
+                                'menunggu' => [
+                                    'label' => 'MENUNGGU',
+                                    'dot' => 'bg-amber-300',
+                                    'class' => 'bg-amber-400/10 text-amber-200 border-amber-300/30'
+                                ],
+                                'disetujui' => [
+                                    'label' => 'DISETUJUI',
+                                    'dot' => 'bg-emerald-300',
+                                    'class' => 'bg-emerald-400/10 text-emerald-200 border-emerald-300/30'
+                                ],
+                                'ditolak' => [
+                                    'label' => 'DITOLAK',
+                                    'dot' => 'bg-rose-300',
+                                    'class' => 'bg-rose-400/10 text-rose-200 border-rose-300/30'
+                                ],
+                                'selesai' => [
+                                    'label' => 'SELESAI',
+                                    'dot' => 'bg-sky-300',
+                                    'class' => 'bg-sky-400/10 text-sky-200 border-sky-300/30'
+                                ],
+                                'dibatalkan' => [
+                                    'label' => 'DIBATALKAN',
+                                    'dot' => 'bg-gray-300',
+                                    'class' => 'bg-gray-400/10 text-gray-200 border-gray-300/30'
+                                ],
+                            ];
+
+                            $config = $statusConfig[$booking->status] ?? [
+                                'label' => strtoupper($booking->status),
+                                'dot' => 'bg-gray-300',
+                                'class' => 'bg-gray-400/10 text-gray-200 border-gray-300/30'
+                            ];
+                        @endphp
+
+                        <span
+                            class="inline-flex items-center gap-2 px-4 py-2 rounded-full border {{ $config['class'] }} backdrop-blur-sm text-xs sm:text-sm font-bold tracking-wide"
+                        >
+                            <span class="w-2.5 h-2.5 rounded-full {{ $config['dot'] }}"></span>
+                            {{ $config['label'] }}
+                        </span>
+
+                    </div>
+
+
+                    {{-- KICKER --}}
+                    <div class="flex items-center gap-2 mb-2">
+
+                        <svg
+                            class="w-5 h-5 text-cyan-300"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                            />
+                        </svg>
+
+                        <span class="text-cyan-300 text-sm font-bold uppercase tracking-wide">
+                            Detail Pemesanan
+                        </span>
+
+                    </div>
+
+
+                    {{-- TITLE --}}
+                    <div class="flex items-end justify-between gap-4">
+
+                        <h1 class="text-3xl sm:text-[34px] leading-tight font-bold text-white tracking-tight">
                             Detail Booking
                         </h1>
-                        <p class="text-white/80 mt-1 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                            </svg>
-                            {{ $booking->room->name }}
-                        </p>
+
                     </div>
 
 
-                    @php
-                        $statusConfig = [
-                            'menunggu' => ['label' => 'Menunggu Persetujuan', 'class' => 'bg-amber-400/20 text-amber-50 border-amber-300/30', 'dot' => 'bg-amber-300', 'icon' => '🟡'],
-                            'disetujui' => ['label' => 'Disetujui', 'class' => 'bg-emerald-400/20 text-emerald-50 border-emerald-300/30', 'dot' => 'bg-emerald-300', 'icon' => '🟢'],
-                            'ditolak' => ['label' => 'Ditolak', 'class' => 'bg-rose-400/20 text-rose-50 border-rose-300/30', 'dot' => 'bg-rose-300', 'icon' => '🔴'],
-                            'selesai' => ['label' => 'Selesai', 'class' => 'bg-sky-400/20 text-sky-50 border-sky-300/30', 'dot' => 'bg-sky-300', 'icon' => '🔵'],
-                            'dibatalkan' => ['label' => 'Dibatalkan', 'class' => 'bg-gray-400/20 text-gray-50 border-gray-300/30', 'dot' => 'bg-gray-300', 'icon' => '⚪'],
-                        ];
-                        $config = $statusConfig[$booking->status] ?? ['label' => $booking->status, 'class' => 'bg-gray-400/20 text-gray-50 border-gray-300/30', 'dot' => 'bg-gray-300', 'icon' => '⚪'];
-                    @endphp
+                    {{-- ROOM --}}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mt-5">
 
-                    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full border {{ $config['class'] }} backdrop-blur font-semibold text-sm whitespace-nowrap self-start md:self-center">
-                        <span class="w-2 h-2 rounded-full {{ $config['dot'] }} animate-pulse"></span>
-                        {{ $config['label'] }}
-                    </span>
+                        <div
+                            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-white/10 border border-white/15"
+                        >
+
+                            <svg
+                                class="w-5 h-5 text-cyan-200 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.8"
+                                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"
+                                />
+                            </svg>
+
+                            <span class="text-white font-semibold text-sm sm:text-base leading-tight">
+                                {{ $booking->room->name ?? 'Ruangan' }}
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl bg-cyan-400/10 border border-cyan-300/20"
+                        >
+
+                            <svg
+                                class="w-5 h-5 text-cyan-200 flex-shrink-0"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.8"
+                                    d="M12 6v6l4 2"
+                                />
+                            </svg>
+
+                            <span class="text-cyan-100 font-semibold text-sm sm:text-base">
+                                Ruang Pertemuan
+                            </span>
+
+                        </div>
+
+                    </div>
 
                 </div>
+
             </div>
 
 
-            {{-- Body --}}
-            <div class="p-6 md:p-8">
+            {{-- =====================================================
+                 BODY
+            ====================================================== --}}
+            <div class="px-5 sm:px-7 py-6">
 
-                <div class="grid md:grid-cols-2 gap-5">
 
-                    {{-- Pembooking --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#56b8c2] to-[#0e4f81] flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Pembooking</p>
-                                <p class="font-semibold text-gray-800 mt-1 break-words">{{ $booking->name }}</p>
-                            </div>
+                {{-- =================================================
+                     DATE + TIME
+                ================================================== --}}
+
+                @php
+                    $startTime = \Carbon\Carbon::parse($booking->time_start);
+                    $endTime = \Carbon\Carbon::parse($booking->time_end);
+
+                    if ($endTime->lessThan($startTime)) {
+                        $endTime->addDay();
+                    }
+
+                    $totalMinutes = $startTime->diffInMinutes($endTime);
+
+                    $durationHours = intdiv($totalMinutes, 60);
+                    $durationMinutes = $totalMinutes % 60;
+                @endphp
+
+
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+
+                    {{-- DATE --}}
+                    <div class="flex items-center gap-4 px-5 py-4">
+
+                        {{-- CALENDAR ICON --}}
+                        <div
+                            class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100 flex items-center justify-center flex-shrink-0"
+                        >
+
+                            <svg
+                                class="w-6 h-6 text-amber-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.8"
+                                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                                />
+                            </svg>
+
                         </div>
-                    </div>
 
 
-                    {{-- Instansi --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Instansi</p>
-                                <p class="font-semibold text-gray-800 mt-1 break-words">{{ $booking->institution ?? '-' }}</p>
-                            </div>
-                        </div>
-                    </div>
+                        {{-- DATE --}}
+                        <div class="min-w-0 flex-1">
 
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                Tanggal Pemakaian
+                            </p>
 
-                    {{-- Ruangan --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Ruangan</p>
-                                <p class="font-semibold text-gray-800 mt-1 break-words">{{ $booking->room->name }}</p>
-                            </div>
-                        </div>
-                    </div>
+                            <p class="text-lg font-bold text-slate-800 mt-0.5">
 
+                                @if($booking->date)
 
-                    {{-- Tanggal --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Tanggal</p>
-                                <p class="font-semibold text-gray-800 mt-1">
-                                    {{ $booking->date ? $booking->date->translatedFormat('d F Y') : '-' }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                                    {{ \Carbon\Carbon::parse($booking->date)->translatedFormat('d F Y') }}
 
+                                @else
 
-                    {{-- Waktu --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Waktu</p>
-                                <p class="font-semibold text-gray-800 mt-1">
-                                    {{ substr($booking->time_start, 0, 5) }}
                                     -
-                                    {{ substr($booking->time_end, 0, 5) }}
-                                </p>
-                            </div>
+
+                                @endif
+
+                            </p>
+
                         </div>
+
+
+                        {{-- DURASI --}}
+                        <div
+                            class="flex-shrink-0 min-w-[136px] px-3 py-1.5 rounded-full bg-cyan-50 border border-cyan-200 text-center"
+                        >
+
+                            <span class="block text-sm font-semibold text-cyan-700 leading-tight">
+
+                                @if($durationHours > 0)
+
+                                    {{ $durationHours }} Jam
+
+                                    @if($durationMinutes > 0)
+                                        {{ $durationMinutes }} Menit
+                                    @endif
+
+                                @else
+
+                                    {{ $durationMinutes }} Menit
+
+                                @endif
+
+                            </span>
+
+                        </div>
+
                     </div>
 
 
-                    {{-- Peserta --}}
-                    <div class="group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Jumlah Peserta</p>
-                                <p class="font-semibold text-gray-800 mt-1">
-                                    {{ $booking->participants ?? 0 }} orang
-                                </p>
-                            </div>
+                    {{-- DIVIDER --}}
+                    <div class="mx-5 border-t border-gray-100"></div>
+
+
+                    {{-- TIME --}}
+                    <div class="flex items-center gap-4 px-5 py-4">
+
+                        {{-- CLOCK ICON --}}
+                        <div
+                            class="w-12 h-12 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0"
+                        >
+
+                            <svg
+                                class="w-6 h-6 text-emerald-500"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.8"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                                />
+                            </svg>
+
                         </div>
-                    </div>
 
 
-                    {{-- Keperluan --}}
-                    <div class="md:col-span-2 group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-400 to-pink-500 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Keperluan</p>
-                                <p class="font-semibold text-gray-800 mt-1 break-words">{{ $booking->purpose ?? '-' }}</p>
-                            </div>
+                        {{-- TIME --}}
+                        <div class="min-w-0">
+
+                            <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                Waktu Rapat
+                            </p>
+
+                            <p class="text-lg font-bold text-slate-800 mt-0.5">
+
+                                {{ substr($booking->time_start, 0, 5) }}
+
+                                –
+
+                                {{ substr($booking->time_end, 0, 5) }}
+
+                                <span class="text-sm font-semibold text-slate-400">
+                                    WIB
+                                </span>
+
+                            </p>
+
                         </div>
-                    </div>
 
 
-                    {{-- Fasilitas Tambahan --}}
-                    <div class="md:col-span-2 group p-5 rounded-2xl bg-gradient-to-br from-slate-50 to-white border border-gray-100 hover:border-[#56b8c2]/30 hover:shadow-md transition-all duration-200">
-                        <div class="flex items-start gap-3">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-lime-400 to-green-600 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
-                                </svg>
-                            </div>
-                            <div class="min-w-0 flex-1">
-                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Fasilitas Tambahan</p>
-                                <div class="flex flex-wrap gap-2">
-                                    @forelse($booking->facilities ?? [] as $facility)
-                                        <span class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-gradient-to-r from-cyan-50 to-teal-50 text-cyan-700 text-sm font-medium border border-cyan-100">
-                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                                            </svg>
-                                            {{ $facility }}
-                                        </span>
-                                    @empty
-                                        <span class="text-gray-400 text-sm italic">Tidak ada fasilitas tambahan</span>
-                                    @endforelse
-                                </div>
-                            </div>
+                        {{-- ROOM READY --}}
+                        <div class="ml-auto flex items-center gap-1.5 text-emerald-600 font-semibold text-sm">
+
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+
+                            Room Ready
+
                         </div>
+
                     </div>
 
                 </div>
 
 
-                {{-- =========================================================
-                     ACTION BUTTONS
-                ========================================================== --}}
+                {{-- =================================================
+                     INFORMATION GRID
+                ================================================== --}}
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5">
 
+
+                    {{-- PEMBOOKING --}}
+                    <div class="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-11 h-11 rounded-xl bg-cyan-50 border border-cyan-100 flex items-center justify-center flex-shrink-0"
+                            >
+
+                                <svg
+                                    class="w-6 h-6 text-cyan-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.8"
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                    />
+                                </svg>
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    Pembooking
+                                </p>
+
+                                <p class="text-base font-bold text-slate-800 mt-0.5 break-words">
+                                    {{ $booking->name ?? '-' }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- INSTANSI --}}
+                    <div class="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-11 h-11 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center flex-shrink-0"
+                            >
+
+                                <svg
+                                    class="w-6 h-6 text-purple-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.8"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"
+                                    />
+                                </svg>
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    Instansi
+                                </p>
+
+                                <p class="text-base font-bold text-slate-800 mt-0.5 break-words">
+                                    {{ $booking->institution ?? '-' }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- PESERTA --}}
+                    <div class="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-11 h-11 rounded-xl bg-indigo-50 border border-indigo-100 flex items-center justify-center flex-shrink-0"
+                            >
+
+                                <svg
+                                    class="w-6 h-6 text-indigo-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.8"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                                    />
+                                </svg>
+
+                            </div>
+
+
+                            <div>
+
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    Jumlah Peserta
+                                </p>
+
+                                <p class="text-base font-bold text-slate-800 mt-0.5">
+                                    {{ $booking->participants ?? 0 }} Orang
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- KEPERLUAN --}}
+                    <div class="p-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
+
+                        <div class="flex items-center gap-3">
+
+                            <div
+                                class="w-11 h-11 rounded-xl bg-rose-50 border border-rose-100 flex items-center justify-center flex-shrink-0"
+                            >
+
+                                <svg
+                                    class="w-6 h-6 text-rose-600"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="1.8"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                                    />
+                                </svg>
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                    Keperluan
+                                </p>
+
+                                <p class="text-base font-bold text-slate-800 mt-0.5 break-words">
+                                    {{ $booking->purpose ?? '-' }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                {{-- =================================================
+                     FACILITIES
+                ================================================== --}}
+                <div class="mt-5 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm">
+
+                    <div class="flex items-center gap-3 mb-4">
+
+                        <div
+                            class="w-10 h-10 rounded-xl bg-lime-50 border border-lime-100 flex items-center justify-center"
+                        >
+
+                            <svg
+                                class="w-5 h-5 text-lime-600"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="1.8"
+                                    d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
+                                />
+                            </svg>
+
+                        </div>
+
+
+                        <p class="text-sm font-bold text-slate-500 uppercase tracking-wider">
+                            Fasilitas Tambahan
+                        </p>
+
+                    </div>
+
+
+                    <div class="flex flex-wrap gap-2">
+
+                        @forelse($booking->facilities ?? [] as $facility)
+
+                            <span
+                                class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-700 text-sm font-medium"
+                            >
+
+                                <svg
+                                    class="w-3.5 h-3.5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2.5"
+                                        d="M5 13l4 4L19 7"
+                                    />
+                                </svg>
+
+                                {{ $facility }}
+
+                            </span>
+
+                        @empty
+
+                            <span class="text-sm text-gray-400 italic">
+                                Tidak ada fasilitas tambahan
+                            </span>
+
+                        @endforelse
+
+                    </div>
+
+                </div>
+
+
+                {{-- =================================================
+                     ACTION: MENUNGGU
+                ================================================== --}}
                 @if($booking->status === 'menunggu')
 
-                    <div class="border-t border-gray-100 mt-8 pt-8">
+                    <div class="mt-6 pt-6 border-t border-gray-100">
 
-                        <div class="flex flex-col md:flex-row gap-3">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
 
-                            {{-- Approve --}}
+                            {{-- APPROVE --}}
                             <form
                                 method="POST"
                                 action="{{ route('admin.bookings.approve', $booking->id) }}"
                                 onsubmit="return confirm('Setujui booking ini?')"
-                                class="flex-1 md:flex-none"
                             >
                                 @csrf
+
                                 <button
                                     type="submit"
-                                    class="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white rounded-xl px-6 py-3.5 font-semibold shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-200"
+                                    class="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold transition-all shadow-sm"
                                 >
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
+
+                                    <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2.5"
+                                            d="M5 13l4 4L19 7"
+                                        />
                                     </svg>
-                                    Setujui Booking
+
+                                    Setujui
+
                                 </button>
+
                             </form>
 
 
-                            {{-- Reject Toggle --}}
+                            {{-- REJECT --}}
                             <button
                                 type="button"
                                 onclick="document.getElementById('rejectForm').classList.toggle('hidden')"
-                                class="w-full md:w-auto inline-flex items-center justify-center gap-2 bg-white border-2 border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-xl px-6 py-3.5 font-semibold transition-all duration-200"
+                                class="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-rose-200 text-rose-600 hover:bg-rose-50 text-sm font-bold transition-all"
                             >
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/>
+
+                                <svg
+                                    class="w-5 h-5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2.5"
+                                        d="M6 18L18 6M6 6l12 12"
+                                    />
                                 </svg>
-                                Tolak Booking
+
+                                Tolak
+
                             </button>
 
 
-                            {{-- Batalkan --}}
+                            {{-- CANCEL --}}
                             <form
                                 method="POST"
                                 action="{{ route('admin.bookings.cancel', $booking->id) }}"
                                 onsubmit="return confirm('Batalkan booking ini?')"
-                                class="flex-1 md:flex-none"
                             >
                                 @csrf
+
                                 <button
                                     type="submit"
-                                    class="w-full inline-flex items-center justify-center gap-2 bg-white border-2 border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 rounded-xl px-6 py-3.5 font-semibold transition-all duration-200"
+                                    class="w-full min-h-[48px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 text-sm font-bold transition-all"
                                 >
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+
+                                    <svg
+                                        class="w-5 h-5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            cx="12"
+                                            cy="12"
+                                            r="8.5"
+                                            stroke-width="2"
+                                        />
+
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-width="2"
+                                            d="M8.5 8.5l7 7"
+                                        />
                                     </svg>
-                                    Batalkan Booking
+
+                                    Batalkan
+
                                 </button>
+
                             </form>
 
                         </div>
 
 
-                        {{-- Reject Form --}}
+                        {{-- REJECT FORM --}}
                         <form
                             id="rejectForm"
                             method="POST"
                             action="{{ route('admin.bookings.reject', $booking->id) }}"
-                            class="hidden mt-5 animate-fade-in"
+                            class="hidden mt-4"
                         >
+
                             @csrf
 
-                            <div class="p-5 rounded-2xl bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-100">
+                            <div class="p-4 rounded-2xl bg-rose-50 border border-rose-100">
 
-                                <label class="flex items-center gap-2 text-sm font-semibold text-rose-700 mb-3">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 001.74-2.99l-6.93-12a2 2 0 00-3.48 0l-6.93 12A2 2 0 005.07 19z"/>
-                                    </svg>
+                                <label class="block text-sm font-bold text-rose-700 mb-2">
                                     Alasan Penolakan
                                 </label>
 
                                 <textarea
                                     name="admin_note"
                                     required
-                                    rows="4"
-                                    class="w-full border border-rose-200 rounded-xl p-4 bg-white focus:outline-none focus:ring-2 focus:ring-rose-300 focus:border-rose-300 transition-all duration-200 resize-none"
-                                    placeholder="Masukkan alasan penolakan..."></textarea>
+                                    rows="3"
+                                    class="w-full rounded-xl border border-rose-200 bg-white p-3 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 resize-none"
+                                    placeholder="Masukkan alasan penolakan..."
+                                ></textarea>
 
                                 <button
                                     type="submit"
-                                    class="mt-3 inline-flex items-center gap-2 bg-gradient-to-r from-rose-500 to-red-600 hover:from-rose-600 hover:to-red-700 text-white rounded-xl px-6 py-3 font-semibold shadow-lg shadow-rose-500/20 transition-all duration-200"
+                                    class="mt-3 inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold"
                                 >
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
-                                    </svg>
                                     Konfirmasi Penolakan
                                 </button>
 
@@ -339,45 +744,98 @@
                 @endif
 
 
+                {{-- =================================================
+                     ACTION: DISETUJUI
+                ================================================== --}}
                 @if($booking->status === 'disetujui')
 
-                    <div class="border-t border-gray-100 mt-8 pt-8">
+                    <div class="mt-6 pt-6 border-t border-gray-100">
 
+                        {{-- TANDAI SELESAI --}}
                         <form
                             method="POST"
                             action="{{ route('admin.bookings.complete', $booking->id) }}"
                             onsubmit="return confirm('Tandai booking sebagai selesai?')"
                         >
+
                             @csrf
+
                             <button
                                 type="submit"
-                                class="inline-flex items-center gap-2 bg-gradient-to-r from-slate-600 to-gray-700 hover:from-slate-700 hover:to-gray-800 text-white rounded-xl px-6 py-3.5 font-semibold shadow-lg shadow-gray-500/20 transition-all duration-200"
+                                class="w-full min-h-[54px] inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-[#111827] hover:bg-[#0b1220] text-white text-base font-bold transition-all shadow-md"
                             >
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+
+                                <svg
+                                    class="w-5 h-5 text-emerald-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                        stroke-width="2"
+                                    />
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2.5"
+                                        d="M8 12.5l2.5 2.5L16 9"
+                                    />
                                 </svg>
+
                                 Tandai Selesai
+
                             </button>
+
                         </form>
 
 
-                        {{-- Batalkan --}}
+                        {{-- BATALKAN BOOKING --}}
                         <form
                             method="POST"
                             action="{{ route('admin.bookings.cancel', $booking->id) }}"
                             onsubmit="return confirm('Batalkan booking ini?')"
-                            class="mt-4"
+                            class="mt-3"
                         >
+
                             @csrf
+
                             <button
                                 type="submit"
-                                class="inline-flex items-center gap-2 bg-white border-2 border-rose-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 rounded-xl px-6 py-3.5 font-semibold transition-all duration-200"
+                                class="w-full min-h-[54px] inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 text-base font-bold transition-all"
                             >
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+
+                              {{-- ICON BATALKAN --}}
+                                <svg
+                                    class="w-5 h-5 flex-shrink-0"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                >
+                                    <circle
+                                        cx="12"
+                                        cy="12"
+                                        r="9"
+                                        stroke-width="2.5"
+                                    />
+
+                                    <path
+                                        d="M5.64 5.64L18.36 18.36"
+                                        stroke-width="2.5"
+                                        stroke-linecap="round"
+                                    />
                                 </svg>
-                                Batalkan Booking
+
+                                <span>
+                                    Batalkan Booking
+                                </span>
+
                             </button>
+
                         </form>
 
                     </div>
@@ -385,23 +843,46 @@
                 @endif
 
 
-                {{-- Admin Note --}}
+                {{-- =================================================
+                     ADMIN NOTE
+                ================================================== --}}
                 @if($booking->admin_note)
 
-                    <div class="border-t border-gray-100 mt-8 pt-8">
+                    <div class="mt-6 p-4 rounded-2xl bg-rose-50 border border-rose-100">
 
-                        <div class="p-5 rounded-2xl bg-gradient-to-br from-red-50 to-rose-50 border border-red-100">
+                        <div class="flex items-start gap-3">
 
-                            <div class="flex items-start gap-3">
-                                <div class="w-9 h-9 rounded-xl bg-red-500 flex items-center justify-center flex-shrink-0 shadow-sm">
-                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 001.74-2.99l-6.93-12a2 2 0 00-3.48 0l-6.93 12A2 2 0 005.07 19z"/>
-                                    </svg>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-semibold text-red-500 uppercase tracking-wider">Catatan Admin</p>
-                                    <p class="text-red-700 mt-1 font-medium">{{ $booking->admin_note }}</p>
-                                </div>
+                            <div
+                                class="w-9 h-9 rounded-xl bg-rose-500 flex items-center justify-center flex-shrink-0"
+                            >
+
+                                <svg
+                                    class="w-4 h-4 text-white"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M12 9v2m0 4h.01M5.07 19h13.86a2 2 0 001.74-2.99l-6.93-12a2 2 0 00-3.48 0l-6.93 12A2 2 0 005.07 19z"
+                                    />
+                                </svg>
+
+                            </div>
+
+
+                            <div class="min-w-0">
+
+                                <p class="text-xs font-bold text-rose-500 uppercase tracking-wider">
+                                    Catatan Admin
+                                </p>
+
+                                <p class="text-sm text-rose-700 mt-1 font-medium break-words">
+                                    {{ $booking->admin_note }}
+                                </p>
+
                             </div>
 
                         </div>
@@ -410,6 +891,37 @@
 
                 @endif
 
+
+                {{-- =================================================
+                     BACK LINK
+                ================================================== --}}
+                <div class="text-center mt-6">
+
+                    <a
+                        href="{{ route('admin.bookings.index') }}"
+                        class="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-[#0e4f81] transition-colors"
+                    >
+
+                        <svg
+                            class="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 19l-7-7 7-7"
+                            />
+                        </svg>
+
+                        Kembali ke daftar booking
+
+                    </a>
+
+                </div>
+
             </div>
 
         </div>
@@ -417,15 +929,5 @@
     </div>
 
 </div>
-
-<style>
-    @keyframes fade-in {
-        from { opacity: 0; transform: translateY(-8px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-in {
-        animation: fade-in 0.3s ease-out;
-    }
-</style>
 
 @endsection
