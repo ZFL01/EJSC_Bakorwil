@@ -264,8 +264,11 @@ class PublicController extends Controller
      */
     public function clients(Request $request)
     {
+        // `user` di-eager load agar kartu di halaman publik dapat memakai
+        // foto profil akun (users.profile_photo) sebagai fallback avatar.
         $query = Client::publicData()
-            ->active();
+            ->active()
+            ->with('user');
 
         /*
         |--------------------------------------------------------------------------
@@ -412,8 +415,11 @@ class PublicController extends Controller
      */
     public function mentors(Request $request)
     {
+        // `user` di-eager load agar kartu di halaman publik dapat memakai
+        // foto profil akun (users.profile_photo) sebagai fallback avatar.
         $query = Mentor::publicData()
-            ->active();
+            ->active()
+            ->with('user');
 
         /*
         |--------------------------------------------------------------------------
@@ -588,8 +594,11 @@ class PublicController extends Controller
      */
     public function talents(Request $request)
     {
+        // `user` di-eager load agar kartu di halaman publik dapat memakai
+        // foto profil akun (users.profile_photo) sebagai fallback avatar.
         $query = Talent::publicData()
-            ->active();
+            ->active()
+            ->with('user');
 
         /*
         |--------------------------------------------------------------------------

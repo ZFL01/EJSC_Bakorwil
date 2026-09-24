@@ -5,7 +5,6 @@ use App\Http\Controllers\Admin\RoomBookingController as AdminRoomBookingControll
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\GisMapController;
 use App\Http\Controllers\PublicController;
-use App\Http\Controllers\RatingController;
 use App\Http\Controllers\RoomBookingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -21,9 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/registrasi', [RegisterController::class, 'showRegistrationForm'])
     ->name('registrasi');
 
+// Name route POST dibedakan dari route GET '/registrasi' di atas supaya tidak
+// ada dua route bernama 'registrasi' (URL-nya sama, jadi semua tautan/form
+// yang memakai route('registrasi') tetap bekerja seperti sebelumnya).
 Route::post('/registrasi', [RegisterController::class, 'register'])
     ->middleware('throttle:registrasi')
-    ->name('registrasi');
+    ->name('registrasi.attempt');
 
 Route::get('/registrasi/selesai', [RegisterController::class, 'showWaiting'])
     ->name('registrasi.waiting');
@@ -305,11 +307,8 @@ Route::prefix('admin')
 |--------------------------------------------------------------------------
 | Rating
 |--------------------------------------------------------------------------
+| Rating hanya diberikan oleh Admin melalui panel /admin/ratings.
 */
-Route::post('/rating', [RatingController::class, 'store'])
-    ->middleware('auth')
-    ->name('rating.store');
-
 Route::get(
     '/admin/ratings',
     [AdminRatingController::class, 'index']

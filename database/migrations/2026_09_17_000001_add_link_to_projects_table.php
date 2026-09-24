@@ -6,8 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Tabel `project` adalah tabel legacy dari dump/import SQL (tidak dibuat
+     * oleh migration mana pun), sehingga guard hasTable dipakai agar migration
+     * ini tidak gagal pada environment tanpa tabel tersebut (mis. test sqlite).
+     */
     public function up(): void
     {
+        if (! Schema::hasTable('project') || Schema::hasColumn('project', 'link')) {
+            return;
+        }
+
         Schema::table('project', function (Blueprint $table) {
             $table->string('link', 2048)->nullable();
         });
@@ -15,6 +24,10 @@ return new class extends Migration
 
     public function down(): void
     {
+        if (! Schema::hasTable('project') || ! Schema::hasColumn('project', 'link')) {
+            return;
+        }
+
         Schema::table('project', function (Blueprint $table) {
             $table->dropColumn('link');
         });
